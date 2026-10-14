@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Animations: Class TglTFAnimationImporter</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFAnimationImporter"></span><h1 class="cio">Class TglTFAnimationImporter</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Animations.html">glTF.Animations</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFAnimationImporter = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Imports the animations of other glTF files into a document, one animation at a time.</p>
+<p>
+
+
+<p>Set OnDuplicate, and OnProgress if wanted, then call ImportFiles. Duplicates are found by name, ignoring case, among the model's animations, including those added earlier in the same import. Without an OnDuplicate handler, duplicates keep the old animation. The importer owns the documents it loads; free it after the import.
+
+<p></p>
+
+<pre class="longcode">
+Importer := TglTFAnimationImporter.Create(Doc);
+<span class="pascal_keyword">try</span>
+  Importer.OnDuplicate :=
+    <span class="pascal_keyword">procedure</span>(AImporter: TglTFAnimationImporter; ACandidate: TglTFAnimationCandidate;
+      AExisting: Integer; <span class="pascal_keyword">var</span> AAction: TglTFDuplicateAction; <span class="pascal_keyword">var</span> ANewName: <span class="pascal_keyword">string</span>)
+    <span class="pascal_keyword">begin</span>
+      AAction := daRename; <span class="pascal_comment">// keep both, under the suggested name</span>
+    <span class="pascal_keyword">end</span>;
+  Importer.ImportFiles([<span class="pascal_string">'walk.glb'</span>, <span class="pascal_string">'run.glb'</span>]);
+<span class="pascal_keyword">finally</span>
+  Importer.Free;
+<span class="pascal_keyword">end</span>;</pre>
+
+<p></p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFAnimationImporter</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Animations.TglTFAnimationImporter.html#Create-TglTFDocument-">Create</a></strong>(ATarget: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTF.Animations.TglTFAnimationImporter.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Animations.TglTFAnimationImporter.html#ImportFiles-TArraystring-">ImportFiles</a></strong>(const AFileNames: TArray&lt;string&gt;): Integer;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Animations.TglTFAnimationImporter.html#ImportDocument-TglTFDocument-string-">ImportDocument</a></strong>(ASource: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>; const AFileName: string): Integer;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Animations.TglTFAnimationImporter.html#RequestAbort">RequestAbort</a></strong>;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Animations.TglTFAnimationImporter.html#NameProblem-string-">NameProblem</a></strong>(const AName: string): string;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Animations.TglTFAnimationImporter.html#SuggestName-string-">SuggestName</a></strong>(const AName: string): string;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationImporter.html#Target">Target</a></strong>: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a> read FTarget;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationImporter.html#Count">Count</a></strong>: Integer read GetCount;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationImporter.html#Candidates">Candidates</a></strong>[AIndex: Integer]: <a href="glTF.Animations.TglTFAnimationCandidate.html">TglTFAnimationCandidate</a> read GetCandidate; default;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationImporter.html#ImportedCount">ImportedCount</a></strong>: Integer read FImportedCount;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationImporter.html#AbortRequested">AbortRequested</a></strong>: Boolean read GetAbortRequested;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationImporter.html#OnProgress">OnProgress</a></strong>: <a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a> read FOnProgress write FOnProgress;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationImporter.html#OnDuplicate">OnDuplicate</a></strong>: <a href="glTF.Animations.html#TglTFDuplicateEvent">TglTFDuplicateEvent</a> read FOnDuplicate write FOnDuplicate;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationImporter.html#Log">Log</a></strong>: TStringList read FLog;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-TglTFDocument-"></span><code>constructor <strong>Create</strong>(ATarget: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates an importer for a document.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ATarget</dt>
+<dd>The document that receives the animations; not owned. Nothing else may change it during the import.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the importer, the documents it loaded and its candidates.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ImportFiles-TArraystring-"></span><code>function <strong>ImportFiles</strong>(const AFileNames: TArray&lt;string&gt;): Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Imports the animations of several .gltf or .glb files.</p>
+<p>
+
+
+<p>Each file is loaded and its animations matched and added in turn; see the unit description. A file that cannot be loaded, or has no animations, adds a line to <a class="normal" href="glTF.Animations.TglTFAnimationImporter.html#Log">Log</a> and the import goes on. Stops early on an abort. At the end, the data only replaced animations used is removed from the model.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AFileNames</dt>
+<dd>The files, in the order their animations are to be added.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of animations added or replaced.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ImportDocument-TglTFDocument-string-"></span><code>function <strong>ImportDocument</strong>(ASource: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>; const AFileName: string): Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Imports the animations of an already loaded document.</p>
+<p>
+
+
+<p>Like ImportFiles for one file, including the removal of replaced data at the end.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ASource</dt>
+<dd>The document; the importer owns it from now on, even when this raises.</dd>
+<dt>AFileName</dt>
+<dd>The name to show and to derive names of unnamed animations from; may be empty.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of animations added or replaced.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RequestAbort"></span><code>procedure <strong>RequestAbort</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks the import to stop once the animation being added is finished.</p>
+<p>
+
+
+<p>May be called from any thread, typically the main thread while the import runs in a background thread. The remaining animations and files are not imported; those already added stay.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="NameProblem-string-"></span><code>function <strong>NameProblem</strong>(const AName: string): string;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether a name can be given to an imported animation.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>The name wanted; leading and trailing spaces are ignored.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">Empty when the name is fine, otherwise why it is not.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SuggestName-string-"></span><code>function <strong>SuggestName</strong>(const AName: string): string;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Suggests a name the model does not use yet.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>The name wanted.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">AName followed by &quot;_2&quot;, &quot;_3&quot; and so on: the first the model does not use. A &quot;_N&quot; already at the end of AName is replaced.</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Target"></span><code>property <strong>Target</strong>: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a> read FTarget;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The document receiving the animations.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Count"></span><code>property <strong>Count</strong>: Integer read GetCount;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Number of animations found in the files so far.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Candidates"></span><code>property <strong>Candidates</strong>[AIndex: Integer]: <a href="glTF.Animations.TglTFAnimationCandidate.html">TglTFAnimationCandidate</a> read GetCandidate; default;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The animations found, in the order the files and their animations were read.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ImportedCount"></span><code>property <strong>ImportedCount</strong>: Integer read FImportedCount;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Number of animations added or replaced so far.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AbortRequested"></span><code>property <strong>AbortRequested</strong>: Boolean read GetAbortRequested;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether the import was asked to stop.</p>
+<p>
+
+
+<p>May be read from any thread.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnProgress"></span><code>property <strong>OnProgress</strong>: <a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a> read FOnProgress write FOnProgress;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs as files are loaded and animations added.</p>
+<p>
+
+
+<p>Each file is one model: its load takes the first half, adding its animations the second. Called on the importing thread; see TglTFProgressEvent.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnDuplicate"></span><code>property <strong>OnDuplicate</strong>: <a href="glTF.Animations.html#TglTFDuplicateEvent">TglTFDuplicateEvent</a> read FOnDuplicate write FOnDuplicate;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks what to do with each duplicate; see <a class="normal" href="glTF.Animations.html#TglTFDuplicateEvent">TglTFDuplicateEvent</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Log"></span><code>property <strong>Log</strong>: TStringList read FLog;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+What happened: files loaded or not, channels skipped, animations added, replaced, renamed or kept, and any abort.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

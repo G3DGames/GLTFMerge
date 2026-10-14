@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.Columns: Record TColumnDef</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TColumnDef"></span><h1 class="cio">Record TColumnDef</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.Columns.html">glTFViewer.Columns</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TColumnDef = record</code></p>
+<h2 class="description">Description</h2>
+<p>
+One column of a list panel.</p>
+<h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Columns.TColumnDef.html#Title">Title</a></strong>: string;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Columns.TColumnDef.html#Width">Width</a></strong>: Single;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Columns.TColumnDef.html#Hide">Hide</a></strong>: <a href="glTFViewer.Columns.html#TColumnHide">TColumnHide</a>;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Columns.TColumnDef.html#Centered">Centered</a></strong>: Boolean;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTFViewer.Columns.TColumnDef.html#Create-string-Single-TColumnHide-Boolean-">Create</a></strong>(const ATitle: string; AWidth: Single; AHide: <a href="glTFViewer.Columns.html#TColumnHide">TColumnHide</a> = <a href="glTFViewer.Columns.html#chNever">chNever</a>; ACentered: Boolean = False): <a href="glTFViewer.Columns.TColumnDef.html">TColumnDef</a>; static;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Title"></span><code><strong>Title</strong>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The heading.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Width"></span><code><strong>Width</strong>: Single;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Width in pixels, including the space around the cell; 0 for the column that takes the remaining width.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Hide"></span><code><strong>Hide</strong>: <a href="glTFViewer.Columns.html#TColumnHide">TColumnHide</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+When the column is hidden.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Centered"></span><code><strong>Centered</strong>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether the heading is centred, as for a column of checkboxes.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-string-Single-TColumnHide-Boolean-"></span><code>class function <strong>Create</strong>(const ATitle: string; AWidth: Single; AHide: <a href="glTFViewer.Columns.html#TColumnHide">TColumnHide</a> = <a href="glTFViewer.Columns.html#chNever">chNever</a>; ACentered: Boolean = False): <a href="glTFViewer.Columns.TColumnDef.html">TColumnDef</a>; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns a column description.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ATitle</dt>
+<dd>The heading.</dd>
+<dt>AWidth</dt>
+<dd>Width in pixels; 0 for the column that takes the remaining width.</dd>
+<dt>AHide</dt>
+<dd>When the column is hidden.</dd>
+<dt>ACentered</dt>
+<dd>Whether the heading is centred.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The description.</p></td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

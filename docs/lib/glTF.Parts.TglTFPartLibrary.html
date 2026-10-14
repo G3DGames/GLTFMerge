@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Parts: Class TglTFPartLibrary</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFPartLibrary"></span><h1 class="cio">Class TglTFPartLibrary</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Parts.html">glTF.Parts</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFPartLibrary = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+The part files loaded and the parts found in them.</p>
+<p>
+
+
+<p>Every node with both a mesh and a skin is a part. Load files with <a class="normal" href="glTF.Parts.TglTFPartLibrary.html#LoadFiles-TArraystring-">LoadFiles</a>, or add documents already loaded with <a class="normal" href="glTF.Parts.TglTFPartLibrary.html#AddDocument-TglTFDocument-string-">AddDocument</a>. The library owns the documents and the parts.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFPartLibrary</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Parts.TglTFPartLibrary.html#Create">Create</a></strong>;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTF.Parts.TglTFPartLibrary.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.TglTFPartLibrary.html#LoadFiles-TArraystring-">LoadFiles</a></strong>(const AFileNames: TArray&lt;string&gt;): Integer;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.TglTFPartLibrary.html#AddDocument-TglTFDocument-string-">AddDocument</a></strong>(ADoc: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>; const AFileName: string): Integer;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Parts.TglTFPartLibrary.html#Clear">Clear</a></strong>;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Parts.TglTFPartLibrary.html#RequestAbort">RequestAbort</a></strong>;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPartLibrary.html#Count">Count</a></strong>: Integer read GetCount;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPartLibrary.html#Parts">Parts</a></strong>[AIndex: Integer]: <a href="glTF.Parts.TglTFPart.html">TglTFPart</a> read GetPart; default;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPartLibrary.html#Log">Log</a></strong>: TStringList read FLog;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPartLibrary.html#AbortRequested">AbortRequested</a></strong>: Boolean read GetAbortRequested;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPartLibrary.html#OnProgress">OnProgress</a></strong>: <a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a> read FOnProgress write FOnProgress;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create"></span><code>constructor <strong>Create</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates an empty library.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the library, its documents and its parts.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LoadFiles-TArraystring-"></span><code>function <strong>LoadFiles</strong>(const AFileNames: TArray&lt;string&gt;): Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads part files and adds the parts found in them.</p>
+<p>
+
+
+<p>A file that cannot be loaded adds a line to <a class="normal" href="glTF.Parts.TglTFPartLibrary.html#Log">Log</a> and the others are still loaded. Stops early on an abort.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AFileNames</dt>
+<dd>The .gltf or .glb files.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of parts added.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AddDocument-TglTFDocument-string-"></span><code>function <strong>AddDocument</strong>(ADoc: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>; const AFileName: string): Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Adds the parts of a document already loaded.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ADoc</dt>
+<dd>The document; the library owns it from now on, even when this raises.</dd>
+<dt>AFileName</dt>
+<dd>The name to show; may be empty.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of parts added, those that cannot be put on a model included.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Clear"></span><code>procedure <strong>Clear</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Removes every part and frees every document.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RequestAbort"></span><code>procedure <strong>RequestAbort</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks LoadFiles to stop after the file it is loading.</p>
+<p>
+
+
+<p>May be called from any thread.</p>
+</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Count"></span><code>property <strong>Count</strong>: Integer read GetCount;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Number of parts.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Parts"></span><code>property <strong>Parts</strong>[AIndex: Integer]: <a href="glTF.Parts.TglTFPart.html">TglTFPart</a> read GetPart; default;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The parts, in the order of the files and of their nodes.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Log"></span><code>property <strong>Log</strong>: TStringList read FLog;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+What happened while loading; cleared by each LoadFiles.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AbortRequested"></span><code>property <strong>AbortRequested</strong>: Boolean read GetAbortRequested;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether LoadFiles was asked to stop. May be read from any thread.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnProgress"></span><code>property <strong>OnProgress</strong>: <a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a> read FOnProgress write FOnProgress;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs as files are loaded. Called on the loading thread; see TglTFProgressEvent.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

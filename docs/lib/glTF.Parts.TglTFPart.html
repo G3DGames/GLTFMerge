@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Parts: Class TglTFPart</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFPart"></span><h1 class="cio">Class TglTFPart</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Parts.html">glTF.Parts</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFPart = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+One skinned mesh found in a part file: a piece that can be put on a model.</p>
+<p>
+
+
+<p>Created and owned by <a class="normal" href="glTF.Parts.TglTFPartLibrary.html">TglTFPartLibrary</a>; read-only for its users.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFPart</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.TglTFPart.html#Description">Description</a></strong>: string;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.TglTFPart.html#CoveredBones-TglTFPartOptions-">CoveredBones</a></strong>(const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>): TArray&lt;string&gt;;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.TglTFPart.html#CoveredText-TglTFPartOptions-Integer-">CoveredText</a></strong>(const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>; AMax: Integer = 4): string;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPart.html#Source">Source</a></strong>: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a> read FSource;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPart.html#FileName">FileName</a></strong>: string read FFileName;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPart.html#NodeIndex">NodeIndex</a></strong>: Integer read FNodeIndex;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPart.html#Name">Name</a></strong>: string read FName;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPart.html#TriangleCount">TriangleCount</a></strong>: Integer read FTriangleCount;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPart.html#Bones">Bones</a></strong>: TArray&lt;string&gt; read FBones;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPart.html#BoneTriangles">BoneTriangles</a></strong>: TArray&lt;Integer&gt; read FBoneTriangles;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPart.html#Error">Error</a></strong>: string read FError;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Description"></span><code>function <strong>Description</strong>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns a short description for messages.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">For example: &quot;Peasant_Feet&quot; from Peasant.gltf.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="CoveredBones-TglTFPartOptions-"></span><code>function <strong>CoveredBones</strong>(const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>): TArray&lt;string&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the bones the part covers with the given settings.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOptions</dt>
+<dd>Decide the share a bone needs and the bones never covered.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The bone names, the one driving the most triangles first.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="CoveredText-TglTFPartOptions-Integer-"></span><code>function <strong>CoveredText</strong>(const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>; AMax: Integer = 4): string;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the bones the part covers with their shares, for display.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOptions</dt>
+<dd>Decide the share a bone needs and the bones never covered.</dd>
+<dt>AMax</dt>
+<dd>Most bones listed; the rest are counted.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">For example &quot;foot_l 64%, ball_l 30%&quot;; &quot;none&quot; when it covers no bone.</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Source"></span><code>property <strong>Source</strong>: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a> read FSource;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The document the part is in; owned by the library.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FileName"></span><code>property <strong>FileName</strong>: string read FFileName;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The file the part is in.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="NodeIndex"></span><code>property <strong>NodeIndex</strong>: Integer read FNodeIndex;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Index of the part's node in <code>Source.Root.Nodes</code>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Name"></span><code>property <strong>Name</strong>: string read FName;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The part's name: its node's name, else its mesh's, else &quot;node N&quot;.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="TriangleCount"></span><code>property <strong>TriangleCount</strong>: Integer read FTriangleCount;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Number of triangles of the part.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Bones"></span><code>property <strong>Bones</strong>: TArray&lt;string&gt; read FBones;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Every bone that drives some of the part's triangles, the one driving the most first.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="BoneTriangles"></span><code>property <strong>BoneTriangles</strong>: TArray&lt;Integer&gt; read FBoneTriangles;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Parallel to <a class="normal" href="glTF.Parts.TglTFPart.html#Bones">Bones</a>: the number of triangles each one drives.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Error"></span><code>property <strong>Error</strong>: string read FError;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Why the part cannot be put on a model; empty when it can.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

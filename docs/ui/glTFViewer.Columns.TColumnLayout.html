@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.Columns: Class TColumnLayout</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TColumnLayout"></span><h1 class="cio">Class TColumnLayout</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Constants">Constants</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.Columns.html">glTFViewer.Columns</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TColumnLayout = class sealed(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Creates heading and row cells and places them at computed positions.</p>
+<p>
+
+
+<p>All methods are class methods. Use them on the main thread. A row is any control that holds cells: the heading layout or a list box item.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TColumnLayout</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Constants"></span><h3 class="summary">Constants</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Columns.TColumnLayout.html#CellMargin">CellMargin</a></strong> = 4;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Columns.TColumnLayout.html#RowPadding">RowPadding</a></strong> = 8;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Columns.TColumnLayout.html#AddHeadings-TControl-TColumnDefs-">AddHeadings</a></strong>(AHeader: TControl; const AColumns: <a href="glTFViewer.Columns.html#TColumnDefs">TColumnDefs</a>); static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTFViewer.Columns.TColumnLayout.html#AddText-TControl-Integer-string-Boolean-Boolean-Boolean-">AddText</a></strong>(ARow: TControl; AColumn: Integer; const AText: string; AGrey: Boolean = False; ABold: Boolean = False; ACentered: Boolean = False): TLabel; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTFViewer.Columns.TColumnLayout.html#AddCheck-TControl-Integer-">AddCheck</a></strong>(ARow: TControl; AColumn: Integer): TCheckBox; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Columns.TColumnLayout.html#LayoutRow-TControl-TColumnDefs-Single-Single-Single-">LayoutRow</a></strong>(ARow: TControl; const AColumns: <a href="glTFViewer.Columns.html#TColumnDefs">TColumnDefs</a>; APanelWidth, ANarrow, AVeryNarrow: Single); static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTFViewer.Columns.TColumnLayout.html#AlignHeader-TControl-TListBox-">AlignHeader</a></strong>(AHeader: TControl; AList: TListBox): Boolean; static;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Constants</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="CellMargin"></span><code><strong>CellMargin</strong> = 4;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Space left and right of every cell inside its column, in pixels.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RowPadding"></span><code><strong>RowPadding</strong> = 8;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Space left and right of the cells inside a row, in pixels.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AddHeadings-TControl-TColumnDefs-"></span><code>class procedure <strong>AddHeadings</strong>(AHeader: TControl; const AColumns: <a href="glTFViewer.Columns.html#TColumnDefs">TColumnDefs</a>); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Adds the headings of all columns to a heading row.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AHeader</dt>
+<dd>The heading row.</dd>
+<dt>AColumns</dt>
+<dd>The columns.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AddText-TControl-Integer-string-Boolean-Boolean-Boolean-"></span><code>class function <strong>AddText</strong>(ARow: TControl; AColumn: Integer; const AText: string; AGrey: Boolean = False; ABold: Boolean = False; ACentered: Boolean = False): TLabel; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Adds a text cell to a row.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARow</dt>
+<dd>The row; it owns the cell.</dd>
+<dt>AColumn</dt>
+<dd>Index of the column in the panel's TColumnDefs.</dd>
+<dt>AText</dt>
+<dd>The text; longer text is cut with an ellipsis.</dd>
+<dt>AGrey</dt>
+<dd>Grey text, for rows of missing items.</dd>
+<dt>ABold</dt>
+<dd>Bold text, for headings.</dd>
+<dt>ACentered</dt>
+<dd>Centred text.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The label.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AddCheck-TControl-Integer-"></span><code>class function <strong>AddCheck</strong>(ARow: TControl; AColumn: Integer): TCheckBox; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Adds a checkbox cell to a row, the checkbox centred in its column.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARow</dt>
+<dd>The row; it owns the cell.</dd>
+<dt>AColumn</dt>
+<dd>Index of the column in the panel's TColumnDefs.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The checkbox, without text.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LayoutRow-TControl-TColumnDefs-Single-Single-Single-"></span><code>class procedure <strong>LayoutRow</strong>(ARow: TControl; const AColumns: <a href="glTFViewer.Columns.html#TColumnDefs">TColumnDefs</a>; APanelWidth, ANarrow, AVeryNarrow: Single); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Places the cells of a row in their columns.</p>
+<p>
+
+
+<p>The cells go between the row's left and right padding: hidden columns take no room, fixed columns their width in array order, and the column with no width the rest, never less than 40 pixels. Each cell is as tall as the row. Call it when the row is created and whenever its width changes.
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARow</dt>
+<dd>The heading row or a list box item.</dd>
+<dt>AColumns</dt>
+<dd>The panel's columns.</dd>
+<dt>APanelWidth</dt>
+<dd>The panel's width, which decides which columns are hidden.</dd>
+<dt>ANarrow</dt>
+<dd>Below this panel width chNarrow columns are hidden.</dd>
+<dt>AVeryNarrow</dt>
+<dd>Below this panel width chVeryNarrow columns are hidden too.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AlignHeader-TControl-TListBox-"></span><code>class function <strong>AlignHeader</strong>(AHeader: TControl; AList: TListBox): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Sets the heading's padding so its cells sit exactly above those of the rows.</p>
+<p>
+
+
+<p>Measures the first row against the heading, so the list box's border and its vertical scroll bar are allowed for. Does nothing while the list is empty. Changes the padding only when it differs, so it can be called whenever the list is painted; lay the heading out again when it returns True.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AHeader</dt>
+<dd>The heading, placed above the list box with the same width.</dd>
+<dt>AList</dt>
+<dd>The list box whose rows were filled with the same cells.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when the padding was changed.</p></td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

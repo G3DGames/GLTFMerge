@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Edit: Class TglTFEdit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFEdit"></span><h1 class="cio">Class TglTFEdit</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Edit.html">glTF.Edit</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFEdit = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Editing operations on a glTF object tree that keep its indices consistent.</p>
+<p>
+
+
+<p>All methods are class methods; there is nothing to create. A Delete method assumes the object it deletes is no longer referred to: use the matching IsUsed method, or <a class="normal" href="glTF.Edit.TglTFEdit.html#DeleteUnusedData-TglTF-TArrayInteger-TStrings-">DeleteUnusedData</a>, which checks.
+
+<p></p>
+
+<pre class="longcode">
+<span class="pascal_comment">// Drop animation 2 and whatever data only it used</span>
+TglTFEdit.DeleteAnimation(Doc.Root, <span class="pascal_numeric">2</span>, Warnings);</pre>
+
+<p></p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFEdit</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#UsesBufferViewExtension-TglTF-string-">UsesBufferViewExtension</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; out AName: string): Boolean; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#UsesAccessorExtension-TglTF-string-">UsesAccessorExtension</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; out AName: string): Boolean; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#IsAccessorUsed-TglTF-Integer-">IsAccessorUsed</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): Boolean; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#IsBufferViewUsed-TglTF-Integer-">IsBufferViewUsed</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): Boolean; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#IsBufferUsed-TglTF-Integer-">IsBufferUsed</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): Boolean; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTF.Edit.TglTFEdit.html#DeleteAccessor-TglTF-Integer-">DeleteAccessor</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer); static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTF.Edit.TglTFEdit.html#DeleteBufferView-TglTF-Integer-">DeleteBufferView</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer); static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTF.Edit.TglTFEdit.html#DeleteAccessors-TglTF-TArrayInteger-">DeleteAccessors</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AIndices: TArray&lt;Integer&gt;); static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTF.Edit.TglTFEdit.html#DeleteBufferViews-TglTF-TArrayInteger-">DeleteBufferViews</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AIndices: TArray&lt;Integer&gt;); static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTF.Edit.TglTFEdit.html#DeleteBuffer-TglTF-Integer-">DeleteBuffer</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer); static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#DeleteUnusedData-TglTF-TArrayInteger-TStrings-">DeleteUnusedData</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AAccessors: TArray&lt;Integer&gt;; AWarnings: TStrings): Integer; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#AnimationAccessors-TglTFAnimation-">AnimationAccessors</a></strong>(AAnimation: <a href="glTF.Classes.TglTFAnimation.html">TglTFAnimation</a>): TArray&lt;Integer&gt;; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTF.Edit.TglTFEdit.html#DeleteAnimation-TglTF-Integer-TStrings-">DeleteAnimation</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer; AWarnings: TStrings); static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#ClearAnimations-TglTF-TStrings-">ClearAnimations</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AWarnings: TStrings): Integer; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#DataBuffer-TglTF-">DataBuffer</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>): Integer; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#AppendBufferData-TglTF-Integer-TBytes-">AppendBufferData</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; ABufferIndex: Integer; const AData: TBytes): Int64; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTF.Edit.TglTFEdit.html#AddExtensionUsed-TglTF-string-">AddExtensionUsed</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AName: string); static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#IsMeshUsed-TglTF-Integer-">IsMeshUsed</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): Boolean; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#IsSkinUsed-TglTF-Integer-">IsSkinUsed</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): Boolean; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTF.Edit.TglTFEdit.html#DeleteNodes-TglTF-TArrayInteger-TStrings-">DeleteNodes</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AIndices: TArray&lt;Integer&gt;; AWarnings: TStrings); static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#DeleteUnusedObjects-TglTF-TArrayInteger-TArrayInteger-TArrayInteger-TArrayInteger-TStrings-">DeleteUnusedObjects</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AMeshes, ASkins, AMaterials, AAccessors: TArray&lt;Integer&gt;; AWarnings: TStrings): Integer; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTF.Edit.TglTFEdit.html#RemapTextureRefs-TJSONValue-TFuncIntegerInteger-">RemapTextureRefs</a></strong>(AValue: TJSONValue; const AMap: TFunc&lt;Integer, Integer&gt;); static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#ImagesInUse-TglTF-">ImagesInUse</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>): TArray&lt;Boolean&gt;; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#DeleteUnusedImages-TglTF-TStrings-">DeleteUnusedImages</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AWarnings: TStrings): Integer; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTF.Edit.TglTFEdit.html#RemapNamedRefs-TJSONValue-string-TFuncIntegerInteger-">RemapNamedRefs</a></strong>(AValue: TJSONValue; const AName: string; const AMap: TFunc&lt;Integer, Integer&gt;); static;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="UsesBufferViewExtension-TglTF-string-"></span><code>class function <strong>UsesBufferViewExtension</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; out AName: string): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether the tree uses an extension that refers to bufferViews or buffers from its own JSON.</p>
+<p>
+
+
+<p>These are KHR_draco_mesh_compression, EXT_meshopt_compression and KHR_meshopt_compression. While one is used, bufferViews and buffers must not be deleted, as the extension's indices would then point at the wrong data.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to check.</dd>
+<dt>AName</dt>
+<dd>The first such extension found; empty when none.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when such an extension is in <code>ExtensionsUsed</code>.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="UsesAccessorExtension-TglTF-string-"></span><code>class function <strong>UsesAccessorExtension</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; out AName: string): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether the tree uses an extension that refers to accessors from its own JSON.</p>
+<p>
+
+
+<p>This is EXT_mesh_gpu_instancing. While it is used, accessors must not be deleted.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to check.</dd>
+<dt>AName</dt>
+<dd>The first such extension found; empty when none.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when such an extension is in <code>ExtensionsUsed</code>.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsAccessorUsed-TglTF-Integer-"></span><code>class function <strong>IsAccessorUsed</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether anything in the tree refers to an accessor.</p>
+<p>
+
+
+<p>Checks mesh primitive attributes, indices and morph targets, skin inverse bind matrices and animation sampler inputs and outputs.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to check.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Accessors</code>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when at least one reference was found.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsBufferViewUsed-TglTF-Integer-"></span><code>class function <strong>IsBufferViewUsed</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether anything in the tree refers to a bufferView.</p>
+<p>
+
+
+<p>Checks accessors, their sparse indices and values, and images.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to check.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.BufferViews</code>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when at least one reference was found.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsBufferUsed-TglTF-Integer-"></span><code>class function <strong>IsBufferUsed</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether any bufferView refers to a buffer.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to check.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Buffers</code>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when at least one bufferView is in that buffer.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DeleteAccessor-TglTF-Integer-"></span><code>class procedure <strong>DeleteAccessor</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes an accessor and renumbers the references to the accessors after it.</p>
+<p>
+
+
+<p>Nothing may still refer to the accessor itself. Its bufferViews are left in place.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Accessors</code>.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DeleteBufferView-TglTF-Integer-"></span><code>class procedure <strong>DeleteBufferView</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes a bufferView, cuts its bytes out of its buffer and renumbers the references to the bufferViews after it.</p>
+<p>
+
+
+<p>The bytes cut are the view rounded up to 4 bytes, so its padding goes too, or rounded down when another view uses the padding; nothing is cut when another view overlaps it. The views after it in the same buffer move down by the amount cut, which is a multiple of 4 unless the view is at the end of the buffer. The buffer's Data is replaced by a new array, so an array shared with another tree is not changed. Nothing may still refer to the bufferView itself.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.BufferViews</code>.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DeleteAccessors-TglTF-TArrayInteger-"></span><code>class procedure <strong>DeleteAccessors</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AIndices: TArray&lt;Integer&gt;); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes several accessors at once and renumbers every reference to the others.</p>
+<p>
+
+
+<p>Much faster than deleting them one by one: the references are renumbered in one pass. Nothing may still refer to the accessors deleted. Their bufferViews are left in place.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AIndices</dt>
+<dd>Indices in <code>ARoot.Accessors</code>, in any order; repeats and invalid indices are ignored.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DeleteBufferViews-TglTF-TArrayInteger-"></span><code>class procedure <strong>DeleteBufferViews</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AIndices: TArray&lt;Integer&gt;); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes several bufferViews at once, cutting their bytes out of their buffers.</p>
+<p>
+
+
+<p>The same rules as DeleteBufferView, applied to all of them together: each buffer is rebuilt once, without the bytes cut, and the references to the remaining views are renumbered in one pass. Bytes a remaining view uses are never cut. Nothing may still refer to the views deleted.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AIndices</dt>
+<dd>Indices in <code>ARoot.BufferViews</code>, in any order; repeats and invalid indices are ignored.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DeleteBuffer-TglTF-Integer-"></span><code>class procedure <strong>DeleteBuffer</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes a buffer and renumbers the bufferViews that refer to the buffers after it.</p>
+<p>
+
+
+<p>No bufferView may still be in the buffer itself.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Buffers</code>.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DeleteUnusedData-TglTF-TArrayInteger-TStrings-"></span><code>class function <strong>DeleteUnusedData</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AAccessors: TArray&lt;Integer&gt;; AWarnings: TStrings): Integer; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes those of the given accessors that nothing uses any more, then the bufferViews and buffers that only they used.</p>
+<p>
+
+
+<p>Only the listed accessors and the bufferViews and buffers they lead to are considered, so data the file never used is left alone. Up to 3 zero bytes of padding left at the end of a buffer that was cut are removed too. A buffer is deleted when its data was cut down to nothing. When the tree uses an extension that would be broken, the step concerned is skipped and a warning added.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AAccessors</dt>
+<dd>Indices in <code>ARoot.Accessors</code> that may have become unused; may repeat and may include indices that are still used.</dd>
+<dt>AWarnings</dt>
+<dd>Receives a line for each step skipped; may be nil.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of accessors deleted.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AnimationAccessors-TglTFAnimation-"></span><code>class function <strong>AnimationAccessors</strong>(AAnimation: <a href="glTF.Classes.TglTFAnimation.html">TglTFAnimation</a>): TArray&lt;Integer&gt;; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the accessors an animation's samplers use.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AAnimation</dt>
+<dd>The animation.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The input and output accessor indices, each once, in sampler order.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DeleteAnimation-TglTF-Integer-TStrings-"></span><code>class procedure <strong>DeleteAnimation</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer; AWarnings: TStrings); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes an animation and the data only it used.</p>
+<p>
+
+
+<p>Nothing in the glTF core schema refers to an animation by index, so no other index changes apart from those of the data deleted; see <a class="normal" href="glTF.Edit.TglTFEdit.html#DeleteUnusedData-TglTF-TArrayInteger-TStrings-">DeleteUnusedData</a>.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Animations</code>.</dd>
+<dt>AWarnings</dt>
+<dd>Receives a line for each step skipped; may be nil.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ClearAnimations-TglTF-TStrings-"></span><code>class function <strong>ClearAnimations</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AWarnings: TStrings): Integer; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes every animation and the data only they used.</p>
+<p>
+
+
+<p>Accessors, bufferViews and buffer bytes that something else, such as a mesh or a skin, also uses are kept; see <a class="normal" href="glTF.Edit.TglTFEdit.html#DeleteUnusedData-TglTF-TArrayInteger-TStrings-">DeleteUnusedData</a>.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AWarnings</dt>
+<dd>Receives a line for each step skipped; may be nil.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of animations deleted.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DataBuffer-TglTF-"></span><code>class function <strong>DataBuffer</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>): Integer; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the buffer new binary data should be appended to, creating one when needed.</p>
+<p>
+
+
+<p>That is buffers[0] when its data is loaded, so that a GLB keeps a single BIN chunk. Otherwise a new, empty buffer is added at the end; it has no uri, so a save decides where it goes.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">Index in <code>ARoot.Buffers</code>.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AppendBufferData-TglTF-Integer-TBytes-"></span><code>class function <strong>AppendBufferData</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; ABufferIndex: Integer; const AData: TBytes): Int64; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Appends bytes to a buffer, starting on a 4-byte boundary.</p>
+<p>
+
+
+<p>The buffer is padded with zeros up to the boundary first. Its Data is replaced by a new array and its ByteLength updated.
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>ABufferIndex</dt>
+<dd>Index in <code>ARoot.Buffers</code>; its data must be loaded unless it is empty.</dd>
+<dt>AData</dt>
+<dd>The bytes to append.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The byte offset in the buffer where the bytes start.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The buffer's data is not loaded.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AddExtensionUsed-TglTF-string-"></span><code>class procedure <strong>AddExtensionUsed</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AName: string); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Adds a name to <code>ExtensionsUsed</code> unless it is already there.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AName</dt>
+<dd>The extension name, for example KHR_texture_transform.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsMeshUsed-TglTF-Integer-"></span><code>class function <strong>IsMeshUsed</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether any node refers to a mesh.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to check.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Meshes</code>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when at least one node has it as its mesh.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsSkinUsed-TglTF-Integer-"></span><code>class function <strong>IsSkinUsed</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether any node refers to a skin.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to check.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Skins</code>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when at least one node has it as its skin.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DeleteNodes-TglTF-TArrayInteger-TStrings-"></span><code>class procedure <strong>DeleteNodes</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AIndices: TArray&lt;Integer&gt;; AWarnings: TStrings); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes nodes and renumbers every reference to the nodes after them.</p>
+<p>
+
+
+<p>The children of a deleted node that stay take its place: in its parent's children, or among the root nodes of the scenes it was in. Animation channels that target a deleted node are removed, and an animation left without channels is deleted with the data only it used. A deleted node that was a skin's &quot;skeleton&quot; leaves that skin without one. The meshes, skins and cameras of the deleted nodes stay; see <a class="normal" href="glTF.Edit.TglTFEdit.html#DeleteUnusedObjects-TglTF-TArrayInteger-TArrayInteger-TArrayInteger-TArrayInteger-TStrings-">DeleteUnusedObjects</a>.
+
+<p>Only the glTF 2.0 core references are renumbered; an extension that refers to nodes from its own JSON is not.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AIndices</dt>
+<dd>Indices in <code>ARoot.Nodes</code>, in any order; repeats and invalid indices are ignored.</dd>
+<dt>AWarnings</dt>
+<dd>Receives a line for each step skipped; may be nil.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>A node to delete is a joint of a skin; nothing is changed.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DeleteUnusedObjects-TglTF-TArrayInteger-TArrayInteger-TArrayInteger-TArrayInteger-TStrings-"></span><code>class function <strong>DeleteUnusedObjects</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AMeshes, ASkins, AMaterials, AAccessors: TArray&lt;Integer&gt;; AWarnings: TStrings): Integer; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes those of the given meshes, skins and materials that nothing uses any more, then everything that only they used.</p>
+<p>
+
+
+<p>Works down from the objects given: meshes no node uses, skins no node uses, and materials no primitive uses are deleted; then the textures only the deleted materials used, the images and samplers only those textures used, and the accessors, bufferViews and buffer bytes only all of these used (see <a class="normal" href="glTF.Edit.TglTFEdit.html#DeleteUnusedData-TglTF-TArrayInteger-TStrings-">DeleteUnusedData</a>). Every reference to the objects that follow is renumbered, texture references in material extensions and image references in texture extensions included. Objects the file never used are left alone, as only what the given objects lead to is considered.
+
+<p>Materials are kept when the tree uses KHR_materials_variants, which refers to them from its own JSON; a warning says so.
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AMeshes</dt>
+<dd>Indices in <code>ARoot.Meshes</code> that may have become unused.</dd>
+<dt>ASkins</dt>
+<dd>Indices in <code>ARoot.Skins</code> that may have become unused.</dd>
+<dt>AMaterials</dt>
+<dd>Indices in <code>ARoot.Materials</code> that may have become unused.</dd>
+<dt>AAccessors</dt>
+<dd>Further indices in <code>ARoot.Accessors</code> that may have become unused.</dd>
+<dt>AWarnings</dt>
+<dd>Receives a line for each step skipped; may be nil.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of meshes, skins, materials, textures, images and samplers deleted.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RemapTextureRefs-TJSONValue-TFuncIntegerInteger-"></span><code>class procedure <strong>RemapTextureRefs</strong>(AValue: TJSONValue; const AMap: TFunc&lt;Integer, Integer&gt;); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Calls a function for every texture reference in a material's JSON and replaces the index with what it returns.</p>
+<p>
+
+
+<p>A texture reference is an object with a numeric &quot;index&quot; under a name ending in &quot;Texture&quot;, such as baseColorTexture, or clearcoatTexture inside an extension. The whole value is searched, so references in extensions are found too.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AValue</dt>
+<dd>A material, or part of one, as JSON; changed in place.</dd>
+<dt>AMap</dt>
+<dd>Returns the new texture index for an old one; returning the same index leaves it as it is.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ImagesInUse-TglTF-"></span><code>class function <strong>ImagesInUse</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>): TArray&lt;Boolean&gt;; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells which images the model needs: those a mesh shows.</p>
+<p>
+
+
+<p>An image is needed when a texture uses it that a material uses that a mesh primitive uses, texture references in material extensions and image references in texture extensions included. While KHR_materials_variants is used, every material counts as used, as that extension refers to materials from its own JSON.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to check.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">One flag per entry of <code>ARoot.Images</code>, True for the images needed.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DeleteUnusedImages-TglTF-TStrings-"></span><code>class function <strong>DeleteUnusedImages</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AWarnings: TStrings): Integer; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes every material, texture, image and sampler the meshes do not lead to.</p>
+<p>
+
+
+<p>The images left are exactly those <a class="normal" href="glTF.Edit.TglTFEdit.html#ImagesInUse-TglTF-">ImagesInUse</a> reports as needed. Materials no primitive uses go first, then the textures no remaining material uses, then the images and samplers no remaining texture uses, and the bufferViews and buffer bytes only those images used. Every reference to the objects that follow is renumbered. Used on the copy made for a save, so that a saved file holds only the images it needs.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AWarnings</dt>
+<dd>Receives a line for each step skipped; may be nil.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of materials, textures, images and samplers deleted.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RemapNamedRefs-TJSONValue-string-TFuncIntegerInteger-"></span><code>class procedure <strong>RemapNamedRefs</strong>(AValue: TJSONValue; const AName: string; const AMap: TFunc&lt;Integer, Integer&gt;); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Calls a function for every number under a given name in a JSON value and replaces it with what it returns.</p>
+<p>
+
+
+<p>Used for the &quot;source&quot; image references of textures, which texture extensions such as EXT_texture_webp repeat.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AValue</dt>
+<dd>The JSON to search, whole; changed in place.</dd>
+<dt>AName</dt>
+<dd>The property name, for example &quot;source&quot;.</dd>
+<dt>AMap</dt>
+<dd>Returns the new value for an old one.</dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

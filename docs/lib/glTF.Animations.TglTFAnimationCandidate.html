@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Animations: Class TglTFAnimationCandidate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFAnimationCandidate"></span><h1 class="cio">Class TglTFAnimationCandidate</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Animations.html">glTF.Animations</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFAnimationCandidate = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+One animation found in a file being imported, and what happened to it.</p>
+<p>
+
+
+<p>Created and owned by <a class="normal" href="glTF.Animations.TglTFAnimationImporter.html">TglTFAnimationImporter</a>; read-only for its users.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFAnimationCandidate</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#Create">Create</a></strong>;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#Description">Description</a></strong>: string;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#Source">Source</a></strong>: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a> read FSource;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#FileName">FileName</a></strong>: string read FFileName;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#SourceIndex">SourceIndex</a></strong>: Integer read FSourceIndex;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#OriginalName">OriginalName</a></strong>: string read FOriginalName;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#Name">Name</a></strong>: string read FName;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#WillImport">WillImport</a></strong>: Boolean read FWillImport;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#Imported">Imported</a></strong>: Boolean read FImported;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#Replaced">Replaced</a></strong>: Integer read FReplaced;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#ChannelCount">ChannelCount</a></strong>: Integer read GetChannelCount;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#MatchedChannels">MatchedChannels</a></strong>: Integer read FMatchedChannels;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#Error">Error</a></strong>: string read FError;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Animations.TglTFAnimationCandidate.html#Notes">Notes</a></strong>: TStringList read FNotes;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create"></span><code>constructor <strong>Create</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates an empty candidate.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the candidate.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Description"></span><code>function <strong>Description</strong>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns a short description for messages.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">For example: &quot;Walk&quot; from run.glb.</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Source"></span><code>property <strong>Source</strong>: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a> read FSource;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The document the animation is in; owned by the importer.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FileName"></span><code>property <strong>FileName</strong>: string read FFileName;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The file the animation is in.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SourceIndex"></span><code>property <strong>SourceIndex</strong>: Integer read FSourceIndex;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Index of the animation in <code>Source.Root.Animations</code>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OriginalName"></span><code>property <strong>OriginalName</strong>: string read FOriginalName;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The animation's name in its file; empty when it has none.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Name"></span><code>property <strong>Name</strong>: string read FName;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The name it has, or would have, in the model.</p>
+<p>
+
+
+<p>The original name, or for an unnamed animation the file name without its extension, followed by &quot;_&quot; and the animation's number when the file has several. Changed by a rename.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="WillImport"></span><code>property <strong>WillImport</strong>: Boolean read FWillImport;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether it can be imported: some channel matched and its data is there.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Imported"></span><code>property <strong>Imported</strong>: Boolean read FImported;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether it was added to the model.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Replaced"></span><code>property <strong>Replaced</strong>: Integer read FReplaced;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Index of the model's animation it replaced; GLTF_UNDEFINED_INDEX when it replaced none.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ChannelCount"></span><code>property <strong>ChannelCount</strong>: Integer read GetChannelCount;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Number of channels the animation has in its file.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="MatchedChannels"></span><code>property <strong>MatchedChannels</strong>: Integer read FMatchedChannels;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Number of channels whose node was matched in the model; only these are imported.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Error"></span><code>property <strong>Error</strong>: string read FError;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Why the animation cannot be imported; empty when it can.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Notes"></span><code>property <strong>Notes</strong>: TStringList read FNotes;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+One line per channel skipped, saying why.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

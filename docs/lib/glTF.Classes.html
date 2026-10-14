@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Classes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<h1 class="unit">Unit glTF.Classes</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objects and Records</a></div><div class="one_section"><a class="section" href="#PasDoc-Types">Types</a></div><div class="one_section"><a class="section" href="#PasDoc-Constants">Constants</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="description">Description</h2>
+<p>
+The glTF 2.0 object types, one class per object of the glTF schema.</p>
+<p>
+
+
+<p>Property JSON names are given with <code>[NeonProperty]</code> and properties the schema requires with <code>[glTFRequired]</code>. Optional index properties, such as accessor.bufferView or node.mesh, default to GLTF_UNDEFINED_INDEX (-1); every other optional value defaults to the value the specification defines. IsDefined tells whether a value was present in the loaded file.
+
+<p>TglTFBuffer and TglTFImage also carry their binary data and save choices, which are not part of the glTF JSON: Data, SourceFile and, for images, Embed.</p>
+<span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
+<span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFAsset.html"><code>TglTFAsset</code></a></td>
+<td class="itemdesc">The glTF &quot;asset&quot;: metadata about the file, including the glTF version.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFBuffer.html"><code>TglTFBuffer</code></a></td>
+<td class="itemdesc">A glTF buffer: a block of binary data that bufferViews point into.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFBufferView.html"><code>TglTFBufferView</code></a></td>
+<td class="itemdesc">A glTF bufferView: a range of bytes in a buffer.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFAccessorSparseIndices.html"><code>TglTFAccessorSparseIndices</code></a></td>
+<td class="itemdesc">The indices of the elements a sparse accessor replaces.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFAccessorSparseValues.html"><code>TglTFAccessorSparseValues</code></a></td>
+<td class="itemdesc">The replacement values of a sparse accessor.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFAccessorSparse.html"><code>TglTFAccessorSparse</code></a></td>
+<td class="itemdesc">The glTF &quot;sparse&quot; storage of an accessor: values that replace some of its elements.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFAccessor.html"><code>TglTFAccessor</code></a></td>
+<td class="itemdesc">A glTF accessor: how to read typed elements, such as vertex positions, from a bufferView.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFAnimationChannelTarget.html"><code>TglTFAnimationChannelTarget</code></a></td>
+<td class="itemdesc">The glTF &quot;target&quot; of an animation channel: the node and property it animates.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFAnimationChannel.html"><code>TglTFAnimationChannel</code></a></td>
+<td class="itemdesc">A glTF animation channel: connects a sampler to the property it animates.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFAnimationSampler.html"><code>TglTFAnimationSampler</code></a></td>
+<td class="itemdesc">A glTF animation sampler: key frame times, values and how to interpolate between them.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFAnimation.html"><code>TglTFAnimation</code></a></td>
+<td class="itemdesc">A glTF animation: a set of channels and the samplers they use.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFCameraOrthographic.html"><code>TglTFCameraOrthographic</code></a></td>
+<td class="itemdesc">The orthographic projection of a camera.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFCameraPerspective.html"><code>TglTFCameraPerspective</code></a></td>
+<td class="itemdesc">The perspective projection of a camera.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFCamera.html"><code>TglTFCamera</code></a></td>
+<td class="itemdesc">A glTF camera: a perspective or orthographic projection.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFImage.html"><code>TglTFImage</code></a></td>
+<td class="itemdesc">A glTF image: texture data stored in a file, a data URI or a bufferView.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFSampler.html"><code>TglTFSampler</code></a></td>
+<td class="itemdesc">A glTF sampler: texture filtering and wrapping.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFTexture.html"><code>TglTFTexture</code></a></td>
+<td class="itemdesc">A glTF texture: an image combined with a sampler.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFTextureInfo.html"><code>TglTFTextureInfo</code></a></td>
+<td class="itemdesc">A reference from a material to a texture.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFNormalTextureInfo.html"><code>TglTFNormalTextureInfo</code></a></td>
+<td class="itemdesc">A reference to a normal map, with its scale.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFOcclusionTextureInfo.html"><code>TglTFOcclusionTextureInfo</code></a></td>
+<td class="itemdesc">A reference to an occlusion map, with its strength.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFPbrMetallicRoughness.html"><code>TglTFPbrMetallicRoughness</code></a></td>
+<td class="itemdesc">The metallic-roughness parameters of a material.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFMaterial.html"><code>TglTFMaterial</code></a></td>
+<td class="itemdesc">A glTF material: how a surface looks.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFMeshPrimitive.html"><code>TglTFMeshPrimitive</code></a></td>
+<td class="itemdesc">A glTF mesh primitive: geometry drawn with one material.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFMesh.html"><code>TglTFMesh</code></a></td>
+<td class="itemdesc">A glTF mesh: a set of primitives drawn together.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFNode.html"><code>TglTFNode</code></a></td>
+<td class="itemdesc">A glTF node: an element of the scene hierarchy with a transform.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFScene.html"><code>TglTFScene</code></a></td>
+<td class="itemdesc">A glTF scene: the root nodes of a hierarchy to show.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTFSkin.html"><code>TglTFSkin</code></a></td>
+<td class="itemdesc">A glTF skin: the joints that deform a skinned mesh.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Classes.TglTF.html"><code>TglTF</code></a></td>
+<td class="itemdesc">The root object of a glTF asset.</td>
+</tr>
+</table>
+<span id="PasDoc-Types"></span><h3 class="summary">Types</h3>
+<table class="summary wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#TglTFAccessorType">TglTFAccessorType</a></strong> = (...);</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#TglTFAlphaMode">TglTFAlphaMode</a></strong> = (...);</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#TglTFAnimationPath">TglTFAnimationPath</a></strong> = (...);</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#TglTFInterpolation">TglTFInterpolation</a></strong> = (...);</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#TglTFCameraType">TglTFCameraType</a></strong> = (...);</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#TglTFAttributeMap">TglTFAttributeMap</a></strong> = TDictionary&lt;string, Integer&gt;;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Constants"></span><h3 class="summary">Constants</h3>
+<table class="summary wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_UNDEFINED_INDEX">GLTF_UNDEFINED_INDEX</a></strong> = -1;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_COMPONENT_BYTE">GLTF_COMPONENT_BYTE</a></strong>           = 5120;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_COMPONENT_UNSIGNED_BYTE">GLTF_COMPONENT_UNSIGNED_BYTE</a></strong>  = 5121;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_COMPONENT_SHORT">GLTF_COMPONENT_SHORT</a></strong>          = 5122;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_COMPONENT_UNSIGNED_SHORT">GLTF_COMPONENT_UNSIGNED_SHORT</a></strong> = 5123;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_COMPONENT_UNSIGNED_INT">GLTF_COMPONENT_UNSIGNED_INT</a></strong>   = 5125;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_COMPONENT_FLOAT">GLTF_COMPONENT_FLOAT</a></strong>          = 5126;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_TARGET_ARRAY_BUFFER">GLTF_TARGET_ARRAY_BUFFER</a></strong>         = 34962;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_TARGET_ELEMENT_ARRAY_BUFFER">GLTF_TARGET_ELEMENT_ARRAY_BUFFER</a></strong> = 34963;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_MODE_POINTS">GLTF_MODE_POINTS</a></strong>         = 0;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_MODE_LINES">GLTF_MODE_LINES</a></strong>          = 1;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_MODE_LINE_LOOP">GLTF_MODE_LINE_LOOP</a></strong>      = 2;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_MODE_LINE_STRIP">GLTF_MODE_LINE_STRIP</a></strong>     = 3;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_MODE_TRIANGLES">GLTF_MODE_TRIANGLES</a></strong>      = 4;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_MODE_TRIANGLE_STRIP">GLTF_MODE_TRIANGLE_STRIP</a></strong> = 5;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_MODE_TRIANGLE_FAN">GLTF_MODE_TRIANGLE_FAN</a></strong>   = 6;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_FILTER_NEAREST">GLTF_FILTER_NEAREST</a></strong>                = 9728;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_FILTER_LINEAR">GLTF_FILTER_LINEAR</a></strong>                 = 9729;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_FILTER_NEAREST_MIPMAP_NEAREST">GLTF_FILTER_NEAREST_MIPMAP_NEAREST</a></strong> = 9984;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_FILTER_LINEAR_MIPMAP_NEAREST">GLTF_FILTER_LINEAR_MIPMAP_NEAREST</a></strong>  = 9985;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_FILTER_NEAREST_MIPMAP_LINEAR">GLTF_FILTER_NEAREST_MIPMAP_LINEAR</a></strong>  = 9986;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_FILTER_LINEAR_MIPMAP_LINEAR">GLTF_FILTER_LINEAR_MIPMAP_LINEAR</a></strong>   = 9987;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_WRAP_CLAMP_TO_EDGE">GLTF_WRAP_CLAMP_TO_EDGE</a></strong>   = 33071;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_WRAP_MIRRORED_REPEAT">GLTF_WRAP_MIRRORED_REPEAT</a></strong> = 33648;</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Classes.html#GLTF_WRAP_REPEAT">GLTF_WRAP_REPEAT</a></strong>          = 10497;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Types</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFAccessorType"></span><code><strong>TglTFAccessorType</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+The accessor &quot;type&quot; as an enumeration.</p>
+<p>
+
+
+<p>The schema allows other strings for extensions; those map to atUnknown.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="atUnknown">atUnknown</span>: Any other string.</li>
+<li>
+<span id="atScalar">atScalar</span>: &quot;SCALAR&quot;: one component.</li>
+<li>
+<span id="atVec2">atVec2</span>: &quot;VEC2&quot;: two components.</li>
+<li>
+<span id="atVec3">atVec3</span>: &quot;VEC3&quot;: three components.</li>
+<li>
+<span id="atVec4">atVec4</span>: &quot;VEC4&quot;: four components.</li>
+<li>
+<span id="atMat2">atMat2</span>: &quot;MAT2&quot;: a 2 by 2 matrix.</li>
+<li>
+<span id="atMat3">atMat3</span>: &quot;MAT3&quot;: a 3 by 3 matrix.</li>
+<li>
+<span id="atMat4">atMat4</span>: &quot;MAT4&quot;: a 4 by 4 matrix.</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFAlphaMode"></span><code><strong>TglTFAlphaMode</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+The material &quot;alphaMode&quot; as an enumeration.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="amUnknown">amUnknown</span>: Any other string.</li>
+<li>
+<span id="amOpaque">amOpaque</span>: &quot;OPAQUE&quot;: alpha is ignored.</li>
+<li>
+<span id="amMask">amMask</span>: &quot;MASK&quot;: fully opaque or fully transparent, by alphaCutoff.</li>
+<li>
+<span id="amBlend">amBlend</span>: &quot;BLEND&quot;: alpha blends with the background.</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFAnimationPath"></span><code><strong>TglTFAnimationPath</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+The animation target &quot;path&quot; as an enumeration.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="apUnknown">apUnknown</span>: Any other string.</li>
+<li>
+<span id="apTranslation">apTranslation</span>: &quot;translation&quot;.</li>
+<li>
+<span id="apRotation">apRotation</span>: &quot;rotation&quot;.</li>
+<li>
+<span id="apScale">apScale</span>: &quot;scale&quot;.</li>
+<li>
+<span id="apWeights">apWeights</span>: &quot;weights&quot;: morph target weights.</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFInterpolation"></span><code><strong>TglTFInterpolation</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+The animation sampler &quot;interpolation&quot; as an enumeration.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="ipUnknown">ipUnknown</span>: Any other string.</li>
+<li>
+<span id="ipLinear">ipLinear</span>: &quot;LINEAR&quot;.</li>
+<li>
+<span id="ipStep">ipStep</span>: &quot;STEP&quot;: values are held until the next key frame.</li>
+<li>
+<span id="ipCubicSpline">ipCubicSpline</span>: &quot;CUBICSPLINE&quot;: cubic spline with tangents.</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFCameraType"></span><code><strong>TglTFCameraType</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+The camera &quot;type&quot; as an enumeration.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="ctUnknown">ctUnknown</span>: Any other string.</li>
+<li>
+<span id="ctPerspective">ctPerspective</span>: &quot;perspective&quot;.</li>
+<li>
+<span id="ctOrthographic">ctOrthographic</span>: &quot;orthographic&quot;.</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFAttributeMap"></span><code><strong>TglTFAttributeMap</strong> = TDictionary&lt;string, Integer&gt;;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Maps attribute semantics to accessor indices.</p>
+<p>
+
+
+<p>Keys are names such as POSITION, NORMAL or TEXCOORD_0; values are indices in <code>TglTF.Accessors</code>.</p>
+</td></tr>
+</table>
+<h3 class="detail">Constants</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_UNDEFINED_INDEX"></span><code><strong>GLTF_UNDEFINED_INDEX</strong> = -1;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Value of an optional index property that is not set.</p>
+<p>
+
+
+<p>Index properties such as <code>TglTFNode.Mesh</code> hold -1 when the glTF does not give them.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_COMPONENT_BYTE"></span><code><strong>GLTF_COMPONENT_BYTE</strong>           = 5120;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Component type 5120: signed 8-bit integer.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_COMPONENT_UNSIGNED_BYTE"></span><code><strong>GLTF_COMPONENT_UNSIGNED_BYTE</strong>  = 5121;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Component type 5121: unsigned 8-bit integer.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_COMPONENT_SHORT"></span><code><strong>GLTF_COMPONENT_SHORT</strong>          = 5122;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Component type 5122: signed 16-bit integer.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_COMPONENT_UNSIGNED_SHORT"></span><code><strong>GLTF_COMPONENT_UNSIGNED_SHORT</strong> = 5123;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Component type 5123: unsigned 16-bit integer.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_COMPONENT_UNSIGNED_INT"></span><code><strong>GLTF_COMPONENT_UNSIGNED_INT</strong>   = 5125;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Component type 5125: unsigned 32-bit integer.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_COMPONENT_FLOAT"></span><code><strong>GLTF_COMPONENT_FLOAT</strong>          = 5126;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Component type 5126: 32-bit IEEE float.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_TARGET_ARRAY_BUFFER"></span><code><strong>GLTF_TARGET_ARRAY_BUFFER</strong>         = 34962;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+bufferView target 34962: vertex attribute data.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_TARGET_ELEMENT_ARRAY_BUFFER"></span><code><strong>GLTF_TARGET_ELEMENT_ARRAY_BUFFER</strong> = 34963;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+bufferView target 34963: vertex indices.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_MODE_POINTS"></span><code><strong>GLTF_MODE_POINTS</strong>         = 0;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Primitive mode 0: points.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_MODE_LINES"></span><code><strong>GLTF_MODE_LINES</strong>          = 1;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Primitive mode 1: separate lines.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_MODE_LINE_LOOP"></span><code><strong>GLTF_MODE_LINE_LOOP</strong>      = 2;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Primitive mode 2: a closed line loop.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_MODE_LINE_STRIP"></span><code><strong>GLTF_MODE_LINE_STRIP</strong>     = 3;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Primitive mode 3: a line strip.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_MODE_TRIANGLES"></span><code><strong>GLTF_MODE_TRIANGLES</strong>      = 4;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Primitive mode 4: separate triangles; the default.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_MODE_TRIANGLE_STRIP"></span><code><strong>GLTF_MODE_TRIANGLE_STRIP</strong> = 5;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Primitive mode 5: a triangle strip.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_MODE_TRIANGLE_FAN"></span><code><strong>GLTF_MODE_TRIANGLE_FAN</strong>   = 6;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Primitive mode 6: a triangle fan.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_FILTER_NEAREST"></span><code><strong>GLTF_FILTER_NEAREST</strong>                = 9728;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Sampler filter 9728: nearest texel.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_FILTER_LINEAR"></span><code><strong>GLTF_FILTER_LINEAR</strong>                 = 9729;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Sampler filter 9729: linear interpolation.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_FILTER_NEAREST_MIPMAP_NEAREST"></span><code><strong>GLTF_FILTER_NEAREST_MIPMAP_NEAREST</strong> = 9984;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Sampler minification filter 9984: nearest texel of the nearest mipmap.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_FILTER_LINEAR_MIPMAP_NEAREST"></span><code><strong>GLTF_FILTER_LINEAR_MIPMAP_NEAREST</strong>  = 9985;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Sampler minification filter 9985: linear within the nearest mipmap.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_FILTER_NEAREST_MIPMAP_LINEAR"></span><code><strong>GLTF_FILTER_NEAREST_MIPMAP_LINEAR</strong>  = 9986;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Sampler minification filter 9986: nearest texel, blended between two mipmaps.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_FILTER_LINEAR_MIPMAP_LINEAR"></span><code><strong>GLTF_FILTER_LINEAR_MIPMAP_LINEAR</strong>   = 9987;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Sampler minification filter 9987: trilinear filtering.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_WRAP_CLAMP_TO_EDGE"></span><code><strong>GLTF_WRAP_CLAMP_TO_EDGE</strong>   = 33071;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Sampler wrap mode 33071: clamp to the edge.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_WRAP_MIRRORED_REPEAT"></span><code><strong>GLTF_WRAP_MIRRORED_REPEAT</strong> = 33648;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Sampler wrap mode 33648: mirrored repeat.</p>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_WRAP_REPEAT"></span><code><strong>GLTF_WRAP_REPEAT</strong>          = 10497;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Sampler wrap mode 10497: repeat; the default.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

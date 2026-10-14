@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Base: Class TglTFProperty</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFProperty"></span><h1 class="cio">Class TglTFProperty</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Base.html">glTF.Base</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFProperty = class abstract(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Abstract base of every glTF object, glTFProperty in the schema.</p>
+<p>
+
+
+<p><a class="normal" href="glTF.Base.TglTFProperty.html#LoadFromJSON-TJSONValue-string-">LoadFromJSON</a> runs these steps: (1) the properties marked <code>[glTFRequired]</code> are checked; (2) simple values (numbers, strings, booleans, arrays) are read into the writable properties marked <code>[NeonProperty]</code>, directly through RTTI cached per class, as this is done for every object of a file; (3) &quot;extensions&quot;, &quot;extras&quot; and any property not in the schema are kept as JSON so they can be queried; (4) <a class="normal" href="glTF.Base.TglTFProperty.html#ReadChildren-TJSONObject-">ReadChildren</a> loads nested glTF objects; (5) <a class="normal" href="glTF.Base.TglTFProperty.html#Validate">Validate</a> applies rules an attribute cannot express.
+
+<p><a class="normal" href="glTF.Base.TglTFProperty.html#SaveToJSON">SaveToJSON</a> does the reverse from the current property values. Objects are not thread-safe; the per-class metadata is shared and guarded by a monitor.
+
+<p>To add an object type: derive from this class, declare its values as properties with <code>[NeonProperty]</code> and, where required, <code>[glTFRequired]</code>; override <a class="normal" href="glTF.Base.TglTFProperty.html#ReadChildren-TJSONObject-">ReadChildren</a> and <a class="normal" href="glTF.Base.TglTFProperty.html#WriteChildren-TJSONObject-">WriteChildren</a> for nested objects, <a class="normal" href="glTF.Base.TglTFProperty.html#Validate">Validate</a> for other rules and <a class="normal" href="glTF.Base.TglTFProperty.html#glTFTypeName">glTFTypeName</a> for messages.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFProperty</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#ChildPath-string-">ChildPath</a></strong>(const AName: string): string;</code></td>
+</tr>
+<tr class="list2 visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#ReadObject-TJSONObject-string-TglTFPropertyClass-">ReadObject</a></strong>(AJSON: TJSONObject; const AName: string; AClass: <a href="glTF.Base.html#TglTFPropertyClass">TglTFPropertyClass</a>): <a href="glTF.Base.TglTFProperty.html">TglTFProperty</a>;</code></td>
+</tr>
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Base.TglTFProperty.html#ReadChildren-TJSONObject-">ReadChildren</a></strong>(AJSON: TJSONObject); virtual;</code></td>
+</tr>
+<tr class="list2 visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Base.TglTFProperty.html#Validate">Validate</a></strong>; virtual;</code></td>
+</tr>
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Base.TglTFProperty.html#RaiseMissing-string-">RaiseMissing</a></strong>(const AJSONName: string);</code></td>
+</tr>
+<tr class="list2 visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Base.TglTFProperty.html#RaiseInvalid-string-string-">RaiseInvalid</a></strong>(const AJSONName, AMessage: string);</code></td>
+</tr>
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Base.TglTFProperty.html#WriteChildren-TJSONObject-">WriteChildren</a></strong>(AJSON: TJSONObject); virtual;</code></td>
+</tr>
+<tr class="list2 visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Base.TglTFProperty.html#WriteObject-TJSONObject-string-TglTFProperty-">WriteObject</a></strong>(AJSON: TJSONObject; const AName: string; AChild: <a href="glTF.Base.TglTFProperty.html">TglTFProperty</a>);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Base.TglTFProperty.html#Create">Create</a></strong>; virtual;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTF.Base.TglTFProperty.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Base.TglTFProperty.html#glTFTypeName">glTFTypeName</a></strong>: string; virtual;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Base.TglTFProperty.html#LoadFromJSON-TJSONValue-string-">LoadFromJSON</a></strong>(AJSON: TJSONValue; const AJSONPath: string = '');</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#SaveToJSON">SaveToJSON</a></strong>: TJSONObject; virtual;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#IsDefined-string-">IsDefined</a></strong>(const AJSONName: string): Boolean;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#HasExtensions">HasExtensions</a></strong>: Boolean;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#HasExtension-string-">HasExtension</a></strong>(const AName: string): Boolean;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#FindExtension-string-">FindExtension</a></strong>(const AName: string): TJSONValue;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#ExtensionNames">ExtensionNames</a></strong>: TArray&lt;string&gt;;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#TryGetExtensionValue-string-string-T-">TryGetExtensionValue</a></strong>&lt;T&gt;(const AExtension, APath: string; out AValue: T): Boolean;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#ExtensionAs-string-INeonConfiguration-">ExtensionAs</a></strong>&lt;T:class,constructor&gt;(const AName: string; const AConfig: INeonConfiguration = nil): T;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#HasExtras">HasExtras</a></strong>: Boolean;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#HasExtra-string-">HasExtra</a></strong>(const APath: string): Boolean;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#FindExtra-string-">FindExtra</a></strong>(const APath: string): TJSONValue;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#ExtraNames">ExtraNames</a></strong>: TArray&lt;string&gt;;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#TryGetExtra-string-T-">TryGetExtra</a></strong>&lt;T&gt;(const APath: string; out AValue: T): Boolean;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#GetExtra-string-T-">GetExtra</a></strong>&lt;T&gt;(const APath: string; const ADefault: T): T;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#ExtraAs-string-INeonConfiguration-">ExtraAs</a></strong>&lt;T:class,constructor&gt;(const APath: string = ''; const AConfig: INeonConfiguration = nil): T;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#HasUnknownProperty-string-">HasUnknownProperty</a></strong>(const AName: string): Boolean;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#FindUnknownProperty-string-">FindUnknownProperty</a></strong>(const AName: string): TJSONValue;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.TglTFProperty.html#JSONPath">JSONPath</a></strong>: string read FJSONPath;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.TglTFProperty.html#DefinedProperties">DefinedProperties</a></strong>: TArray&lt;string&gt; read FDefinedProperties;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.TglTFProperty.html#Extensions">Extensions</a></strong>: TJSONObject read FExtensions;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.TglTFProperty.html#Extras">Extras</a></strong>: TJSONValue read FExtras;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.TglTFProperty.html#UnknownProperties">UnknownProperties</a></strong>: TJSONObject read FUnknownProperties;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class property <strong><a href="glTF.Base.TglTFProperty.html#ExtrasNeonConfig">ExtrasNeonConfig</a></strong>: INeonConfiguration read FExtrasNeonConfig write FExtrasNeonConfig;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="ChildPath-string-"></span><code>function <strong>ChildPath</strong>(const AName: string): string;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the JSON path of a direct child of this object.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>JSON name of the child property.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">For example &quot;meshes[0].primitives&quot; for AName &quot;primitives&quot; on meshes[0].</p></td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="ReadObject-TJSONObject-string-TglTFPropertyClass-"></span><code>function <strong>ReadObject</strong>(AJSON: TJSONObject; const AName: string; AClass: <a href="glTF.Base.html#TglTFPropertyClass">TglTFPropertyClass</a>): <a href="glTF.Base.TglTFProperty.html">TglTFProperty</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates and loads a nested glTF object from a property of AJSON.</p>
+<p>
+
+
+<p>Whether the property is required is checked earlier through <code>[glTFRequired]</code>, so an absent property is not an error here.
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AJSON</dt>
+<dd>This object's JSON.</dd>
+<dt>AName</dt>
+<dd>JSON name of the nested object.</dd>
+<dt>AClass</dt>
+<dd>Class of the object to create.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The new object, owned by the caller; nil when the property is absent or null.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The nested object is invalid.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="ReadChildren-TJSONObject-"></span><code>procedure <strong>ReadChildren</strong>(AJSON: TJSONObject); virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads nested glTF objects, lists and maps; does nothing by default.</p>
+<p>
+
+
+<p>Called by <a class="normal" href="glTF.Base.TglTFProperty.html#LoadFromJSON-TJSONValue-string-">LoadFromJSON</a> after the simple values have been read. Free any previously loaded children first, as an object can be loaded more than once.
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AJSON</dt>
+<dd>This object's JSON.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="Validate"></span><code>procedure <strong>Validate</strong>; virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Checks rules beyond &quot;property X is required&quot;; does nothing by default.</p>
+<p>
+
+
+<p>Called last by <a class="normal" href="glTF.Base.TglTFProperty.html#LoadFromJSON-TJSONValue-string-">LoadFromJSON</a>. For example camera.type &quot;perspective&quot; requires camera.perspective. Raise with <a class="normal" href="glTF.Base.TglTFProperty.html#RaiseMissing-string-">RaiseMissing</a> or <a class="normal" href="glTF.Base.TglTFProperty.html#RaiseInvalid-string-string-">RaiseInvalid</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="RaiseMissing-string-"></span><code>procedure <strong>RaiseMissing</strong>(const AJSONName: string);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises <a class="normal" href="glTF.Base.EglTFMissingPropertyError.html">EglTFMissingPropertyError</a> for a property of this object.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AJSONName</dt>
+<dd>JSON name of the missing property.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFMissingPropertyError.html">EglTFMissingPropertyError</a></dt>
+<dd>Always.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="RaiseInvalid-string-string-"></span><code>procedure <strong>RaiseInvalid</strong>(const AJSONName, AMessage: string);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises <a class="normal" href="glTF.Base.EglTFParseError.html">EglTFParseError</a> for an invalid property of this object.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AJSONName</dt>
+<dd>JSON name of the invalid property.</dd>
+<dt>AMessage</dt>
+<dd>Why it is invalid, for example &quot;must be &gt;= 1&quot;.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFParseError.html">EglTFParseError</a></dt>
+<dd>Always.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="WriteChildren-TJSONObject-"></span><code>procedure <strong>WriteChildren</strong>(AJSON: TJSONObject); virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Writes nested glTF objects, lists and maps; does nothing by default.</p>
+<p>
+
+
+<p>The counterpart of <a class="normal" href="glTF.Base.TglTFProperty.html#ReadChildren-TJSONObject-">ReadChildren</a>, called by <a class="normal" href="glTF.Base.TglTFProperty.html#SaveToJSON">SaveToJSON</a> after the simple values have been written.
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AJSON</dt>
+<dd>The JSON being built for this object.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="WriteObject-TJSONObject-string-TglTFProperty-"></span><code>procedure <strong>WriteObject</strong>(AJSON: TJSONObject; const AName: string; AChild: <a href="glTF.Base.TglTFProperty.html">TglTFProperty</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Writes a nested glTF object when it is assigned.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AJSON</dt>
+<dd>The JSON being built for this object.</dd>
+<dt>AName</dt>
+<dd>JSON name to write it under.</dd>
+<dt>AChild</dt>
+<dd>The nested object; nothing is written when nil.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create"></span><code>constructor <strong>Create</strong>; virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the object with the spec's default values.</p>
+<p>
+
+
+<p>Descendants set their defaults here; <a class="normal" href="glTF.Base.TglTFProperty.html#SaveToJSON">SaveToJSON</a> leaves out values equal to them.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the object and the JSON it keeps.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="glTFTypeName"></span><code>class function <strong>glTFTypeName</strong>: string; virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the object's name in the glTF specification.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">For example &quot;accessor&quot;; used in error messages. The class name unless overridden.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LoadFromJSON-TJSONValue-string-"></span><code>procedure <strong>LoadFromJSON</strong>(AJSON: TJSONValue; const AJSONPath: string = '');</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads this object from a JSON object.</p>
+<p>
+
+
+<p>Replaces everything loaded before. The JSON is not kept, except copies of extensions, extras and non-standard properties.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AJSON</dt>
+<dd>A JSON object; the caller keeps ownership.</dd>
+<dt>AJSONPath</dt>
+<dd>This object's location in the document, used in error messages and by <a class="normal" href="glTF.Base.TglTFProperty.html#ChildPath-string-">ChildPath</a>.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFParseError.html">EglTFParseError</a></dt>
+<dd>AJSON is not an object or a value is invalid.</dd>
+<dt><a class="normal" href="glTF.Base.EglTFMissingPropertyError.html">EglTFMissingPropertyError</a></dt>
+<dd>A required property is missing.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SaveToJSON"></span><code>function <strong>SaveToJSON</strong>: TJSONObject; virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Builds the JSON for this object from its current property values.</p>
+<p>
+
+
+<p>Nothing comes from the JSON the object was loaded from. A simple value is written when it is required or differs from the spec default (the value a new instance has), so values changed in code are written whether or not they were in the original file. Nested objects come from <a class="normal" href="glTF.Base.TglTFProperty.html#WriteChildren-TJSONObject-">WriteChildren</a>; extensions, extras and non-standard properties are written last.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">A new JSON object, owned by the caller.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>A value cannot be converted to JSON.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsDefined-string-"></span><code>function <strong>IsDefined</strong>(const AJSONName: string): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether the loaded JSON contained a property.</p>
+<p>
+
+
+<p>Useful for optional values whose default could also appear explicitly, such as node.matrix. Reflects the last load only, not later changes; a JSON null counts as absent.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AJSONName</dt>
+<dd>JSON name of the property.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when the property was present and not null.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="HasExtensions"></span><code>function <strong>HasExtensions</strong>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether the object has at least one extension.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when &quot;extensions&quot; has at least one entry.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="HasExtension-string-"></span><code>function <strong>HasExtension</strong>(const AName: string): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether the object has a given extension.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>Extension name, for example &quot;KHR_materials_emissive_strength&quot;.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when the extension is present.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FindExtension-string-"></span><code>function <strong>FindExtension</strong>(const AName: string): TJSONValue;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the JSON of an extension.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>Extension name.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The extension's JSON, owned by this object; nil when absent.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ExtensionNames"></span><code>function <strong>ExtensionNames</strong>: TArray&lt;string&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the names of the object's extensions.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">The names in file order; empty when there are none.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="TryGetExtensionValue-string-string-T-"></span><code>function <strong>TryGetExtensionValue</strong>&lt;T&gt;(const AExtension, APath: string; out AValue: T): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Reads a typed value inside an extension.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AExtension</dt>
+<dd>Extension name.</dd>
+<dt>APath</dt>
+<dd>Path inside the extension in System.JSON syntax, for example &quot;a.b[0]&quot;; empty for the extension itself.</dd>
+<dt>AValue</dt>
+<dd>The value; Default(T) when not found.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when the value exists and converts to T.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ExtensionAs-string-INeonConfiguration-"></span><code>function <strong>ExtensionAs</strong>&lt;T:class,constructor&gt;(const AName: string; const AConfig: INeonConfiguration = nil): T;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deserialises an extension into an object of your own class with Neon.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>Extension name.</dd>
+<dt>AConfig</dt>
+<dd>Neon configuration; nil uses <a class="normal" href="glTF.Base.TglTFProperty.html#ExtrasNeonConfig">ExtrasNeonConfig</a>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">A new T, owned by the caller; nil when the extension is absent.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><code>Exception</code></dt>
+<dd>Neon cannot map the JSON onto T.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="HasExtras"></span><code>function <strong>HasExtras</strong>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether the object has an &quot;extras&quot; value.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when &quot;extras&quot; was present.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="HasExtra-string-"></span><code>function <strong>HasExtra</strong>(const APath: string): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether a value exists inside &quot;extras&quot;.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>APath</dt>
+<dd>Path in System.JSON syntax, for example &quot;author.name&quot;.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when the value exists.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FindExtra-string-"></span><code>function <strong>FindExtra</strong>(const APath: string): TJSONValue;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the JSON at a path inside &quot;extras&quot;.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>APath</dt>
+<dd>Path in System.JSON syntax; empty for &quot;extras&quot; itself.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The JSON, owned by this object; nil when absent.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ExtraNames"></span><code>function <strong>ExtraNames</strong>: TArray&lt;string&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the top-level names inside &quot;extras&quot;.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">The names in file order; empty when &quot;extras&quot; is absent or not a JSON object.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="TryGetExtra-string-T-"></span><code>function <strong>TryGetExtra</strong>&lt;T&gt;(const APath: string; out AValue: T): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Reads a typed value inside &quot;extras&quot;.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>APath</dt>
+<dd>Path in System.JSON syntax, for example &quot;author.name&quot;.</dd>
+<dt>AValue</dt>
+<dd>The value; Default(T) when not found.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when the value exists and converts to T.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="GetExtra-string-T-"></span><code>function <strong>GetExtra</strong>&lt;T&gt;(const APath: string; const ADefault: T): T;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Reads a typed value inside &quot;extras&quot;, with a fallback.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+
+<pre class="longcode">
+Author := Asset.GetExtra&lt;<span class="pascal_keyword">string</span>&gt;(<span class="pascal_string">'author.name'</span>, <span class="pascal_string">'(unknown)'</span>);</pre>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>APath</dt>
+<dd>Path in System.JSON syntax.</dd>
+<dt>ADefault</dt>
+<dd>Returned when the value is absent or does not convert to T.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The value, or ADefault.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ExtraAs-string-INeonConfiguration-"></span><code>function <strong>ExtraAs</strong>&lt;T:class,constructor&gt;(const APath: string = ''; const AConfig: INeonConfiguration = nil): T;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deserialises &quot;extras&quot;, or a part of it, into an object of your own class with Neon.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>APath</dt>
+<dd>Path in System.JSON syntax; empty for &quot;extras&quot; itself.</dd>
+<dt>AConfig</dt>
+<dd>Neon configuration; nil uses <a class="normal" href="glTF.Base.TglTFProperty.html#ExtrasNeonConfig">ExtrasNeonConfig</a>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">A new T, owned by the caller; nil when absent.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><code>Exception</code></dt>
+<dd>Neon cannot map the JSON onto T.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="HasUnknownProperty-string-"></span><code>function <strong>HasUnknownProperty</strong>(const AName: string): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether the object had a property the glTF schema does not define.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>JSON name of the property.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when it was present.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FindUnknownProperty-string-"></span><code>function <strong>FindUnknownProperty</strong>(const AName: string): TJSONValue;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the JSON of a property the glTF schema does not define.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>JSON name of the property.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The JSON, owned by this object; nil when absent.</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="JSONPath"></span><code>property <strong>JSONPath</strong>: string read FJSONPath;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+This object's location in the document, for example &quot;nodes[3]&quot;.</p>
+<p>
+
+
+<p>Empty for the root object.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DefinedProperties"></span><code>property <strong>DefinedProperties</strong>: TArray&lt;string&gt; read FDefinedProperties;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+JSON names of the properties present in the loaded JSON.</p>
+<p>
+
+
+<p>Null values are not included. See <a class="normal" href="glTF.Base.TglTFProperty.html#IsDefined-string-">IsDefined</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Extensions"></span><code>property <strong>Extensions</strong>: TJSONObject read FExtensions;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The &quot;extensions&quot; JSON object; nil when absent.</p>
+<p>
+
+
+<p>Owned by this object and written back by <a class="normal" href="glTF.Base.TglTFProperty.html#SaveToJSON">SaveToJSON</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Extras"></span><code>property <strong>Extras</strong>: TJSONValue read FExtras;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The &quot;extras&quot; JSON value; nil when absent.</p>
+<p>
+
+
+<p>Owned by this object and written back by <a class="normal" href="glTF.Base.TglTFProperty.html#SaveToJSON">SaveToJSON</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="UnknownProperties"></span><code>property <strong>UnknownProperties</strong>: TJSONObject read FUnknownProperties;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Properties the glTF schema does not define; nil when there are none.</p>
+<p>
+
+
+<p>Owned by this object and written back by <a class="normal" href="glTF.Base.TglTFProperty.html#SaveToJSON">SaveToJSON</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ExtrasNeonConfig"></span><code>class property <strong>ExtrasNeonConfig</strong>: INeonConfiguration read FExtrasNeonConfig write FExtrasNeonConfig;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Neon configuration used by <a class="normal" href="glTF.Base.TglTFProperty.html#ExtraAs-string-INeonConfiguration-">ExtraAs</a> and <a class="normal" href="glTF.Base.TglTFProperty.html#ExtensionAs-string-INeonConfiguration-">ExtensionAs</a> when none is passed.</p>
+<p>
+
+
+<p>Defaults to camelCase member names with exceptions raised. Shared by all objects; set it at start-up, not while other threads load documents.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

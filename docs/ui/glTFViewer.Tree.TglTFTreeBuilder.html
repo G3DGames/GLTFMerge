@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.Tree: Class TglTFTreeBuilder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFTreeBuilder"></span><h1 class="cio">Class TglTFTreeBuilder</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.Tree.html">glTFViewer.Tree</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFTreeBuilder = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Builds the structure tree of a glTF document.</p>
+<p>
+
+
+<p>Use the class methods <a class="normal" href="glTFViewer.Tree.TglTFTreeBuilder.html#Build-TTreeView-TglTFDocument-">Build</a> and <a class="normal" href="glTFViewer.Tree.TglTFTreeBuilder.html#ShowMessage-TTreeView-string-">ShowMessage</a>; an instance only lives while a tree is built. Must be used on the main thread.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFTreeBuilder</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTFViewer.Tree.TglTFTreeBuilder.html#Create-TTreeView-TglTFDocument-">Create</a></strong>(ATree: TTreeView; ADoc: TglTFDocument);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTFViewer.Tree.TglTFTreeBuilder.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Tree.TglTFTreeBuilder.html#Build-TTreeView-TglTFDocument-">Build</a></strong>(ATree: TTreeView; ADoc: TglTFDocument);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Tree.TglTFTreeBuilder.html#ShowMessage-TTreeView-string-">ShowMessage</a></strong>(ATree: TTreeView; const AText: string);</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-TTreeView-TglTFDocument-"></span><code>constructor <strong>Create</strong>(ATree: TTreeView; ADoc: TglTFDocument);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates a builder for one tree and document; used by <a class="normal" href="glTFViewer.Tree.TglTFTreeBuilder.html#Build-TTreeView-TglTFDocument-">Build</a>.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ATree</dt>
+<dd>The tree view to fill; not owned.</dd>
+<dt>ADoc</dt>
+<dd>The document to show; not owned.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the builder; the tree and the document are not affected.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Build-TTreeView-TglTFDocument-"></span><code>class procedure <strong>Build</strong>(ATree: TTreeView; ADoc: TglTFDocument);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Clears a tree view and fills it with the structure of a document.</p>
+<p>
+
+
+<p>The tree holds only text; it keeps no references to the document's objects, so the document can be freed or reloaded afterwards.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ATree</dt>
+<dd>The tree view to fill.</dd>
+<dt>ADoc</dt>
+<dd>The document to show.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ShowMessage-TTreeView-string-"></span><code>class procedure <strong>ShowMessage</strong>(ATree: TTreeView; const AText: string);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Clears a tree view and shows a single line of text in it.</p>
+<p>
+
+
+<p>Used when nothing is loaded or a load failed.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ATree</dt>
+<dd>The tree view.</dd>
+<dt>AText</dt>
+<dd>The text to show, for example a load error.</dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

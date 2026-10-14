@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Classes: Class TglTFSampler</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFSampler"></span><h1 class="cio">Class TglTFSampler</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Classes.html">glTF.Classes</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFSampler = class(<a class="normal" href="glTF.Base.TglTFChildOfRootProperty.html">TglTFChildOfRootProperty</a>)</code></p>
+<h2 class="description">Description</h2>
+<p>
+A glTF sampler: texture filtering and wrapping.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="ancestor"><a class="normal" href="glTF.Base.TglTFProperty.html">TglTFProperty</a></li>
+<li class="ancestor"><a class="normal" href="glTF.Base.TglTFChildOfRootProperty.html">TglTFChildOfRootProperty</a></li>
+<li class="thisitem">TglTFSampler</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Classes.TglTFSampler.html#Create">Create</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Classes.TglTFSampler.html#glTFTypeName">glTFTypeName</a></strong>: string; override;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFSampler.html#MagFilter">MagFilter</a></strong>: Integer read FMagFilter write FMagFilter;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFSampler.html#MinFilter">MinFilter</a></strong>: Integer read FMinFilter write FMinFilter;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFSampler.html#WrapS">WrapS</a></strong>: Integer read FWrapS write FWrapS;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFSampler.html#WrapT">WrapT</a></strong>: Integer read FWrapT write FWrapT;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create"></span><code>constructor <strong>Create</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the object with the spec's default values.</p>
+<p>
+
+
+<p>WrapS and WrapT are GLTF_WRAP_REPEAT; the filters are 0 (not set).</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="glTFTypeName"></span><code>class function <strong>glTFTypeName</strong>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the object's name in the glTF specification.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">Always &quot;sampler&quot;; used in error messages.</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="MagFilter"></span><code>property <strong>MagFilter</strong>: Integer read FMagFilter write FMagFilter;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;magFilter&quot;: filter for magnification; 0 when not set.</p>
+<p>
+
+
+<p>GLTF_FILTER_NEAREST or GLTF_FILTER_LINEAR.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('magFilter')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="MinFilter"></span><code>property <strong>MinFilter</strong>: Integer read FMinFilter write FMinFilter;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;minFilter&quot;: filter for minification; 0 when not set.</p>
+<p>
+
+
+<p>One of the GLTF_FILTER_* constants.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('minFilter')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="WrapS"></span><code>property <strong>WrapS</strong>: Integer read FWrapS write FWrapS;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;wrapS&quot;: wrapping along U; GLTF_WRAP_REPEAT by default.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('wrapS')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="WrapT"></span><code>property <strong>WrapT</strong>: Integer read FWrapT write FWrapT;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;wrapT&quot;: wrapping along V; GLTF_WRAP_REPEAT by default.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('wrapT')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

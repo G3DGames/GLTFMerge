@@ -1,0 +1,137 @@
+object glTFMainForm: TglTFMainForm
+  Left = 0
+  Top = 0
+  Caption = 'glTF Viewer'
+  ClientHeight = 640
+  ClientWidth = 960
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object ToolBar: TToolBar
+    Size.Width = 960.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object btnOpen: TButton
+      Align = Left
+      Margins.Left = 6.000000000000000000
+      Margins.Top = 6.000000000000000000
+      Margins.Bottom = 6.000000000000000000
+      Position.X = 6.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 90.000000000000000000
+      Size.Height = 28.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Open...'
+      OnClick = btnOpenClick
+    end
+    object btnSave: TButton
+      Align = Left
+      Enabled = False
+      Margins.Left = 6.000000000000000000
+      Margins.Top = 6.000000000000000000
+      Margins.Bottom = 6.000000000000000000
+      Position.X = 102.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 90.000000000000000000
+      Size.Height = 28.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Save as...'
+      OnClick = btnSaveClick
+    end
+    object btnSelfTest: TButton
+      Align = Left
+      Margins.Left = 6.000000000000000000
+      Margins.Top = 6.000000000000000000
+      Margins.Bottom = 6.000000000000000000
+      Position.X = 198.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 120.000000000000000000
+      Size.Height = 28.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Run self-tests'
+      OnClick = btnSelfTestClick
+    end
+    object lblFile: TLabel
+      Align = Client
+      Margins.Left = 12.000000000000000000
+      Margins.Right = 6.000000000000000000
+      Size.Width = 720.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'No file loaded'
+    end
+  end
+  object TabControl: TTabControl
+    Align = Client
+    Size.Width = 960.000000000000000000
+    Size.Height = 600.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 1
+    TabPosition = PlatformDefault
+    object tabStructure: TTabItem
+      IsSelected = True
+      Size.Width = 80.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Structure'
+      object tvStructure: TTreeView
+        Align = Client
+        Size.Width = 960.000000000000000000
+        Size.Height = 574.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+    end
+    object tabImages: TTabItem
+      IsSelected = False
+      Size.Width = 70.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Images'
+    end
+    object tabAnimations: TTabItem
+      IsSelected = False
+      Size.Width = 90.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Animations'
+    end
+    object tabParts: TTabItem
+      IsSelected = False
+      Size.Width = 60.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Parts'
+    end
+    object tabOutput: TTabItem
+      IsSelected = False
+      Size.Width = 70.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      Text = 'Output'
+      object memOutput: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        ReadOnly = True
+        Align = Client
+        Size.Width = 960.000000000000000000
+        Size.Height = 574.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+    end
+  end
+end

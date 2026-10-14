@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Classes: Class TglTFNode</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFNode"></span><h1 class="cio">Class TglTFNode</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Classes.html">glTF.Classes</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFNode = class(<a class="normal" href="glTF.Base.TglTFChildOfRootProperty.html">TglTFChildOfRootProperty</a>)</code></p>
+<h2 class="description">Description</h2>
+<p>
+A glTF node: an element of the scene hierarchy with a transform.</p>
+<p>
+
+
+<p>The local transform is either <a class="normal" href="glTF.Classes.TglTFNode.html#Matrix">Matrix</a> or <a class="normal" href="glTF.Classes.TglTFNode.html#Translation">Translation</a>, <a class="normal" href="glTF.Classes.TglTFNode.html#Rotation">Rotation</a> and <a class="normal" href="glTF.Classes.TglTFNode.html#Scale">Scale</a>; see <a class="normal" href="glTF.Classes.TglTFNode.html#HasMatrix">HasMatrix</a>.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="ancestor"><a class="normal" href="glTF.Base.TglTFProperty.html">TglTFProperty</a></li>
+<li class="ancestor"><a class="normal" href="glTF.Base.TglTFChildOfRootProperty.html">TglTFChildOfRootProperty</a></li>
+<li class="thisitem">TglTFNode</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Classes.TglTFNode.html#Validate">Validate</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Classes.TglTFNode.html#Create">Create</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Classes.TglTFNode.html#glTFTypeName">glTFTypeName</a></strong>: string; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Classes.TglTFNode.html#HasMatrix">HasMatrix</a></strong>: Boolean;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFNode.html#Camera">Camera</a></strong>: Integer read FCamera write FCamera;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFNode.html#Children">Children</a></strong>: TArray&lt;Integer&gt; read FChildren write FChildren;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFNode.html#Skin">Skin</a></strong>: Integer read FSkin write FSkin;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFNode.html#Matrix">Matrix</a></strong>: TArray&lt;Double&gt; read FMatrix write FMatrix;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFNode.html#Mesh">Mesh</a></strong>: Integer read FMesh write FMesh;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFNode.html#Rotation">Rotation</a></strong>: TArray&lt;Double&gt; read FRotation write FRotation;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFNode.html#Scale">Scale</a></strong>: TArray&lt;Double&gt; read FScale write FScale;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFNode.html#Translation">Translation</a></strong>: TArray&lt;Double&gt; read FTranslation write FTranslation;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFNode.html#Weights">Weights</a></strong>: TArray&lt;Double&gt; read FWeights write FWeights;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="Validate"></span><code>procedure <strong>Validate</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="inheritdescription">This item has no description. Showing description inherited from <a class="normal" href="glTF.Base.TglTFProperty.html#Validate">TglTFProperty.Validate</a>.</p><p>
+Checks rules beyond &quot;property X is required&quot;; does nothing by default.
+
+<p>Called last by <a class="normal" href="glTF.Base.TglTFProperty.html#LoadFromJSON-TJSONValue-string-">LoadFromJSON</a>. For example camera.type &quot;perspective&quot; requires camera.perspective. Raise with <a class="normal" href="glTF.Base.TglTFProperty.html#RaiseMissing-string-">RaiseMissing</a> or <a class="normal" href="glTF.Base.TglTFProperty.html#RaiseInvalid-string-string-">RaiseInvalid</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create"></span><code>constructor <strong>Create</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the object with the spec's default values.</p>
+<p>
+
+
+<p>Camera, Skin and Mesh are GLTF_UNDEFINED_INDEX; Matrix is the identity, Rotation [0, 0, 0, 1], Scale [1, 1, 1] and Translation [0, 0, 0].</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="glTFTypeName"></span><code>class function <strong>glTFTypeName</strong>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the object's name in the glTF specification.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">Always &quot;node&quot;; used in error messages.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="HasMatrix"></span><code>function <strong>HasMatrix</strong>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether the loaded node gave its transform as a matrix.</p>
+<p>
+
+
+<p>Reflects the loaded JSON, not later changes.
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when &quot;matrix&quot; was present; False when the transform is translation, rotation and scale.</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Camera"></span><code>property <strong>Camera</strong>: Integer read FCamera write FCamera;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;camera&quot;: index in <code>TglTF.Cameras</code>; GLTF_UNDEFINED_INDEX when not set.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('camera')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Children"></span><code>property <strong>Children</strong>: TArray&lt;Integer&gt; read FChildren write FChildren;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;children&quot;: indices in <code>TglTF.Nodes</code> of the child nodes; empty when none.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('children')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Skin"></span><code>property <strong>Skin</strong>: Integer read FSkin write FSkin;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;skin&quot;: index in <code>TglTF.Skins</code>; GLTF_UNDEFINED_INDEX when not set.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('skin')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Matrix"></span><code>property <strong>Matrix</strong>: TArray&lt;Double&gt; read FMatrix write FMatrix;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;matrix&quot;: the local transform as 16 numbers in column-major order; the identity by default.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('matrix')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Mesh"></span><code>property <strong>Mesh</strong>: Integer read FMesh write FMesh;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;mesh&quot;: index in <code>TglTF.Meshes</code>; GLTF_UNDEFINED_INDEX when not set.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('mesh')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Rotation"></span><code>property <strong>Rotation</strong>: TArray&lt;Double&gt; read FRotation write FRotation;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;rotation&quot;: a unit quaternion x, y, z, w; [0, 0, 0, 1] by default.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('rotation')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Scale"></span><code>property <strong>Scale</strong>: TArray&lt;Double&gt; read FScale write FScale;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;scale&quot; along x, y and z; [1, 1, 1] by default.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('scale')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Translation"></span><code>property <strong>Translation</strong>: TArray&lt;Double&gt; read FTranslation write FTranslation;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;translation&quot; along x, y and z; [0, 0, 0] by default.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('translation')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Weights"></span><code>property <strong>Weights</strong>: TArray&lt;Double&gt; read FWeights write FWeights;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;weights&quot;: morph target weights of the node's mesh; empty when not set.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('weights')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

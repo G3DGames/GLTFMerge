@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.Dialogs: Class TPlatformDialogs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TPlatformDialogs"></span><h1 class="cio">Class TPlatformDialogs</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.Dialogs.html">glTFViewer.Dialogs</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TPlatformDialogs = class sealed(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Open, save, folder and confirmation dialogs for every FireMonkey platform.</p>
+<p>
+
+
+<p>All routines are class methods; use them on the main thread. Results arrive through a callback: immediately on the desktop, after the user closes the dialog on iOS and Android.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TPlatformDialogs</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#UsesNativeDialogs">UsesNativeDialogs</a></strong>: Boolean; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#DefaultFolder">DefaultFolder</a></strong>: string; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#OpenFile-string-TArrayTFileType-string-string-TProcstring-">OpenFile</a></strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir, AFileName: string; const ADone: TProc&lt;string&gt;); static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#OpenFiles-string-TArrayTFileType-string-TProcTArraystring-">OpenFiles</a></strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir: string; const ADone: TProc&lt;TArray&lt;string&gt;&gt;); static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#SaveFile-string-TArrayTFileType-Integer-string-string-TProcstringInteger-">SaveFile</a></strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; ATypeIndex: Integer; const AInitialDir, AFileName: string; const ADone: TProc&lt;string, Integer&gt;); static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#SelectFolder-string-string-TProcstring-">SelectFolder</a></strong>(const ATitle, AInitialDir: string; const ADone: TProc&lt;string&gt;); static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#Confirm-string-TProcBoolean-">Confirm</a></strong>(const AMessage: string; const ADone: TProc&lt;Boolean&gt;); static;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="UsesNativeDialogs"></span><code>class function <strong>UsesNativeDialogs</strong>: Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether the native dialogs are used.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">True on Windows, macOS and Linux; False on iOS and Android, where the built-in browser is shown.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DefaultFolder"></span><code>class function <strong>DefaultFolder</strong>: string; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the folder dialogs start in when no other is given.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">The user's documents folder on the desktop; the app's own documents folder on iOS and Android.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OpenFile-string-TArrayTFileType-string-string-TProcstring-"></span><code>class procedure <strong>OpenFile</strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir, AFileName: string; const ADone: TProc&lt;string&gt;); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lets the user choose an existing file.</p>
+<p>
+
+
+<p>On iOS and Android, tapping a file chooses it.
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ATitle</dt>
+<dd>Title of the dialog.</dd>
+<dt>ATypes</dt>
+<dd>File types offered; the first is selected.</dd>
+<dt>AInitialDir</dt>
+<dd>Folder to start in; empty or missing uses DefaultFolder on mobile.</dd>
+<dt>AFileName</dt>
+<dd>File name to suggest; may be empty.</dd>
+<dt>ADone</dt>
+<dd>Called with the chosen file's full path, or an empty string when cancelled.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OpenFiles-string-TArrayTFileType-string-TProcTArraystring-"></span><code>class procedure <strong>OpenFiles</strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir: string; const ADone: TProc&lt;TArray&lt;string&gt;&gt;); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lets the user choose one or more existing files.</p>
+<p>
+
+
+<p>On the desktop, the native dialog with multiple selection. On iOS and Android, tapping a file ticks or unticks it, a tick shown before its name; files can be ticked in several folders before choosing Open.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ATitle</dt>
+<dd>Title of the dialog.</dd>
+<dt>ATypes</dt>
+<dd>File types offered; the first is selected.</dd>
+<dt>AInitialDir</dt>
+<dd>Folder to start in; empty or missing uses DefaultFolder on mobile.</dd>
+<dt>ADone</dt>
+<dd>Called with the full paths of the chosen files, in the order they were chosen on mobile; an empty array when cancelled.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SaveFile-string-TArrayTFileType-Integer-string-string-TProcstringInteger-"></span><code>class procedure <strong>SaveFile</strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; ATypeIndex: Integer; const AInitialDir, AFileName: string; const ADone: TProc&lt;string, Integer&gt;); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lets the user choose a file name to save to.</p>
+<p>
+
+
+<p>Replacing an existing file is not confirmed here, so that the caller can first adjust the name, for example its extension, and then use <a class="normal" href="glTFViewer.Dialogs.TPlatformDialogs.html#Confirm-string-TProcBoolean-">Confirm</a>.
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ATitle</dt>
+<dd>Title of the dialog.</dd>
+<dt>ATypes</dt>
+<dd>File types offered.</dd>
+<dt>ATypeIndex</dt>
+<dd>Index in ATypes of the type selected at first.</dd>
+<dt>AInitialDir</dt>
+<dd>Folder to start in.</dd>
+<dt>AFileName</dt>
+<dd>File name to suggest; may be empty.</dd>
+<dt>ADone</dt>
+<dd>Called with the chosen full path and the index of the chosen type; with an empty string and -1 when cancelled.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SelectFolder-string-string-TProcstring-"></span><code>class procedure <strong>SelectFolder</strong>(const ATitle, AInitialDir: string; const ADone: TProc&lt;string&gt;); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lets the user choose a folder.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ATitle</dt>
+<dd>Title of the dialog.</dd>
+<dt>AInitialDir</dt>
+<dd>Folder to start in.</dd>
+<dt>ADone</dt>
+<dd>Called with the chosen folder, or an empty string when cancelled.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Confirm-string-TProcBoolean-"></span><code>class procedure <strong>Confirm</strong>(const AMessage: string; const ADone: TProc&lt;Boolean&gt;); static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks a yes or no question.</p>
+<p>
+
+
+<p>Uses TDialogService, which works on every platform.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AMessage</dt>
+<dd>The question.</dd>
+<dt>ADone</dt>
+<dd>Called with True when the user answered Yes.</dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

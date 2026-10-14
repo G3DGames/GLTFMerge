@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{7F684203-60B8-4370-92BF-E4D0A351BC47}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="glTFMerge.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="glTFMerge">
+        <MSBuild Projects="glTFMerge.dproj"/>
+    </Target>
+    <Target Name="glTFMerge:Clean">
+        <MSBuild Projects="glTFMerge.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="glTFMerge:Make">
+        <MSBuild Projects="glTFMerge.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="glTFMerge"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="glTFMerge:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="glTFMerge:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

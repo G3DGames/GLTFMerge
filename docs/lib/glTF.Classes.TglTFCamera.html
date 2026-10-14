@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Classes: Class TglTFCamera</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFCamera"></span><h1 class="cio">Class TglTFCamera</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Classes.html">glTF.Classes</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFCamera = class(<a class="normal" href="glTF.Base.TglTFChildOfRootProperty.html">TglTFChildOfRootProperty</a>)</code></p>
+<h2 class="description">Description</h2>
+<p>
+A glTF camera: a perspective or orthographic projection.</p>
+<p>
+
+
+<p>The object matching <a class="normal" href="glTF.Classes.TglTFCamera.html#Type">Type</a> is required: Perspective for &quot;perspective&quot;, Orthographic for &quot;orthographic&quot;.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="ancestor"><a class="normal" href="glTF.Base.TglTFProperty.html">TglTFProperty</a></li>
+<li class="ancestor"><a class="normal" href="glTF.Base.TglTFChildOfRootProperty.html">TglTFChildOfRootProperty</a></li>
+<li class="thisitem">TglTFCamera</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Classes.TglTFCamera.html#ReadChildren-TJSONObject-">ReadChildren</a></strong>(AJSON: TJSONObject); override;</code></td>
+</tr>
+<tr class="list2 visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Classes.TglTFCamera.html#WriteChildren-TJSONObject-">WriteChildren</a></strong>(AJSON: TJSONObject); override;</code></td>
+</tr>
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Classes.TglTFCamera.html#Validate">Validate</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTF.Classes.TglTFCamera.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Classes.TglTFCamera.html#glTFTypeName">glTFTypeName</a></strong>: string; override;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFCamera.html#Orthographic">Orthographic</a></strong>: <a href="glTF.Classes.TglTFCameraOrthographic.html">TglTFCameraOrthographic</a> read FOrthographic;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFCamera.html#Perspective">Perspective</a></strong>: <a href="glTF.Classes.TglTFCameraPerspective.html">TglTFCameraPerspective</a> read FPerspective;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFCamera.html#Type">Type</a></strong>: string read FType write FType;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFCamera.html#CameraType">CameraType</a></strong>: <a href="glTF.Classes.html#TglTFCameraType">TglTFCameraType</a> read GetCameraType;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="ReadChildren-TJSONObject-"></span><code>procedure <strong>ReadChildren</strong>(AJSON: TJSONObject); override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="inheritdescription">This item has no description. Showing description inherited from <a class="normal" href="glTF.Base.TglTFProperty.html#ReadChildren-TJSONObject-">TglTFProperty.ReadChildren</a>.</p><p>
+Loads nested glTF objects, lists and maps; does nothing by default.
+
+<p>Called by <a class="normal" href="glTF.Base.TglTFProperty.html#LoadFromJSON-TJSONValue-string-">LoadFromJSON</a> after the simple values have been read. Free any previously loaded children first, as an object can be loaded more than once.
+
+<p></p>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="WriteChildren-TJSONObject-"></span><code>procedure <strong>WriteChildren</strong>(AJSON: TJSONObject); override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="inheritdescription">This item has no description. Showing description inherited from <a class="normal" href="glTF.Base.TglTFProperty.html#WriteChildren-TJSONObject-">TglTFProperty.WriteChildren</a>.</p><p>
+Writes nested glTF objects, lists and maps; does nothing by default.
+
+<p>The counterpart of <a class="normal" href="glTF.Base.TglTFProperty.html#ReadChildren-TJSONObject-">ReadChildren</a>, called by <a class="normal" href="glTF.Base.TglTFProperty.html#SaveToJSON">SaveToJSON</a> after the simple values have been written.
+
+<p></p>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="Validate"></span><code>procedure <strong>Validate</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="inheritdescription">This item has no description. Showing description inherited from <a class="normal" href="glTF.Base.TglTFProperty.html#Validate">TglTFProperty.Validate</a>.</p><p>
+Checks rules beyond &quot;property X is required&quot;; does nothing by default.
+
+<p>Called last by <a class="normal" href="glTF.Base.TglTFProperty.html#LoadFromJSON-TJSONValue-string-">LoadFromJSON</a>. For example camera.type &quot;perspective&quot; requires camera.perspective. Raise with <a class="normal" href="glTF.Base.TglTFProperty.html#RaiseMissing-string-">RaiseMissing</a> or <a class="normal" href="glTF.Base.TglTFProperty.html#RaiseInvalid-string-string-">RaiseInvalid</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the object and its projection objects.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="glTFTypeName"></span><code>class function <strong>glTFTypeName</strong>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the object's name in the glTF specification.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">Always &quot;camera&quot;; used in error messages.</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Orthographic"></span><code>property <strong>Orthographic</strong>: <a href="glTF.Classes.TglTFCameraOrthographic.html">TglTFCameraOrthographic</a> read FOrthographic;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;orthographic&quot; projection; nil when not set.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('orthographic')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Perspective"></span><code>property <strong>Perspective</strong>: <a href="glTF.Classes.TglTFCameraPerspective.html">TglTFCameraPerspective</a> read FPerspective;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;perspective&quot; projection; nil when not set.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('perspective')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Type"></span><code>property <strong>Type</strong>: string read FType write FType;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;type&quot;: &quot;perspective&quot; or &quot;orthographic&quot;; required.</p>
+<p>
+
+
+<p>See <a class="normal" href="glTF.Classes.TglTFCamera.html#CameraType">CameraType</a> for a typed view.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('type')</dt>
+  <dd></dd>
+  <dt><a class="normal" href="glTF.Base.glTFRequiredAttribute.html">glTFRequired</a></dt>
+  <dd>Marks a property as required by the glTF 2.0 schema.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="CameraType"></span><code>property <strong>CameraType</strong>: <a href="glTF.Classes.html#TglTFCameraType">TglTFCameraType</a> read GetCameraType;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The &quot;type&quot; as an enumeration; ctUnknown for any other string.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

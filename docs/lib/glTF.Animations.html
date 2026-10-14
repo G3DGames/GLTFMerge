@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Animations</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<h1 class="unit">Unit glTF.Animations</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objects and Records</a></div><div class="one_section"><a class="section" href="#PasDoc-Types">Types</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="description">Description</h2>
+<p>
+Imports animations from other .gltf or .glb files into a loaded model.</p>
+<p>
+
+
+<p>Animation files are often exported separately from the model they animate, one or several animations per file, sometimes with a copy of the model. Only the animations are taken: each with the samplers it uses, their accessors and bufferViews, and the bytes of those, which are appended to the model's buffer. Meshes, materials, images and the rest of the source file are ignored.
+
+<p>An animation targets nodes by index, and the indices of the source file mean nothing in the model. So each channel's node is matched to a node of the model by name, exactly first and then ignoring case. An unnamed node matches the node with the same index, but only when both files have the same number of nodes. A channel whose node cannot be matched is skipped; an animation with no channel left is not imported.
+
+<p>The import works one animation at a time: each file is loaded, then each of its animations is matched, checked for a duplicate name and added to the model straight away. A duplicate is settled through <a class="normal" href="glTF.Animations.TglTFAnimationImporter.html#OnDuplicate">TglTFAnimationImporter.OnDuplicate</a>. An abort, requested with <a class="normal" href="glTF.Animations.TglTFAnimationImporter.html#RequestAbort">TglTFAnimationImporter.RequestAbort</a> or answered to a duplicate, stops the import after the animation being added; everything added so far stays and the model is always valid.
+
+<p></p>
+
+<pre class="preformatted">
+for each file:       load  -&gt; match its nodes
+  for each animation: duplicate? -&gt; OnDuplicate -&gt; add to the model
+at the end:          remove the data of replaced animations</pre>
+
+<p>
+
+<p>Progress is reported through <a class="normal" href="glTF.Animations.TglTFAnimationImporter.html#OnProgress">TglTFAnimationImporter.OnProgress</a>, so the import can run in a background thread with a progress bar. Use an importer from one thread at a time; only RequestAbort and AbortRequested may be used from another.</p>
+<span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
+<span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Animations.TglTFAnimationCandidate.html"><code>TglTFAnimationCandidate</code></a></td>
+<td class="itemdesc">One animation found in a file being imported, and what happened to it.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Animations.TglTFAnimationImporter.html"><code>TglTFAnimationImporter</code></a></td>
+<td class="itemdesc">Imports the animations of other glTF files into a document, one animation at a time.</td>
+</tr>
+</table>
+<span id="PasDoc-Types"></span><h3 class="summary">Types</h3>
+<table class="summary wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Animations.html#TglTFDuplicateAction">TglTFDuplicateAction</a></strong> = (...);</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Animations.html#TglTFDuplicateEvent">TglTFDuplicateEvent</a></strong> = reference to procedure(AImporter: <a href="glTF.Animations.TglTFAnimationImporter.html">TglTFAnimationImporter</a>;
+    ACandidate: <a href="glTF.Animations.TglTFAnimationCandidate.html">TglTFAnimationCandidate</a>; AExisting: Integer;
+    var AAction: <a href="glTF.Animations.html#TglTFDuplicateAction">TglTFDuplicateAction</a>; var ANewName: string);</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Types</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFDuplicateAction"></span><code><strong>TglTFDuplicateAction</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+What to do with an imported animation whose name is already used.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="daReplace">daReplace</span>: The imported animation replaces the one with the same name, taking its place in the list; the data only the old one used is removed at the end of the import.</li>
+<li>
+<span id="daKeep">daKeep</span>: The animation already there is kept and the imported one is ignored.</li>
+<li>
+<span id="daRename">daRename</span>: The imported animation is added under a new, unique name.</li>
+<li>
+<span id="daAbort">daAbort</span>: The imported animation is ignored and the import stops; what was added so far stays.</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFDuplicateEvent"></span><code><strong>TglTFDuplicateEvent</strong> = reference to procedure(AImporter: <a href="glTF.Animations.TglTFAnimationImporter.html">TglTFAnimationImporter</a>;
+    ACandidate: <a href="glTF.Animations.TglTFAnimationCandidate.html">TglTFAnimationCandidate</a>; AExisting: Integer;
+    var AAction: <a href="glTF.Animations.html#TglTFDuplicateAction">TglTFDuplicateAction</a>; var ANewName: string);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Asks what to do with an animation whose name the model already uses.</p>
+<p>
+
+
+<p>Called on the importing thread, which waits for the answer. A handler that asks the user from a background import must show the question on the main thread and wait for it, for example with a TEvent; it must not be called on the main thread itself then. Reading the model, for example through NameProblem, is safe while the importer waits.
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AImporter</dt>
+<dd>The importer.</dd>
+<dt>ACandidate</dt>
+<dd>The animation being imported.</dd>
+<dt>AExisting</dt>
+<dd>Index of the model's animation with the same name.</dd>
+<dt>AAction</dt>
+<dd>The answer; daKeep when unchanged.</dd>
+<dt>ANewName</dt>
+<dd>For daRename: the new name; it holds a suggested unique name on entry. A name that cannot be used is replaced by the suggestion.</dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

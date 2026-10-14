@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Document: Class TglTFDocument</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFDocument"></span><h1 class="cio">Class TglTFDocument</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Document.html">glTF.Document</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFDocument = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+A glTF 2.0 document: its object tree and loading and saving.</p>
+<p>
+
+
+<p>Holds a <code>TglTF</code> object tree in <a class="normal" href="glTF.Document.TglTFDocument.html#Root">Root</a>, which is never nil. Loading replaces the tree only when the load succeeds, so a failed load leaves the previous asset in place. Saving never changes the tree: it works on a copy.
+
+<p>Not thread-safe; use an instance from one thread at a time. Every method blocks until it finishes, including the file reads and writes it does.
+
+<p></p>
+
+<pre class="longcode">
+Doc := TglTFDocument.CreateFromFile(<span class="pascal_string">'model.gltf'</span>);
+<span class="pascal_keyword">try</span>
+  Doc.SaveToFile(<span class="pascal_string">'model.glb'</span>); <span class="pascal_comment">// every image inside the GLB</span>
+<span class="pascal_keyword">finally</span>
+  Doc.Free;
+<span class="pascal_keyword">end</span>;</pre>
+
+<p></p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFDocument</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Document.TglTFDocument.html#Create">Create</a></strong>;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTF.Document.TglTFDocument.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Document.TglTFDocument.html#CreateFromFile-string-">CreateFromFile</a></strong>(const AFileName: string): <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Document.TglTFDocument.html#CreateFromStream-TStream-">CreateFromStream</a></strong>(AStream: TStream): <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Document.TglTFDocument.html#IsGLBData-TBytes-">IsGLBData</a></strong>(const ABytes: TBytes): Boolean; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Document.TglTFDocument.html#FormatFromFileName-string-">FormatFromFileName</a></strong>(const AFileName: string): <a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a>; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#Clear">Clear</a></strong>;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#LoadFromFile-string-">LoadFromFile</a></strong>(const AFileName: string);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#LoadFromStream-TStream-">LoadFromStream</a></strong>(AStream: TStream);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#LoadFromString-string-">LoadFromString</a></strong>(const AJSONText: string);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#LoadFromGLBBytes-TBytes-">LoadFromGLBBytes</a></strong>(const ABytes: TBytes);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#LoadFromJSON-TJSONValue-">LoadFromJSON</a></strong>(AJSON: TJSONValue);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#SaveToFile-string-">SaveToFile</a></strong>(const AFileName: string); overload;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#SaveToFile-string-TglTFSaveOptions-">SaveToFile</a></strong>(const AFileName: string; const AOptions: <a href="glTF.Document.TglTFSaveOptions.html">TglTFSaveOptions</a>); overload;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#SaveToStream-TStream-TglTFFileFormat-">SaveToStream</a></strong>(AStream: TStream; AFormat: <a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a>); overload;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#SaveToStream-TStream-TglTFFileFormat-TglTFSaveOptions-">SaveToStream</a></strong>(AStream: TStream; AFormat: <a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a>; const AOptions: <a href="glTF.Document.TglTFSaveOptions.html">TglTFSaveOptions</a>); overload;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Document.TglTFDocument.html#ResolveUri-string-">ResolveUri</a></strong>(const AUri: string): string;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Document.TglTFDocument.html#GetBufferData-Integer-">GetBufferData</a></strong>(AIndex: Integer): TBytes;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Document.TglTFDocument.html#MissingResources">MissingResources</a></strong>: TArray&lt;<a href="glTF.Document.TglTFMissingResource.html">TglTFMissingResource</a>&gt;;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Document.TglTFDocument.html#HasMissingResources">HasMissingResources</a></strong>: Boolean;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Document.TglTFDocument.html#SupplyResourceFile-TglTFResourceKind-Integer-string-">SupplyResourceFile</a></strong>(AKind: <a href="glTF.Document.html#TglTFResourceKind">TglTFResourceKind</a>; AIndex: Integer; const AFileName: string);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Document.TglTFDocument.html#SearchMissingResources-string-Boolean-">SearchMissingResources</a></strong>(const ADirectory: string; ARecursive: Boolean = True): Integer;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#Root">Root</a></strong>: <a href="glTF.Classes.TglTF.html">TglTF</a> read FRoot;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#FileName">FileName</a></strong>: string read FFileName;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#BaseDirectory">BaseDirectory</a></strong>: string read FBaseDirectory write FBaseDirectory;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#FileFormat">FileFormat</a></strong>: <a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a> read FFormat;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#HasBinaryChunk">HasBinaryChunk</a></strong>: Boolean read FHasBinaryChunk;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#BinaryChunkLength">BinaryChunkLength</a></strong>: Int64 read FBinaryChunkLength;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#JSONChunkLength">JSONChunkLength</a></strong>: Int64 read FJSONChunkLength;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#LoadExternalResources">LoadExternalResources</a></strong>: Boolean read FLoadExternalResources write FLoadExternalResources;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#OnProgress">OnProgress</a></strong>: <a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a> read FOnProgress write FOnProgress;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#Warnings">Warnings</a></strong>: TStringList read FWarnings;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#SaveWarnings">SaveWarnings</a></strong>: TStringList read FSaveWarnings;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#SavedFiles">SavedFiles</a></strong>: TStringList read FSavedFiles;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Document.TglTFDocument.html#SaveComplete">SaveComplete</a></strong>: Boolean read FSaveComplete;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create"></span><code>constructor <strong>Create</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates an empty document.</p>
+<p>
+
+
+<p><a class="normal" href="glTF.Document.TglTFDocument.html#Root">Root</a> is an empty <code>TglTF</code> and <a class="normal" href="glTF.Document.TglTFDocument.html#FileFormat">FileFormat</a> is gffNone.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the document and its whole object tree.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="CreateFromFile-string-"></span><code>class function <strong>CreateFromFile</strong>(const AFileName: string): <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates a document and loads a .gltf or .glb file into it.</p>
+<p>
+
+
+<p>The caller owns the result. Nothing is returned when loading fails.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AFileName</dt>
+<dd>The file to load; see <a class="normal" href="glTF.Document.TglTFDocument.html#LoadFromFile-string-">LoadFromFile</a>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The new document.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The file is not valid glTF; see <a class="normal" href="glTF.Document.TglTFDocument.html#LoadFromFile-string-">LoadFromFile</a>.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="CreateFromStream-TStream-"></span><code>class function <strong>CreateFromStream</strong>(AStream: TStream): <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates a document and loads glTF JSON or GLB from a stream into it.</p>
+<p>
+
+
+<p>The caller owns the result. Nothing is returned when loading fails.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AStream</dt>
+<dd>Read from its current position to its end; see <a class="normal" href="glTF.Document.TglTFDocument.html#LoadFromStream-TStream-">LoadFromStream</a>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The new document.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The data is not valid glTF.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsGLBData-TBytes-"></span><code>class function <strong>IsGLBData</strong>(const ABytes: TBytes): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether bytes start with the GLB magic &quot;glTF&quot;.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ABytes</dt>
+<dd>The start of the data, at least 4 bytes to be recognised.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True for GLB data, False otherwise.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FormatFromFileName-string-"></span><code>class function <strong>FormatFromFileName</strong>(const AFileName: string): <a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a>; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the format a file name's extension stands for.</p>
+<p>
+
+
+<p>The comparison ignores case.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AFileName</dt>
+<dd>A file name or path.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">gffGLB for .glb, gffJSON for .gltf, gffNone for anything else.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Clear"></span><code>procedure <strong>Clear</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Discards the loaded asset.</p>
+<p>
+
+
+<p><a class="normal" href="glTF.Document.TglTFDocument.html#Root">Root</a> becomes an empty <code>TglTF</code>; the file name, base directory, format and load warnings are cleared. Objects of the old tree become invalid.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LoadFromFile-string-"></span><code>procedure <strong>LoadFromFile</strong>(const AFileName: string);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads a .gltf or .glb file.</p>
+<p>
+
+
+<p>The format is detected from the content. External buffers and images are read relative to the file's folder, which becomes <a class="normal" href="glTF.Document.TglTFDocument.html#BaseDirectory">BaseDirectory</a>. Missing external files do not fail the load: they are listed in <a class="normal" href="glTF.Document.TglTFDocument.html#Warnings">Warnings</a> and <a class="normal" href="glTF.Document.TglTFDocument.html#MissingResources">MissingResources</a>. Errors in the JSON report their line, within the JSON chunk for a GLB.
+
+<p>When a referenced file is not found under its exact name, folder and file names are matched ignoring case, as glTF files made on Windows often differ in case from the files on case-sensitive file systems (Linux, Android, iOS).
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AFileName</dt>
+<dd>The file to load.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFParseError.html">EglTFParseError</a></dt>
+<dd>The JSON is malformed or a value is invalid.</dd>
+<dt><a class="normal" href="glTF.Base.EglTFMissingPropertyError.html">EglTFMissingPropertyError</a></dt>
+<dd>A property the glTF schema requires is missing.</dd>
+<dt><a class="normal" href="glTF.Document.EglTFGLBError.html">EglTFGLBError</a></dt>
+<dd>The GLB container is invalid.</dd>
+<dt><code>EFOpenError</code></dt>
+<dd>The file cannot be opened.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LoadFromStream-TStream-"></span><code>procedure <strong>LoadFromStream</strong>(AStream: TStream);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads glTF JSON or GLB from a stream.</p>
+<p>
+
+
+<p>Reads from the stream's current position to its end; the format is detected from the content. External files are read relative to <a class="normal" href="glTF.Document.TglTFDocument.html#BaseDirectory">BaseDirectory</a>, so set it first if the asset has any. <a class="normal" href="glTF.Document.TglTFDocument.html#FileName">FileName</a> becomes empty.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AStream</dt>
+<dd>The data; the caller keeps ownership.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The data is empty or not valid glTF; see <a class="normal" href="glTF.Document.TglTFDocument.html#LoadFromFile-string-">LoadFromFile</a>.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LoadFromString-string-"></span><code>procedure <strong>LoadFromString</strong>(const AJSONText: string);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads glTF JSON text.</p>
+<p>
+
+
+<p>External files are read relative to <a class="normal" href="glTF.Document.TglTFDocument.html#BaseDirectory">BaseDirectory</a>. <a class="normal" href="glTF.Document.TglTFDocument.html#FileName">FileName</a> becomes empty.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AJSONText</dt>
+<dd>The JSON of a glTF asset.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The text is not valid glTF; see <a class="normal" href="glTF.Document.TglTFDocument.html#LoadFromFile-string-">LoadFromFile</a>.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LoadFromGLBBytes-TBytes-"></span><code>procedure <strong>LoadFromGLBBytes</strong>(const ABytes: TBytes);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads GLB data held in memory.</p>
+<p>
+
+
+<p>External files are read relative to <a class="normal" href="glTF.Document.TglTFDocument.html#BaseDirectory">BaseDirectory</a>. <a class="normal" href="glTF.Document.TglTFDocument.html#FileName">FileName</a> becomes empty.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ABytes</dt>
+<dd>The whole GLB file.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The data is not valid GLB; see <a class="normal" href="glTF.Document.TglTFDocument.html#LoadFromFile-string-">LoadFromFile</a>.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LoadFromJSON-TJSONValue-"></span><code>procedure <strong>LoadFromJSON</strong>(AJSON: TJSONValue);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads already parsed glTF JSON.</p>
+<p>
+
+
+<p>Errors cannot report line numbers, as the original text is not available. Buffer data can only come from data URIs and from external files relative to <a class="normal" href="glTF.Document.TglTFDocument.html#BaseDirectory">BaseDirectory</a>.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AJSON</dt>
+<dd>The glTF root object; the caller keeps ownership.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The JSON is not valid glTF.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SaveToFile-string-"></span><code>procedure <strong>SaveToFile</strong>(const AFileName: string); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Saves as .gltf or .glb, chosen by the file extension, with default options.</p>
+<p>
+
+
+<p>Same as <a class="normal" href="glTF.Document.TglTFDocument.html#SaveToFile-string-TglTFSaveOptions-">SaveToFile</a> with <a class="normal" href="glTF.Document.TglTFSaveOptions.html#Default">TglTFSaveOptions.Default</a>.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AFileName</dt>
+<dd>The output file; its extension must be .gltf or .glb.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>See the overload with options.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SaveToFile-string-TglTFSaveOptions-"></span><code>procedure <strong>SaveToFile</strong>(const AFileName: string; const AOptions: <a href="glTF.Document.TglTFSaveOptions.html">TglTFSaveOptions</a>); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Saves as .gltf or .glb, chosen by the file extension.</p>
+<p>
+
+
+<p>The output is made file-complete. Every buffer and image stored as a separate file is written next to it, at the path its uri gives relative to the output, creating sub-folders as needed. A file whose data was not loaded is copied from where it was found, or from its original location. A file already there with the same bytes is left alone. <a class="normal" href="glTF.Document.TglTFDocument.html#SavedFiles">SavedFiles</a> lists what was done for each file. A file that cannot be found anywhere is written as a uri reference only, reported in <a class="normal" href="glTF.Document.TglTFDocument.html#SaveWarnings">SaveWarnings</a>, and makes <a class="normal" href="glTF.Document.TglTFDocument.html#SaveComplete">SaveComplete</a> False.
+
+<p>An image saved as a separate file is not also kept in a buffer: when it was inside one, its bytes are cut out, the later data moves down and every bufferView index is renumbered. Files using Draco or meshopt compression are the exception, as those extensions refer to bufferViews in their own JSON; the bytes then stay and <a class="normal" href="glTF.Document.TglTFDocument.html#SaveWarnings">SaveWarnings</a> says so. The document itself is never changed.
+
+<p>An image saved as a separate file is named, in order of preference: after its uri (keeping the uri's folders when they stay inside the output folder, otherwise only the file name); after its name, made safe for every platform's file system, with an extension from its MIME type; or &lt;model&gt;_image&lt;N&gt;. Names are unique within a save, ignoring case: images with identical bytes share one file, others get &quot;_2&quot;, &quot;_3&quot; and so on before the extension. Buffer files follow the same rule, and nothing may take the name of the output file itself.
+
+<p>An image file never replaces a different file already on disk: it is renamed the same way instead. The exception is an image with <code>TglTFImage.Shared</code> set, whose file may be shared with other models: when it already exists it is used as it is, even if its bytes differ, and its uri may lead outside the output folder.
+
+<p>The separate files are written first and the main file last, so a failure leaves any existing main file untouched. Existing files of the same names are replaced.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AFileName</dt>
+<dd>The output file; its extension must be .gltf or .glb.</dd>
+<dt>AOptions</dt>
+<dd>Where buffer data goes and how the JSON is laid out.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The extension is not .gltf or .glb, the objects are not valid glTF, or a GLB's buffers[0] has no data.</dd>
+<dt><code>EInOutError</code></dt>
+<dd>A file cannot be written.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SaveToStream-TStream-TglTFFileFormat-"></span><code>procedure <strong>SaveToStream</strong>(AStream: TStream; AFormat: <a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a>); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Saves to a stream in the given format, with default options.</p>
+<p>
+
+
+<p>Same as <a class="normal" href="glTF.Document.TglTFDocument.html#SaveToStream-TStream-TglTFFileFormat-TglTFSaveOptions-">SaveToStream</a> with <a class="normal" href="glTF.Document.TglTFSaveOptions.html#Default">TglTFSaveOptions.Default</a>.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AStream</dt>
+<dd>Written from its current position; the caller keeps ownership.</dd>
+<dt>AFormat</dt>
+<dd>gffJSON or gffGLB.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>See the overload with options.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SaveToStream-TStream-TglTFFileFormat-TglTFSaveOptions-"></span><code>procedure <strong>SaveToStream</strong>(AStream: TStream; AFormat: <a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a>; const AOptions: <a href="glTF.Document.TglTFSaveOptions.html">TglTFSaveOptions</a>); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Saves to a stream in the given format.</p>
+<p>
+
+
+<p>A stream has no folder for separate files, so every buffer and image that has data is put inside it: in a GLB, buffers[0] goes into the BIN chunk; everything else becomes a data URI, or a buffer for images with Embed set. Only files that could not be found stay as uri references, which makes <a class="normal" href="glTF.Document.TglTFDocument.html#SaveComplete">SaveComplete</a> False.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AStream</dt>
+<dd>Written from its current position; the caller keeps ownership.</dd>
+<dt>AFormat</dt>
+<dd>gffJSON or gffGLB.</dd>
+<dt>AOptions</dt>
+<dd>How the JSON is laid out; Buffers is ignored.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>AFormat is gffNone, the objects are not valid glTF, or a GLB's buffers[0] has no data.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ResolveUri-string-"></span><code>function <strong>ResolveUri</strong>(const AUri: string): string;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Resolves a buffer or image uri to a file path.</p>
+<p>
+
+
+<p>The uri is percent-decoded and resolved against <a class="normal" href="glTF.Document.TglTFDocument.html#BaseDirectory">BaseDirectory</a>. Data URIs and absolute paths are returned unchanged. The file does not have to exist.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AUri</dt>
+<dd>A uri as written in the glTF.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The file path, or AUri itself for a data URI.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="GetBufferData-Integer-"></span><code>function <strong>GetBufferData</strong>(AIndex: Integer): TBytes;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the bytes of a buffer.</p>
+<p>
+
+
+<p>The array is the buffer's own Data, not a copy.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AIndex</dt>
+<dd>Index in <code>Root.Buffers</code>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The buffer's Data, byteLength bytes long.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The buffer does not exist or its data is not loaded.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="MissingResources"></span><code>function <strong>MissingResources</strong>: TArray&lt;<a href="glTF.Document.TglTFMissingResource.html">TglTFMissingResource</a>&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lists the external buffer and image files whose data is not loaded.</p>
+<p>
+
+
+<p>Computed from the current objects each time it is called: every buffer or image with a uri that is not a data URI and no Data. Images inside a bufferView are not included.
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">One entry per missing file, buffers first; empty when none is missing.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="HasMissingResources"></span><code>function <strong>HasMissingResources</strong>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether any external buffer or image file is missing.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when <a class="normal" href="glTF.Document.TglTFDocument.html#MissingResources">MissingResources</a> is not empty.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SupplyResourceFile-TglTFResourceKind-Integer-string-"></span><code>procedure <strong>SupplyResourceFile</strong>(AKind: <a href="glTF.Document.html#TglTFResourceKind">TglTFResourceKind</a>; AIndex: Integer; const AFileName: string);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads the data of a buffer or image from a file the caller found.</p>
+<p>
+
+
+<p>The uri in the glTF is not changed. The file becomes the object's SourceFile, so a later save copies it next to the output if it is to be a separate file there.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AKind</dt>
+<dd>Whether AIndex is a buffer or an image.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>Root.Buffers</code> or <code>Root.Images</code>.</dd>
+<dt>AFileName</dt>
+<dd>The file to read.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The file does not exist, AIndex is out of range, or a buffer file is smaller than the buffer's byteLength.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SearchMissingResources-string-Boolean-"></span><code>function <strong>SearchMissingResources</strong>(const ADirectory: string; ARecursive: Boolean = True): Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Looks for every missing file in a folder and loads those it finds.</p>
+<p>
+
+
+<p>For each missing file it tries, in order: the uri's relative path inside ADirectory, the file name directly in ADirectory, then (when ARecursive) the file name in any sub-folder. Names are compared ignoring case on every platform. A candidate that cannot be used, such as a buffer file that is too small, is skipped. Sub-folders that cannot be read are ignored.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ADirectory</dt>
+<dd>The folder to search.</dd>
+<dt>ARecursive</dt>
+<dd>Also search sub-folders; this can be slow on large folders.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">How many missing files were found and loaded; 0 when ADirectory does not exist.</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Root"></span><code>property <strong>Root</strong>: <a href="glTF.Classes.TglTF.html">TglTF</a> read FRoot;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF object tree; never nil.</p>
+<p>
+
+
+<p>Owned by the document. Replaced by every successful load and by <a class="normal" href="glTF.Document.TglTFDocument.html#Clear">Clear</a>, which makes references to the old tree's objects invalid.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FileName"></span><code>property <strong>FileName</strong>: string read FFileName;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Full path of the loaded file; empty when loaded from anything else.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="BaseDirectory"></span><code>property <strong>BaseDirectory</strong>: string read FBaseDirectory write FBaseDirectory;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Folder that relative uris are resolved against.</p>
+<p>
+
+
+<p>Set by <a class="normal" href="glTF.Document.TglTFDocument.html#LoadFromFile-string-">LoadFromFile</a> to the file's folder. Set it before the other load methods when the asset refers to external files.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FileFormat"></span><code>property <strong>FileFormat</strong>: <a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a> read FFormat;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Format of the loaded asset; gffNone when nothing is loaded.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="HasBinaryChunk"></span><code>property <strong>HasBinaryChunk</strong>: Boolean read FHasBinaryChunk;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+True when the loaded GLB had a BIN chunk.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="BinaryChunkLength"></span><code>property <strong>BinaryChunkLength</strong>: Int64 read FBinaryChunkLength;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Size of the loaded GLB BIN chunk in bytes, padding included; 0 otherwise.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="JSONChunkLength"></span><code>property <strong>JSONChunkLength</strong>: Int64 read FJSONChunkLength;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Size of the loaded GLB JSON chunk in bytes; 0 for .gltf.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LoadExternalResources"></span><code>property <strong>LoadExternalResources</strong>: Boolean read FLoadExternalResources write FLoadExternalResources;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Reads external buffer and image files while loading; True by default.</p>
+<p>
+
+
+<p>When False, external files are not read and appear in <a class="normal" href="glTF.Document.TglTFDocument.html#MissingResources">MissingResources</a>. A later save to a file still copies them from their original location.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnProgress"></span><code>property <strong>OnProgress</strong>: <a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a> read FOnProgress write FOnProgress;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs as loading progresses: reading, parsing, building the objects and loading each buffer and image.</p>
+<p>
+
+
+<p>Called on the thread that loads; see <a class="normal" href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a>. The last call of a successful load has Done = 1 and says how many animations the model has.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Warnings"></span><code>property <strong>Warnings</strong>: TStringList read FWarnings;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Non-fatal problems found by the last load, one per line.</p>
+<p>
+
+
+<p>For example a missing texture file. Owned by the document.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SaveWarnings"></span><code>property <strong>SaveWarnings</strong>: TStringList read FSaveWarnings;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Non-fatal problems found by the last save, one per line.</p>
+<p>
+
+
+<p>Includes every file the saved glTF refers to that could not be found. Owned by the document; cleared at the start of each save.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SavedFiles"></span><code>property <strong>SavedFiles</strong>: TStringList read FSavedFiles;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+What the last save did with each separate buffer and image file.</p>
+<p>
+
+
+<p>One line per file, for example &quot;textures/brick.png: copied from D:\found\brick.png&quot;, &quot;...: written from embedded data&quot; or &quot;...: already in place&quot;. Empty after a save to a stream. Owned by the document; cleared at the start of each save.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SaveComplete"></span><code>property <strong>SaveComplete</strong>: Boolean read FSaveComplete;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+True when the last save is file-complete.</p>
+<p>
+
+
+<p>File-complete means every file the saved glTF refers to exists next to it, so it loads without missing files. False when a referenced file could not be found; <a class="normal" href="glTF.Document.TglTFDocument.html#SaveWarnings">SaveWarnings</a> names it.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

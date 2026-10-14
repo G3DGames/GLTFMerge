@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Classes: Class TglTFImage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFImage"></span><h1 class="cio">Class TglTFImage</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Classes.html">glTF.Classes</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFImage = class(<a class="normal" href="glTF.Base.TglTFChildOfRootProperty.html">TglTFChildOfRootProperty</a>)</code></p>
+<h2 class="description">Description</h2>
+<p>
+A glTF image: texture data stored in a file, a data URI or a bufferView.</p>
+<p>
+
+
+<p>The bytes of the image file are in <a class="normal" href="glTF.Classes.TglTFImage.html#Data">Data</a>. Whether a save stores them inside the glTF file or as a separate file is decided by <a class="normal" href="glTF.Classes.TglTFImage.html#Embed">Embed</a>.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="ancestor"><a class="normal" href="glTF.Base.TglTFProperty.html">TglTFProperty</a></li>
+<li class="ancestor"><a class="normal" href="glTF.Base.TglTFChildOfRootProperty.html">TglTFChildOfRootProperty</a></li>
+<li class="thisitem">TglTFImage</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Classes.TglTFImage.html#Validate">Validate</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Classes.TglTFImage.html#Create">Create</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Classes.TglTFImage.html#glTFTypeName">glTFTypeName</a></strong>: string; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Classes.TglTFImage.html#IsDataUri">IsDataUri</a></strong>: Boolean;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Classes.TglTFImage.html#EffectiveMimeType">EffectiveMimeType</a></strong>: string;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFImage.html#Data">Data</a></strong>: TBytes read FData write FData;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFImage.html#Embed">Embed</a></strong>: Boolean read FEmbed write FEmbed;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFImage.html#Shared">Shared</a></strong>: Boolean read FShared write FShared;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFImage.html#SourceFile">SourceFile</a></strong>: string read FSourceFile write FSourceFile;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFImage.html#Uri">Uri</a></strong>: string read FUri write FUri;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFImage.html#MimeType">MimeType</a></strong>: string read FMimeType write FMimeType;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTFImage.html#BufferView">BufferView</a></strong>: Integer read FBufferView write FBufferView;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="Validate"></span><code>procedure <strong>Validate</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="inheritdescription">This item has no description. Showing description inherited from <a class="normal" href="glTF.Base.TglTFProperty.html#Validate">TglTFProperty.Validate</a>.</p><p>
+Checks rules beyond &quot;property X is required&quot;; does nothing by default.
+
+<p>Called last by <a class="normal" href="glTF.Base.TglTFProperty.html#LoadFromJSON-TJSONValue-string-">LoadFromJSON</a>. For example camera.type &quot;perspective&quot; requires camera.perspective. Raise with <a class="normal" href="glTF.Base.TglTFProperty.html#RaiseMissing-string-">RaiseMissing</a> or <a class="normal" href="glTF.Base.TglTFProperty.html#RaiseInvalid-string-string-">RaiseInvalid</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create"></span><code>constructor <strong>Create</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates an image with no uri and no bufferView.</p>
+<p>
+
+
+<p><a class="normal" href="glTF.Classes.TglTFImage.html#BufferView">BufferView</a> is GLTF_UNDEFINED_INDEX and <a class="normal" href="glTF.Classes.TglTFImage.html#Embed">Embed</a> is False.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="glTFTypeName"></span><code>class function <strong>glTFTypeName</strong>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the object's name in the glTF specification.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">Always &quot;image&quot;; used in error messages.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsDataUri"></span><code>function <strong>IsDataUri</strong>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether the uri holds the image itself as a &quot;data:&quot; URI.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">True for a data URI, False for a file reference or no uri.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="EffectiveMimeType"></span><code>function <strong>EffectiveMimeType</strong>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the best known MIME type of the image.</p>
+<p>
+
+
+<p>Tries, in order: <a class="normal" href="glTF.Classes.TglTFImage.html#MimeType">MimeType</a>, the data URI's type, the file extension of the uri, then the signature at the start of <a class="normal" href="glTF.Classes.TglTFImage.html#Data">Data</a> (PNG, JPEG, WebP).
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">For example <code>image/png</code>; empty when the type cannot be told.</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Data"></span><code>property <strong>Data</strong>: TBytes read FData write FData;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The bytes of the image file; nil when the file is missing.</p>
+<p>
+
+
+<p>Filled by TglTFDocument when loading, from a data URI, an external file or a copy of its bufferView, and used when saving. Not part of the glTF JSON.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonIgnore</code></dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Embed"></span><code>property <strong>Embed</strong>: Boolean read FEmbed write FEmbed;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether a save stores the image inside the glTF file, when the save lets each image decide.</p>
+<p>
+
+
+<p>Only used by a save whose ImageSaveMode is ismPerImage; by default the format decides (see TglTFSaveOptions in glTF.Document). True stores it inside the saved file: in the BIN chunk for GLB, in a base64 data-URI buffer for glTF. False writes it as a separate file next to the saved file only; an image that was inside a buffer is taken out of it, so its bytes are not stored twice. Loading sets it to whether the image was already inside the file (a data URI or a bufferView). A save choice, not part of the glTF JSON.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonIgnore</code></dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Shared"></span><code>property <strong>Shared</strong>: Boolean read FShared write FShared;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether the image file may be shared with other models when saved as a separate file.</p>
+<p>
+
+
+<p>Only used when <a class="normal" href="glTF.Classes.TglTFImage.html#Embed">Embed</a> is False. When True and a file already exists where the image is to be saved, that file is used as it is: it is neither overwritten nor renamed, even if its bytes differ, as other models rely on it. A relative uri that leads outside the output folder, such as &quot;../textures/wood.png&quot;, is kept, so that models can share a common texture folder. When False (the default), saving never overwrites a different file: the image gets a unique name instead. A save choice, not part of the glTF JSON.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonIgnore</code></dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SourceFile"></span><code>property <strong>SourceFile</strong>: string read FSourceFile write FSourceFile;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The file <a class="normal" href="glTF.Classes.TglTFImage.html#Data">Data</a> was read from; empty for an image that was inside the glTF.</p>
+<p>
+
+
+<p>Set when the image is loaded from an external file, or from a file found later with TglTFDocument.SupplyResourceFile. Saving copies from it when the image must be a separate file and its data is not loaded. Not part of the glTF JSON.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonIgnore</code></dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Uri"></span><code>property <strong>Uri</strong>: string read FUri write FUri;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;uri&quot;: a file path relative to the glTF, or a data URI.</p>
+<p>
+
+
+<p>Empty when the image is in a bufferView.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('uri')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="MimeType"></span><code>property <strong>MimeType</strong>: string read FMimeType write FMimeType;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;mimeType&quot;, for example <code>image/png</code> or <code>image/jpeg</code>.</p>
+<p>
+
+
+<p>Required when the image is in a bufferView.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('mimeType')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="BufferView"></span><code>property <strong>BufferView</strong>: Integer read FBufferView write FBufferView;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;bufferView&quot; holding the image; GLTF_UNDEFINED_INDEX when it has none.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('bufferView')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

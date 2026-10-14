@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Document</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<h1 class="unit">Unit glTF.Document</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objects and Records</a></div><div class="one_section"><a class="section" href="#PasDoc-Types">Types</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="description">Description</h2>
+<p>
+Loads and saves glTF 2.0 documents as .gltf JSON or .glb binary files.</p>
+<p>
+
+
+<p><a class="normal" href="glTF.Document.TglTFDocument.html">TglTFDocument</a> is the entry point. Loading reads a .gltf or .glb asset from a file, a stream, a string, bytes or an already parsed TJSONValue into a TglTF object tree. The format is detected from the content, not the file name. Buffer and image bytes are copied into the objects (<code>TglTFBuffer.Data</code>, <code>TglTFImage.Data</code>) from the GLB BIN chunk, data URIs or external files.
+
+<p>Saving writes .gltf or .glb, chosen by the file extension (or explicitly for streams). Everything written comes from the objects: the JSON from <code>TglTF.SaveToJSON</code> and the binary data from the Data properties. Nothing is copied from the file that was loaded. By default a GLB stores every image inside it, in the BIN chunk, and a glTF writes every image as a separate file next to it; with <a class="normal" href="glTF.Document.TglTFSaveOptions.html#ImageSaveMode">TglTFSaveOptions.ImageSaveMode</a> set to ismPerImage, each image's Embed flag decides instead whether it goes into a buffer (GLB: the BIN chunk; glTF: a new base64 data-URI buffer) or into a separate file. Animations whose <code>ExportOnSave</code> is False are left out, together with the accessors, bufferViews and buffer bytes only they used, and so are images no mesh shows (see <a class="normal" href="glTF.Document.TglTFSaveOptions.html#LeaveOutUnusedImages">TglTFSaveOptions.LeaveOutUnusedImages</a>).
+
+<p>A save to a file is made file-complete: every separate buffer and image file the saved glTF refers to is written or copied next to it, unless it is already there with the same bytes. Files that could not be found are reported in <a class="normal" href="glTF.Document.TglTFDocument.html#SaveWarnings">TglTFDocument.SaveWarnings</a> and <a class="normal" href="glTF.Document.TglTFDocument.html#SaveComplete">TglTFDocument.SaveComplete</a> is False.
+
+<p></p>
+
+<pre class="preformatted">
+Load:  file / stream / string / bytes --&gt; TglTF objects + Data
+Save:  TglTF objects + Data --&gt; copy --&gt; storage chosen per buffer / image --&gt; output
+       separate files: written next to the output (SavedFiles lists them)</pre>
+
+<p>
+
+<p>None of the classes in this unit are thread-safe; use a document from one thread at a time.</p>
+<span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
+<span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Document.EglTFGLBError.html"><code>EglTFGLBError</code></a></td>
+<td class="itemdesc">Raised when the GLB container itself is invalid: its header or chunk layout.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Record&nbsp;<a class="bold" href="glTF.Document.TglTFSaveOptions.html"><code>TglTFSaveOptions</code></a></td>
+<td class="itemdesc">Settings for <a class="normal" href="glTF.Document.TglTFDocument.html#SaveToFile-string-TglTFSaveOptions-">TglTFDocument.SaveToFile</a> and <a class="normal" href="glTF.Document.TglTFDocument.html#SaveToStream-TStream-TglTFFileFormat-TglTFSaveOptions-">TglTFDocument.SaveToStream</a>.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Record&nbsp;<a class="bold" href="glTF.Document.TglTFMissingResource.html"><code>TglTFMissingResource</code></a></td>
+<td class="itemdesc">An external buffer or image file whose data is not loaded.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Record&nbsp;<a class="bold" href="glTF.Document.TglTFProgress.html"><code>TglTFProgress</code></a></td>
+<td class="itemdesc">How far a long operation has got: which model, which stage, how much of it.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Document.TglTFDocument.html"><code>TglTFDocument</code></a></td>
+<td class="itemdesc">A glTF 2.0 document: its object tree and loading and saving.</td>
+</tr>
+</table>
+<span id="PasDoc-Types"></span><h3 class="summary">Types</h3>
+<table class="summary wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a></strong> = (...);</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Document.html#TglTFResourceMode">TglTFResourceMode</a></strong> = (...);</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Document.html#TglTFImageSaveMode">TglTFImageSaveMode</a></strong> = (...);</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Document.html#TglTFResourceKind">TglTFResourceKind</a></strong> = (...);</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a></strong> = procedure(Sender: TObject; const AProgress: <a href="glTF.Document.TglTFProgress.html">TglTFProgress</a>) of object;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Types</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFFileFormat"></span><code><strong>TglTFFileFormat</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+The two glTF file formats.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="gffNone">gffNone</span>: No format: nothing is loaded, or the file name has no .gltf or .glb extension.</li>
+<li>
+<span id="gffJSON">gffJSON</span>: glTF JSON text, usually a .gltf file.</li>
+<li>
+<span id="gffGLB">gffGLB</span>: Binary glTF, a .glb file.</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFResourceMode"></span><code><strong>TglTFResourceMode</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Where the data of a buffer goes when saving.</p>
+<p>
+
+
+<p>Applies to buffers only; images follow <a class="normal" href="glTF.Document.html#TglTFImageSaveMode">TglTFImageSaveMode</a>. In a GLB, buffers[0] always goes into the BIN chunk whatever the mode.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="rmKeep">rmKeep</span>: Keeps each buffer's kind: data URIs stay data URIs, external files stay external files, written next to the output.</p>
+<p>
+
+
+<p>A buffer that was in a GLB BIN chunk becomes &quot;&lt;name&gt;.bin&quot; when saving .gltf.</li>
+<li>
+<span id="rmEmbed">rmEmbed</span>: Embeds every buffer as a base64 data URI.</li>
+<li>
+<span id="rmExternal">rmExternal</span>: Writes every buffer as a file next to the output.</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFImageSaveMode"></span><code><strong>TglTFImageSaveMode</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Where the images go when saving.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="ismByFormat">ismByFormat</span>: The format decides: a GLB stores every image inside it, in the BIN chunk; a glTF writes every image as a separate file next to it.</p>
+<p>
+
+
+<p>The images' Embed flags are ignored. A glTF saved to a stream, which has no folder for files, still holds its images as data URIs.</li>
+<li>
+<span id="ismPerImage">ismPerImage</span>: Each image's <code>TglTFImage.Embed</code> flag decides, in either format.</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFResourceKind"></span><code><strong>TglTFResourceKind</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+The two kinds of external file a glTF can refer to.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="rkBuffer">rkBuffer</span>: A buffer, an entry of <code>TglTF.Buffers</code>.</li>
+<li>
+<span id="rkImage">rkImage</span>: An image, an entry of <code>TglTF.Images</code>.</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFProgressEvent"></span><code><strong>TglTFProgressEvent</strong> = procedure(Sender: TObject; const AProgress: <a href="glTF.Document.TglTFProgress.html">TglTFProgress</a>) of object;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Event reporting progress, like TNotifyEvent with the progress added.</p>
+<p>
+
+
+<p>Called on the thread doing the work: when loading runs in a background thread, a handler that updates the user interface must pass the update to the main thread, for example with TThread.Queue. The handler must not change the document.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The document or importer doing the work.</dd>
+<dt>AProgress</dt>
+<dd>How far it has got.</dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Base: Class EglTFError</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="EglTFError"></span><h1 class="cio">Class EglTFError</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Base.html">glTF.Base</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type EglTFError = class(Exception)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Base class of every exception raised by the glTF reader and writer.</p>
+<p>
+
+
+<p>Carries where the problem is: <a class="normal" href="glTF.Base.EglTFError.html#JSONPath">JSONPath</a> always when known, and the line and column in the source text when the document was loaded from text. The location is appended to the message by <a class="normal" href="glTF.Base.EglTFError.html#SetSourceLocation-string-Integer-Integer-Integer-">SetSourceLocation</a>.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="ancestor">Exception</li>
+<li class="thisitem">EglTFError</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Base.EglTFError.html#SetSourceLocation-string-Integer-Integer-Integer-">SetSourceLocation</a></strong>(const ASourceName: string; ALine, AColumn: Integer; AEndLine: Integer = 0);</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.EglTFError.html#JSONPath">JSONPath</a></strong>: string read FJSONPath;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.EglTFError.html#SourceName">SourceName</a></strong>: string read FSourceName;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.EglTFError.html#Line">Line</a></strong>: Integer read FLine;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.EglTFError.html#Column">Column</a></strong>: Integer read FColumn;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.EglTFError.html#EndLine">EndLine</a></strong>: Integer read FEndLine;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Base.EglTFError.html#HasSourceLocation">HasSourceLocation</a></strong>: Boolean read GetHasSourceLocation;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SetSourceLocation-string-Integer-Integer-Integer-"></span><code>procedure <strong>SetSourceLocation</strong>(const ASourceName: string; ALine, AColumn: Integer; AEndLine: Integer = 0);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Records where the error is in the source text and appends it to the message.</p>
+<p>
+
+
+<p>The message gets for example &quot; [model.gltf, line 74, column 13]&quot;, or &quot; [lines 72-79]&quot; when AEndLine is after ALine. Only the first call has an effect; a line of 0 or less is ignored. Called by TglTFDocument while loading.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ASourceName</dt>
+<dd>File name to show; empty when not loaded from a file.</dd>
+<dt>ALine</dt>
+<dd>1-based line of the start of the problem.</dd>
+<dt>AColumn</dt>
+<dd>1-based column of the start of the problem.</dd>
+<dt>AEndLine</dt>
+<dd>Last line of the offending value, to report a range; 0 for a single position.</dd>
+</dl>
+</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="JSONPath"></span><code>property <strong>JSONPath</strong>: string read FJSONPath;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Location of the problem in the document, for example &quot;meshes[0].primitives[2]&quot;.</p>
+<p>
+
+
+<p>Empty for the root object or when unknown.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SourceName"></span><code>property <strong>SourceName</strong>: string read FSourceName;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Name of the loaded file, with &quot;, JSON chunk&quot; for a GLB; empty otherwise.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Line"></span><code>property <strong>Line</strong>: Integer read FLine;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+1-based line of the problem in the glTF text; 0 when unknown.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Column"></span><code>property <strong>Column</strong>: Integer read FColumn;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+1-based column of the problem in the glTF text; 0 when unknown.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="EndLine"></span><code>property <strong>EndLine</strong>: Integer read FEndLine;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Last line of the offending value; equal to <a class="normal" href="glTF.Base.EglTFError.html#Line">Line</a> for one-line values.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="HasSourceLocation"></span><code>property <strong>HasSourceLocation</strong>: Boolean read GetHasSourceLocation;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+True when <a class="normal" href="glTF.Base.EglTFError.html#Line">Line</a> and <a class="normal" href="glTF.Base.EglTFError.html#Column">Column</a> are known.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

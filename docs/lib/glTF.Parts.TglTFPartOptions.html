@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Parts: Record TglTFPartOptions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFPartOptions"></span><h1 class="cio">Record TglTFPartOptions</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Parts.html">glTF.Parts</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFPartOptions = record</code></p>
+<h2 class="description">Description</h2>
+<p>
+Settings that decide which bones a part covers and what it replaces.</p>
+<p>
+
+
+<p>Start from <a class="normal" href="glTF.Parts.TglTFPartOptions.html#Default">TglTFPartOptions.Default</a> and change what you need.</p>
+<h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTF.Parts.TglTFPartOptions.html#CoverGap">CoverGap</a></strong>: Double;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTF.Parts.TglTFPartOptions.html#MinShare">MinShare</a></strong>: Double;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTF.Parts.TglTFPartOptions.html#ReplaceShare">ReplaceShare</a></strong>: Double;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTF.Parts.TglTFPartOptions.html#KeepBones">KeepBones</a></strong>: TArray&lt;string&gt;;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Parts.TglTFPartOptions.html#Default">Default</a></strong>: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.TglTFPartOptions.html#IsKept-string-">IsKept</a></strong>(const ABone: string): Boolean;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="CoverGap"></span><code><strong>CoverGap</strong>: Double;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+How close a part's surface must come to the body for the body to be hidden there, as a share of the body's height; 0.03 by default.</p>
+<p>
+
+
+<p>A body vertex is covered when a part's surface crosses the line along its normal no further than this from it, on either side: outside the skin, or inside it where the body pokes through the cloth. A triangle is hidden when its three corners are covered. Larger values hide the body under looser clothes too; smaller ones keep more of it, at the risk of skin showing through.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="MinShare"></span><code><strong>MinShare</strong>: Double;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Share of a part's triangles a bone must drive for the part to cover that bone, from 0 to 1; 0.02 by default.</p>
+<p>
+
+
+<p>The bones a part covers decide which parts it replaces (see <a class="normal" href="glTF.Parts.TglTFPartOptions.html#ReplaceShare">ReplaceShare</a>) and are listed for it; they do not decide what of the body is hidden (see <a class="normal" href="glTF.Parts.TglTFPartOptions.html#CoverGap">CoverGap</a>).</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ReplaceShare"></span><code><strong>ReplaceShare</strong>: Double;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Share of a part's triangles on the bones a new part covers for the new part to replace it, from 0 to 1; 0.5 by default.</p>
+<p>
+
+
+<p>Only parts put on earlier are replaced; the body and the model's other meshes are hidden where covered instead.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="KeepBones"></span><code><strong>KeepBones</strong>: TArray&lt;string&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Bones never covered, compared ignoring case; none by default.</p>
+<p>
+
+
+<p>Body vertices whose strongest bone is one of these are never hidden, and parts do not replace each other on account of these bones. For example Head keeps the whole head under a hood.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Default"></span><code>class function <strong>Default</strong>: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the default settings.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">CoverGap 0.03, MinShare 0.02, ReplaceShare 0.5, no KeepBones.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsKept-string-"></span><code>function <strong>IsKept</strong>(const ABone: string): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether a bone is one of <a class="normal" href="glTF.Parts.TglTFPartOptions.html#KeepBones">KeepBones</a>.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ABone</dt>
+<dd>The bone's node name.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when the bone is never covered.</p></td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

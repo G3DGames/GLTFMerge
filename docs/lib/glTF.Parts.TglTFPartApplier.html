@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Parts: Class TglTFPartApplier</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFPartApplier"></span><h1 class="cio">Class TglTFPartApplier</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Parts.html">glTF.Parts</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFPartApplier = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Puts parts on a model and takes them off again.</p>
+<p>
+
+
+<p>Create one per model and keep it as long as the model is open: it remembers the body's triangles from before the first change, so that hidden triangles can come back. Create a new one when another model is loaded. See the unit description for what Apply does.
+
+<p></p>
+
+<pre class="longcode">
+Applier := TglTFPartApplier.Create(Doc);
+Applier.Apply([<span class="pascal_keyword">Library</span>[<span class="pascal_numeric">0</span>], <span class="pascal_keyword">Library</span>[<span class="pascal_numeric">3</span>]], TglTFPartOptions.<span class="pascal_keyword">Default</span>);</pre>
+
+<p></p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFPartApplier</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Parts.TglTFPartApplier.html#Create-TglTFDocument-">Create</a></strong>(ATarget: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTF.Parts.TglTFPartApplier.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.TglTFPartApplier.html#Apply-TArrayTglTFPart-TglTFPartOptions-">Apply</a></strong>(const AParts: TArray&lt;<a href="glTF.Parts.TglTFPart.html">TglTFPart</a>&gt;; const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>): Integer;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.TglTFPartApplier.html#Remove-TArrayInteger-TglTFPartOptions-">Remove</a></strong>(const ANodes: TArray&lt;Integer&gt;; const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>): Integer;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Parts.TglTFPartApplier.html#Refresh-TglTFPartOptions-">Refresh</a></strong>(const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.TglTFPartApplier.html#AppliedParts-TglTFPartOptions-">AppliedParts</a></strong>(const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>): TArray&lt;<a href="glTF.Parts.TglTFAppliedPart.html">TglTFAppliedPart</a>&gt;;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Parts.TglTFPartApplier.html#IsPartNode-TglTFNode-">IsPartNode</a></strong>(ANode: <a href="glTF.Classes.TglTFNode.html">TglTFNode</a>): Boolean; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Parts.TglTFPartApplier.html#RequestAbort">RequestAbort</a></strong>;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPartApplier.html#Target">Target</a></strong>: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a> read FTarget;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPartApplier.html#Log">Log</a></strong>: TStringList read FLog;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPartApplier.html#AbortRequested">AbortRequested</a></strong>: Boolean read GetAbortRequested;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Parts.TglTFPartApplier.html#OnProgress">OnProgress</a></strong>: <a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a> read FOnProgress write FOnProgress;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-TglTFDocument-"></span><code>constructor <strong>Create</strong>(ATarget: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates an applier for a model.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ATarget</dt>
+<dd>The model; not owned. Nothing else may change its meshes while the applier is used.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the applier; the model is not changed.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Apply-TArrayTglTFPart-TglTFPartOptions-"></span><code>function <strong>Apply</strong>(const AParts: TArray&lt;<a href="glTF.Parts.TglTFPart.html">TglTFPart</a>&gt;; const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>): Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Puts parts on the model.</p>
+<p>
+
+
+<p>The parts are put on in turn, each taking off the pieces it replaces, so of two parts that cover the same bones the later one stays. A part that cannot be put on adds a line to <a class="normal" href="glTF.Parts.TglTFPartApplier.html#Log">Log</a> and the others are still put on. Then the body triangles the parts on the model lie over are hidden and the data no longer used is deleted. An abort stops between parts; the model is always left valid.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AParts</dt>
+<dd>The parts, from one or more libraries, which must stay alive meanwhile.</dd>
+<dt>AOptions</dt>
+<dd>Decide which bones each part covers and what it replaces.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of parts put on.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Remove-TArrayInteger-TglTFPartOptions-"></span><code>function <strong>Remove</strong>(const ANodes: TArray&lt;Integer&gt;; const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>): Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Takes parts off the model.</p>
+<p>
+
+
+<p>The parts' nodes are deleted with whatever only they used, and the body triangles they covered come back unless another part covers them.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ANodes</dt>
+<dd>Indices of part nodes in the model's <code>Root.Nodes</code>, as <a class="normal" href="glTF.Parts.TglTFPartApplier.html#AppliedParts-TglTFPartOptions-">AppliedParts</a> gives them; nodes that are not parts are ignored.</dd>
+<dt>AOptions</dt>
+<dd>Decide which bones the remaining parts cover.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of parts taken off.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Refresh-TglTFPartOptions-"></span><code>procedure <strong>Refresh</strong>(const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Hides the body triangles again with new settings, without putting on or taking off any part.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOptions</dt>
+<dd>Decide which bones the parts on the model cover.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AppliedParts-TglTFPartOptions-"></span><code>function <strong>AppliedParts</strong>(const AOptions: <a href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>): TArray&lt;<a href="glTF.Parts.TglTFAppliedPart.html">TglTFAppliedPart</a>&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lists the parts on the model.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOptions</dt>
+<dd>Decide the bones listed as covered.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">One entry per node marked as a part, in node order.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsPartNode-TglTFNode-"></span><code>class function <strong>IsPartNode</strong>(ANode: <a href="glTF.Classes.TglTFNode.html">TglTFNode</a>): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether a node is a part put on by an applier.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ANode</dt>
+<dd>The node.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when its extras have the <a class="normal" href="glTF.Parts.html#GLTF_PART_EXTRA">GLTF_PART_EXTRA</a> mark.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RequestAbort"></span><code>procedure <strong>RequestAbort</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks Apply to stop after the part it is putting on.</p>
+<p>
+
+
+<p>May be called from any thread.</p>
+</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Target"></span><code>property <strong>Target</strong>: <a href="glTF.Document.TglTFDocument.html">TglTFDocument</a> read FTarget;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The model.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Log"></span><code>property <strong>Log</strong>: TStringList read FLog;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+What happened: parts put on, taken off and replaced, triangles hidden; cleared by each Apply, Remove and Refresh.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AbortRequested"></span><code>property <strong>AbortRequested</strong>: Boolean read GetAbortRequested;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether Apply was asked to stop. May be read from any thread.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnProgress"></span><code>property <strong>OnProgress</strong>: <a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a> read FOnProgress write FOnProgress;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs as parts are put on. Called on the applying thread; see TglTFProgressEvent.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

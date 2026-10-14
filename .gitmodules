@@ -1,0 +1,6 @@
+[submodule "GLTFLib/delphi-neon"]
+	path = GLTFLib/delphi-neon
+	url = https://github.com/paolo-rossi/delphi-neon
+[submodule "delphi-neon"]
+	path = delphi-neon
+	url = https://github.com/paolo-rossi/delphi-neon

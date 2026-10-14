@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Parts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<h1 class="unit">Unit glTF.Parts</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objects and Records</a></div><div class="one_section"><a class="section" href="#PasDoc-FuncsProcs">Functions and Procedures</a></div><div class="one_section"><a class="section" href="#PasDoc-Constants">Constants</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="description">Description</h2>
+<p>
+Swaps body parts and outfit pieces between glTF models that share a skeleton.</p>
+<p>
+
+
+<p>Modular character kits, such as the Quaternius outfits, come as skinned meshes rigged to the same skeleton as a base character: a pair of boots, trousers, a hood. This unit puts such pieces on a loaded model, hides the body under them and takes off what they replace.
+
+<p><a class="normal" href="glTF.Parts.TglTFPartLibrary.html">TglTFPartLibrary</a> loads part files and lists every skinned mesh in them as a <a class="normal" href="glTF.Parts.TglTFPart.html">TglTFPart</a>, with the bones that drive it: for each triangle, the bone with the most weight on its three corners. The bones that drive a good share of a part's triangles are the ones it <em>covers</em>; see <a class="normal" href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a>.
+
+<p><a class="normal" href="glTF.Parts.TglTFPartApplier.html">TglTFPartApplier</a> puts parts on a model: </p>
+
+<ul class="paragraph_spacing">
+  <li><p>Each part is copied in with its mesh, materials, textures and images, and bound to the model's skeleton by bone name, so it follows the model's bones.</p></li>
+  <li><p>A part put on earlier that the new part covers for the most part, such as the old boots, is taken off: deleted with whatever only it used. This goes by bones, as new sandals do not lie over the old boots.</p></li>
+  <li><p>The body triangles a part's surface lies over are hidden: left out of the index list. This goes by shape, not by bone, as a bone is often only partly covered: trousers that end at mid-calf leave the shin below them. Both the body and the parts are skinned to the model's skeleton at rest, and a body vertex is covered when a part's surface crosses the line along its normal within a small gap, on either side, so body that pokes through the cloth is hidden too. The body keeps all its vertices, and the hidden triangles come back when the part covering them is taken off.</p></li>
+</ul>
+
+<p> Parts added are marked in their node's extras (see <a class="normal" href="glTF.Parts.html#GLTF_PART_EXTRA">GLTF_PART_EXTRA</a>), so they are recognised after the model is saved and loaded again. The model's other skinned meshes, such as hair under a hood, are hidden where covered like the body; they are never deleted.
+
+<p>The applier remembers each body primitive's triangles from before the first change, so taking parts off and putting others on never loses any. That memory lasts as long as the applier: after the model is saved and loaded again, its triangles as saved are the starting point.
+
+<p></p>
+
+<pre class="preformatted">
+part files --&gt; TglTFPartLibrary --&gt; TglTFPart (mesh + bones it covers)
+TglTFPartApplier.Apply(parts):
+  for each part:  take off the parts it replaces --&gt; copy it in, bound by bone name
+  then:           hide the body where the parts lie over it --&gt; delete unused data</pre>
+
+<p>
+
+<p>Progress is reported through OnProgress, so loading and applying can run in a background thread. Use a library or an applier from one thread at a time; only RequestAbort and AbortRequested may be used from another.</p>
+<span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
+<span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">Record&nbsp;<a class="bold" href="glTF.Parts.TglTFPartOptions.html"><code>TglTFPartOptions</code></a></td>
+<td class="itemdesc">Settings that decide which bones a part covers and what it replaces.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Parts.TglTFPart.html"><code>TglTFPart</code></a></td>
+<td class="itemdesc">One skinned mesh found in a part file: a piece that can be put on a model.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Parts.TglTFPartLibrary.html"><code>TglTFPartLibrary</code></a></td>
+<td class="itemdesc">The part files loaded and the parts found in them.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Record&nbsp;<a class="bold" href="glTF.Parts.TglTFAppliedPart.html"><code>TglTFAppliedPart</code></a></td>
+<td class="itemdesc">A part on a model, as listed by <a class="normal" href="glTF.Parts.TglTFPartApplier.html#AppliedParts-TglTFPartOptions-">TglTFPartApplier.AppliedParts</a>.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Parts.TglTFPartApplier.html"><code>TglTFPartApplier</code></a></td>
+<td class="itemdesc">Puts parts on a model and takes them off again.</td>
+</tr>
+</table>
+<span id="PasDoc-FuncsProcs"></span><h3 class="summary">Functions and Procedures</h3>
+<table class="summary wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.html#ReadPrimitiveTriangles-TglTF-TglTFMeshPrimitive-">ReadPrimitiveTriangles</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; APrimitive: <a href="glTF.Classes.TglTFMeshPrimitive.html">TglTFMeshPrimitive</a>): TArray&lt;Cardinal&gt;;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code>function <strong><a href="glTF.Parts.html#ReadAccessorValues-TglTF-Integer-">ReadAccessorValues</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): TArray&lt;Double&gt;;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Constants"></span><h3 class="summary">Constants</h3>
+<table class="summary wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Parts.html#GLTF_PART_EXTRA">GLTF_PART_EXTRA</a></strong> = 'glTFViewerPart';</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Functions and Procedures</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="ReadPrimitiveTriangles-TglTF-TglTFMeshPrimitive-"></span><code>function <strong>ReadPrimitiveTriangles</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; APrimitive: <a href="glTF.Classes.TglTFMeshPrimitive.html">TglTFMeshPrimitive</a>): TArray&lt;Cardinal&gt;;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Reads the triangles of a mesh primitive.</p>
+<p>
+
+
+<p>Triangle strips and fans are turned into separate triangles. A primitive without indices uses its vertices in order.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree the primitive is in.</dd>
+<dt>APrimitive</dt>
+<dd>The primitive.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">Three vertex indices per triangle; nil for points and lines.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The data is missing or does not fit.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="ReadAccessorValues-TglTF-Integer-"></span><code>function <strong>ReadAccessorValues</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): TArray&lt;Double&gt;;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Reads the values of an accessor as numbers.</p>
+<p>
+
+
+<p>Normalized integers are turned into 0..1 or -1..1, as the glTF specification says; sparse values are applied. Matrices are read as their components in order, without the padding some small matrix types have.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree the accessor is in.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Accessors</code>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">Count times the number of components values; element I's component C is at I * components + C.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The data is missing or does not fit.</dd>
+</dl>
+</td></tr>
+</table>
+<h3 class="detail">Constants</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="GLTF_PART_EXTRA"></span><code><strong>GLTF_PART_EXTRA</strong> = 'glTFViewerPart';</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Name of the extras entry that marks a node as a part put on by TglTFPartApplier.</p>
+<p>
+
+
+<p>Its value is an object with &quot;file&quot;, the part file's name, and &quot;part&quot;, the part's name.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

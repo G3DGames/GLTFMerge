@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Base</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<h1 class="unit">Unit glTF.Base</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objects and Records</a></div><div class="one_section"><a class="section" href="#PasDoc-Types">Types</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="description">Description</h2>
+<p>
+Base classes and exceptions of the glTF 2.0 reader and writer.</p>
+<p>
+
+
+<p><a class="normal" href="glTF.Base.TglTFProperty.html">TglTFProperty</a> is the abstract base of every glTF object: it loads an object from JSON, checks the properties the schema requires, keeps extensions, extras and non-standard properties so they can be queried, and writes the object back to JSON. <a class="normal" href="glTF.Base.TglTFList.generic.html">TglTFList</a> holds the arrays of glTF objects. Errors are reported with <a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a> and its descendants, which carry the JSON path and, when the text is known, the line of the problem.
+
+<p>JSON values are read and written with the Neon library (<a href="https://github.com/paolo-rossi/delphi-neon@">https://github.com/paolo-rossi/delphi-neon@</a>). The unit has no VCL or FMX dependencies, so it works on every target. Specification: <a href="https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html">https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html</a>
+
+<p></p>
+
+<pre class="preformatted">
+EglTFError
+|-- EglTFParseError             malformed JSON or an invalid value
+`-- EglTFMissingPropertyError   a required property is missing
+
+TglTFProperty (abstract)          load, validate, save; extensions and extras
+`-- TglTFChildOfRootProperty (abstract)   adds &quot;name&quot;</pre>
+
+<p></p>
+<span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
+<span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Base.EglTFError.html"><code>EglTFError</code></a></td>
+<td class="itemdesc">Base class of every exception raised by the glTF reader and writer.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Base.EglTFParseError.html"><code>EglTFParseError</code></a></td>
+<td class="itemdesc">Raised when the JSON is malformed or a value has the wrong type or shape.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Base.EglTFMissingPropertyError.html"><code>EglTFMissingPropertyError</code></a></td>
+<td class="itemdesc">Raised when a property the glTF 2.0 schema requires is not present.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Base.glTFRequiredAttribute.html"><code>glTFRequiredAttribute</code></a></td>
+<td class="itemdesc">Marks a property as required by the glTF 2.0 schema.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Record&nbsp;<a class="bold" href="glTF.Base.TglTFMemberInfo.html"><code>TglTFMemberInfo</code></a></td>
+<td class="itemdesc">Describes one simple-value property that is read from and written to JSON.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Base.TglTFTypeInfo.html"><code>TglTFTypeInfo</code></a></td>
+<td class="itemdesc">Metadata of one glTF object class, collected once through RTTI.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Base.TglTFProperty.html"><code>TglTFProperty</code></a></td>
+<td class="itemdesc">Abstract base of every glTF object, glTFProperty in the schema.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Base.TglTFChildOfRootProperty.html"><code>TglTFChildOfRootProperty</code></a></td>
+<td class="itemdesc">Abstract base of the objects stored in the root's arrays, glTFChildOfRootProperty in the schema.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Base.TglTFList.generic.html"><code>TglTFList</code></a></td>
+<td class="itemdesc">Owning list of glTF objects, loaded from and saved to a JSON array.</td>
+</tr>
+</table>
+<span id="PasDoc-Types"></span><h3 class="summary">Types</h3>
+<table class="summary wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.Base.html#TglTFPropertyClass">TglTFPropertyClass</a></strong> = class of <a href="glTF.Base.TglTFProperty.html">TglTFProperty</a>;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Types</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFPropertyClass"></span><code><strong>TglTFPropertyClass</strong> = class of <a href="glTF.Base.TglTFProperty.html">TglTFProperty</a>;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Class reference to a glTF object class, used to create nested objects.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

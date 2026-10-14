@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Classes: Class TglTF</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTF"></span><h1 class="cio">Class TglTF</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Classes.html">glTF.Classes</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTF = class(<a class="normal" href="glTF.Base.TglTFProperty.html">TglTFProperty</a>)</code></p>
+<h2 class="description">Description</h2>
+<p>
+The root object of a glTF asset.</p>
+<p>
+
+
+<p>Owns every object of the document. Other objects refer to each other by index in these lists, so removing or reordering items changes those references. Usually held by a TglTFDocument.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="ancestor"><a class="normal" href="glTF.Base.TglTFProperty.html">TglTFProperty</a></li>
+<li class="thisitem">TglTF</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Classes.TglTF.html#ReadChildren-TJSONObject-">ReadChildren</a></strong>(AJSON: TJSONObject); override;</code></td>
+</tr>
+<tr class="list2 visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Classes.TglTF.html#WriteChildren-TJSONObject-">WriteChildren</a></strong>(AJSON: TJSONObject); override;</code></td>
+</tr>
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Classes.TglTF.html#Validate">Validate</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Classes.TglTF.html#Create">Create</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTF.Classes.TglTF.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Classes.TglTF.html#glTFTypeName">glTFTypeName</a></strong>: string; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Classes.TglTF.html#IsExtensionUsed-string-">IsExtensionUsed</a></strong>(const AName: string): Boolean;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Classes.TglTF.html#IsExtensionRequired-string-">IsExtensionRequired</a></strong>(const AName: string): Boolean;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Classes.TglTF.html#SaveToJSON">SaveToJSON</a></strong>: TJSONObject; override;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#ExtensionsUsed">ExtensionsUsed</a></strong>: TArray&lt;string&gt; read FExtensionsUsed write FExtensionsUsed;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#ExtensionsRequired">ExtensionsRequired</a></strong>: TArray&lt;string&gt; read FExtensionsRequired write FExtensionsRequired;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Accessors">Accessors</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFAccessor.html">TglTFAccessor</a>&gt; read FAccessors;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Animations">Animations</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFAnimation.html">TglTFAnimation</a>&gt; read FAnimations;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Asset">Asset</a></strong>: <a href="glTF.Classes.TglTFAsset.html">TglTFAsset</a> read FAsset;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Buffers">Buffers</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFBuffer.html">TglTFBuffer</a>&gt; read FBuffers;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#BufferViews">BufferViews</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFBufferView.html">TglTFBufferView</a>&gt; read FBufferViews;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Cameras">Cameras</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFCamera.html">TglTFCamera</a>&gt; read FCameras;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Images">Images</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFImage.html">TglTFImage</a>&gt; read FImages;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Materials">Materials</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFMaterial.html">TglTFMaterial</a>&gt; read FMaterials;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Meshes">Meshes</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFMesh.html">TglTFMesh</a>&gt; read FMeshes;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Nodes">Nodes</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFNode.html">TglTFNode</a>&gt; read FNodes;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Samplers">Samplers</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFSampler.html">TglTFSampler</a>&gt; read FSamplers;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Scene">Scene</a></strong>: Integer read FScene write FScene;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Scenes">Scenes</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFScene.html">TglTFScene</a>&gt; read FScenes;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Skins">Skins</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFSkin.html">TglTFSkin</a>&gt; read FSkins;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Classes.TglTF.html#Textures">Textures</a></strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFTexture.html">TglTFTexture</a>&gt; read FTextures;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="ReadChildren-TJSONObject-"></span><code>procedure <strong>ReadChildren</strong>(AJSON: TJSONObject); override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="inheritdescription">This item has no description. Showing description inherited from <a class="normal" href="glTF.Base.TglTFProperty.html#ReadChildren-TJSONObject-">TglTFProperty.ReadChildren</a>.</p><p>
+Loads nested glTF objects, lists and maps; does nothing by default.
+
+<p>Called by <a class="normal" href="glTF.Base.TglTFProperty.html#LoadFromJSON-TJSONValue-string-">LoadFromJSON</a> after the simple values have been read. Free any previously loaded children first, as an object can be loaded more than once.
+
+<p></p>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="WriteChildren-TJSONObject-"></span><code>procedure <strong>WriteChildren</strong>(AJSON: TJSONObject); override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="inheritdescription">This item has no description. Showing description inherited from <a class="normal" href="glTF.Base.TglTFProperty.html#WriteChildren-TJSONObject-">TglTFProperty.WriteChildren</a>.</p><p>
+Writes nested glTF objects, lists and maps; does nothing by default.
+
+<p>The counterpart of <a class="normal" href="glTF.Base.TglTFProperty.html#ReadChildren-TJSONObject-">ReadChildren</a>, called by <a class="normal" href="glTF.Base.TglTFProperty.html#SaveToJSON">SaveToJSON</a> after the simple values have been written.
+
+<p></p>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="Validate"></span><code>procedure <strong>Validate</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="inheritdescription">This item has no description. Showing description inherited from <a class="normal" href="glTF.Base.TglTFProperty.html#Validate">TglTFProperty.Validate</a>.</p><p>
+Checks rules beyond &quot;property X is required&quot;; does nothing by default.
+
+<p>Called last by <a class="normal" href="glTF.Base.TglTFProperty.html#LoadFromJSON-TJSONValue-string-">LoadFromJSON</a>. For example camera.type &quot;perspective&quot; requires camera.perspective. Raise with <a class="normal" href="glTF.Base.TglTFProperty.html#RaiseMissing-string-">RaiseMissing</a> or <a class="normal" href="glTF.Base.TglTFProperty.html#RaiseInvalid-string-string-">RaiseInvalid</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create"></span><code>constructor <strong>Create</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the object with the spec's default values.</p>
+<p>
+
+
+<p>Scene is GLTF_UNDEFINED_INDEX; every list is empty and Asset is nil until loaded.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the object and every object it holds.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="glTFTypeName"></span><code>class function <strong>glTFTypeName</strong>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the object's name in the glTF specification.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">Always &quot;glTF&quot;; used in error messages.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsExtensionUsed-string-"></span><code>function <strong>IsExtensionUsed</strong>(const AName: string): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether an extension is listed in &quot;extensionsUsed&quot;.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>Extension name; case-sensitive.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when listed.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="IsExtensionRequired-string-"></span><code>function <strong>IsExtensionRequired</strong>(const AName: string): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether an extension is listed in &quot;extensionsRequired&quot;.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>Extension name; case-sensitive.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when listed.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SaveToJSON"></span><code>function <strong>SaveToJSON</strong>: TJSONObject; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Builds the JSON for the whole asset from the current objects.</p>
+<p>
+
+
+<p>As <code>TglTFProperty.SaveToJSON</code>, with &quot;asset&quot; moved to the front as is conventional.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">A new JSON object, owned by the caller.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>A value cannot be converted to JSON.</dd>
+</dl>
+</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ExtensionsUsed"></span><code>property <strong>ExtensionsUsed</strong>: TArray&lt;string&gt; read FExtensionsUsed write FExtensionsUsed;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;extensionsUsed&quot;: names of the extensions the file uses; empty when none.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('extensionsUsed')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ExtensionsRequired"></span><code>property <strong>ExtensionsRequired</strong>: TArray&lt;string&gt; read FExtensionsRequired write FExtensionsRequired;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;extensionsRequired&quot;: names of the extensions a reader must support; empty when none.</p>
+<p>
+
+
+<p>Every name must also be in <a class="normal" href="glTF.Classes.TglTF.html#ExtensionsUsed">ExtensionsUsed</a>.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('extensionsRequired')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Accessors"></span><code>property <strong>Accessors</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFAccessor.html">TglTFAccessor</a>&gt; read FAccessors;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;accessors&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('accessors')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Animations"></span><code>property <strong>Animations</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFAnimation.html">TglTFAnimation</a>&gt; read FAnimations;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;animations&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('animations')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Asset"></span><code>property <strong>Asset</strong>: <a href="glTF.Classes.TglTFAsset.html">TglTFAsset</a> read FAsset;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;asset&quot;: file metadata; required.</p>
+<p>
+
+
+<p>Nil until loaded. Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('asset')</dt>
+  <dd></dd>
+  <dt><a class="normal" href="glTF.Base.glTFRequiredAttribute.html">glTFRequired</a></dt>
+  <dd>Marks a property as required by the glTF 2.0 schema.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Buffers"></span><code>property <strong>Buffers</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFBuffer.html">TglTFBuffer</a>&gt; read FBuffers;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;buffers&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('buffers')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="BufferViews"></span><code>property <strong>BufferViews</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFBufferView.html">TglTFBufferView</a>&gt; read FBufferViews;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;bufferViews&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('bufferViews')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Cameras"></span><code>property <strong>Cameras</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFCamera.html">TglTFCamera</a>&gt; read FCameras;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;cameras&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('cameras')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Images"></span><code>property <strong>Images</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFImage.html">TglTFImage</a>&gt; read FImages;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;images&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('images')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Materials"></span><code>property <strong>Materials</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFMaterial.html">TglTFMaterial</a>&gt; read FMaterials;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;materials&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('materials')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Meshes"></span><code>property <strong>Meshes</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFMesh.html">TglTFMesh</a>&gt; read FMeshes;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;meshes&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('meshes')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Nodes"></span><code>property <strong>Nodes</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFNode.html">TglTFNode</a>&gt; read FNodes;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;nodes&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('nodes')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Samplers"></span><code>property <strong>Samplers</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFSampler.html">TglTFSampler</a>&gt; read FSamplers;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;samplers&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('samplers')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Scene"></span><code>property <strong>Scene</strong>: Integer read FScene write FScene;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;scene&quot;: index in <a class="normal" href="glTF.Classes.TglTF.html#Scenes">Scenes</a> of the scene to show first; GLTF_UNDEFINED_INDEX when not set.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('scene')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Scenes"></span><code>property <strong>Scenes</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFScene.html">TglTFScene</a>&gt; read FScenes;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;scenes&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('scenes')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Skins"></span><code>property <strong>Skins</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFSkin.html">TglTFSkin</a>&gt; read FSkins;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;skins&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('skins')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Textures"></span><code>property <strong>Textures</strong>: <a href="glTF.Base.TglTFList.generic.html">TglTFList</a>&lt;<a href="glTF.Classes.TglTFTexture.html">TglTFTexture</a>&gt; read FTextures;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The glTF &quot;textures&quot;.</p>
+<p>
+
+
+<p>Owned by this object.</p>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt><code>NeonProperty</code>('textures')</dt>
+  <dd></dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>
