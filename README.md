@@ -4,8 +4,10 @@ A Pascal Library to read/write GLTF/GLB files and merge them together
 
 ### Dependancies - neon JSON library
 
-> git submodule init
-> git submodule update
+```
+git submodule init
+git submodule update
+```
 
 ### Code
 
