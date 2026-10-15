@@ -107,6 +107,29 @@ type
   /// appear.</summary>
   TglTFAnimationRanges = TArray<TglTFAnimationRange>;
 
+  //** @abstract(What @link(TglTFAnimationSplitter.ParseRangeList) found in a text.)
+  /// <summary>What <see cref="TglTFAnimationSplitter.ParseRangeList"/> found in a
+  /// text.</summary>
+  TglTFRangeList = record
+    //** @abstract(The ranges, in the order of the lines.)
+    /// <summary>The ranges, in the order of the lines.</summary>
+    Ranges: TglTFAnimationRanges;
+
+    //** @abstract(Line number, from 1, of the first range; 0 when none was found.)
+    /// <summary>Line number, from 1, of the first range; 0 when none was found.</summary>
+    FirstLine: Integer;
+
+    //** @abstract(Line number, from 1, of the last range; 0 when none was found.)
+    /// <summary>Line number, from 1, of the last range; 0 when none was found.</summary>
+    LastLine: Integer;
+
+    //** @abstract(Line numbers between the first and the last range that hold text but no
+    //** range; they were skipped.)
+    /// <summary>Line numbers between the first and the last range that hold text but no
+    /// range; they were skipped.</summary>
+    SkippedLines: TArray<Integer>;
+  end;
+
   //** @abstract(Finds long animations and splits them by frame ranges.)
   //**
   //** All methods are class methods. They work on a TglTF whose buffer data is loaded.
@@ -262,6 +285,59 @@ type
     class function ValidateRanges(ARoot: TglTF; AIndex, ALastFrame: Integer;
       const ARanges: TglTFAnimationRanges; out AProblems: TArray<string>): Boolean; static;
 
+    //** @abstract(Reads animation ranges from a text, such as the list that comes with an
+    //** animation file.)
+    //**
+    //** A line holds a range when it has two whole numbers, the start frame and then the end
+    //** frame, separated only by spaces, tabs and signs such as "-", "~", ":" or "..", or by
+    //** the word "to"; a "-" is never a minus sign, as frames are never negative. The name is
+    //** the text before the numbers or, when there is none, the text after them. It ends at a
+    //** tab, two spaces, "@(", "[", "#", ";" or "//", so notes after it are ignored, and must
+    //** contain a letter. Quotes are removed, and so are a leading list number such as "3."
+    //** and surrounding signs such as ":" or ",". Digits inside a name, as in walk_01, are part
+    //** of it.
+    //**
+    //** Lines before the first range and after the last, such as a title or a note, are
+    //** ignored. Lines between them that hold text but no range are skipped and listed.
+    //** The ranges are not checked; see ValidateRanges.
+    //**
+    //** @param(AText The text, with any line ends.)
+    //**
+    //** @param(AList What was found.)
+    //**
+    //** @returns(True when at least one range was found.)
+    //**
+    //** @longCode(#
+    //** 10 - 40  walk_01           -> walk_01, 10, 40
+    //** Look Around    415 - 555  -> Look Around, 415, 555
+    //** "Run" 625-685 (3 loops)   -> Run, 625, 685
+    //** #)
+    /// <summary>Reads animation ranges from a text, such as the list that comes with an
+    /// animation file.</summary>
+    /// <param name="AText">The text, with any line ends.</param>
+    /// <param name="AList">What was found.</param>
+    /// <returns>True when at least one range was found.</returns>
+    /// <remarks>
+    /// <para>A line holds a range when it has two whole numbers, the start frame and then the
+    /// end frame, separated only by spaces, tabs and signs such as "-", "~", ":" or "..", or
+    /// by the word "to"; a "-" is never a minus sign, as frames are never negative. The name is
+    /// the text before the numbers or, when there is none, the text after them. It ends at a
+    /// tab, two spaces, "(", "[", "#", ";" or "//", so notes after it are ignored, and must
+    /// contain a letter. Quotes are removed, and so are a leading list number such as "3." and
+    /// surrounding signs such as ":" or ",". Digits inside a name, as in walk_01, are part of
+    /// it.</para>
+    /// <para>Lines before the first range and after the last, such as a title or a note, are
+    /// ignored. Lines between them that hold text but no range are skipped and listed. The
+    /// ranges are not checked; see ValidateRanges.</para>
+    /// </remarks>
+    /// <example><code>
+    /// 10 - 40  walk_01           -> walk_01, 10, 40
+    /// Look Around    415 - 555  -> Look Around, 415, 555
+    /// "Run" 625-685 (3 loops)   -> Run, 625, 685
+    /// </code></example>
+    class function ParseRangeList(const AText: string; out AList: TglTFRangeList): Boolean;
+      static;
+
     //** @abstract(Replaces an animation with one new animation per range.)
     //**
     //** The new animations take the old one's place in the list, in the order of ARanges,
@@ -306,6 +382,7 @@ type
 implementation
 
 uses
+  System.RegularExpressions, System.Character,
   glTF.Edit;
 
 const
@@ -850,6 +927,98 @@ begin
     if AProblems[I] <> '' then
       Result := False;
   end;
+end;
+
+// The name in the text before or after a range: up to a tab, two spaces or
+// the start of a note, without a list number or surrounding signs
+function CleanRangeName(const AText: string): string;
+var
+  LMatch: TMatch;
+begin
+  Result := Trim(AText);
+  Result := TRegEx.Replace(Result, '^\d+[.)]\s+', '');
+  LMatch := TRegEx.Match(Result, '\t|\s{2,}|\(|\[|#|;|//');
+  if LMatch.Success then
+    Result := Copy(Result, 1, LMatch.Index - 1);
+  Result := Trim(Result).Trim([' ', #9, ':', '-', '=', '|', '.', ',']);
+end;
+
+function HasLetter(const AText: string): Boolean;
+var
+  C: Char;
+begin
+  for C in AText do
+    if C.IsLetter then
+      Exit(True);
+  Result := False;
+end;
+
+// One line as a range; False when it holds none
+function ParseRangeLine(const ALine: string; out ARange: TglTFAnimationRange): Boolean;
+const
+  // Two whole numbers, not part of a word or a decimal, apart by up to 12
+  // signs or spaces, or by "to"
+  RANGE_PATTERN = '(?<![\w\-.])(\d+)(?:[^\w]{1,12}|[^\w]{0,6}to[^\w]{0,6})(\d+)(?![\w.])';
+  QUOTES: array[0..6] of string = ('"', '''', '`', #$201C, #$201D, #$2018, #$2019);
+var
+  LLine, LBefore: string;
+  LMatch: TMatch;
+  I: Integer;
+begin
+  Result := False;
+  LLine := ALine;
+  for I := Low(QUOTES) to High(QUOTES) do
+    LLine := LLine.Replace(QUOTES[I], '');
+
+  LMatch := TRegEx.Match(LLine, RANGE_PATTERN, [roIgnoreCase]);
+  if not LMatch.Success or not TryStrToInt(LMatch.Groups[1].Value, ARange.StartFrame) or
+     not TryStrToInt(LMatch.Groups[2].Value, ARange.EndFrame) then
+    Exit;
+
+  LBefore := Copy(LLine, 1, LMatch.Index - 1);
+  if HasLetter(LBefore) then
+    ARange.Name := CleanRangeName(LBefore)
+  else
+    ARange.Name := CleanRangeName(Copy(LLine, LMatch.Index + LMatch.Length, MaxInt));
+  ARange.Notes := '';
+  Result := HasLetter(ARange.Name);
+end;
+
+class function TglTFAnimationSplitter.ParseRangeList(const AText: string;
+  out AList: TglTFRangeList): Boolean;
+var
+  LLines: TArray<string>;
+  LParsed: TArray<Boolean>;
+  LRanges: TArray<TglTFAnimationRange>;
+  LRange: TglTFAnimationRange;
+  I: Integer;
+begin
+  AList.Ranges := nil;
+  AList.FirstLine := 0;
+  AList.LastLine := 0;
+  AList.SkippedLines := nil;
+
+  LLines := AText.Replace(#13#10, #10).Replace(#13, #10).Split([#10]);
+  SetLength(LParsed, Length(LLines));
+  SetLength(LRanges, Length(LLines));
+  for I := 0 to High(LLines) do
+    if ParseRangeLine(LLines[I], LRange) then
+    begin
+      LParsed[I] := True;
+      LRanges[I] := LRange;
+      if AList.FirstLine = 0 then
+        AList.FirstLine := I + 1;
+      AList.LastLine := I + 1;
+    end;
+
+  // The block from the first range to the last; text around it is ignored
+  if AList.FirstLine > 0 then
+    for I := AList.FirstLine - 1 to AList.LastLine - 1 do
+      if LParsed[I] then
+        AList.Ranges := AList.Ranges + [LRanges[I]]
+      else if Trim(LLines[I]) <> '' then
+        AList.SkippedLines := AList.SkippedLines + [I + 1];
+  Result := AList.Ranges <> nil;
 end;
 
 class function TglTFAnimationSplitter.Split(ARoot: TglTF; AIndex: Integer; AFrameRate: Double;

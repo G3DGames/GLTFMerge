@@ -13,6 +13,10 @@
 //** of the row before; a row that does not is reported in a message as soon as it is entered.
 //** Gaps between ranges are allowed.
 //**
+//** "Import list..." fills the grid from a text file, such as the list of ranges that comes
+//** with many animation files, using @code(TglTFAnimationSplitter.ParseRangeList); a message
+//** says what was read, and "Clear" empties the grid when the result is not right.
+//**
 //** The sheet can be saved to a file and loaded again, to finish it later. "Convert" is
 //** enabled once every row is valid; the ranges then go to the callback, which does the split
 //** with TglTFAnimationSplitter. The form is built in code and frees itself.
@@ -35,6 +39,11 @@ unit glTFViewer.Split;
   row must also start at or after the end of the row before; a row that does
   not is reported in a message as soon as it is entered. Gaps between ranges
   are allowed.
+
+  "Import list..." fills the grid from a text file, such as the list of ranges
+  that comes with many animation files, using
+  TglTFAnimationSplitter.ParseRangeList; a message says what was read, and
+  "Clear" empties the grid when the result is not right.
 
   The sheet can be saved to a file and loaded again, to finish it later.
   "Convert" is enabled once every row is valid; the ranges then go to the
@@ -111,6 +120,10 @@ type
     procedure IncreasingChange(Sender: TObject);
     procedure SaveClick(Sender: TObject);
     procedure LoadClick(Sender: TObject);
+    procedure ImportClick(Sender: TObject);
+    procedure ClearClick(Sender: TObject);
+    procedure ImportList(const AFileName: string);
+    procedure ClearRows;
     procedure SaveSheet(const AFileName: string);
     procedure LoadSheet(const AFileName: string);
     procedure ConvertClick(Sender: TObject);
@@ -252,8 +265,8 @@ var
   LButton: TButton;
 begin
   Caption := 'Split "' + FName + '"';
-  Width := 720;
-  Height := 560;
+  Width := 860;
+  Height := 580;
   Position := TFormPosition.MainFormCenter;
   BorderIcons := [TBorderIcon.biSystemMenu];
   Padding.Rect := TRectF.Create(12, 10, 12, 10);
@@ -319,6 +332,10 @@ begin
 
   AddButton(LButtons, 'Save sheet...', TAlignLayout.Left, 0, SaveClick);
   AddButton(LButtons, 'Load sheet...', TAlignLayout.Left, 1000, LoadClick);
+  AddButton(LButtons, 'Import list...', TAlignLayout.Left, 2000, ImportClick).Hint :=
+    'Read the ranges from a text file, such as the list that comes with the animation';
+  AddButton(LButtons, 'Clear', TAlignLayout.Left, 3000, ClearClick).Hint :=
+    'Empty the grid';
   FConvert := AddButton(LButtons, 'Convert', TAlignLayout.Right, 2000, ConvertClick);
   LButton := AddButton(LButtons, 'Cancel', TAlignLayout.Right, 1000, nil);
   LButton.Cancel := True;
@@ -704,6 +721,101 @@ begin
       except
         on E: Exception do
           TDialogService.ShowMessage('The sheet could not be loaded: ' + E.Message);
+      end;
+    end);
+end;
+
+procedure TSplitAnimationForm.ClearRows;
+var
+  R: Integer;
+begin
+  for R := 0 to FGrid.RowCount - 1 do
+  begin
+    FGrid.Cells[COL_NAME, R] := '';
+    FGrid.Cells[COL_START, R] := '';
+    FGrid.Cells[COL_END, R] := '';
+  end;
+  FGrid.RowCount := 1;
+  NumberRows;
+  FLastWarning := '';
+  Check;
+end;
+
+procedure TSplitAnimationForm.ClearClick(Sender: TObject);
+begin
+  if RowIsEmpty(0) and (FGrid.RowCount = 1) then
+    Exit;
+  TPlatformDialogs.Confirm('Clear every row of the grid?',
+    procedure(AConfirmed: Boolean)
+    begin
+      if AConfirmed then
+        ClearRows;
+    end);
+end;
+
+procedure TSplitAnimationForm.ImportList(const AFileName: string);
+var
+  LList: TglTFRangeList;
+  LMessage: string;
+  LMaxEnd, LBackwards, R: Integer;
+begin
+  if not TglTFAnimationSplitter.ParseRangeList(TFile.ReadAllText(AFileName), LList) then
+  begin
+    TDialogService.ShowMessage(Format('Sorry, no animation ranges could be recognised in %s. ' +
+      'We tried, but they will have to be typed in.', [ExtractFileName(AFileName)]));
+    Exit;
+  end;
+
+  // The grid becomes the list, in its order
+  ClearRows;
+  FGrid.RowCount := Length(LList.Ranges) + 1;
+  LMaxEnd := 0;
+  for R := 0 to High(LList.Ranges) do
+  begin
+    FGrid.Cells[COL_NAME, R] := LList.Ranges[R].Name;
+    FGrid.Cells[COL_START, R] := IntToStr(LList.Ranges[R].StartFrame);
+    FGrid.Cells[COL_END, R] := IntToStr(LList.Ranges[R].EndFrame);
+    LMaxEnd := Max(LMaxEnd, LList.Ranges[R].EndFrame);
+  end;
+  EnsureEmptyLastRow;
+  Check;
+
+  LMessage := Format('Read %d animation range(s) from %s, lines %d to %d.',
+    [Length(LList.Ranges), ExtractFileName(AFileName), LList.FirstLine, LList.LastLine]);
+  if LList.SkippedLines <> nil then
+    LMessage := LMessage + sLineBreak + Format('%d line(s) in between were not understood and ' +
+      'were skipped, the first being line %d.', [Length(LList.SkippedLines),
+      LList.SkippedLines[0]]);
+  if LMaxEnd > FLastFrame then
+    LMessage := LMessage + sLineBreak + Format('The list goes up to frame %d but the last ' +
+      'frame is set to %d: check the frame rate or the last frame.', [LMaxEnd, FLastFrame]);
+  LBackwards := 0;
+  for R := 0 to FGrid.RowCount - 1 do
+    if OrderProblem(R) <> '' then
+      Inc(LBackwards);
+  if LBackwards > 0 then
+    LMessage := LMessage + sLineBreak + Format('%d row(s) do not go forward in time.',
+      [LBackwards]);
+  LMessage := LMessage + sLineBreak + sLineBreak + 'Please check the rows before converting; ' +
+    '"Clear" empties the grid if they are wrong.';
+  TDialogService.ShowMessage(LMessage);
+end;
+
+procedure TSplitAnimationForm.ImportClick(Sender: TObject);
+begin
+  TPlatformDialogs.OpenFile('Import animation list',
+    [TFileType.Create('Text files', ['.txt', '.csv', '.md']),
+     TFileType.Create('All files', ['*'])], FFolder, '',
+    procedure(AFileName: string)
+    begin
+      if AFileName = '' then
+        Exit;
+      try
+        ImportList(AFileName);
+        FFolder := TPath.GetDirectoryName(AFileName);
+      except
+        on E: Exception do
+          TDialogService.ShowMessage('The list could not be read: ' + E.Message);
       end;
     end);
 end;

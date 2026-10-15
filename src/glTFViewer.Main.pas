@@ -1612,6 +1612,7 @@ var
   LJSON: string;
   LFailures, I: Integer;
   LSaved: TMemoryStream;
+  LList: TglTFRangeList;
 
   procedure Check(ACondition: Boolean; const AText: string);
   begin
@@ -1684,6 +1685,21 @@ begin
         'run should go from x = 6.3 to x = 12');
       Check(LDoc.Root.Accessors.Count = 4, 'Take001''s own data should be removed');
 
+      // Range lists as they come with animation files: the name after the
+      // numbers or before them, a title and notes around, quotes removed
+      Check(TglTFAnimationSplitter.ParseRangeList('Animation ranges' + sLineBreak + sLineBreak +
+        '1 - 5  t-pose' + sLineBreak + '10 - 40  "walk_01"' + sLineBreak +
+        '380 - 415  run_jump-360', LList) and (Length(LList.Ranges) = 3) and
+        (LList.FirstLine = 3) and (LList.Ranges[1].Name = 'walk_01') and
+        (LList.Ranges[2].Name = 'run_jump-360') and (LList.Ranges[2].StartFrame = 380) and
+        (LList.Ranges[2].EndFrame = 415), 'a list with the names after the numbers');
+      Check(TglTFAnimationSplitter.ParseRangeList('Walk In Place'#9#9'560'#9'-'#9'620 ' +
+        '(repeated 3 times) 20 frame animation', LList) and
+        (LList.Ranges[0].Name = 'Walk In Place') and (LList.Ranges[0].StartFrame = 560) and
+        (LList.Ranges[0].EndFrame = 620), 'a list with the names before the numbers');
+      Check(not TglTFAnimationSplitter.ParseRangeList('No ranges here' + sLineBreak +
+        'IMPORTANT: none at all', LList), 'a text without ranges');
+
       // The result saves and loads
       LDoc.SaveToStream(LSaved, gffGLB);
       LSaved.Position := 0;
@@ -1691,7 +1707,8 @@ begin
       Check(LDoc.Root.Animations.Count = 2, 'the split animations should survive a save');
 
       if LFailures = 0 then
-        Log('  PASS: found, frame rate detected, ranges checked, split at and between keys');
+        Log('  PASS: found, frame rate detected, ranges checked, split at and between keys, ' +
+          'range lists read');
     except
       on E: Exception do
         Check(False, E.ClassName + ': ' + E.Message);
