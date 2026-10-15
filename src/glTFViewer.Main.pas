@@ -233,6 +233,8 @@ type
     procedure ImagesLocateMissing(Sender: TObject);
     procedure AnimationsImport(Sender: TObject);
     procedure AnimationsClear(Sender: TObject);
+    procedure AnimationsSplit(Sender: TObject);
+    procedure LogLongAnimationHint;
     procedure ImportAnimationFiles(const AFiles: TArray<string>);
     procedure AskDuplicate(AImporter: TglTFAnimationImporter;
       ACandidate: TglTFAnimationCandidate; AExisting: Integer;
@@ -260,6 +262,7 @@ type
       AExpected: ExceptClass);
     procedure RoundTripTest(AFormat: TglTFFileFormat);
     procedure AnimationImportTest;
+    procedure AnimationSplitTest;
     procedure PartsTest;
     procedure UnusedImagesTest;
     procedure RunSelfTests;
@@ -278,8 +281,8 @@ uses
   System.StrUtils, System.Math, System.JSON,
   System.NetEncoding, System.Threading,
   System.SyncObjs,
-  glTF.Edit,
-  glTFViewer.Tree, glTFViewer.Missing, glTFViewer.Dialogs;
+  glTF.Edit, glTF.AnimationSplit,
+  glTFViewer.Split, glTFViewer.Tree, glTFViewer.Missing, glTFViewer.Dialogs;
 
 type
   // Example of mapping an extension onto your own class (see DumpDocument)
@@ -331,6 +334,7 @@ begin
   FAnimations.Align := TAlignLayout.Client;
   FAnimations.OnImport := AnimationsImport;
   FAnimations.OnClear := AnimationsClear;
+  FAnimations.OnSplit := AnimationsSplit;
 
   FPartLibrary := TglTFPartLibrary.Create;
   FPartApplier := TglTFPartApplier.Create(FDoc);
@@ -816,11 +820,64 @@ begin
   else
     Log('%d animation(s) imported', [AImporter.ImportedCount]);
   Log('The model now has %d animation(s)', [FDoc.Root.Animations.Count]);
+  LogLongAnimationHint;
   AImporter.Free;
 
   TglTFTreeBuilder.Build(tvStructure, FDoc);
   FAnimations.RefreshList;
   TabControl.ActiveTab := tabAnimations;
+end;
+
+procedure TglTFMainForm.LogLongAnimationHint;
+var
+  LIndex: Integer;
+begin
+  LIndex := TglTFAnimationSplitter.FindLongAnimation(FDoc.Root);
+  if LIndex >= 0 then
+    Log('Animation %d "%s" is %.1f seconds long and may be several animations joined ' +
+      'together: "Split long animation..." on the Animations tab cuts it into frame ranges',
+      [LIndex, FDoc.Root.Animations[LIndex].Name,
+       TglTFAnimationSplitter.Duration(FDoc.Root, FDoc.Root.Animations[LIndex])]);
+end;
+
+procedure TglTFMainForm.AnimationsSplit(Sender: TObject);
+var
+  LIndex: Integer;
+  LName: string;
+begin
+  if FBusy then
+    Exit;
+  LIndex := TglTFAnimationSplitter.FindLongAnimation(FDoc.Root);
+  if LIndex < 0 then
+    Exit;
+  LName := FDoc.Root.Animations[LIndex].Name;
+  TSplitAnimationForm.Execute(FDoc.Root, LIndex, StartFolder,
+    procedure(const ARanges: TglTFAnimationRanges; AFrameRate: Double)
+    var
+      LWarnings: TStringList;
+      LWarning: string;
+      LCount: Integer;
+    begin
+      LWarnings := TStringList.Create;
+      try
+        try
+          LCount := TglTFAnimationSplitter.Split(FDoc.Root, LIndex, AFrameRate, ARanges,
+            LWarnings);
+          Log;
+          Log('Split "%s" into %d animation(s) at %s frames per second', [LName, LCount,
+            FloatToStr(AFrameRate, TFormatSettings.Invariant)]);
+          for LWarning in LWarnings do
+            Log('Warning: %s', [LWarning]);
+        except
+          on E: Exception do
+            Log('ERROR: could not split "%s": %s', [LName, E.Message]);
+        end;
+      finally
+        LWarnings.Free;
+      end;
+      TglTFTreeBuilder.Build(tvStructure, FDoc);
+      FAnimations.RefreshList;
+    end);
 end;
 
 procedure TglTFMainForm.AnimationsClear(Sender: TObject);
@@ -1164,6 +1221,7 @@ begin
     else
       Log('Format: glTF JSON');
     Log('%d animation(s) (see the Animations tab)', [FDoc.Root.Animations.Count]);
+    LogLongAnimationHint;
     Log;
     DumpDocument;
     TglTFTreeBuilder.Build(tvStructure, FDoc);
@@ -1525,6 +1583,122 @@ begin
       LEncoding.EncodeBytesToString(PatternBytes(ACount, ASeed));
   finally
     LEncoding.Free;
+  end;
+end;
+
+function FloatsDataUri(const AFloats: TArray<Single>): string;
+var
+  LBytes: TBytes;
+  LEncoding: TBase64Encoding;
+begin
+  SetLength(LBytes, Length(AFloats) * SizeOf(Single));
+  if Length(LBytes) > 0 then
+    Move(AFloats[0], LBytes[0], Length(LBytes));
+  LEncoding := TBase64Encoding.Create(0);
+  try
+    Result := 'data:application/octet-stream;base64,' + LEncoding.EncodeBytesToString(LBytes);
+  finally
+    LEncoding.Free;
+  end;
+end;
+
+procedure TglTFMainForm.AnimationSplitTest;
+const
+  KEYS = 25; // 0 to 12 seconds, every half second
+var
+  LDoc: TglTFDocument;
+  LFloats, LTimes, LValues: TArray<Single>;
+  LProblems: TArray<string>;
+  LJSON: string;
+  LFailures, I: Integer;
+  LSaved: TMemoryStream;
+
+  procedure Check(ACondition: Boolean; const AText: string);
+  begin
+    if not ACondition then
+    begin
+      Inc(LFailures);
+      Log('  FAIL: %s', [AText]);
+    end;
+  end;
+
+begin
+  Log;
+  Log('Self-test: splitting a 12-second animation into frame ranges');
+
+  // "Take001" moves node 0 along x: x = time, so values are easy to check
+  SetLength(LFloats, KEYS + KEYS * 3);
+  for I := 0 to KEYS - 1 do
+  begin
+    LFloats[I] := I * 0.5;
+    LFloats[KEYS + I * 3] := I * 0.5;
+  end;
+  LJSON :=
+    '{"asset":{"version":"2.0"},"nodes":[{"name":"Hips"}],' +
+    '"buffers":[{"byteLength":' + IntToStr(Length(LFloats) * 4) + ',"uri":"' +
+      FloatsDataUri(LFloats) + '"}],' +
+    '"bufferViews":[{"buffer":0,"byteLength":' + IntToStr(KEYS * 4) + '},' +
+    '{"buffer":0,"byteOffset":' + IntToStr(KEYS * 4) + ',"byteLength":' + IntToStr(KEYS * 12) + '}],' +
+    '"accessors":[{"bufferView":0,"componentType":5126,"count":' + IntToStr(KEYS) +
+      ',"type":"SCALAR","min":[0],"max":[12]},' +
+    '{"bufferView":1,"componentType":5126,"count":' + IntToStr(KEYS) + ',"type":"VEC3"}],' +
+    '"animations":[{"name":"Take001","channels":[{"sampler":0,"target":{"node":0,' +
+      '"path":"translation"}}],"samplers":[{"input":0,"output":1}]}]}';
+
+  LFailures := 0;
+  LDoc := TglTFDocument.Create;
+  LSaved := TMemoryStream.Create;
+  try
+    try
+      LDoc.LoadFromString(LJSON);
+      Check(TglTFAnimationSplitter.FindLongAnimation(LDoc.Root) = 0,
+        'Take001 should be found as a long animation');
+      Check(SameValue(TglTFAnimationSplitter.DetectFrameRate(LDoc.Root,
+        LDoc.Root.Animations[0]), 2), 'key frames every 0.5 s should give 2 frames per second');
+
+      // At 10 frames per second the frames run 0..120. Duplicate names and
+      // reversed ranges are refused
+      TglTFAnimationSplitter.ValidateRanges(LDoc.Root, 0, 120,
+        [TglTFAnimationRange.Create('a', 0, 10), TglTFAnimationRange.Create('A', 20, 10),
+         TglTFAnimationRange.Create('b', 0, 121)], LProblems);
+      Check((LProblems[0] = '') and (LProblems[1] <> '') and (LProblems[2] <> ''),
+        'invalid ranges should be refused');
+
+      // walk 0-40 (0-4 s), a gap, run 63-120 (6.3-12 s)
+      Check(TglTFAnimationSplitter.Split(LDoc.Root, 0, 10,
+        [TglTFAnimationRange.Create('walk', 0, 40, 'start'),
+         TglTFAnimationRange.Create('run', 63, 120)], nil) = 2, 'two animations expected');
+      Check((LDoc.Root.Animations.Count = 2) and (LDoc.Root.Animations[0].Name = 'walk') and
+        (LDoc.Root.Animations[1].Name = 'run'), 'the parts should replace Take001, in order');
+      Check(LDoc.Root.Animations[0].HasExtra('notes'), 'notes should be kept in the extras');
+
+      // run: starts at x = 6.3, computed between the keys at 6.0 and 6.5,
+      // and ends on the key at 12
+      LTimes := TglTFAnimationSplitter.ReadAccessor(LDoc.Root,
+        LDoc.Root.Animations[1].Samplers[0].Input);
+      LValues := TglTFAnimationSplitter.ReadAccessor(LDoc.Root,
+        LDoc.Root.Animations[1].Samplers[0].Output);
+      Check((Length(LTimes) = 13) and SameValue(LTimes[0], 0) and
+        SameValue(LTimes[High(LTimes)], 5.7, 1e-5), 'run should last 5.7 s with 13 keys');
+      Check(SameValue(LValues[0], 6.3, 1e-5) and SameValue(LValues[High(LValues) - 2], 12, 1e-5),
+        'run should go from x = 6.3 to x = 12');
+      Check(LDoc.Root.Accessors.Count = 4, 'Take001''s own data should be removed');
+
+      // The result saves and loads
+      LDoc.SaveToStream(LSaved, gffGLB);
+      LSaved.Position := 0;
+      LDoc.LoadFromStream(LSaved);
+      Check(LDoc.Root.Animations.Count = 2, 'the split animations should survive a save');
+
+      if LFailures = 0 then
+        Log('  PASS: found, frame rate detected, ranges checked, split at and between keys');
+    except
+      on E: Exception do
+        Check(False, E.ClassName + ': ' + E.Message);
+    end;
+  finally
+    LSaved.Free;
+    LDoc.Free;
   end;
 end;
 
@@ -2122,6 +2296,7 @@ begin
     '}'], EglTFParseError);
 
   AnimationImportTest;
+  AnimationSplitTest;
   PartsTest;
   UnusedImagesTest;
 

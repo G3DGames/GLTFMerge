@@ -2,8 +2,9 @@
 //** files.)
 //**
 //** The units glTF.Base, glTF.Classes, glTF.SourceMap, glTF.Document, glTF.Edit,
-//** glTF.Animations and glTF.Parts are the glTF reader, writer, animation importer and part
-//** swapper and have no user interface; they are in the GLTFLib folder. The glTFViewer units
+//** glTF.Animations, glTF.AnimationSplit and glTF.Parts are the glTF reader, writer,
+//** animation importer and splitter and part swapper and have no user interface; they are in
+//** the GLTFLib folder. The glTFViewer units
 //** and the form are the application, in the src folder. Neon
 //** @(https://github.com/paolo-rossi/delphi-neon@) is expected in the delphi-neon folder next
 //** to this file; its units are listed below. Needs Delphi 10.4 or later. Memory leaks are
@@ -24,9 +25,10 @@ program glTFMerge;
   and GLB files.
 
   The units glTF.Base, glTF.Classes, glTF.SourceMap, glTF.Document, glTF.Edit,
-  glTF.Animations and glTF.Parts are the glTF reader, writer, animation
-  importer and part swapper and have no user interface; they are in the GLTFLib folder. The glTFViewer
-  units and the form are the application, in the src folder. Neon
+  glTF.Animations, glTF.AnimationSplit and glTF.Parts are the glTF reader,
+  writer, animation importer and splitter and part swapper and have no user
+  interface; they are in the GLTFLib folder. The glTFViewer units and the
+  form are the application, in the src folder. Neon
   (https://github.com/paolo-rossi/delphi-neon) is expected in the
   delphi-neon folder next to this file; its units are listed below. Needs
   Delphi 10.4 or later. Memory leaks are reported on shutdown.
@@ -56,6 +58,7 @@ uses
   glTF.Edit in 'GLTFLib\glTF.Edit.pas',
   glTF.Animations in 'GLTFLib\glTF.Animations.pas',
   glTF.Parts in 'GLTFLib\glTF.Parts.pas',
+  glTF.AnimationSplit in 'GLTFLib\glTF.AnimationSplit.pas',
   glTFViewer.Tree in 'src\glTFViewer.Tree.pas',
   glTFViewer.Dialogs in 'src\glTFViewer.Dialogs.pas',
   glTFViewer.Missing in 'src\glTFViewer.Missing.pas',
@@ -65,6 +68,7 @@ uses
   glTFViewer.Animations in 'src\glTFViewer.Animations.pas',
   glTFViewer.Duplicates in 'src\glTFViewer.Duplicates.pas',
   glTFViewer.Parts in 'src\glTFViewer.Parts.pas',
+  glTFViewer.Split in 'src\glTFViewer.Split.pas',
   glTFViewer.Main in 'src\glTFViewer.Main.pas' {glTFMainForm};
 
 begin

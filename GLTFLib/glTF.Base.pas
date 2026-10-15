@@ -730,6 +730,25 @@ type
     /// <remarks>Null values are not included. See <see cref="IsDefined"/>.</remarks>
     property DefinedProperties: TArray<string> read FDefinedProperties;
 
+    //** @abstract(Sets one member of the "extras" JSON object.)
+    //**
+    //** Creates "extras" as an object when it is absent and replaces a member with the same
+    //** name. Written back by @link(SaveToJSON).
+    //**
+    //** @param(AName The member name.)
+    //**
+    //** @param(AValue The value; this object owns it from now on.)
+    //**
+    //** @raises(EglTFError "extras" is present but is not a JSON object; AValue is freed.)
+    /// <summary>Sets one member of the "extras" JSON object.</summary>
+    /// <param name="AName">The member name.</param>
+    /// <param name="AValue">The value; this object owns it from now on.</param>
+    /// <exception cref="EglTFError">"extras" is present but is not a JSON object; AValue is
+    /// freed.</exception>
+    /// <remarks>Creates "extras" as an object when it is absent and replaces a member with the
+    /// same name. Written back by <see cref="SaveToJSON"/>.</remarks>
+    procedure SetExtra(const AName: string; AValue: TJSONValue);
+
     //** @abstract(The "extensions" JSON object; nil when absent.)
     //**
     //** Owned by this object and written back by @link(SaveToJSON).
@@ -1609,6 +1628,19 @@ begin
 end;
 
 { Unknown properties }
+
+procedure TglTFProperty.SetExtra(const AName: string; AValue: TJSONValue);
+begin
+  if FExtras = nil then
+    FExtras := TJSONObject.Create
+  else if not (FExtras is TJSONObject) then
+  begin
+    AValue.Free;
+    raise EglTFError.CreateFmt('The extras of this glTF %s are not a JSON object', [glTFTypeName]);
+  end;
+  TJSONObject(FExtras).RemovePair(AName).Free;
+  TJSONObject(FExtras).AddPair(AName, AValue);
+end;
 
 function TglTFProperty.HasUnknownProperty(const AName: string): Boolean;
 begin

@@ -354,6 +354,7 @@
         <DCCReference Include="GLTFLib\glTF.Edit.pas"/>
         <DCCReference Include="GLTFLib\glTF.Animations.pas"/>
         <DCCReference Include="GLTFLib\glTF.Parts.pas"/>
+        <DCCReference Include="GLTFLib\glTF.AnimationSplit.pas"/>
         <DCCReference Include="src\glTFViewer.Tree.pas"/>
         <DCCReference Include="src\glTFViewer.Dialogs.pas"/>
         <DCCReference Include="src\glTFViewer.Missing.pas"/>
@@ -363,6 +364,7 @@
         <DCCReference Include="src\glTFViewer.Animations.pas"/>
         <DCCReference Include="src\glTFViewer.Duplicates.pas"/>
         <DCCReference Include="src\glTFViewer.Parts.pas"/>
+        <DCCReference Include="src\glTFViewer.Split.pas"/>
         <DCCReference Include="src\glTFViewer.Main.pas">
             <Form>glTFMainForm</Form>
         </DCCReference>
@@ -387,6 +389,7 @@
                 <Source>
                     <Source Name="MainSource">glTFMerge.dpr</Source>
                 </Source>
+                <WelcomePageFile Path="README.md"/>
             </Delphi.Personality>
             <Deployment Version="5">
                 <DeployFile LocalName="$(BDS)\Redist\iossimulator\libcgunwind.1.0.dylib" Class="DependencyModule">

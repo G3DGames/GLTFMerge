@@ -8,6 +8,8 @@
 //** data only they used. "Export all" and "Export none" change every flag at once.
 //**
 //** "Clear animations" raises @link(TglTFAnimationsPanel.OnClear), to empty the list.
+//** "Split long animation..." appears while an animation is over 10 seconds long and raises
+//** @link(TglTFAnimationsPanel.OnSplit).
 //** "Import animations..." raises @link(TglTFAnimationsPanel.OnImport); the main form shows
 //** the file dialog and does the import, then calls RefreshList.
 //**
@@ -27,7 +29,9 @@ unit glTFViewer.Animations;
   ticked, with the data only they used. "Export all" and "Export none" change
   every flag at once.
 
-  "Clear animations" raises OnClear, to empty the list. "Import
+  "Clear animations" raises OnClear, to empty the list. "Split long
+  animation..." appears while an animation is over 10 seconds long and raises
+  OnSplit. "Import
   animations..." raises OnImport; the main form shows the file dialog
   and does the import, then calls RefreshList.
 
@@ -44,7 +48,7 @@ uses
   FMX.Types, FMX.Controls, FMX.StdCtrls, FMX.Layouts, FMX.ListBox,
   FMX.Graphics, FMX.Controls.Presentation,
 
-  glTF.Classes, glTF.Document,
+  glTF.Classes, glTF.Document, glTF.AnimationSplit,
   glTFViewer.Columns;
 
 type
@@ -66,12 +70,14 @@ type
     FBtnAll: TButton;
     FBtnNone: TButton;
     FBtnClear: TButton;
+    FBtnSplit: TButton;
     FHeader: TLayout;
     FList: TListBox;
     FChecks: TList<TCheckBox>;
     FUpdating: Boolean;
     FOnImport: TNotifyEvent;
     FOnClear: TNotifyEvent;
+    FOnSplit: TNotifyEvent;
     FColumns: TColumnDefs;
     procedure BuildControls;
     function AddButton(AParent: TFmxObject; const AText: string; AWidth, AGap, AOrder: Single;
@@ -84,6 +90,7 @@ type
     procedure ExportChange(Sender: TObject);
     procedure ImportClick(Sender: TObject);
     procedure ClearClick(Sender: TObject);
+    procedure SplitClick(Sender: TObject);
     procedure AllClick(Sender: TObject);
     procedure NoneClick(Sender: TObject);
     procedure SetAll(AValue: Boolean);
@@ -139,6 +146,19 @@ type
     /// <remarks>The handler is expected to confirm, remove every animation from the document
     /// and then call <see cref="RefreshList"/>.</remarks>
     property OnClear: TNotifyEvent read FOnClear write FOnClear;
+
+    //** @abstract(Occurs when the user clicks "Split long animation...".)
+    //**
+    //** The button is only shown while the document has an animation longer than
+    //** @code(TglTFAnimationSplitter.LongAnimationSeconds), which is likely to be several
+    //** animations joined together. The handler is expected to show the split dialog for it
+    //** and then call @link(RefreshList).
+    /// <summary>Occurs when the user clicks "Split long animation...".</summary>
+    /// <remarks>The button is only shown while the document has an animation longer than
+    /// <c>TglTFAnimationSplitter.LongAnimationSeconds</c>, which is likely to be several
+    /// animations joined together. The handler is expected to show the split dialog for it
+    /// and then call <see cref="RefreshList"/>.</remarks>
+    property OnSplit: TNotifyEvent read FOnSplit write FOnSplit;
   end;
 
 implementation
@@ -209,6 +229,8 @@ begin
   FBtnAll := AddButton(LBar, 'Export all', 100, 18, 200, AllClick);
   FBtnNone := AddButton(LBar, 'Export none', 100, 6, 400, NoneClick);
   FBtnClear := AddButton(LBar, 'Clear animations', 130, 18, 600, ClearClick);
+  FBtnSplit := AddButton(LBar, 'Split long animation...', 170, 18, 800, SplitClick);
+  FBtnSplit.Visible := False;
 
   FSummary := TLabel.Create(Self);
   FSummary.Parent := LBar;
@@ -356,7 +378,7 @@ begin
   for I := 0 to FList.Count - 1 do
     LayoutRow(FList.ListItems[I]);
   // The summary needs the room the buttons leave
-  FSummary.Visible := Width >= 760;
+  FSummary.Visible := Width >= 960;
 end;
 
 procedure TglTFAnimationsPanel.UpdateSummary;
@@ -391,6 +413,9 @@ begin
   FBtnAll.Enabled := LCount > 0;
   FBtnNone.Enabled := LCount > 0;
   FBtnClear.Enabled := LCount > 0;
+  // Offered while one animation is long enough to be several joined together
+  FBtnSplit.Visible := (LCount > 0) and
+    (TglTFAnimationSplitter.FindLongAnimation(FDoc.Root) >= 0);
 end;
 
 procedure TglTFAnimationsPanel.ExportChange(Sender: TObject);
@@ -422,6 +447,12 @@ begin
     FUpdating := False;
   end;
   UpdateSummary;
+end;
+
+procedure TglTFAnimationsPanel.SplitClick(Sender: TObject);
+begin
+  if Assigned(FOnSplit) then
+    FOnSplit(Self);
 end;
 
 procedure TglTFAnimationsPanel.ClearClick(Sender: TObject);
