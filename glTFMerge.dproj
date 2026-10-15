@@ -5,7 +5,7 @@
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
         <ProjectName Condition="'$(ProjectName)'==''">glTFMerge</ProjectName>
         <TargetedPlatforms>2790547</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -355,6 +355,7 @@
         <DCCReference Include="GLTFLib\glTF.Animations.pas"/>
         <DCCReference Include="GLTFLib\glTF.Parts.pas"/>
         <DCCReference Include="GLTFLib\glTF.AnimationSplit.pas"/>
+        <DCCReference Include="GLTFLib\glTF.Orient.pas"/>
         <DCCReference Include="src\glTFViewer.Tree.pas"/>
         <DCCReference Include="src\glTFViewer.Dialogs.pas"/>
         <DCCReference Include="src\glTFViewer.Missing.pas"/>
@@ -365,6 +366,7 @@
         <DCCReference Include="src\glTFViewer.Duplicates.pas"/>
         <DCCReference Include="src\glTFViewer.Parts.pas"/>
         <DCCReference Include="src\glTFViewer.Split.pas"/>
+        <DCCReference Include="src\glTFViewer.Orient.pas"/>
         <DCCReference Include="src\glTFViewer.Main.pas">
             <Form>glTFMainForm</Form>
         </DCCReference>

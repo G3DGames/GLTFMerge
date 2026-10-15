@@ -15,7 +15,9 @@
 //** instead whether it goes into a buffer (GLB: the BIN chunk; glTF: a new base64 data-URI
 //** buffer) or into a separate file. Animations whose @code(ExportOnSave) is False are left
 //** out, together with the accessors, bufferViews and buffer bytes only they used, and so are
-//** images no mesh shows @(see @link(TglTFSaveOptions.LeaveOutUnusedImages)@).
+//** images no mesh shows @(see @link(TglTFSaveOptions.LeaveOutUnusedImages)@). The saved model
+//** can also be turned about the X, Y and Z axes, baked into its data @(see
+//** @link(TglTFSaveOptions.RotateX)@).
 //**
 //** A save to a file is made file-complete: every separate buffer and image file the
 //** saved glTF refers to is written or copied next to it, unless it is already there
@@ -51,7 +53,9 @@ unit glTF.Document;
   BIN chunk; glTF: a new base64 data-URI buffer) or into a separate file. Animations whose
   ExportOnSave is False are left out, together with the accessors, bufferViews
   and buffer bytes only they used, and so are images no mesh shows (see
-  TglTFSaveOptions.LeaveOutUnusedImages).
+  TglTFSaveOptions.LeaveOutUnusedImages). The saved model can also be turned
+  about the X, Y and Z axes, baked into its data (see
+  TglTFSaveOptions.RotateX).
 
   A save to a file is made file-complete: every separate buffer and image file
   the saved glTF refers to is written or copied next to it, unless it is
@@ -205,13 +209,40 @@ type
     /// <summary>Where the images go; ismByFormat by default.</summary>
     ImageSaveMode: TglTFImageSaveMode;
 
+    //** @abstract(Degrees to turn the whole model about the X axis; 0 by default.)
+    //**
+    //** With RotateY and RotateZ: when any of them turns the model, the saved model is
+    //** re-oriented, its meshes, nodes, animations and skins turned, by
+    //** @code(TglTFReorienter) in glTF.Orient. X is applied first, then Y, then Z. The
+    //** document itself is not changed.
+    /// <summary>Degrees to turn the whole model about the X axis; 0 by default.</summary>
+    /// <remarks>With RotateY and RotateZ: when any of them turns the model, the saved model is
+    /// re-oriented, its meshes, nodes, animations and skins turned, by
+    /// <c>TglTFReorienter</c> in glTF.Orient. X is applied first, then Y, then Z. The document
+    /// itself is not changed.</remarks>
+    RotateX: Double;
+
+    //** @abstract(Degrees to turn the whole model about the Y axis; 0 by default.)
+    //**
+    //** See RotateX.
+    /// <summary>Degrees to turn the whole model about the Y axis; 0 by default.</summary>
+    /// <remarks>See RotateX.</remarks>
+    RotateY: Double;
+
+    //** @abstract(Degrees to turn the whole model about the Z axis; 0 by default.)
+    //**
+    //** See RotateX.
+    /// <summary>Degrees to turn the whole model about the Z axis; 0 by default.</summary>
+    /// <remarks>See RotateX.</remarks>
+    RotateZ: Double;
+
     //** @abstract(Returns the default settings.)
     //**
-    //** @returns(Buffers = rmKeep, PrettyPrint = True, LeaveOutUnusedImages = True and
-    //** ImageSaveMode = ismByFormat.)
+    //** @returns(Buffers = rmKeep, PrettyPrint = True, LeaveOutUnusedImages = True,
+    //** ImageSaveMode = ismByFormat and no turn.)
     /// <summary>Returns the default settings.</summary>
-    /// <returns>Buffers = rmKeep, PrettyPrint = True, LeaveOutUnusedImages = True and
-    /// ImageSaveMode = ismByFormat.</returns>
+    /// <returns>Buffers = rmKeep, PrettyPrint = True, LeaveOutUnusedImages = True,
+    /// ImageSaveMode = ismByFormat and no turn.</returns>
     class function Default: TglTFSaveOptions; static;
   end;
 
@@ -948,7 +979,7 @@ implementation
 uses
   System.NetEncoding, System.StrUtils,
   Neon.Core.Persistence.JSON,
-  glTF.Edit;
+  glTF.Edit, glTF.Orient;
 
 const
   GLB_MAGIC: array[0..3] of Byte = ($67, $6C, $54, $46); // 'glTF'
@@ -1262,6 +1293,9 @@ begin
   Result.PrettyPrint := True;
   Result.LeaveOutUnusedImages := True;
   Result.ImageSaveMode := ismByFormat;
+  Result.RotateX := 0;
+  Result.RotateY := 0;
+  Result.RotateZ := 0;
 end;
 
 { TglTFMissingResource }
@@ -2309,6 +2343,9 @@ begin
 
     ReadUnloadedFiles(LOut);
     LeaveOutUnexportedAnimations(LOut);
+    // The model the right way up, baked into the copy's data
+    TglTFReorienter.Apply(LOut, AOptions.RotateX, AOptions.RotateY, AOptions.RotateZ,
+      FSaveWarnings);
     // Before the images are placed: only those the model needs are saved
     if AOptions.LeaveOutUnusedImages then
       TglTFEdit.DeleteUnusedImages(LOut, FSaveWarnings);

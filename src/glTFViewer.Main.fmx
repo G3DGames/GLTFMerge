@@ -62,7 +62,7 @@ object glTFMainForm: TglTFMainForm
       Align = Client
       Margins.Left = 12.000000000000000000
       Margins.Right = 6.000000000000000000
-      Size.Width = 720.000000000000000000
+      Size.Width = 624.000000000000000000
       Size.Height = 40.000000000000000000
       Size.PlatformDefault = False
       Text = 'No file loaded'
@@ -76,52 +76,111 @@ object glTFMainForm: TglTFMainForm
     TabIndex = 0
     TabOrder = 1
     TabPosition = PlatformDefault
+    Sizes = (
+      960s
+      574s
+      960s
+      574s
+      960s
+      574s
+      960s
+      574s
+      960s
+      574s
+      960s
+      574s)
     object tabStructure: TTabItem
+      CustomIcon = <
+        item
+        end>
       IsSelected = True
-      Size.Width = 80.000000000000000000
+      Size.Width = 68.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
+      StyleLookup = ''
       TabOrder = 0
       Text = 'Structure'
+      ExplicitSize.cx = 80.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
       object tvStructure: TTreeView
         Align = Client
         Size.Width = 960.000000000000000000
         Size.Height = 574.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
+        Viewport.Width = 956.000000000000000000
+        Viewport.Height = 570.000000000000000000
       end
     end
     object tabImages: TTabItem
+      CustomIcon = <
+        item
+        end>
       IsSelected = False
-      Size.Width = 70.000000000000000000
+      Size.Width = 59.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 1
+      StyleLookup = ''
+      TabOrder = 0
       Text = 'Images'
+      ExplicitSize.cx = 70.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
     end
     object tabAnimations: TTabItem
+      CustomIcon = <
+        item
+        end>
       IsSelected = False
-      Size.Width = 90.000000000000000000
+      Size.Width = 80.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 2
+      StyleLookup = ''
+      TabOrder = 0
       Text = 'Animations'
+      ExplicitSize.cx = 90.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
     end
     object tabParts: TTabItem
+      CustomIcon = <
+        item
+        end>
       IsSelected = False
-      Size.Width = 60.000000000000000000
+      Size.Width = 46.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 3
+      StyleLookup = ''
+      TabOrder = 0
       Text = 'Parts'
+      ExplicitSize.cx = 60.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+    object tabOrient: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 71.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Re-Orient'
+      ExplicitSize.cx = 80.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
     end
     object tabOutput: TTabItem
+      CustomIcon = <
+        item
+        end>
       IsSelected = False
-      Size.Width = 70.000000000000000000
+      Size.Width = 58.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 4
+      StyleLookup = ''
+      TabOrder = 0
       Text = 'Output'
+      ExplicitSize.cx = 70.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
       object memOutput: TMemo
         Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
         DataDetectorTypes = []
@@ -131,6 +190,8 @@ object glTFMainForm: TglTFMainForm
         Size.Height = 574.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
+        Viewport.Width = 956.000000000000000000
+        Viewport.Height = 570.000000000000000000
       end
     end
   end

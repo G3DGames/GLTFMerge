@@ -8,7 +8,9 @@
 //** choice and imports animations from other files @(see glTFViewer.Animations@); duplicate
 //** names are resolved with glTFViewer.Duplicates. The Parts tab loads body parts and outfit
 //** pieces from other files and puts them on the model in place of the parts they replace @(see
-//** glTFViewer.Parts and glTF.Parts@). The Output tab logs loading, saving and the
+//** glTFViewer.Parts and glTF.Parts@). The Re-Orient tab turns the model about X, Y and Z
+//** when it is saved @(see glTFViewer.Orient and glTF.Orient@). The Output tab logs loading,
+//** saving and the
 //** self-tests,
 //** and shows errors with their line in the glTF text; it comes to the front when a load fails,
 //** when saving and when the self-tests run.
@@ -46,8 +48,9 @@ unit glTFViewer.Main;
   other files (see glTFViewer.Animations); duplicate names are resolved with
   glTFViewer.Duplicates. The Parts tab loads body parts and outfit pieces from
   other files and puts them on the model in place of the parts they replace
-  (see glTFViewer.Parts and glTF.Parts). The Output tab logs loading, saving
-  and the
+  (see glTFViewer.Parts and glTF.Parts). The Re-Orient tab turns the model
+  about X, Y and Z when it is saved (see glTFViewer.Orient and glTF.Orient).
+  The Output tab logs loading, saving and the
   self-tests, and shows errors with their line in
   the glTF text; it comes to the front when a load fails, when saving and when
   the self-tests run.
@@ -81,7 +84,7 @@ uses
 
   glTF.Base, glTF.Classes, glTF.Document, glTF.Animations, glTF.Parts,
   glTFViewer.Images, glTFViewer.Animations, glTFViewer.Progress, glTFViewer.Duplicates,
-  glTFViewer.Parts;
+  glTFViewer.Parts, glTFViewer.Orient;
 
 type
   //** @abstract(The viewer's main window.)
@@ -115,8 +118,9 @@ type
     /// <summary>Shows the loaded file's path, or why it failed to load.</summary>
     lblFile: TLabel;
 
-    //** @abstract(Holds the Structure, Images, Animations and Output tabs.)
-    /// <summary>Holds the Structure, Images, Animations and Output tabs.</summary>
+    //** @abstract(Holds the Structure, Images, Animations, Parts, Re-Orient and Output tabs.)
+    /// <summary>Holds the Structure, Images, Animations, Parts, Re-Orient and Output
+    /// tabs.</summary>
     TabControl: TTabControl;
 
     //** @abstract(The Output tab, holding the log.)
@@ -139,6 +143,11 @@ type
     //** @abstract(The Parts tab, holding the parts panel created at start-up.)
     /// <summary>The Parts tab, holding the parts panel created at start-up.</summary>
     tabParts: TTabItem;
+
+    //** @abstract(The Re-Orient tab, holding the panel with the turn applied when saving.)
+    /// <summary>The Re-Orient tab, holding the panel with the turn applied when
+    /// saving.</summary>
+    tabOrient: TTabItem;
 
     //** @abstract(The log: load results, document summary, save results and self-test results.)
     /// <summary>The log: load results, document summary, save results and self-test
@@ -212,6 +221,7 @@ type
     FProgress: TProgressOverlay;
     FDuplicates: TDuplicatePanel;
     FParts: TglTFPartsPanel;
+    FOrient: TglTFOrientPanel;
     // The part files loaded; kept across model loads
     FPartLibrary: TglTFPartLibrary;
     // Puts parts on FDoc; replaced with the document
@@ -263,6 +273,7 @@ type
     procedure RoundTripTest(AFormat: TglTFFileFormat);
     procedure AnimationImportTest;
     procedure AnimationSplitTest;
+    procedure ReorientTest;
     procedure PartsTest;
     procedure UnusedImagesTest;
     procedure RunSelfTests;
@@ -281,7 +292,7 @@ uses
   System.StrUtils, System.Math, System.JSON,
   System.NetEncoding, System.Threading,
   System.SyncObjs,
-  glTF.Edit, glTF.AnimationSplit,
+  glTF.Edit, glTF.AnimationSplit, glTF.Orient,
   glTFViewer.Split, glTFViewer.Tree, glTFViewer.Missing, glTFViewer.Dialogs;
 
 type
@@ -346,6 +357,10 @@ begin
   FParts.OnClearList := PartsClearList;
   FParts.OnApply := PartsApply;
   FParts.OnRemove := PartsRemove;
+
+  FOrient := TglTFOrientPanel.Create(Self);
+  FOrient.Parent := tabOrient;
+  FOrient.Align := TAlignLayout.Client;
   FParts.OnRefreshModel := PartsRefreshModel;
   FParts.Bind(FDoc, FPartApplier);
 
@@ -576,6 +591,14 @@ begin
   LOptions := TglTFSaveOptions.Default;
   if FImages.AlterSaveMode then
     LOptions.ImageSaveMode := ismPerImage;
+  // The turn on the Re-Orient tab; nothing is saved while it is not valid
+  if not FOrient.GetAngles(LOptions.RotateX, LOptions.RotateY, LOptions.RotateZ) then
+  begin
+    TabControl.ActiveTab := tabOrient;
+    Log;
+    Log('Not saved: the angles on the Re-Orient tab must be numbers from -360 to 360');
+    Exit;
+  end;
   LGLB := TglTFDocument.FormatFromFileName(AFileName) = gffGLB;
   LEmbedded := 0;
   LExported := 0;
@@ -616,6 +639,9 @@ begin
   if FDoc.Root.Animations.Count > 0 then
     Log('Animations: %d of %d saved (see the Animations tab)',
       [LExported, FDoc.Root.Animations.Count]);
+  if not TglTFReorienter.IsIdentity(LOptions.RotateX, LOptions.RotateY, LOptions.RotateZ) then
+    Log('Re-oriented: turned by X %s, Y %s, Z %s degrees (see the Re-Orient tab)',
+      [FloatText(LOptions.RotateX), FloatText(LOptions.RotateY), FloatText(LOptions.RotateZ)]);
   try
     FDoc.SaveToFile(AFileName, LOptions);
   except
@@ -1602,6 +1628,118 @@ begin
   end;
 end;
 
+procedure TglTFMainForm.ReorientTest;
+var
+  LDoc, LCopy: TglTFDocument;
+  LOptions: TglTFSaveOptions;
+  LStream: TMemoryStream;
+  LValues: TArray<Single>;
+  LJSON: string;
+  LFailures: Integer;
+
+  procedure Check(ACondition: Boolean; const AText: string);
+  begin
+    if not ACondition then
+    begin
+      Inc(LFailures);
+      Log('  FAIL: %s', [AText]);
+    end;
+  end;
+
+  function Near(const AValues: TArray<Single>; AFirst: Integer;
+    const AExpected: array of Double): Boolean;
+  var
+    I: Integer;
+  begin
+    Result := Length(AValues) >= AFirst + Length(AExpected);
+    if Result then
+      for I := 0 to High(AExpected) do
+        if Abs(AValues[AFirst + I] - AExpected[I]) > 1e-5 then
+          Exit(False);
+  end;
+
+  function NearArray(const AValues: TArray<Double>; const AExpected: array of Double): Boolean;
+  var
+    I: Integer;
+  begin
+    Result := Length(AValues) = Length(AExpected);
+    if Result then
+      for I := 0 to High(AExpected) do
+        if Abs(AValues[I] - AExpected[I]) > 1e-6 then
+          Exit(False);
+  end;
+
+begin
+  Log;
+  Log('Self-test: re-orienting a Z-up model to Y-up (X -90) when saving');
+
+  // Root node "Root" at (1, 2, 3), animated along Z; its child shows a mesh
+  // whose three points lie on the axes
+  LJSON :=
+    '{"asset":{"version":"2.0"},"scene":0,"scenes":[{"nodes":[0]}],' +
+    '"nodes":[{"name":"Root","translation":[1,2,3],"children":[1]},{"mesh":0}],' +
+    '"meshes":[{"primitives":[{"attributes":{"POSITION":0,"NORMAL":1}}]}],' +
+    '"buffers":[{"byteLength":104,"uri":"' + FloatsDataUri([1, 0, 0, 0, 1, 0, 0, 0, 1,
+      1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 5, 0, 0, 5]) + '"}],' +
+    '"bufferViews":[{"buffer":0,"byteLength":36},{"buffer":0,"byteOffset":36,"byteLength":36},' +
+    '{"buffer":0,"byteOffset":72,"byteLength":8},{"buffer":0,"byteOffset":80,"byteLength":24}],' +
+    '"accessors":[{"bufferView":0,"componentType":5126,"count":3,"type":"VEC3",' +
+      '"min":[0,0,0],"max":[1,1,1]},' +
+    '{"bufferView":1,"componentType":5126,"count":3,"type":"VEC3"},' +
+    '{"bufferView":2,"componentType":5126,"count":2,"type":"SCALAR","min":[0],"max":[1]},' +
+    '{"bufferView":3,"componentType":5126,"count":2,"type":"VEC3"}],' +
+    '"animations":[{"name":"Rise","channels":[{"sampler":0,"target":{"node":0,' +
+      '"path":"translation"}}],"samplers":[{"input":2,"output":3}]}]}';
+
+  LFailures := 0;
+  LDoc := TglTFDocument.Create;
+  LCopy := TglTFDocument.Create;
+  LStream := TMemoryStream.Create;
+  try
+    try
+      LDoc.LoadFromString(LJSON);
+      Check(TglTFReorienter.IsIdentity(0, 360, 0), '360 degrees should be no turn');
+      Check(not TglTFReorienter.IsIdentity(-90, 0, 0), '-90 degrees should be a turn');
+
+      LOptions := TglTFSaveOptions.Default;
+      LOptions.RotateX := -90;
+      LDoc.SaveToStream(LStream, gffGLB, LOptions);
+      LStream.Position := 0;
+      LCopy.LoadFromStream(LStream);
+
+      // X -90 takes (x, y, z) to (x, z, -y)
+      Check(NearArray(LCopy.Root.Nodes[0].Translation, [1, 3, -2]),
+        'the root node should move from (1, 2, 3) to (1, 3, -2)');
+      Check(NearArray(LCopy.Root.Nodes[1].Rotation, [0, 0, 0, 1]),
+        'the child node should keep no rotation of its own');
+      LValues := TglTFAnimationSplitter.ReadAccessor(LCopy.Root, 0);
+      Check(Near(LValues, 0, [1, 0, 0]) and Near(LValues, 3, [0, 0, -1]) and
+        Near(LValues, 6, [0, 1, 0]), 'the positions should be turned');
+      Check(NearArray(LCopy.Root.Accessors[0].Min, [0, 0, -1]) and
+        NearArray(LCopy.Root.Accessors[0].Max, [1, 1, 0]), 'min and max should be recomputed');
+      LValues := TglTFAnimationSplitter.ReadAccessor(LCopy.Root, 1);
+      Check(Near(LValues, 6, [0, 1, 0]), 'the normals should be turned');
+      LValues := TglTFAnimationSplitter.ReadAccessor(LCopy.Root, 3);
+      Check(Near(LValues, 3, [0, 5, 0]), 'the animation should rise along Y now');
+
+      // The loaded document is not changed by the save
+      LValues := TglTFAnimationSplitter.ReadAccessor(LDoc.Root, 0);
+      Check(Near(LValues, 6, [0, 0, 1]) and
+        NearArray(LDoc.Root.Nodes[0].Translation, [1, 2, 3]), 'the document should not change');
+
+      if LFailures = 0 then
+        Log('  PASS: nodes, mesh data, min/max and animation turned; document unchanged');
+    except
+      on E: Exception do
+        Check(False, E.ClassName + ': ' + E.Message);
+    end;
+  finally
+    LStream.Free;
+    LCopy.Free;
+    LDoc.Free;
+  end;
+end;
+
 procedure TglTFMainForm.AnimationSplitTest;
 const
   KEYS = 25; // 0 to 12 seconds, every half second
@@ -2314,6 +2452,7 @@ begin
 
   AnimationImportTest;
   AnimationSplitTest;
+  ReorientTest;
   PartsTest;
   UnusedImagesTest;
 
