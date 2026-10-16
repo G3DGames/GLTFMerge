@@ -1,0 +1,137 @@
+object DuplicateFrame: TDuplicateFrame
+  Size.Width = 960.000000000000000000
+  Size.Height = 640.000000000000000000
+  Size.PlatformDefault = False
+  object rectShade: TRectangle
+    Align = Contents
+    Size.Width = 960.000000000000000000
+    Size.Height = 640.000000000000000000
+    Fill.Color = x66000000
+    Stroke.Kind = None
+    Size.PlatformDefault = False
+  end
+  object rectBox: TRectangle
+    Align = Center
+    Position.X = 220.000000000000000000
+    Position.Y = 155.000000000000000000
+    Size.Width = 520.000000000000000000
+    Size.Height = 330.000000000000000000
+    Padding.Left = 16.000000000000000000
+    Padding.Top = 12.000000000000000000
+    Padding.Right = 16.000000000000000000
+    Padding.Bottom = 12.000000000000000000
+    XRadius = 6.000000000000000000
+    YRadius = 6.000000000000000000
+    Fill.Color = claWhite
+    Stroke.Color = claGray
+    Size.PlatformDefault = False
+    object lblInfo: TLabel
+      Align = Top
+      Size.Width = 488.000000000000000000
+      Size.Height = 60.000000000000000000
+      Position.Y = 12.000000000000000000
+      StyledSettings = [Family, Size]
+      TextSettings.FontColor = claBlack
+      TextSettings.Font.Style = [fsBold]
+      TextSettings.WordWrap = True
+      TextSettings.Trimming = Character
+      Position.X = 16.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object rbReplace: TRadioButton
+      Align = Top
+      GroupName = 'gltf.duplicate'
+      Position.X = 16.000000000000000000
+      Position.Y = 72.000000000000000000
+      Size.Width = 488.000000000000000000
+      Size.Height = 26.000000000000000000
+      Text = 'Replace the old animation with this one'
+      OnChange = RadioChange
+      Size.PlatformDefault = False
+    end
+    object rbKeep: TRadioButton
+      Align = Top
+      GroupName = 'gltf.duplicate'
+      Position.X = 16.000000000000000000
+      Position.Y = 98.000000000000000000
+      Size.Width = 488.000000000000000000
+      Size.Height = 26.000000000000000000
+      Text = 'Keep the old animation and ignore this one'
+      OnChange = RadioChange
+      Size.PlatformDefault = False
+    end
+    object rbRename: TRadioButton
+      Align = Top
+      GroupName = 'gltf.duplicate'
+      Position.X = 16.000000000000000000
+      Position.Y = 124.000000000000000000
+      Size.Width = 488.000000000000000000
+      Size.Height = 26.000000000000000000
+      Text = 'Import this one under a new name:'
+      OnChange = RadioChange
+      Size.PlatformDefault = False
+    end
+    object edtName: TEdit
+      Align = Top
+      Position.X = 42.000000000000000000
+      Position.Y = 152.000000000000000000
+      Size.Width = 462.000000000000000000
+      Size.Height = 22.000000000000000000
+      Margins.Left = 26.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      OnChangeTracking = edtNameChangeTracking
+      Size.PlatformDefault = False
+    end
+    object lblError: TLabel
+      Align = Top
+      Size.Width = 462.000000000000000000
+      Size.Height = 20.000000000000000000
+      Position.Y = 176.000000000000000000
+      StyledSettings = [Family, Size]
+      TextSettings.FontColor = claRed
+      TextSettings.WordWrap = False
+      TextSettings.Trimming = Character
+      Position.X = 42.000000000000000000
+      Margins.Left = 26.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object chkForAll: TCheckBox
+      Align = Top
+      Position.X = 16.000000000000000000
+      Position.Y = 200.000000000000000000
+      Size.Width = 488.000000000000000000
+      Size.Height = 26.000000000000000000
+      Margins.Top = 4.000000000000000000
+      Text = 'Do the same for the other duplicates of this import'
+      Size.PlatformDefault = False
+    end
+    object layButtons: TLayout
+      Align = Bottom
+      Size.Width = 488.000000000000000000
+      Size.Height = 36.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 282.000000000000000000
+      Size.PlatformDefault = False
+      object btnAbortImport: TButton
+        Align = Right
+        Size.Width = 120.000000000000000000
+        Size.Height = 36.000000000000000000
+        Text = 'Abort import'
+        Position.X = 260.000000000000000000
+        Margins.Right = 8.000000000000000000
+        OnClick = btnAbortImportClick
+        Size.PlatformDefault = False
+      end
+      object btnOK: TButton
+        Align = Right
+        Size.Width = 100.000000000000000000
+        Size.Height = 36.000000000000000000
+        Text = 'OK'
+        Position.X = 388.000000000000000000
+        OnClick = btnOKClick
+        Size.PlatformDefault = False
+      end
+    end
+  end
+end

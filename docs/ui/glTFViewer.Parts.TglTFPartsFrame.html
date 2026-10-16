@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.Parts: Class TglTFPartsFrame</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFPartsFrame"></span><h1 class="cio">Class TglTFPartsFrame</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.Parts.html">glTFViewer.Parts</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFPartsFrame = class(TFrame)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Frame listing the parts loaded and the parts on the model.</p>
+<p>
+
+
+<p>Place it on a tab with Align = Client, set <a class="normal" href="glTFViewer.Parts.TglTFPartsFrame.html#PartLibrary">PartLibrary</a> once, and call <a class="normal" href="glTFViewer.Parts.TglTFPartsFrame.html#Bind-TglTFDocument-TglTFPartApplier-">Bind</a> after each load and <a class="normal" href="glTFViewer.Parts.TglTFPartsFrame.html#RefreshList">RefreshList</a> after each change. Must be used on the main thread.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TFrame</li>
+<li class="thisitem">TglTFPartsFrame</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#layBar">layBar</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#btnAddFiles">btnAddFiles</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#btnClearList">btnClearList</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#btnApply">btnApply</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#lblSummary">lblSummary</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#laySettings">laySettings</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#lblGapBefore">lblGapBefore</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#spnGap">spnGap</a></strong>: TSpinBox;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#lblGapAfter">lblGapAfter</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#edtKeep">edtKeep</a></strong>: TEdit;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#btnRefresh">btnRefresh</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#splApplied">splApplied</a></strong>: TSplitter;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#layApplied">layApplied</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#layAppliedBar">layAppliedBar</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#lblAppliedTitle">lblAppliedTitle</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#btnRemove">btnRemove</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#layAppliedHeader">layAppliedHeader</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#lstApplied">lstApplied</a></strong>: TListBox;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#layPartsHeader">layPartsHeader</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#lstParts">lstParts</a></strong>: TListBox;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#btnAddFilesClick-TObject-">btnAddFilesClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#btnClearListClick-TObject-">btnClearListClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#btnApplyClick-TObject-">btnApplyClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#btnRemoveClick-TObject-">btnRemoveClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#btnRefreshClick-TObject-">btnRefreshClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#SettingsChange-TObject-">SettingsChange</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#layPartsHeaderResize-TObject-">layPartsHeaderResize</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#layAppliedHeaderResize-TObject-">layAppliedHeaderResize</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#lstPartsPainting-TObject-TCanvas-TRectF-">lstPartsPainting</a></strong>(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#lstAppliedPainting-TObject-TCanvas-TRectF-">lstAppliedPainting</a></strong>(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);</code></td>
+</tr>
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#Resize">Resize</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#Create-TComponent-">Create</a></strong>(AOwner: TComponent); override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#Bind-TglTFDocument-TglTFPartApplier-">Bind</a></strong>(ADoc: TglTFDocument; AApplier: TglTFPartApplier);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#RefreshList">RefreshList</a></strong>;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#UntickParts">UntickParts</a></strong>;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#Options">Options</a></strong>: TglTFPartOptions;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#TickedParts">TickedParts</a></strong>: TArray&lt;TglTFPart&gt;;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#TickedApplied">TickedApplied</a></strong>: TArray&lt;Integer&gt;;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#PartLibrary">PartLibrary</a></strong>: TglTFPartLibrary read FLibrary write FLibrary;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#OnAddFiles">OnAddFiles</a></strong>: TNotifyEvent read FOnAddFiles write FOnAddFiles;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#OnClearList">OnClearList</a></strong>: TNotifyEvent read FOnClearList write FOnClearList;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#OnApply">OnApply</a></strong>: TNotifyEvent read FOnApply write FOnApply;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#OnRemove">OnRemove</a></strong>: TNotifyEvent read FOnRemove write FOnRemove;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Parts.TglTFPartsFrame.html#OnRefreshModel">OnRefreshModel</a></strong>: TNotifyEvent read FOnRefreshModel write FOnRefreshModel;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layBar"></span><code><strong>layBar</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The buttons for the parts loaded and the summary, at the top.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnAddFiles"></span><code><strong>btnAddFiles</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnAddFiles.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnClearList"></span><code><strong>btnClearList</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnClearList; enabled while parts are loaded.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnApply"></span><code><strong>btnApply</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnApply; enabled while a part is ticked.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblSummary"></span><code><strong>lblSummary</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+How many parts are loaded, usable and ticked.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="laySettings"></span><code><strong>laySettings</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The settings row: how much of the body is hidden under the parts.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblGapBefore"></span><code><strong>lblGapBefore</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The text before the closeness setting.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="spnGap"></span><code><strong>spnGap</strong>: TSpinBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+How close a part must come to the skin to hide it, in percent of the body's height.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblGapAfter"></span><code><strong>lblGapAfter</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The text after the closeness setting.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtKeep"></span><code><strong>edtKeep</strong>: TEdit;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The bones never hidden, separated by commas.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnRefresh"></span><code><strong>btnRefresh</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnRefreshModel; enabled while parts are on the model.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="splApplied"></span><code><strong>splApplied</strong>: TSplitter;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Separates the two lists.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layApplied"></span><code><strong>layApplied</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The parts on the model, at the bottom.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layAppliedBar"></span><code><strong>layAppliedBar</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The title and the button of the lower list.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblAppliedTitle"></span><code><strong>lblAppliedTitle</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+&quot;Parts on the model&quot; with their number.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnRemove"></span><code><strong>btnRemove</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnRemove; enabled while a part on the model is ticked.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layAppliedHeader"></span><code><strong>layAppliedHeader</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The headings of the lower list, filled in from its column list.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstApplied"></span><code><strong>lstApplied</strong>: TListBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+One row per part on the model.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layPartsHeader"></span><code><strong>layPartsHeader</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The headings of the upper list, filled in from its column list.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstParts"></span><code><strong>lstParts</strong>: TListBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+One row per part loaded.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnAddFilesClick-TObject-"></span><code>procedure <strong>btnAddFilesClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnAddFiles.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnClearListClick-TObject-"></span><code>procedure <strong>btnClearListClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnClearList.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnApplyClick-TObject-"></span><code>procedure <strong>btnApplyClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnApply.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnRemoveClick-TObject-"></span><code>procedure <strong>btnRemoveClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnRemove.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnRefreshClick-TObject-"></span><code>procedure <strong>btnRefreshClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnRefreshModel.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SettingsChange-TObject-"></span><code>procedure <strong>SettingsChange</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Shows the Covers columns for the new settings; the model follows with &quot;Use on the model&quot; or the next change.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The setting changed.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layPartsHeaderResize-TObject-"></span><code>procedure <strong>layPartsHeaderResize</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lays out the headings of the upper list again.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The heading row.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layAppliedHeaderResize-TObject-"></span><code>procedure <strong>layAppliedHeaderResize</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lays out the headings of the lower list again.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The heading row.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstPartsPainting-TObject-TCanvas-TRectF-"></span><code>procedure <strong>lstPartsPainting</strong>(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Keeps the headings above the cells of the upper list.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The list.</dd>
+<dt>Canvas</dt>
+<dd>The canvas painted on.</dd>
+<dt>ARect</dt>
+<dd>The area painted.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstAppliedPainting-TObject-TCanvas-TRectF-"></span><code>procedure <strong>lstAppliedPainting</strong>(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Keeps the headings above the cells of the lower list.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The list.</dd>
+<dt>Canvas</dt>
+<dd>The canvas painted on.</dd>
+<dt>ARect</dt>
+<dd>The area painted.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="Resize"></span><code>procedure <strong>Resize</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lays the rows out again for the new width.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-TComponent-"></span><code>constructor <strong>Create</strong>(AOwner: TComponent); override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the frame with empty lists.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOwner</dt>
+<dd>Owner of the frame.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the frame and its rows.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Bind-TglTFDocument-TglTFPartApplier-"></span><code>procedure <strong>Bind</strong>(ADoc: TglTFDocument; AApplier: TglTFPartApplier);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Shows the parts on a model.</p>
+<p>
+
+
+<p>The frame keeps references to both but owns neither; call Bind(nil, nil) before freeing them.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ADoc</dt>
+<dd>The model; nil when none is loaded.</dd>
+<dt>AApplier</dt>
+<dd>The applier for that model; nil with ADoc.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RefreshList"></span><code>procedure <strong>RefreshList</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Rebuilds both lists from the library and the model.</p>
+<p>
+
+
+<p>Call it after part files were loaded and after parts were put on or taken off. The ticks of the parts loaded are kept as long as the library has the same number of parts.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="UntickParts"></span><code>procedure <strong>UntickParts</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Unticks every part loaded.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Options"></span><code>function <strong>Options</strong>: TglTFPartOptions;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the settings chosen in the settings row.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">The defaults with CoverGap and KeepBones as shown.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="TickedParts"></span><code>function <strong>TickedParts</strong>: TArray&lt;TglTFPart&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the parts loaded that are ticked, in list order.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">The parts; owned by the library, so valid until it is cleared. Empty when none is ticked or no library is set.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="TickedApplied"></span><code>function <strong>TickedApplied</strong>: TArray&lt;Integer&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the node indices of the parts on the model that are ticked.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">Indices in the model's <code>Root.Nodes</code>, as the list was last refreshed; empty when none is ticked.</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="PartLibrary"></span><code>property <strong>PartLibrary</strong>: TglTFPartLibrary read FLibrary write FLibrary;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The parts loaded, shown in the upper list; not owned.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnAddFiles"></span><code>property <strong>OnAddFiles</strong>: TNotifyEvent read FOnAddFiles write FOnAddFiles;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user clicks &quot;Add part files...&quot;.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnClearList"></span><code>property <strong>OnClearList</strong>: TNotifyEvent read FOnClearList write FOnClearList;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user clicks &quot;Clear list&quot;.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnApply"></span><code>property <strong>OnApply</strong>: TNotifyEvent read FOnApply write FOnApply;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user clicks &quot;Put on ticked parts&quot;; see TickedParts.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnRemove"></span><code>property <strong>OnRemove</strong>: TNotifyEvent read FOnRemove write FOnRemove;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user clicks &quot;Take off ticked parts&quot;; see TickedApplied.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnRefreshModel"></span><code>property <strong>OnRefreshModel</strong>: TNotifyEvent read FOnRefreshModel write FOnRefreshModel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user clicks &quot;Use on the model&quot;; see Options.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

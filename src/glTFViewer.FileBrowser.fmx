@@ -1,0 +1,165 @@
+object FileBrowserForm: TFileBrowserForm
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  Caption = 'Files'
+  ClientHeight = 640
+  ClientWidth = 360
+  Position = Default
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnClose = FormClose
+  DesignerMasterStyle = 0
+  object layTop: TLayout
+    Align = Top
+    Size.Width = 360.000000000000000000
+    Size.Height = 116.000000000000000000
+    Padding.Left = 8.000000000000000000
+    Padding.Top = 8.000000000000000000
+    Padding.Right = 8.000000000000000000
+    Padding.Bottom = 4.000000000000000000
+    Size.PlatformDefault = False
+    object lblTitle: TLabel
+      Align = Top
+      Size.Width = 344.000000000000000000
+      Size.Height = 28.000000000000000000
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+      StyledSettings = [Family, Size, FontColor, Other]
+      TextSettings.Font.Style = [fsBold]
+      Size.PlatformDefault = False
+    end
+    object layLocations: TLayout
+      Align = Top
+      Size.Width = 344.000000000000000000
+      Size.Height = 40.000000000000000000
+      Position.X = 8.000000000000000000
+      Position.Y = 36.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Size.PlatformDefault = False
+      object btnUp: TButton
+        Align = Left
+        Size.Width = 60.000000000000000000
+        Size.Height = 32.000000000000000000
+        Text = 'Up'
+        Position.Y = 4.000000000000000000
+        OnClick = btnUpClick
+        Size.PlatformDefault = False
+      end
+      object btnAppFiles: TButton
+        Align = Left
+        Size.Width = 100.000000000000000000
+        Size.Height = 32.000000000000000000
+        Text = 'App files'
+        Position.X = 64.000000000000000000
+        Position.Y = 4.000000000000000000
+        Margins.Left = 4.000000000000000000
+        OnClick = LocationClick
+        Size.PlatformDefault = False
+      end
+      object btnDocuments: TButton
+        Align = Left
+        Size.Width = 100.000000000000000000
+        Size.Height = 32.000000000000000000
+        Text = 'Documents'
+        Position.X = 168.000000000000000000
+        Position.Y = 4.000000000000000000
+        Margins.Left = 4.000000000000000000
+        OnClick = LocationClick
+        Size.PlatformDefault = False
+      end
+      object btnDownloads: TButton
+        Align = Left
+        Size.Width = 100.000000000000000000
+        Size.Height = 32.000000000000000000
+        Text = 'Downloads'
+        Position.X = 272.000000000000000000
+        Position.Y = 4.000000000000000000
+        Margins.Left = 4.000000000000000000
+        OnClick = LocationClick
+        Size.PlatformDefault = False
+      end
+    end
+    object lblPath: TLabel
+      Align = Client
+      Size.Width = 344.000000000000000000
+      Size.Height = 36.000000000000000000
+      Position.X = 8.000000000000000000
+      Position.Y = 76.000000000000000000
+      StyledSettings = [Family, Size, Style, FontColor]
+      TextSettings.Trimming = Character
+      Size.PlatformDefault = False
+    end
+  end
+  object lstFiles: TListBox
+    Align = Client
+    Position.X = 8.000000000000000000
+    Position.Y = 116.000000000000000000
+    Size.Width = 344.000000000000000000
+    Size.Height = 396.000000000000000000
+    Margins.Left = 8.000000000000000000
+    Margins.Right = 8.000000000000000000
+    OnItemClick = lstFilesItemClick
+    Size.PlatformDefault = False
+  end
+  object layBottom: TLayout
+    Align = Bottom
+    Size.Width = 360.000000000000000000
+    Size.Height = 128.000000000000000000
+    Position.Y = 512.000000000000000000
+    Padding.Left = 8.000000000000000000
+    Padding.Top = 4.000000000000000000
+    Padding.Right = 8.000000000000000000
+    Padding.Bottom = 8.000000000000000000
+    Size.PlatformDefault = False
+    object edtName: TEdit
+      Align = Top
+      Position.X = 8.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 344.000000000000000000
+      Size.Height = 32.000000000000000000
+      Margins.Bottom = 6.000000000000000000
+      TextPrompt = 'File name'
+      Size.PlatformDefault = False
+    end
+    object cbType: TComboBox
+      Align = Top
+      Position.X = 8.000000000000000000
+      Position.Y = 42.000000000000000000
+      Size.Width = 344.000000000000000000
+      Size.Height = 32.000000000000000000
+      Margins.Bottom = 6.000000000000000000
+      OnChange = cbTypeChange
+      Size.PlatformDefault = False
+    end
+    object layOKCancel: TLayout
+      Align = Client
+      Size.Width = 344.000000000000000000
+      Size.Height = 40.000000000000000000
+      Position.X = 8.000000000000000000
+      Position.Y = 80.000000000000000000
+      Size.PlatformDefault = False
+      object btnCancel: TButton
+        Align = Right
+        Size.Width = 100.000000000000000000
+        Size.Height = 40.000000000000000000
+        Text = 'Cancel'
+        Position.X = 136.000000000000000000
+        Margins.Right = 8.000000000000000000
+        ModalResult = 2
+        Size.PlatformDefault = False
+      end
+      object btnOK: TButton
+        Align = Right
+        Size.Width = 100.000000000000000000
+        Size.Height = 40.000000000000000000
+        Text = 'Open'
+        Position.X = 244.000000000000000000
+        OnClick = btnOKClick
+        Size.PlatformDefault = False
+      end
+    end
+  end
+end

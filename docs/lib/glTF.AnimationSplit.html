@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.AnimationSplit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<h1 class="unit">Unit glTF.AnimationSplit</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objects and Records</a></div><div class="one_section"><a class="section" href="#PasDoc-Types">Types</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="description">Description</h2>
+<p>
+Splits one long animation into several, by frame ranges.</p>
+<p>
+
+
+<p>Animation files often hold a single long animation, typically called &quot;Take001&quot;, that is really a series of separate moves played one after the other. <a class="normal" href="glTF.AnimationSplit.TglTFAnimationSplitter.html">TglTFAnimationSplitter</a> cuts such an animation into named animations, one per frame range, and replaces it with them. Gaps between the ranges, and before the first or after the last, are simply left out.
+
+<p>glTF stores times in seconds and has no frame rate, so the frame rate is detected from the spacing of the key frames, typically 30 or 24 frames per second, and can be overridden. Frame 0 is time 0 and the last frame is the frame rate times the length of the animation in seconds.
+
+<p>For each range, every channel gets the key frames inside the range, plus a key frame at each end of the range computed from the animation itself: linear interpolation, with spherical interpolation for rotations, the previous value for STEP, and the curve itself for CUBICSPLINE, so each part plays exactly as that stretch of the original did. Times start again at 0 in every new animation. The new key frames are written as floats, whatever the original component type.
+
+<p></p>
+
+<pre class="preformatted">
+Take001  |--walk--|   |---run---|--jump--|      |
+         0       90  120       300      390    450   frames
+becomes  walk 0-90, run 120-300, jump 300-390</pre>
+
+<p></p>
+<span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
+<span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">Record&nbsp;<a class="bold" href="glTF.AnimationSplit.TglTFAnimationRange.html"><code>TglTFAnimationRange</code></a></td>
+<td class="itemdesc">One part of a long animation: a name and a frame range.</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Record&nbsp;<a class="bold" href="glTF.AnimationSplit.TglTFRangeList.html"><code>TglTFRangeList</code></a></td>
+<td class="itemdesc">What <a class="normal" href="glTF.AnimationSplit.TglTFAnimationSplitter.html#ParseRangeList-string-TglTFRangeList-">TglTFAnimationSplitter.ParseRangeList</a> found in a text.</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.AnimationSplit.TglTFAnimationSplitter.html"><code>TglTFAnimationSplitter</code></a></td>
+<td class="itemdesc">Finds long animations and splits them by frame ranges.</td>
+</tr>
+</table>
+<span id="PasDoc-Types"></span><h3 class="summary">Types</h3>
+<table class="summary wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTF.AnimationSplit.html#TglTFAnimationRanges">TglTFAnimationRanges</a></strong> = TArray&lt;<a href="glTF.AnimationSplit.TglTFAnimationRange.html">TglTFAnimationRange</a>&gt;;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Types</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFAnimationRanges"></span><code><strong>TglTFAnimationRanges</strong> = TArray&lt;<a href="glTF.AnimationSplit.TglTFAnimationRange.html">TglTFAnimationRange</a>&gt;;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+The parts a long animation is split into, in the order they are to appear.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

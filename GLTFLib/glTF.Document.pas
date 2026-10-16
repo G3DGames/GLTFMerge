@@ -342,9 +342,11 @@ type
 
     //** @abstract(Returns the model line for a progress display.)
     //**
-    //** @returns(For example: Model 2 of 5: walk.glb.)
+    //** @returns(For example: Model 2 of 5: walk.glb. Only the name, usually empty, while
+    //** ModelCount is 0, for example while the models are still being searched for.)
     /// <summary>Returns the model line for a progress display.</summary>
-    /// <returns>For example: Model 2 of 5: walk.glb.</returns>
+    /// <returns>For example: Model 2 of 5: walk.glb. Only the name, usually empty, while
+    /// ModelCount is 0, for example while the models are still being searched for.</returns>
     function ModelText: string;
   end;
 
@@ -1282,6 +1284,9 @@ end;
 
 function TglTFProgress.ModelText: string;
 begin
+  // No models yet, for example while searching for them
+  if ModelCount <= 0 then
+    Exit(ModelName);
   Result := Format('Model %d of %d', [ModelIndex, ModelCount]);
   if ModelName <> '' then
     Result := Result + ': ' + ModelName;
@@ -2085,7 +2090,8 @@ var
   LTotal: Int64;
   LMime, LName: string;
   LShared: Boolean;
-  // Relative paths (lower case) of the files this save writes, with their bytes
+  // Relative paths (lower case, any alphabet) of the files this save writes,
+  // with their bytes
   LUsed: TDictionary<string, TClaimedName>;
   LExisting: TClaimedName;
   I: Integer;
@@ -2121,7 +2127,7 @@ var
   begin
     AShared := False;
     Result := APath;
-    if LUsed.TryGetValue(LowerCase(Result), LExisting) and (LExisting.Data <> nil) and
+    if LUsed.TryGetValue(AnsiLowerCase(Result), LExisting) and (LExisting.Data <> nil) and
        (ASharedFile or BytesEqual(LExisting.Data, AData)) then
     begin
       // The same file: refer to it exactly as claimed, as case matters on
@@ -2132,7 +2138,7 @@ var
 
     // A shared file may already exist on disk; any other may not replace a
     // different file, there or in this save
-    if LUsed.ContainsKey(LowerCase(Result)) or
+    if LUsed.ContainsKey(AnsiLowerCase(Result)) or
        (ACheckDisk and not ASharedFile and TakenOnDisk(Result, AData)) then
     begin
       SplitExtension(APath, LStem, LExt);
@@ -2140,12 +2146,12 @@ var
       repeat
         Result := Format('%s_%d%s', [LStem, N, LExt]);
         Inc(N);
-      until not LUsed.ContainsKey(LowerCase(Result)) and
+      until not LUsed.ContainsKey(AnsiLowerCase(Result)) and
         not (ACheckDisk and not ASharedFile and TakenOnDisk(Result, AData));
     end;
     LNew.Path := Result;
     LNew.Data := AData;
-    LUsed.Add(LowerCase(Result), LNew);
+    LUsed.Add(AnsiLowerCase(Result), LNew);
   end;
 
   // The relative path (decoded) for an image saved as a separate file:
@@ -2336,9 +2342,9 @@ begin
     begin
       LExisting.Path := ABaseName + '.gltf';
       LExisting.Data := nil;
-      LUsed.Add(LowerCase(LExisting.Path), LExisting);
+      LUsed.Add(AnsiLowerCase(LExisting.Path), LExisting);
       LExisting.Path := ABaseName + '.glb';
-      LUsed.Add(LowerCase(LExisting.Path), LExisting);
+      LUsed.Add(AnsiLowerCase(LExisting.Path), LExisting);
     end;
 
     ReadUnloadedFiles(LOut);

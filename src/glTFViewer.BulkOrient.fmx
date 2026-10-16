@@ -1,0 +1,272 @@
+object BulkOrientForm: TBulkOrientForm
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  Caption = 'Bulk Re-Orient'
+  ClientHeight = 680
+  ClientWidth = 720
+  Position = MainFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Padding.Left = 12.000000000000000000
+  Padding.Top = 10.000000000000000000
+  Padding.Right = 12.000000000000000000
+  Padding.Bottom = 10.000000000000000000
+  OnClose = FormClose
+  DesignerMasterStyle = 0
+  object layFields: TLayout
+    Align = Top
+    Size.Width = 696.000000000000000000
+    Size.Height = 196.000000000000000000
+    Position.X = 12.000000000000000000
+    Position.Y = 10.000000000000000000
+    Size.PlatformDefault = False
+    object layInput: TLayout
+      Align = Top
+      Size.Width = 696.000000000000000000
+      Size.Height = 36.000000000000000000
+      Position.X = 12.000000000000000000
+      Position.Y = 0.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Size.PlatformDefault = False
+      object lblInput: TLabel
+        Align = Left
+        Size.Width = 150.000000000000000000
+        Size.Height = 28.000000000000000000
+        Position.Y = 4.000000000000000000
+        StyledSettings = [Family, Size, Style, FontColor]
+        TextSettings.WordWrap = False
+        Text = 'Input folder:'
+        Size.PlatformDefault = False
+      end
+      object btnInputBrowse: TButton
+        Align = Right
+        Size.Width = 100.000000000000000000
+        Size.Height = 28.000000000000000000
+        Text = 'Browse...'
+        Position.X = 596.000000000000000000
+        Position.Y = 4.000000000000000000
+        Margins.Left = 8.000000000000000000
+        OnClick = btnInputBrowseClick
+        Size.PlatformDefault = False
+      end
+      object edtInput: TEdit
+        Align = Client
+        Position.X = 150.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 438.000000000000000000
+        Size.Height = 28.000000000000000000
+        OnChangeTracking = FieldChange
+        Size.PlatformDefault = False
+      end
+    end
+    object layInputTypes: TLayout
+      Align = Top
+      Size.Width = 696.000000000000000000
+      Size.Height = 36.000000000000000000
+      Position.X = 12.000000000000000000
+      Position.Y = 36.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Size.PlatformDefault = False
+      object lblInputTypes: TLabel
+        Align = Left
+        Size.Width = 150.000000000000000000
+        Size.Height = 28.000000000000000000
+        Position.Y = 4.000000000000000000
+        StyledSettings = [Family, Size, Style, FontColor]
+        TextSettings.WordWrap = False
+        Text = 'Models to turn:'
+        Size.PlatformDefault = False
+      end
+      object rbInputGLB: TRadioButton
+        Align = Left
+        Position.X = 150.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 28.000000000000000000
+        GroupName = 'bulk.input'
+        IsChecked = False
+        Text = 'GLB only'
+        OnChange = FieldChange
+        Size.PlatformDefault = False
+      end
+      object rbInputGLTF: TRadioButton
+        Align = Left
+        Position.X = 260.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 28.000000000000000000
+        GroupName = 'bulk.input'
+        IsChecked = False
+        Text = 'glTF only'
+        OnChange = FieldChange
+        Size.PlatformDefault = False
+      end
+      object rbInputBoth: TRadioButton
+        Align = Left
+        Position.X = 370.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 28.000000000000000000
+        GroupName = 'bulk.input'
+        IsChecked = True
+        Text = 'Both'
+        OnChange = FieldChange
+        Size.PlatformDefault = False
+      end
+    end
+    object layOutput: TLayout
+      Align = Top
+      Size.Width = 696.000000000000000000
+      Size.Height = 36.000000000000000000
+      Position.X = 12.000000000000000000
+      Position.Y = 72.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Size.PlatformDefault = False
+      object lblOutput: TLabel
+        Align = Left
+        Size.Width = 150.000000000000000000
+        Size.Height = 28.000000000000000000
+        Position.Y = 4.000000000000000000
+        StyledSettings = [Family, Size, Style, FontColor]
+        TextSettings.WordWrap = False
+        Text = 'Output folder:'
+        Size.PlatformDefault = False
+      end
+      object btnOutputBrowse: TButton
+        Align = Right
+        Size.Width = 100.000000000000000000
+        Size.Height = 28.000000000000000000
+        Text = 'Browse...'
+        Position.X = 596.000000000000000000
+        Position.Y = 4.000000000000000000
+        Margins.Left = 8.000000000000000000
+        OnClick = btnOutputBrowseClick
+        Size.PlatformDefault = False
+      end
+      object edtOutput: TEdit
+        Align = Client
+        Position.X = 150.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 438.000000000000000000
+        Size.Height = 28.000000000000000000
+        OnChangeTracking = FieldChange
+        Size.PlatformDefault = False
+      end
+    end
+    object layOutputType: TLayout
+      Align = Top
+      Size.Width = 696.000000000000000000
+      Size.Height = 36.000000000000000000
+      Position.X = 12.000000000000000000
+      Position.Y = 108.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Size.PlatformDefault = False
+      object lblOutputType: TLabel
+        Align = Left
+        Size.Width = 150.000000000000000000
+        Size.Height = 28.000000000000000000
+        Position.Y = 4.000000000000000000
+        StyledSettings = [Family, Size, Style, FontColor]
+        TextSettings.WordWrap = False
+        Text = 'Save as:'
+        Size.PlatformDefault = False
+      end
+      object rbOutputGLB: TRadioButton
+        Align = Left
+        Position.X = 150.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 28.000000000000000000
+        GroupName = 'bulk.output'
+        IsChecked = True
+        Text = 'GLB'
+        OnChange = FieldChange
+        Size.PlatformDefault = False
+      end
+      object rbOutputGLTF: TRadioButton
+        Align = Left
+        Position.X = 260.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 110.000000000000000000
+        Size.Height = 28.000000000000000000
+        GroupName = 'bulk.output'
+        IsChecked = False
+        Text = 'glTF'
+        OnChange = FieldChange
+        Size.PlatformDefault = False
+      end
+    end
+    object lblFolders: TLabel
+      Align = Top
+      Size.Width = 696.000000000000000000
+      Size.Height = 48.000000000000000000
+      Position.Y = 148.000000000000000000
+      StyledSettings = [Family, Size, Style, FontColor]
+      TextSettings.WordWrap = True
+      TextSettings.VertAlign = Leading
+      Text = 'Every sub-folder of the input folder is searched. Each ' +
+        'model is saved at the same place under the output folder, ' +
+        'so the output folder ends up with the same sub-folders; the ' +
+        'input files are not changed.'
+      Size.PlatformDefault = False
+    end
+  end
+  object layOrient: TLayout
+    Align = Client
+    Size.Width = 696.000000000000000000
+    Size.Height = 360.000000000000000000
+    Position.X = 12.000000000000000000
+    Position.Y = 206.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lblProblem: TLabel
+    Align = Bottom
+    Size.Width = 696.000000000000000000
+    Size.Height = 40.000000000000000000
+    Position.X = 12.000000000000000000
+    Position.Y = 566.000000000000000000
+    Margins.Top = 4.000000000000000000
+    StyledSettings = [Family, Size, Style]
+    TextSettings.FontColor = claRed
+    TextSettings.WordWrap = True
+    TextSettings.VertAlign = Leading
+    Size.PlatformDefault = False
+  end
+  object layButtons: TLayout
+    Align = Bottom
+    Size.Width = 696.000000000000000000
+    Size.Height = 44.000000000000000000
+    Position.X = 12.000000000000000000
+    Position.Y = 626.000000000000000000
+    Padding.Top = 8.000000000000000000
+    Size.PlatformDefault = False
+    object btnCancel: TButton
+      Align = Right
+      Size.Width = 110.000000000000000000
+      Size.Height = 36.000000000000000000
+      Text = 'Cancel'
+      Position.X = 458.000000000000000000
+      Position.Y = 8.000000000000000000
+      Margins.Right = 8.000000000000000000
+      Cancel = True
+      ModalResult = 2
+      Size.PlatformDefault = False
+    end
+    object btnRun: TButton
+      Align = Right
+      Size.Width = 128.000000000000000000
+      Size.Height = 36.000000000000000000
+      Text = 'Re-Orient models'
+      Position.X = 568.000000000000000000
+      Position.Y = 8.000000000000000000
+      OnClick = btnRunClick
+      Size.PlatformDefault = False
+    end
+  end
+end

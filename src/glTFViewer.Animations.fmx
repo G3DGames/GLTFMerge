@@ -1,0 +1,109 @@
+object glTFAnimationsFrame: TglTFAnimationsFrame
+  Size.Width = 960.000000000000000000
+  Size.Height = 574.000000000000000000
+  Size.PlatformDefault = False
+  object layBar: TLayout
+    Align = Top
+    Size.Width = 960.000000000000000000
+    Size.Height = 40.000000000000000000
+    Padding.Left = 6.000000000000000000
+    Padding.Top = 6.000000000000000000
+    Padding.Right = 6.000000000000000000
+    Padding.Bottom = 6.000000000000000000
+    Size.PlatformDefault = False
+    object btnImport: TButton
+      Align = Left
+      Size.Width = 150.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Import animations...'
+      Position.X = 6.000000000000000000
+      Position.Y = 6.000000000000000000
+      OnClick = btnImportClick
+      Size.PlatformDefault = False
+    end
+    object btnExportAll: TButton
+      Align = Left
+      Size.Width = 100.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Export all'
+      Position.X = 174.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 18.000000000000000000
+      OnClick = btnExportAllClick
+      Size.PlatformDefault = False
+    end
+    object btnExportNone: TButton
+      Align = Left
+      Size.Width = 100.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Export none'
+      Position.X = 280.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 6.000000000000000000
+      OnClick = btnExportNoneClick
+      Size.PlatformDefault = False
+    end
+    object btnClear: TButton
+      Align = Left
+      Size.Width = 130.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Clear animations'
+      Position.X = 398.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 18.000000000000000000
+      OnClick = btnClearClick
+      Size.PlatformDefault = False
+    end
+    object btnSplit: TButton
+      Align = Left
+      Size.Width = 170.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Split long animation...'
+      Position.X = 546.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 18.000000000000000000
+      Visible = False
+      OnClick = btnSplitClick
+      Size.PlatformDefault = False
+    end
+    object lblSummary: TLabel
+      Align = Client
+      Size.Width = 226.000000000000000000
+      Size.Height = 28.000000000000000000
+      Position.X = 542.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 14.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object layHeader: TLayout
+    Align = Top
+    Size.Width = 960.000000000000000000
+    Size.Height = 26.000000000000000000
+    Padding.Left = 8.000000000000000000
+    Padding.Right = 8.000000000000000000
+    OnResize = layHeaderResize
+    Position.Y = 40.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lstAnimations: TListBox
+    Align = Client
+    Size.Width = 960.000000000000000000
+    Size.Height = 508.000000000000000000
+    ItemHeight = 26.000000000000000000
+    Position.Y = 66.000000000000000000
+    OnPainting = lstAnimationsPainting
+    Size.PlatformDefault = False
+  end
+  object edtRename: TEdit
+    Position.X = 112.000000000000000000
+    Position.Y = 66.000000000000000000
+    Size.Width = 300.000000000000000000
+    Size.Height = 26.000000000000000000
+    Visible = False
+    OnKeyDown = edtRenameKeyDown
+    OnExit = edtRenameExit
+    OnChangeTracking = edtRenameChangeTracking
+    Size.PlatformDefault = False
+  end
+end

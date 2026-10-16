@@ -72,7 +72,7 @@ Creates heading and row cells and places them at computed positions.</p>
 </tr>
 <tr class="list2 visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Columns.TColumnLayout.html#LayoutRow-TControl-TColumnDefs-Single-Single-Single-">LayoutRow</a></strong>(ARow: TControl; const AColumns: <a href="glTFViewer.Columns.html#TColumnDefs">TColumnDefs</a>; APanelWidth, ANarrow, AVeryNarrow: Single); static;</code></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Columns.TColumnLayout.html#LayoutRow-TControl-TColumnDefs-Single-Single-Single-">LayoutRow</a></strong>(ARow: TControl; const AColumns: <a href="glTFViewer.Columns.html#TColumnDefs">TColumnDefs</a>; AFrameWidth, ANarrow, AVeryNarrow: Single); static;</code></td>
 </tr>
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
@@ -154,7 +154,7 @@ Adds a text cell to a row.</p>
 <dt>ARow</dt>
 <dd>The row; it owns the cell.</dd>
 <dt>AColumn</dt>
-<dd>Index of the column in the panel's TColumnDefs.</dd>
+<dd>Index of the column in the frame's TColumnDefs.</dd>
 <dt>AText</dt>
 <dd>The text; longer text is cut with an ellipsis.</dd>
 <dt>AGrey</dt>
@@ -188,7 +188,7 @@ Adds a checkbox cell to a row, the checkbox centred in its column.</p>
 <dt>ARow</dt>
 <dd>The row; it owns the cell.</dd>
 <dt>AColumn</dt>
-<dd>Index of the column in the panel's TColumnDefs.</dd>
+<dd>Index of the column in the frame's TColumnDefs.</dd>
 </dl>
 <h6 class="description_section">Returns</h6>
 <p class="return">The checkbox, without text.</p></td></tr>
@@ -196,7 +196,7 @@ Adds a checkbox cell to a row, the checkbox centred in its column.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="LayoutRow-TControl-TColumnDefs-Single-Single-Single-"></span><code>class procedure <strong>LayoutRow</strong>(ARow: TControl; const AColumns: <a href="glTFViewer.Columns.html#TColumnDefs">TColumnDefs</a>; APanelWidth, ANarrow, AVeryNarrow: Single); static;</code></td>
+<td class="itemcode"><span id="LayoutRow-TControl-TColumnDefs-Single-Single-Single-"></span><code>class procedure <strong>LayoutRow</strong>(ARow: TControl; const AColumns: <a href="glTFViewer.Columns.html#TColumnDefs">TColumnDefs</a>; AFrameWidth, ANarrow, AVeryNarrow: Single); static;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
@@ -220,13 +220,13 @@ Places the cells of a row in their columns.</p>
 <dt>ARow</dt>
 <dd>The heading row or a list box item.</dd>
 <dt>AColumns</dt>
-<dd>The panel's columns.</dd>
-<dt>APanelWidth</dt>
-<dd>The panel's width, which decides which columns are hidden.</dd>
+<dd>The frame's columns.</dd>
+<dt>AFrameWidth</dt>
+<dd>The frame's width, which decides which columns are hidden.</dd>
 <dt>ANarrow</dt>
-<dd>Below this panel width chNarrow columns are hidden.</dd>
+<dd>Below this frame width chNarrow columns are hidden.</dd>
 <dt>AVeryNarrow</dt>
-<dd>Below this panel width chVeryNarrow columns are hidden too.</dd>
+<dd>Below this frame width chVeryNarrow columns are hidden too.</dd>
 </dl>
 </td></tr>
 </table>

@@ -1,0 +1,97 @@
+object ProgressFrame: TProgressFrame
+  Size.Width = 960.000000000000000000
+  Size.Height = 640.000000000000000000
+  Size.PlatformDefault = False
+  object rectShade: TRectangle
+    Align = Contents
+    Size.Width = 960.000000000000000000
+    Size.Height = 640.000000000000000000
+    Fill.Color = x66000000
+    Stroke.Kind = None
+    Size.PlatformDefault = False
+  end
+  object rectBox: TRectangle
+    Align = Center
+    Position.X = 260.000000000000000000
+    Position.Y = 223.000000000000000000
+    Size.Width = 440.000000000000000000
+    Size.Height = 194.000000000000000000
+    Padding.Left = 16.000000000000000000
+    Padding.Top = 12.000000000000000000
+    Padding.Right = 16.000000000000000000
+    Padding.Bottom = 12.000000000000000000
+    XRadius = 6.000000000000000000
+    YRadius = 6.000000000000000000
+    Fill.Color = claWhite
+    Stroke.Color = claGray
+    Size.PlatformDefault = False
+    object lblTitle: TLabel
+      Align = Top
+      Size.Width = 408.000000000000000000
+      Size.Height = 24.000000000000000000
+      Position.Y = 12.000000000000000000
+      StyledSettings = [Family, Size]
+      TextSettings.FontColor = claBlack
+      TextSettings.Font.Style = [fsBold]
+      TextSettings.WordWrap = False
+      TextSettings.Trimming = Character
+      Position.X = 16.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object lblModel: TLabel
+      Align = Top
+      Size.Width = 408.000000000000000000
+      Size.Height = 24.000000000000000000
+      Position.Y = 36.000000000000000000
+      StyledSettings = [Family, Size]
+      TextSettings.FontColor = claBlack
+      TextSettings.WordWrap = False
+      TextSettings.Trimming = Character
+      Position.X = 16.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object lblStage: TLabel
+      Align = Top
+      Size.Width = 408.000000000000000000
+      Size.Height = 24.000000000000000000
+      Position.Y = 60.000000000000000000
+      StyledSettings = [Family, Size]
+      TextSettings.FontColor = claBlack
+      TextSettings.WordWrap = False
+      TextSettings.Trimming = Character
+      Position.X = 16.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object pbOverall: TProgressBar
+      Align = Top
+      Orientation = Horizontal
+      Max = 1000.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 92.000000000000000000
+      Size.Width = 408.000000000000000000
+      Size.Height = 20.000000000000000000
+      Margins.Top = 8.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object layButtons: TLayout
+      Align = Top
+      Size.Width = 408.000000000000000000
+      Size.Height = 44.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 112.000000000000000000
+      Padding.Top = 10.000000000000000000
+      Visible = False
+      Size.PlatformDefault = False
+      object btnAbort: TButton
+        Align = Right
+        Size.Width = 200.000000000000000000
+        Size.Height = 34.000000000000000000
+        Text = 'Abort'
+        Position.X = 208.000000000000000000
+        Position.Y = 10.000000000000000000
+        OnClick = btnAbortClick
+        Size.PlatformDefault = False
+      end
+    end
+  end
+end

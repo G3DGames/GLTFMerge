@@ -3,10 +3,16 @@
 //**
 //** @link(TPlatformDialogs) offers open-file @(one or several@), save-file, select-folder and
 //** confirmation dialogs. On Windows, macOS and Linux they are the native dialogs. iOS and
-//** Android have no FireMonkey file dialogs, so there a file browser built into this unit is
-//** shown instead: it
-//** starts in the app's documents folder, which needs no storage permission, and can switch to
-//** the shared Documents and Downloads folders where the system allows access.
+//** Android have no FireMonkey file dialogs, so there the file browser of
+//** glTFViewer.FileBrowser is shown instead: it starts in the app's documents folder, which
+//** needs no storage permission, and can switch to the shared Documents and Downloads folders
+//** where the system allows access.
+//**
+//** Each file dialog is given a key naming its kind, such as "openModel": the folder chosen is
+//** remembered under it in the settings file @(see glTFViewer.Settings@) and offered the next
+//** time, so opening and saving each keep their own folder. A dialog never used before starts
+//** in the folder any dialog used most recently, and with no settings at all in the
+//** platform's usual folder.
 //**
 //** Every dialog reports its result through a callback rather than a return value, because
 //** dialogs do not block on Android. On the desktop the callback runs before the call returns;
@@ -25,11 +31,18 @@ unit glTFViewer.Dialogs;
   platform.
 
   TPlatformDialogs offers open-file (one or several), save-file, select-folder
-  and confirmation dialogs. On Windows, macOS and Linux they are the native dialogs. iOS and
-  Android have no FireMonkey file dialogs, so there a file browser built into
-  this unit is shown instead: it starts in the app's documents folder, which
-  needs no storage permission, and can switch to the shared Documents and
-  Downloads folders where the system allows access.
+  and confirmation dialogs. On Windows, macOS and Linux they are the native
+  dialogs. iOS and Android have no FireMonkey file dialogs, so there the file
+  browser of glTFViewer.FileBrowser is shown instead: it starts in the app's
+  documents folder, which needs no storage permission, and can switch to the
+  shared Documents and Downloads folders where the system allows access.
+
+  Each file dialog is given a key naming its kind, such as "openModel": the
+  folder chosen is remembered under it in the settings file (see
+  glTFViewer.Settings) and offered the next time, so opening and saving each
+  keep their own folder. A dialog never used before starts in the folder any
+  dialog used most recently, and with no settings at all in the platform's
+  usual folder.
 
   Every dialog reports its result through a callback rather than a return
   value, because dialogs do not block on Android. On the desktop the callback
@@ -106,6 +119,17 @@ type
   /// through a callback: immediately on the desktop, after the user closes the dialog on iOS
   /// and Android.</remarks>
   TPlatformDialogs = class sealed
+  private
+    class procedure RememberFolder(const AKey, AFolder: string); static;
+    class procedure DoOpenFile(const ATitle: string; const ATypes: TArray<TFileType>;
+      const AInitialDir, AFileName: string; const ADone: TProc<string>); static;
+    class procedure DoOpenFiles(const ATitle: string; const ATypes: TArray<TFileType>;
+      const AInitialDir: string; const ADone: TProc<TArray<string>>); static;
+    class procedure DoSaveFile(const ATitle: string; const ATypes: TArray<TFileType>;
+      ATypeIndex: Integer; const AInitialDir, AFileName: string;
+      const ADone: TProc<string, Integer>); static;
+    class procedure DoSelectFolder(const ATitle, AInitialDir: string;
+      const ADone: TProc<string>); static;
   public
     //** @abstract(Tells whether the native dialogs are used.)
     //**
@@ -123,30 +147,58 @@ type
     /// <returns>The user's documents folder on the desktop; the app's own documents folder on
     /// iOS and Android.</returns>
     class function DefaultFolder: string; static;
+
+    //** @abstract(Returns the folder a dialog starts in.)
+    //**
+    //** In this order: AInitialDir; the folder remembered for AKey; the folder any dialog used
+    //** most recently; and when none of them exists, an empty string, which leaves the choice
+    //** to the platform @(the native dialog's own folder on the desktop, DefaultFolder on iOS
+    //** and Android@).
+    //**
+    //** @param(AKey The kind of dialog.)
+    //**
+    //** @param(AInitialDir The caller's own choice; may be empty.)
+    //**
+    //** @returns(An existing folder, or an empty string.)
+    /// <summary>Returns the folder a dialog starts in.</summary>
+    /// <param name="AKey">The kind of dialog.</param>
+    /// <param name="AInitialDir">The caller's own choice; may be empty.</param>
+    /// <returns>An existing folder, or an empty string.</returns>
+    /// <remarks>In this order: AInitialDir; the folder remembered for AKey; the folder any
+    /// dialog used most recently; and when none of them exists, an empty string, which leaves
+    /// the choice to the platform (the native dialog's own folder on the desktop,
+    /// DefaultFolder on iOS and Android).</remarks>
+    class function StartFolder(const AKey, AInitialDir: string): string; static;
     //** @abstract(Lets the user choose an existing file.)
     //**
     //** On iOS and Android, tapping a file chooses it.
+    //**
+    //** @param(AKey The kind of dialog, for example "openModel": the folder chosen is
+    //** remembered under it, in the settings file, for the next time.)
     //**
     //** @param(ATitle Title of the dialog.)
     //**
     //** @param(ATypes File types offered; the first is selected.)
     //**
-    //** @param(AInitialDir Folder to start in; empty or missing uses DefaultFolder on mobile.)
+    //** @param(AInitialDir Folder to start in, when the caller knows a better one than the one
+    //** remembered; empty to use StartFolder.)
     //**
     //** @param(AFileName File name to suggest; may be empty.)
     //**
     //** @param(ADone Called with the chosen file's full path, or an empty string when
     //** cancelled.)
     /// <summary>Lets the user choose an existing file.</summary>
+    /// <param name="AKey">The kind of dialog, for example "openModel": the folder chosen is
+    /// remembered under it, in the settings file, for the next time.</param>
     /// <param name="ATitle">Title of the dialog.</param>
     /// <param name="ATypes">File types offered; the first is selected.</param>
-    /// <param name="AInitialDir">Folder to start in; empty or missing uses DefaultFolder on
-    /// mobile.</param>
+    /// <param name="AInitialDir">Folder to start in, when the caller knows a better one than the
+    /// one remembered; empty to use StartFolder.</param>
     /// <param name="AFileName">File name to suggest; may be empty.</param>
     /// <param name="ADone">Called with the chosen file's full path, or an empty string when
     /// cancelled.</param>
     /// <remarks>On iOS and Android, tapping a file chooses it.</remarks>
-    class procedure OpenFile(const ATitle: string; const ATypes: TArray<TFileType>;
+    class procedure OpenFile(const AKey, ATitle: string; const ATypes: TArray<TFileType>;
       const AInitialDir, AFileName: string; const ADone: TProc<string>); static;
     //** @abstract(Lets the user choose one or more existing files.)
     //**
@@ -154,30 +206,39 @@ type
     //** tapping a file ticks or unticks it, a tick shown before its name; files can be ticked
     //** in several folders before choosing Open.
     //**
+    //** @param(AKey The kind of dialog, for example "openModel": the folder chosen is
+    //** remembered under it, in the settings file, for the next time.)
+    //**
     //** @param(ATitle Title of the dialog.)
     //**
     //** @param(ATypes File types offered; the first is selected.)
     //**
-    //** @param(AInitialDir Folder to start in; empty or missing uses DefaultFolder on mobile.)
+    //** @param(AInitialDir Folder to start in, when the caller knows a better one than the one
+    //** remembered; empty to use StartFolder.)
     //**
     //** @param(ADone Called with the full paths of the chosen files, in the order they were
     //** chosen on mobile; an empty array when cancelled.)
     /// <summary>Lets the user choose one or more existing files.</summary>
+    /// <param name="AKey">The kind of dialog, for example "openModel": the folder chosen is
+    /// remembered under it, in the settings file, for the next time.</param>
     /// <param name="ATitle">Title of the dialog.</param>
     /// <param name="ATypes">File types offered; the first is selected.</param>
-    /// <param name="AInitialDir">Folder to start in; empty or missing uses DefaultFolder on
-    /// mobile.</param>
+    /// <param name="AInitialDir">Folder to start in, when the caller knows a better one than the
+    /// one remembered; empty to use StartFolder.</param>
     /// <param name="ADone">Called with the full paths of the chosen files, in the order they
     /// were chosen on mobile; an empty array when cancelled.</param>
     /// <remarks>On the desktop, the native dialog with multiple selection. On iOS and Android,
     /// tapping a file ticks or unticks it, a tick shown before its name; files can be ticked
     /// in several folders before choosing Open.</remarks>
-    class procedure OpenFiles(const ATitle: string; const ATypes: TArray<TFileType>;
+    class procedure OpenFiles(const AKey, ATitle: string; const ATypes: TArray<TFileType>;
       const AInitialDir: string; const ADone: TProc<TArray<string>>); static;
     //** @abstract(Lets the user choose a file name to save to.)
     //**
     //** Replacing an existing file is not confirmed here, so that the caller can first adjust
     //** the name, for example its extension, and then use @link(Confirm).
+    //**
+    //** @param(AKey The kind of dialog, for example "openModel": the folder chosen is
+    //** remembered under it, in the settings file, for the next time.)
     //**
     //** @param(ATitle Title of the dialog.)
     //**
@@ -185,39 +246,50 @@ type
     //**
     //** @param(ATypeIndex Index in ATypes of the type selected at first.)
     //**
-    //** @param(AInitialDir Folder to start in.)
+    //** @param(AInitialDir Folder to start in, when the caller knows a better one than the one
+    //** remembered; empty to use StartFolder.)
     //**
     //** @param(AFileName File name to suggest; may be empty.)
     //**
     //** @param(ADone Called with the chosen full path and the index of the chosen type; with an
     //** empty string and -1 when cancelled.)
     /// <summary>Lets the user choose a file name to save to.</summary>
+    /// <param name="AKey">The kind of dialog, for example "openModel": the folder chosen is
+    /// remembered under it, in the settings file, for the next time.</param>
     /// <param name="ATitle">Title of the dialog.</param>
     /// <param name="ATypes">File types offered.</param>
     /// <param name="ATypeIndex">Index in ATypes of the type selected at first.</param>
-    /// <param name="AInitialDir">Folder to start in.</param>
+    /// <param name="AInitialDir">Folder to start in, when the caller knows a better one than the
+    /// one remembered; empty to use StartFolder.</param>
     /// <param name="AFileName">File name to suggest; may be empty.</param>
     /// <param name="ADone">Called with the chosen full path and the index of the chosen type;
     /// with an empty string and -1 when cancelled.</param>
     /// <remarks>Replacing an existing file is not confirmed here, so that the caller can first
     /// adjust the name, for example its extension, and then use <see
     /// cref="Confirm"/>.</remarks>
-    class procedure SaveFile(const ATitle: string; const ATypes: TArray<TFileType>;
+    class procedure SaveFile(const AKey, ATitle: string; const ATypes: TArray<TFileType>;
       ATypeIndex: Integer; const AInitialDir, AFileName: string;
       const ADone: TProc<string, Integer>); static;
     //** @abstract(Lets the user choose a folder.)
     //**
+    //** @param(AKey The kind of dialog, for example "openModel": the folder chosen is
+    //** remembered under it, in the settings file, for the next time.)
+    //**
     //** @param(ATitle Title of the dialog.)
     //**
-    //** @param(AInitialDir Folder to start in.)
+    //** @param(AInitialDir Folder to start in, when the caller knows a better one than the one
+    //** remembered; empty to use StartFolder.)
     //**
     //** @param(ADone Called with the chosen folder, or an empty string when cancelled.)
     /// <summary>Lets the user choose a folder.</summary>
+    /// <param name="AKey">The kind of dialog, for example "openModel": the folder chosen is
+    /// remembered under it, in the settings file, for the next time.</param>
     /// <param name="ATitle">Title of the dialog.</param>
-    /// <param name="AInitialDir">Folder to start in.</param>
+    /// <param name="AInitialDir">Folder to start in, when the caller knows a better one than the
+    /// one remembered; empty to use StartFolder.</param>
     /// <param name="ADone">Called with the chosen folder, or an empty string when
     /// cancelled.</param>
-    class procedure SelectFolder(const ATitle, AInitialDir: string;
+    class procedure SelectFolder(const AKey, ATitle, AInitialDir: string;
       const ADone: TProc<string>); static;
     //** @abstract(Asks a yes or no question.)
     //**
@@ -238,6 +310,12 @@ implementation
 {$IF DEFINED(ANDROID) or DEFINED(IOS)}
   {$DEFINE GLTF_MOBILE}
 {$ENDIF}
+
+uses
+{$IFDEF GLTF_MOBILE}
+  glTFViewer.FileBrowser,
+{$ENDIF}
+  glTFViewer.Settings;
 
 { TFileType }
 
@@ -289,351 +367,6 @@ begin
   end;
 end;
 
-{$ELSE}
-
-// Mobile: a file browser built in code, as FMX has no file dialogs there
-
-type
-  TBrowseMode = (bmOpen, bmOpenMany, bmSave, bmFolder);
-
-  TFileBrowserForm = class(TForm)
-  private
-    FMode: TBrowseMode;
-    FTypes: TArray<TFileType>;
-    FDir: string;
-    FResult: string;
-    FChosen: TStringList;
-    FPathLabel: TLabel;
-    FList: TListBox;
-    FNameEdit: TEdit;
-    FTypeBox: TComboBox;
-    procedure Build(const ATitle: string; ATypeIndex: Integer; const AFileName: string);
-    procedure AddLocation(AParent: TFmxObject; const ACaption, APath: string);
-    procedure Fill;
-    procedure Navigate(const ADir: string);
-    function CurrentType: Integer;
-    procedure UpClick(Sender: TObject);
-    procedure LocationClick(Sender: TObject);
-    procedure TypeChange(Sender: TObject);
-    procedure ItemClick(const Sender: TCustomListBox; const AItem: TListBoxItem);
-    procedure OKClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    function ItemText(const APath: string): string;
-  public
-    destructor Destroy; override;
-    constructor CreateBrowser(AMode: TBrowseMode; const ATitle: string;
-      const ATypes: TArray<TFileType>; ATypeIndex: Integer;
-      const AInitialDir, AFileName: string);
-  end;
-
-constructor TFileBrowserForm.CreateBrowser(AMode: TBrowseMode; const ATitle: string;
-  const ATypes: TArray<TFileType>; ATypeIndex: Integer; const AInitialDir, AFileName: string);
-begin
-  inherited CreateNew(Application);
-  FMode := AMode;
-  FChosen := TStringList.Create;
-  FTypes := ATypes;
-  OnClose := FormClose;
-  Build(ATitle, ATypeIndex, AFileName);
-  if (AInitialDir <> '') and TDirectory.Exists(AInitialDir) then
-    Navigate(AInitialDir)
-  else
-    Navigate(TPlatformDialogs.DefaultFolder);
-end;
-
-destructor TFileBrowserForm.Destroy;
-begin
-  FChosen.Free;
-  inherited;
-end;
-
-// A file's text in the list: ticked files of a multiple choice start with a tick
-function TFileBrowserForm.ItemText(const APath: string): string;
-begin
-  Result := TPath.GetFileName(APath);
-  if FMode = bmOpenMany then
-    if FChosen.IndexOf(APath) >= 0 then
-      Result := #$2713' ' + Result
-    else
-      Result := '    ' + Result;
-end;
-
-procedure TFileBrowserForm.AddLocation(AParent: TFmxObject; const ACaption, APath: string);
-var
-  LButton: TButton;
-begin
-  if (APath = '') or not TDirectory.Exists(APath) then
-    Exit;
-  LButton := TButton.Create(Self);
-  LButton.Parent := AParent;
-  LButton.Align := TAlignLayout.Left;
-  LButton.Margins.Left := 4;
-  LButton.Width := 100;
-  LButton.Position.X := 1000 + AParent.ChildrenCount;
-  LButton.Text := ACaption;
-  LButton.TagString := APath;
-  LButton.OnClick := LocationClick;
-end;
-
-procedure TFileBrowserForm.Build(const ATitle: string; ATypeIndex: Integer;
-  const AFileName: string);
-var
-  LTop, LBottom, LRow: TLayout;
-  LTitle: TLabel;
-  LButton: TButton;
-  LType: TFileType;
-begin
-  Caption := ATitle;
-
-  LTop := TLayout.Create(Self);
-  LTop.Parent := Self;
-  LTop.Align := TAlignLayout.Top;
-  LTop.Height := 116;
-  LTop.Padding.Rect := TRectF.Create(8, 8, 8, 4);
-
-  LTitle := TLabel.Create(Self);
-  LTitle.Parent := LTop;
-  LTitle.Align := TAlignLayout.Top;
-  LTitle.Height := 28;
-  LTitle.Text := ATitle;
-  LTitle.StyledSettings := LTitle.StyledSettings - [TStyledSetting.Style];
-  LTitle.TextSettings.Font.Style := [TFontStyle.fsBold];
-
-  LRow := TLayout.Create(Self);
-  LRow.Parent := LTop;
-  LRow.Align := TAlignLayout.Top;
-  LRow.Position.Y := 100;
-  LRow.Height := 40;
-  LRow.Padding.Rect := TRectF.Create(0, 4, 0, 4);
-
-  LButton := TButton.Create(Self);
-  LButton.Parent := LRow;
-  LButton.Align := TAlignLayout.Left;
-  LButton.Width := 60;
-  LButton.Text := 'Up';
-  LButton.OnClick := UpClick;
-
-  AddLocation(LRow, 'App files', TPath.GetDocumentsPath);
-  if TPath.GetSharedDocumentsPath <> TPath.GetDocumentsPath then
-    AddLocation(LRow, 'Documents', TPath.GetSharedDocumentsPath);
-  AddLocation(LRow, 'Downloads', TPath.GetSharedDownloadsPath);
-
-  FPathLabel := TLabel.Create(Self);
-  FPathLabel.Parent := LTop;
-  FPathLabel.Align := TAlignLayout.Client;
-  FPathLabel.Trimming := TTextTrimming.Character;
-
-  LBottom := TLayout.Create(Self);
-  LBottom.Parent := Self;
-  LBottom.Align := TAlignLayout.Bottom;
-  LBottom.Padding.Rect := TRectF.Create(8, 4, 8, 8);
-  LBottom.Height := 48;
-
-  if FMode = bmSave then
-  begin
-    LBottom.Height := LBottom.Height + 40;
-    FNameEdit := TEdit.Create(Self);
-    FNameEdit.Parent := LBottom;
-    FNameEdit.Align := TAlignLayout.Top;
-    FNameEdit.Margins.Bottom := 6;
-    FNameEdit.Text := AFileName;
-    FNameEdit.TextPrompt := 'File name';
-  end;
-
-  if (FMode <> bmFolder) and (Length(FTypes) > 0) then
-  begin
-    LBottom.Height := LBottom.Height + 40;
-    FTypeBox := TComboBox.Create(Self);
-    FTypeBox.Parent := LBottom;
-    FTypeBox.Align := TAlignLayout.Top;
-    FTypeBox.Position.Y := 100;
-    FTypeBox.Margins.Bottom := 6;
-    for LType in FTypes do
-      FTypeBox.Items.Add(LType.Description);
-    if (ATypeIndex >= 0) and (ATypeIndex < Length(FTypes)) then
-      FTypeBox.ItemIndex := ATypeIndex
-    else
-      FTypeBox.ItemIndex := 0;
-    FTypeBox.OnChange := TypeChange;
-  end;
-
-  LRow := TLayout.Create(Self);
-  LRow.Parent := LBottom;
-  LRow.Align := TAlignLayout.Client;
-
-  LButton := TButton.Create(Self);
-  LButton.Parent := LRow;
-  LButton.Align := TAlignLayout.Right;
-  LButton.Width := 100;
-  LButton.Position.X := 2000;
-  case FMode of
-    bmOpen, bmOpenMany: LButton.Text := 'Open';
-    bmSave: LButton.Text := 'Save';
-  else
-    LButton.Text := 'Use folder';
-  end;
-  LButton.OnClick := OKClick;
-
-  LButton := TButton.Create(Self);
-  LButton.Parent := LRow;
-  LButton.Align := TAlignLayout.Right;
-  LButton.Width := 100;
-  LButton.Position.X := 1000;
-  LButton.Margins.Right := 8;
-  LButton.Text := 'Cancel';
-  LButton.ModalResult := mrCancel;
-
-  FList := TListBox.Create(Self);
-  FList.Parent := Self;
-  FList.Align := TAlignLayout.Client;
-  FList.Margins.Rect := TRectF.Create(8, 0, 8, 0);
-  FList.OnItemClick := ItemClick;
-end;
-
-function TFileBrowserForm.CurrentType: Integer;
-begin
-  if Assigned(FTypeBox) then
-    Result := FTypeBox.ItemIndex
-  else
-    Result := -1;
-end;
-
-procedure TFileBrowserForm.Fill;
-var
-  LEntries: TArray<string>;
-  LEntry: string;
-  LItem: TListBoxItem;
-  LType: Integer;
-begin
-  FPathLabel.Text := FDir;
-  LType := CurrentType;
-
-  FList.BeginUpdate;
-  try
-    FList.Clear;
-
-    try
-      LEntries := TDirectory.GetDirectories(FDir);
-    except
-      LEntries := nil; // no access
-    end;
-    TArray.Sort<string>(LEntries, TComparer<string>.Construct(
-      function(const A, B: string): Integer
-      begin
-        Result := CompareText(A, B);
-      end));
-    for LEntry in LEntries do
-    begin
-      LItem := TListBoxItem.Create(FList);
-      LItem.Parent := FList;
-      LItem.Text := TPath.GetFileName(LEntry) + '/';
-      LItem.TagString := LEntry;
-      LItem.Tag := 1; // folder
-    end;
-
-    if FMode = bmFolder then
-      Exit;
-
-    try
-      LEntries := TDirectory.GetFiles(FDir);
-    except
-      LEntries := nil;
-    end;
-    TArray.Sort<string>(LEntries, TComparer<string>.Construct(
-      function(const A, B: string): Integer
-      begin
-        Result := CompareText(A, B);
-      end));
-    for LEntry in LEntries do
-      if (LType < 0) or FTypes[LType].Matches(LEntry) then
-      begin
-        LItem := TListBoxItem.Create(FList);
-        LItem.Parent := FList;
-        LItem.Text := ItemText(LEntry);
-        LItem.TagString := LEntry;
-        LItem.Tag := 0; // file
-      end;
-  finally
-    FList.EndUpdate;
-  end;
-end;
-
-procedure TFileBrowserForm.Navigate(const ADir: string);
-begin
-  FDir := ExcludeTrailingPathDelimiter(ADir);
-  if FDir = '' then
-    FDir := ADir;
-  Fill;
-end;
-
-procedure TFileBrowserForm.UpClick(Sender: TObject);
-var
-  LParent: string;
-begin
-  LParent := TPath.GetDirectoryName(FDir);
-  if (LParent <> '') and (LParent <> FDir) and TDirectory.Exists(LParent) then
-    Navigate(LParent);
-end;
-
-procedure TFileBrowserForm.LocationClick(Sender: TObject);
-begin
-  Navigate((Sender as TButton).TagString);
-end;
-
-procedure TFileBrowserForm.TypeChange(Sender: TObject);
-begin
-  Fill;
-end;
-
-procedure TFileBrowserForm.ItemClick(const Sender: TCustomListBox; const AItem: TListBoxItem);
-begin
-  if AItem.Tag = 1 then
-    Navigate(AItem.TagString)
-  else if FMode = bmOpen then
-  begin
-    FResult := AItem.TagString;
-    ModalResult := mrOk;
-  end
-  else if FMode = bmOpenMany then
-  begin
-    // Tapping ticks or unticks; ticks are kept while browsing other folders
-    if FChosen.IndexOf(AItem.TagString) >= 0 then
-      FChosen.Delete(FChosen.IndexOf(AItem.TagString))
-    else
-      FChosen.Add(AItem.TagString);
-    AItem.Text := ItemText(AItem.TagString);
-  end
-  else if FMode = bmSave then
-    FNameEdit.Text := TPath.GetFileName(AItem.TagString);
-end;
-
-procedure TFileBrowserForm.OKClick(Sender: TObject);
-begin
-  case FMode of
-    bmOpen:
-      if Assigned(FList.Selected) and (FList.Selected.Tag = 0) then
-        FResult := FList.Selected.TagString
-      else
-        Exit; // tap a file to open it
-    bmOpenMany:
-      if FChosen.Count = 0 then
-        Exit; // tap files to tick them first
-    bmSave:
-      if Trim(FNameEdit.Text) <> '' then
-        FResult := TPath.Combine(FDir, Trim(FNameEdit.Text))
-      else
-        Exit;
-    bmFolder:
-      FResult := FDir;
-  end;
-  ModalResult := mrOk;
-end;
-
-procedure TFileBrowserForm.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  Action := TCloseAction.caFree;
-end;
-
 {$ENDIF}
 
 { TPlatformDialogs }
@@ -654,7 +387,7 @@ begin
   Result := TPath.GetDocumentsPath;
 end;
 
-class procedure TPlatformDialogs.OpenFile(const ATitle: string; const ATypes: TArray<TFileType>;
+class procedure TPlatformDialogs.DoOpenFile(const ATitle: string; const ATypes: TArray<TFileType>;
   const AInitialDir, AFileName: string; const ADone: TProc<string>);
 {$IFDEF GLTF_MOBILE}
 var
@@ -665,7 +398,7 @@ begin
     procedure(AResult: TModalResult)
     begin
       if AResult = mrOk then
-        ADone(LForm.FResult)
+        ADone(LForm.ResultPath)
       else
         ADone('');
     end);
@@ -691,7 +424,7 @@ begin
 end;
 {$ENDIF}
 
-class procedure TPlatformDialogs.OpenFiles(const ATitle: string; const ATypes: TArray<TFileType>;
+class procedure TPlatformDialogs.DoOpenFiles(const ATitle: string; const ATypes: TArray<TFileType>;
   const AInitialDir: string; const ADone: TProc<TArray<string>>);
 {$IFDEF GLTF_MOBILE}
 var
@@ -702,7 +435,7 @@ begin
     procedure(AResult: TModalResult)
     begin
       if AResult = mrOk then
-        ADone(LForm.FChosen.ToStringArray)
+        ADone(LForm.Chosen)
       else
         ADone(nil);
     end);
@@ -729,7 +462,7 @@ begin
 end;
 {$ENDIF}
 
-class procedure TPlatformDialogs.SaveFile(const ATitle: string; const ATypes: TArray<TFileType>;
+class procedure TPlatformDialogs.DoSaveFile(const ATitle: string; const ATypes: TArray<TFileType>;
   ATypeIndex: Integer; const AInitialDir, AFileName: string; const ADone: TProc<string, Integer>);
 {$IFDEF GLTF_MOBILE}
 var
@@ -740,7 +473,7 @@ begin
     procedure(AResult: TModalResult)
     begin
       if AResult = mrOk then
-        ADone(LForm.FResult, LForm.CurrentType)
+        ADone(LForm.ResultPath, LForm.TypeIndex)
       else
         ADone('', -1);
     end);
@@ -774,7 +507,7 @@ begin
 end;
 {$ENDIF}
 
-class procedure TPlatformDialogs.SelectFolder(const ATitle, AInitialDir: string;
+class procedure TPlatformDialogs.DoSelectFolder(const ATitle, AInitialDir: string;
   const ADone: TProc<string>);
 {$IFDEF GLTF_MOBILE}
 var
@@ -785,7 +518,7 @@ begin
     procedure(AResult: TModalResult)
     begin
       if AResult = mrOk then
-        ADone(LForm.FResult)
+        ADone(LForm.ResultPath)
       else
         ADone('');
     end);
@@ -800,6 +533,78 @@ begin
   ADone(LDir);
 end;
 {$ENDIF}
+
+class function TPlatformDialogs.StartFolder(const AKey, AInitialDir: string): string;
+begin
+  if (AInitialDir <> '') and TDirectory.Exists(AInitialDir) then
+    Exit(AInitialDir);
+  // Remembered for this kind of dialog, else for any
+  Result := AppSettings.GetFolder(AKey);
+  if (Result <> '') and TDirectory.Exists(Result) then
+    Exit;
+  Result := AppSettings.LastFolder;
+  if (Result <> '') and TDirectory.Exists(Result) then
+    Exit;
+  // Nothing remembered yet: the platform's own choice
+  Result := '';
+end;
+
+class procedure TPlatformDialogs.RememberFolder(const AKey, AFolder: string);
+begin
+  if AFolder <> '' then
+    AppSettings.SetFolder(AKey, AFolder);
+end;
+
+class procedure TPlatformDialogs.OpenFile(const AKey, ATitle: string;
+  const ATypes: TArray<TFileType>; const AInitialDir, AFileName: string;
+  const ADone: TProc<string>);
+begin
+  DoOpenFile(ATitle, ATypes, StartFolder(AKey, AInitialDir), AFileName,
+    procedure(AChosen: string)
+    begin
+      if AChosen <> '' then
+        RememberFolder(AKey, ExtractFileDir(AChosen));
+      ADone(AChosen);
+    end);
+end;
+
+class procedure TPlatformDialogs.OpenFiles(const AKey, ATitle: string;
+  const ATypes: TArray<TFileType>; const AInitialDir: string;
+  const ADone: TProc<TArray<string>>);
+begin
+  DoOpenFiles(ATitle, ATypes, StartFolder(AKey, AInitialDir),
+    procedure(AChosen: TArray<string>)
+    begin
+      if Length(AChosen) > 0 then
+        RememberFolder(AKey, ExtractFileDir(AChosen[High(AChosen)]));
+      ADone(AChosen);
+    end);
+end;
+
+class procedure TPlatformDialogs.SaveFile(const AKey, ATitle: string;
+  const ATypes: TArray<TFileType>; ATypeIndex: Integer; const AInitialDir, AFileName: string;
+  const ADone: TProc<string, Integer>);
+begin
+  DoSaveFile(ATitle, ATypes, ATypeIndex, StartFolder(AKey, AInitialDir), AFileName,
+    procedure(AChosen: string; AChosenType: Integer)
+    begin
+      if AChosen <> '' then
+        RememberFolder(AKey, ExtractFileDir(AChosen));
+      ADone(AChosen, AChosenType);
+    end);
+end;
+
+class procedure TPlatformDialogs.SelectFolder(const AKey, ATitle, AInitialDir: string;
+  const ADone: TProc<string>);
+begin
+  DoSelectFolder(ATitle, StartFolder(AKey, AInitialDir),
+    procedure(AChosen: string)
+    begin
+      if AChosen <> '' then
+        RememberFolder(AKey, AChosen);
+      ADone(AChosen);
+    end);
+end;
 
 class procedure TPlatformDialogs.Confirm(const AMessage: string; const ADone: TProc<Boolean>);
 begin

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.Animations: Class TglTFAnimationsFrame</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFAnimationsFrame"></span><h1 class="cio">Class TglTFAnimationsFrame</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.Animations.html">glTFViewer.Animations</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFAnimationsFrame = class(TFrame)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Frame listing the animations of a document, with an Export checkbox per animation.</p>
+<p>
+
+
+<p>Place it on a tab with Align = Client and call <a class="normal" href="glTFViewer.Animations.TglTFAnimationsFrame.html#Bind-TglTFDocument-">Bind</a> after each load and <a class="normal" href="glTFViewer.Animations.TglTFAnimationsFrame.html#RefreshList">RefreshList</a> after each import. Must be used on the main thread.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TFrame</li>
+<li class="thisitem">TglTFAnimationsFrame</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#layBar">layBar</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#btnImport">btnImport</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#btnExportAll">btnExportAll</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#btnExportNone">btnExportNone</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#btnClear">btnClear</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#btnSplit">btnSplit</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#lblSummary">lblSummary</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#layHeader">layHeader</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#lstAnimations">lstAnimations</a></strong>: TListBox;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#edtRename">edtRename</a></strong>: TEdit;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#edtRenameKeyDown-TObject-Word-Char-TShiftState-">edtRenameKeyDown</a></strong>(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#edtRenameExit-TObject-">edtRenameExit</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#edtRenameChangeTracking-TObject-">edtRenameChangeTracking</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#btnImportClick-TObject-">btnImportClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#btnExportAllClick-TObject-">btnExportAllClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#btnExportNoneClick-TObject-">btnExportNoneClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#btnClearClick-TObject-">btnClearClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#btnSplitClick-TObject-">btnSplitClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#layHeaderResize-TObject-">layHeaderResize</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#lstAnimationsPainting-TObject-TCanvas-TRectF-">lstAnimationsPainting</a></strong>(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);</code></td>
+</tr>
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#Resize">Resize</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#Create-TComponent-">Create</a></strong>(AOwner: TComponent); override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#Bind-TglTFDocument-">Bind</a></strong>(ADoc: TglTFDocument);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#RefreshList">RefreshList</a></strong>;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#OnImport">OnImport</a></strong>: TNotifyEvent read FOnImport write FOnImport;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#OnClear">OnClear</a></strong>: TNotifyEvent read FOnClear write FOnClear;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#OnSplit">OnSplit</a></strong>: TNotifyEvent read FOnSplit write FOnSplit;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#OnChange">OnChange</a></strong>: TNotifyEvent read FOnChange write FOnChange;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Animations.TglTFAnimationsFrame.html#OnRename">OnRename</a></strong>: <a href="glTFViewer.Animations.html#TglTFAnimationRenameEvent">TglTFAnimationRenameEvent</a> read FOnRename write FOnRename;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layBar"></span><code><strong>layBar</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The bar of buttons and the summary, at the top.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnImport"></span><code><strong>btnImport</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnImport; enabled once a file is loaded.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnExportAll"></span><code><strong>btnExportAll</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Ticks Export for every animation.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnExportNone"></span><code><strong>btnExportNone</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Unticks Export for every animation.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnClear"></span><code><strong>btnClear</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnClear.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnSplit"></span><code><strong>btnSplit</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnSplit; shown only while an animation is long.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblSummary"></span><code><strong>lblSummary</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+How many animations there are and how many will be saved.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layHeader"></span><code><strong>layHeader</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The column headings, filled in from the column list.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstAnimations"></span><code><strong>lstAnimations</strong>: TListBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+One row per animation.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtRename"></span><code><strong>edtRename</strong>: TEdit;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Edits a name in place; moved over the name clicked, hidden otherwise.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtRenameKeyDown-TObject-Word-Char-TShiftState-"></span><code>procedure <strong>edtRenameKeyDown</strong>(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Keeps the new name on Enter; keeps the old one on Escape.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The edit box.</dd>
+<dt>Key</dt>
+<dd>The key pressed; 0 once handled.</dd>
+<dt>KeyChar</dt>
+<dd>The character typed.</dd>
+<dt>Shift</dt>
+<dd>The modifier keys held.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtRenameExit-TObject-"></span><code>procedure <strong>edtRenameExit</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Keeps the new name when the edit box loses the focus, as Enter does.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The edit box.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtRenameChangeTracking-TObject-"></span><code>procedure <strong>edtRenameChangeTracking</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Shows, as it is typed, whether the name can be used.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The edit box.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnImportClick-TObject-"></span><code>procedure <strong>btnImportClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnImport.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnExportAllClick-TObject-"></span><code>procedure <strong>btnExportAllClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Ticks Export for every animation.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnExportNoneClick-TObject-"></span><code>procedure <strong>btnExportNoneClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Unticks Export for every animation.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnClearClick-TObject-"></span><code>procedure <strong>btnClearClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnClear.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnSplitClick-TObject-"></span><code>procedure <strong>btnSplitClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnSplit.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layHeaderResize-TObject-"></span><code>procedure <strong>layHeaderResize</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lays out the headings again when their width changes.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The heading row.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstAnimationsPainting-TObject-TCanvas-TRectF-"></span><code>procedure <strong>lstAnimationsPainting</strong>(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Keeps the headings above the cells of the rows.</p>
+<p>
+
+
+<p>The list's border and scroll bar take room from the rows but not from the headings.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The list.</dd>
+<dt>Canvas</dt>
+<dd>The canvas painted on.</dd>
+<dt>ARect</dt>
+<dd>The area painted.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="Resize"></span><code>procedure <strong>Resize</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lays the rows out again for the new width.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-TComponent-"></span><code>constructor <strong>Create</strong>(AOwner: TComponent); override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the frame with an empty list.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOwner</dt>
+<dd>Owner of the frame.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the frame and its rows.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Bind-TglTFDocument-"></span><code>procedure <strong>Bind</strong>(ADoc: TglTFDocument);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Shows the animations of a document.</p>
+<p>
+
+
+<p>The frame keeps a reference to ADoc but does not own it; call Bind(nil) before freeing the document.
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ADoc</dt>
+<dd>The document to show; nil clears the list.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RefreshList"></span><code>procedure <strong>RefreshList</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Rebuilds the rows from the current document.</p>
+<p>
+
+
+<p>Call it after animations were imported.</p>
+</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnImport"></span><code>property <strong>OnImport</strong>: TNotifyEvent read FOnImport write FOnImport;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user clicks &quot;Import animations...&quot;.</p>
+<p>
+
+
+<p>The handler is expected to let the user choose the files, import them and then call <a class="normal" href="glTFViewer.Animations.TglTFAnimationsFrame.html#RefreshList">RefreshList</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnClear"></span><code>property <strong>OnClear</strong>: TNotifyEvent read FOnClear write FOnClear;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user clicks &quot;Clear animations&quot;.</p>
+<p>
+
+
+<p>The handler is expected to confirm, remove every animation from the document and then call <a class="normal" href="glTFViewer.Animations.TglTFAnimationsFrame.html#RefreshList">RefreshList</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnSplit"></span><code>property <strong>OnSplit</strong>: TNotifyEvent read FOnSplit write FOnSplit;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user clicks &quot;Split long animation...&quot;.</p>
+<p>
+
+
+<p>The button is only shown while the document has an animation longer than <code>TglTFAnimationSplitter.LongAnimationSeconds</code>, which is likely to be several animations joined together. The handler is expected to show the split dialog for it and then call <a class="normal" href="glTFViewer.Animations.TglTFAnimationsFrame.html#RefreshList">RefreshList</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnChange"></span><code>property <strong>OnChange</strong>: TNotifyEvent read FOnChange write FOnChange;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user changes what a save writes: an Export tick.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnRename"></span><code>property <strong>OnRename</strong>: <a href="glTFViewer.Animations.html#TglTFAnimationRenameEvent">TglTFAnimationRenameEvent</a> read FOnRename write FOnRename;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs after an animation was renamed in the list, after OnChange.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

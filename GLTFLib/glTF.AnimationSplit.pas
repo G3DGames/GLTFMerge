@@ -910,14 +910,14 @@ begin
     else
     begin
       for J := 0 to I - 1 do
-        if SameText(Trim(ARanges[J].Name), LName) then
+        if TglTFEdit.SameName(ARanges[J].Name, LName) then
         begin
           AProblems[I] := Format('the name "%s" is already used in row %d', [LName, J + 1]);
           Break;
         end;
       if AProblems[I] = '' then
         for J := 0 to ARoot.Animations.Count - 1 do
-          if (J <> AIndex) and SameText(ARoot.Animations[J].Name, LName) then
+          if (J <> AIndex) and TglTFEdit.SameName(ARoot.Animations[J].Name, LName) then
           begin
             AProblems[I] := Format('the model already has an animation called "%s"',
               [ARoot.Animations[J].Name]);

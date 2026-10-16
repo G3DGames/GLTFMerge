@@ -1,43 +1,56 @@
 //** @abstract(The Animations tab of the viewer: every animation of a document, with its Export
 //** choice.)
 //**
-//** @link(TglTFAnimationsPanel) shows one row per animation with the columns Export, #, Name,
+//** @link(TglTFAnimationsFrame) shows one row per animation with the columns Export, #, Name,
 //** From, Channels and Duration. From is "model" for animations that came with the loaded
 //** file and the file name for imported ones. The Export column edits
 //** @code(TglTFAnimation.ExportOnSave): a save leaves out the animations not ticked, with the
 //** data only they used. "Export all" and "Export none" change every flag at once.
 //**
-//** "Clear animations" raises @link(TglTFAnimationsPanel.OnClear), to empty the list.
+//** Clicking a name edits it in place: Enter keeps the new name, Escape or a name left
+//** unchanged keeps the old one, and clicking elsewhere counts as Enter. A name is accepted
+//** only when it is not empty and no other animation has it, case ignored @(see
+//** @code(TglTFEdit.AnimationNameProblem)@); the text turns red while it cannot be used, and a
+//** name not accepted is reported and the old one kept.
+//**
+//** "Clear animations" raises @link(TglTFAnimationsFrame.OnClear), to empty the list.
 //** "Split long animation..." appears while an animation is over 10 seconds long and raises
-//** @link(TglTFAnimationsPanel.OnSplit).
-//** "Import animations..." raises @link(TglTFAnimationsPanel.OnImport); the main form shows
+//** @link(TglTFAnimationsFrame.OnSplit).
+//** "Import animations..." raises @link(TglTFAnimationsFrame.OnImport); the main form shows
 //** the file dialog and does the import, then calls RefreshList.
 //**
 //** On narrow screens the From column is hidden, and Channels too when narrower still. The
-//** panel is built in code, so the unit needs no .fmx file; headings and rows are laid out by
-//** glTFViewer.Columns, so the columns line up.
+//** frame is designed in glTFViewer.Animations.fmx. The headings and the rows follow the
+//** column list in the code and are laid out by glTFViewer.Columns, so the columns line up.
 unit glTFViewer.Animations;
 
 {
   The Animations tab of the viewer: every animation of a document, with its
   Export choice.
 
-  TglTFAnimationsPanel shows one row per animation with the columns Export, #,
+  TglTFAnimationsFrame shows one row per animation with the columns Export, #,
   Name, From, Channels and Duration. From is "model" for animations that came
   with the loaded file and the file name for imported ones. The Export column
   edits TglTFAnimation.ExportOnSave: a save leaves out the animations not
   ticked, with the data only they used. "Export all" and "Export none" change
   every flag at once.
 
+  Clicking a name edits it in place: Enter keeps the new name, Escape or a
+  name left unchanged keeps the old one, and clicking elsewhere counts as
+  Enter. A name is accepted only when it is not empty and no other animation
+  has it, case ignored (see TglTFEdit.AnimationNameProblem); the text turns
+  red while it cannot be used, and a name not accepted is reported and the old
+  one kept.
+
   "Clear animations" raises OnClear, to empty the list. "Split long
   animation..." appears while an animation is over 10 seconds long and raises
-  OnSplit. "Import
-  animations..." raises OnImport; the main form shows the file dialog
-  and does the import, then calls RefreshList.
+  OnSplit. "Import animations..." raises OnImport; the main form shows the
+  file dialog and does the import, then calls RefreshList.
 
   On narrow screens the From column is hidden, and Channels too when narrower
-  still. The panel is built in code, so the unit needs no .fmx file; headings
-  and rows are laid out by glTFViewer.Columns, so the columns line up.
+  still. The frame is designed in glTFViewer.Animations.fmx. The headings and
+  the rows follow the column list in the code and are laid out by
+  glTFViewer.Columns, so the columns line up.
 }
 
 interface
@@ -45,80 +58,223 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Math,
   System.Generics.Collections,
-  FMX.Types, FMX.Controls, FMX.StdCtrls, FMX.Layouts, FMX.ListBox,
-  FMX.Graphics, FMX.Controls.Presentation,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.StdCtrls, FMX.Layouts, FMX.ListBox,
+  FMX.Graphics, FMX.Controls.Presentation, FMX.Edit,
 
   glTF.Classes, glTF.Document, glTF.AnimationSplit,
   glTFViewer.Columns;
 
 type
-  //** @abstract(Panel listing the animations of a document, with an Export checkbox per
+  //** @abstract(Reports that an animation was renamed.)
+  //**
+  //** @param(Sender The frame.)
+  //**
+  //** @param(AIndex Index of the animation in the document.)
+  //**
+  //** @param(AOldName The name it had.)
+  //**
+  //** @param(ANewName The name it has now.)
+  /// <summary>Reports that an animation was renamed.</summary>
+  /// <param name="Sender">The frame.</param>
+  /// <param name="AIndex">Index of the animation in the document.</param>
+  /// <param name="AOldName">The name it had.</param>
+  /// <param name="ANewName">The name it has now.</param>
+  TglTFAnimationRenameEvent = procedure(Sender: TObject; AIndex: Integer;
+    const AOldName, ANewName: string) of object;
+
+  //** @abstract(Frame listing the animations of a document, with an Export checkbox per
   //** animation.)
   //**
   //** Place it on a tab with Align = Client and call @link(Bind) after each load and
   //** @link(RefreshList) after each import. Must be used on the main thread.
-  /// <summary>Panel listing the animations of a document, with an Export checkbox per
+  /// <summary>Frame listing the animations of a document, with an Export checkbox per
   /// animation.</summary>
   /// <remarks>Place it on a tab with Align = Client and call <see cref="Bind"/> after each
   /// load and <see cref="RefreshList"/> after each import. Must be used on the main
   /// thread.</remarks>
-  TglTFAnimationsPanel = class(TLayout)
+  TglTFAnimationsFrame = class(TFrame)
+    //** @abstract(The bar of buttons and the summary, at the top.)
+    /// <summary>The bar of buttons and the summary, at the top.</summary>
+    layBar: TLayout;
+
+    //** @abstract(Raises OnImport; enabled once a file is loaded.)
+    /// <summary>Raises OnImport; enabled once a file is loaded.</summary>
+    btnImport: TButton;
+
+    //** @abstract(Ticks Export for every animation.)
+    /// <summary>Ticks Export for every animation.</summary>
+    btnExportAll: TButton;
+
+    //** @abstract(Unticks Export for every animation.)
+    /// <summary>Unticks Export for every animation.</summary>
+    btnExportNone: TButton;
+
+    //** @abstract(Raises OnClear.)
+    /// <summary>Raises OnClear.</summary>
+    btnClear: TButton;
+
+    //** @abstract(Raises OnSplit; shown only while an animation is long.)
+    /// <summary>Raises OnSplit; shown only while an animation is long.</summary>
+    btnSplit: TButton;
+
+    //** @abstract(How many animations there are and how many will be saved.)
+    /// <summary>How many animations there are and how many will be saved.</summary>
+    lblSummary: TLabel;
+
+    //** @abstract(The column headings, filled in from the column list.)
+    /// <summary>The column headings, filled in from the column list.</summary>
+    layHeader: TLayout;
+
+    //** @abstract(One row per animation.)
+    /// <summary>One row per animation.</summary>
+    lstAnimations: TListBox;
+
+    //** @abstract(Edits a name in place; moved over the name clicked, hidden otherwise.)
+    /// <summary>Edits a name in place; moved over the name clicked, hidden
+    /// otherwise.</summary>
+    edtRename: TEdit;
+
+    //** @abstract(Keeps the new name on Enter; keeps the old one on Escape.)
+    //**
+    //** @param(Sender The edit box.)
+    //**
+    //** @param(Key The key pressed; 0 once handled.)
+    //**
+    //** @param(KeyChar The character typed.)
+    //**
+    //** @param(Shift The modifier keys held.)
+    /// <summary>Keeps the new name on Enter; keeps the old one on Escape.</summary>
+    /// <param name="Sender">The edit box.</param>
+    /// <param name="Key">The key pressed; 0 once handled.</param>
+    /// <param name="KeyChar">The character typed.</param>
+    /// <param name="Shift">The modifier keys held.</param>
+    procedure edtRenameKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char;
+      Shift: TShiftState);
+
+    //** @abstract(Keeps the new name when the edit box loses the focus, as Enter does.)
+    //**
+    //** @param(Sender The edit box.)
+    /// <summary>Keeps the new name when the edit box loses the focus, as Enter
+    /// does.</summary>
+    /// <param name="Sender">The edit box.</param>
+    procedure edtRenameExit(Sender: TObject);
+
+    //** @abstract(Shows, as it is typed, whether the name can be used.)
+    //**
+    //** @param(Sender The edit box.)
+    /// <summary>Shows, as it is typed, whether the name can be used.</summary>
+    /// <param name="Sender">The edit box.</param>
+    procedure edtRenameChangeTracking(Sender: TObject);
+
+    //** @abstract(Raises OnImport.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Raises OnImport.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnImportClick(Sender: TObject);
+
+    //** @abstract(Ticks Export for every animation.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Ticks Export for every animation.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnExportAllClick(Sender: TObject);
+
+    //** @abstract(Unticks Export for every animation.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Unticks Export for every animation.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnExportNoneClick(Sender: TObject);
+
+    //** @abstract(Raises OnClear.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Raises OnClear.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnClearClick(Sender: TObject);
+
+    //** @abstract(Raises OnSplit.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Raises OnSplit.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnSplitClick(Sender: TObject);
+
+    //** @abstract(Lays out the headings again when their width changes.)
+    //**
+    //** @param(Sender The heading row.)
+    /// <summary>Lays out the headings again when their width changes.</summary>
+    /// <param name="Sender">The heading row.</param>
+    procedure layHeaderResize(Sender: TObject);
+
+    //** @abstract(Keeps the headings above the cells of the rows.)
+    //**
+    //** The list's border and scroll bar take room from the rows but not from the headings.
+    //**
+    //** @param(Sender The list.)
+    //**
+    //** @param(Canvas The canvas painted on.)
+    //**
+    //** @param(ARect The area painted.)
+    /// <summary>Keeps the headings above the cells of the rows.</summary>
+    /// <param name="Sender">The list.</param>
+    /// <param name="Canvas">The canvas painted on.</param>
+    /// <param name="ARect">The area painted.</param>
+    /// <remarks>The list's border and scroll bar take room from the rows but not from the
+    /// headings.</remarks>
+    procedure lstAnimationsPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
   private
     FDoc: TglTFDocument;
-    FSummary: TLabel;
-    FBtnImport: TButton;
-    FBtnAll: TButton;
-    FBtnNone: TButton;
-    FBtnClear: TButton;
-    FBtnSplit: TButton;
-    FHeader: TLayout;
-    FList: TListBox;
     FChecks: TList<TCheckBox>;
     FUpdating: Boolean;
     FOnImport: TNotifyEvent;
     FOnClear: TNotifyEvent;
     FOnSplit: TNotifyEvent;
+    FOnChange: TNotifyEvent;
+    FOnRename: TglTFAnimationRenameEvent;
     FColumns: TColumnDefs;
-    procedure BuildControls;
-    function AddButton(AParent: TFmxObject; const AText: string; AWidth, AGap, AOrder: Single;
-      AOnClick: TNotifyEvent): TButton;
-    procedure ListPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
+    // The animation whose name is being edited, -1 for none, and its name cell
+    FRenameIndex: Integer;
+    FRenameLabel: TLabel;
     procedure RowResize(Sender: TObject);
     procedure LayoutRow(ARow: TControl);
     procedure AddRow(AIndex: Integer; AAnimation: TglTFAnimation);
     function Duration(AAnimation: TglTFAnimation): string;
     procedure ExportChange(Sender: TObject);
-    procedure ImportClick(Sender: TObject);
-    procedure ClearClick(Sender: TObject);
-    procedure SplitClick(Sender: TObject);
-    procedure AllClick(Sender: TObject);
-    procedure NoneClick(Sender: TObject);
     procedure SetAll(AValue: Boolean);
+    procedure Changed;
+    procedure NameClick(Sender: TObject);
+    procedure BeginRename(ALabel: TLabel);
+    procedure CommitRename;
+    procedure EndRename;
     procedure UpdateSummary;
     procedure ApplyWidth;
   protected
+    //** @abstract(Lays the rows out again for the new width.)
+    /// <summary>Lays the rows out again for the new width.</summary>
     procedure Resize; override;
   public
-    //** @abstract(Creates the panel with an empty list.)
+    //** @abstract(Creates the frame with an empty list.)
     //**
-    //** @param(AOwner Owner of the panel.)
-    /// <summary>Creates the panel with an empty list.</summary>
-    /// <param name="AOwner">Owner of the panel.</param>
+    //** @param(AOwner Owner of the frame.)
+    /// <summary>Creates the frame with an empty list.</summary>
+    /// <param name="AOwner">Owner of the frame.</param>
     constructor Create(AOwner: TComponent); override;
 
-    //** @abstract(Frees the panel and its rows.)
-    /// <summary>Frees the panel and its rows.</summary>
+    //** @abstract(Frees the frame and its rows.)
+    /// <summary>Frees the frame and its rows.</summary>
     destructor Destroy; override;
 
     //** @abstract(Shows the animations of a document.)
     //**
-    //** The panel keeps a reference to ADoc but does not own it; call Bind@(nil@) before
+    //** The frame keeps a reference to ADoc but does not own it; call Bind@(nil@) before
     //** freeing the document.
     //**
     //** @param(ADoc The document to show; nil clears the list.)
     /// <summary>Shows the animations of a document.</summary>
     /// <param name="ADoc">The document to show; nil clears the list.</param>
-    /// <remarks>The panel keeps a reference to ADoc but does not own it; call Bind(nil) before
+    /// <remarks>The frame keeps a reference to ADoc but does not own it; call Bind(nil) before
     /// freeing the document.</remarks>
     procedure Bind(ADoc: TglTFDocument);
 
@@ -159,9 +315,22 @@ type
     /// animations joined together. The handler is expected to show the split dialog for it
     /// and then call <see cref="RefreshList"/>.</remarks>
     property OnSplit: TNotifyEvent read FOnSplit write FOnSplit;
+    //** @abstract(Occurs when the user changes what a save writes: an Export tick.)
+    /// <summary>Occurs when the user changes what a save writes: an Export tick.</summary>
+    property OnChange: TNotifyEvent read FOnChange write FOnChange;
+
+    //** @abstract(Occurs after an animation was renamed in the list, after OnChange.)
+    /// <summary>Occurs after an animation was renamed in the list, after OnChange.</summary>
+    property OnRename: TglTFAnimationRenameEvent read FOnRename write FOnRename;
   end;
 
 implementation
+
+{$R *.fmx}
+
+uses
+  FMX.DialogService,
+  glTF.Edit;
 
 const
   ROW_HEIGHT = 26;
@@ -174,15 +343,16 @@ const
   COL_CHANNELS = 4;
   COL_DURATION = 5;
 
-  // Below these panel widths (phones in portrait) some columns are hidden
+  // Below these frame widths (phones in portrait) some columns are hidden
   NARROW_WIDTH = 600;
   VERY_NARROW_WIDTH = 420;
 
-{ TglTFAnimationsPanel }
+{ TglTFAnimationsFrame }
 
-constructor TglTFAnimationsPanel.Create(AOwner: TComponent);
+constructor TglTFAnimationsFrame.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  FRenameIndex := -1;
   FChecks := TList<TCheckBox>.Create;
   FColumns := [
     TColumnDef.Create('Export', 64, chNever, True),
@@ -191,90 +361,43 @@ begin
     TColumnDef.Create('From', 220, chNarrow),
     TColumnDef.Create('Channels', 80, chVeryNarrow),
     TColumnDef.Create('Duration', 90)];
-  BuildControls;
+  // The headings come from the same list as the rows' cells, so they match
+  TColumnLayout.AddHeadings(layHeader, FColumns);
   Bind(nil);
 end;
 
-destructor TglTFAnimationsPanel.Destroy;
+destructor TglTFAnimationsFrame.Destroy;
 begin
   FChecks.Free;
   inherited;
 end;
 
-function TglTFAnimationsPanel.AddButton(AParent: TFmxObject; const AText: string;
-  AWidth, AGap, AOrder: Single; AOnClick: TNotifyEvent): TButton;
+procedure TglTFAnimationsFrame.lstAnimationsPainting(Sender: TObject; Canvas: TCanvas;
+  const ARect: TRectF);
 begin
-  Result := TButton.Create(Self);
-  Result.Parent := AParent;
-  Result.Align := TAlignLayout.Left;
-  Result.Width := AWidth;
-  Result.Margins.Left := AGap;
-  Result.Position.X := AOrder; // same-side alignment is ordered by position
-  Result.Text := AText;
-  Result.OnClick := AOnClick;
+  if TColumnLayout.AlignHeader(layHeader, lstAnimations) then
+    LayoutRow(layHeader);
 end;
 
-procedure TglTFAnimationsPanel.BuildControls;
-var
-  LBar: TLayout;
-begin
-  // Button bar
-  LBar := TLayout.Create(Self);
-  LBar.Parent := Self;
-  LBar.Align := TAlignLayout.Top;
-  LBar.Height := 40;
-  LBar.Padding.Rect := TRectF.Create(6, 6, 6, 6);
-
-  FBtnImport := AddButton(LBar, 'Import animations...', 150, 0, 0, ImportClick);
-  FBtnAll := AddButton(LBar, 'Export all', 100, 18, 200, AllClick);
-  FBtnNone := AddButton(LBar, 'Export none', 100, 6, 400, NoneClick);
-  FBtnClear := AddButton(LBar, 'Clear animations', 130, 18, 600, ClearClick);
-  FBtnSplit := AddButton(LBar, 'Split long animation...', 170, 18, 800, SplitClick);
-  FBtnSplit.Visible := False;
-
-  FSummary := TLabel.Create(Self);
-  FSummary.Parent := LBar;
-  FSummary.Align := TAlignLayout.Client;
-  FSummary.Margins.Left := 14;
-
-  // Column headings, laid out like the rows
-  FHeader := TLayout.Create(Self);
-  FHeader.Parent := Self;
-  FHeader.Align := TAlignLayout.Top;
-  FHeader.Height := ROW_HEIGHT;
-  FHeader.Position.Y := 100;
-  FHeader.Padding.Rect := TRectF.Create(TColumnLayout.RowPadding, 0, TColumnLayout.RowPadding, 0);
-  TColumnLayout.AddHeadings(FHeader, FColumns);
-  FHeader.OnResize := RowResize;
-
-  FList := TListBox.Create(Self);
-  FList.Parent := Self;
-  FList.Align := TAlignLayout.Client;
-  FList.ItemHeight := ROW_HEIGHT;
-  // The headings follow the rows, whose room the list's border and scroll
-  // bar reduce
-  FList.OnPainting := ListPainting;
-end;
-
-procedure TglTFAnimationsPanel.ListPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
-begin
-  // The headings follow the rows, whose room the list's border and scroll
-  // bar reduce
-  if TColumnLayout.AlignHeader(FHeader, FList) then
-    LayoutRow(FHeader);
-end;
-
-procedure TglTFAnimationsPanel.LayoutRow(ARow: TControl);
+procedure TglTFAnimationsFrame.LayoutRow(ARow: TControl);
 begin
   TColumnLayout.LayoutRow(ARow, FColumns, Width, NARROW_WIDTH, VERY_NARROW_WIDTH);
+  // The name being edited stays over its cell
+  if (FRenameLabel <> nil) and (FRenameLabel.Parent = ARow) then
+    edtRename.BoundsRect := FRenameLabel.BoundsRect;
 end;
 
-procedure TglTFAnimationsPanel.RowResize(Sender: TObject);
+procedure TglTFAnimationsFrame.RowResize(Sender: TObject);
 begin
   LayoutRow(Sender as TControl);
 end;
 
-function TglTFAnimationsPanel.Duration(AAnimation: TglTFAnimation): string;
+procedure TglTFAnimationsFrame.layHeaderResize(Sender: TObject);
+begin
+  LayoutRow(layHeader);
+end;
+
+function TglTFAnimationsFrame.Duration(AAnimation: TglTFAnimation): string;
 var
   LSampler: TglTFAnimationSampler;
   LAccessor: TglTFAccessor;
@@ -300,10 +423,11 @@ begin
     Result := '?';
 end;
 
-procedure TglTFAnimationsPanel.AddRow(AIndex: Integer; AAnimation: TglTFAnimation);
+procedure TglTFAnimationsFrame.AddRow(AIndex: Integer; AAnimation: TglTFAnimation);
 var
   LItem: TListBoxItem;
   LCheck: TCheckBox;
+  LLabel: TLabel;
   LName, LFrom: string;
 begin
   LName := AAnimation.Name;
@@ -313,8 +437,8 @@ begin
   if LFrom = '' then
     LFrom := 'model';
 
-  LItem := TListBoxItem.Create(FList);
-  LItem.Parent := FList;
+  LItem := TListBoxItem.Create(lstAnimations);
+  LItem.Parent := lstAnimations;
   LItem.Height := ROW_HEIGHT;
   LItem.Text := '';
   LItem.Padding.Rect := TRectF.Create(TColumnLayout.RowPadding, 0, TColumnLayout.RowPadding, 0);
@@ -327,7 +451,13 @@ begin
   FChecks.Add(LCheck);
 
   TColumnLayout.AddText(LItem, COL_INDEX, IntToStr(AIndex));
-  TColumnLayout.AddText(LItem, COL_NAME, LName);
+  // Clicking the name edits it
+  LLabel := TColumnLayout.AddText(LItem, COL_NAME, LName);
+  LLabel.HitTest := True;
+  LLabel.Cursor := crIBeam;
+  LLabel.Hint := 'Click to rename';
+  LLabel.ShowHint := True;
+  LLabel.OnClick := NameClick;
   TColumnLayout.AddText(LItem, COL_FROM, LFrom);
   TColumnLayout.AddText(LItem, COL_CHANNELS, IntToStr(AAnimation.Channels.Count));
   TColumnLayout.AddText(LItem, COL_DURATION, Duration(AAnimation));
@@ -336,52 +466,54 @@ begin
   LayoutRow(LItem);
 end;
 
-procedure TglTFAnimationsPanel.Bind(ADoc: TglTFDocument);
+procedure TglTFAnimationsFrame.Bind(ADoc: TglTFDocument);
 begin
   FDoc := ADoc;
   RefreshList;
 end;
 
-procedure TglTFAnimationsPanel.RefreshList;
+procedure TglTFAnimationsFrame.RefreshList;
 var
   I: Integer;
 begin
+  // The rows are rebuilt: a name being edited keeps its old value
+  EndRename;
   FUpdating := True;
-  FList.BeginUpdate;
+  lstAnimations.BeginUpdate;
   try
-    FList.Clear;
+    lstAnimations.Clear;
     FChecks.Clear;
     if Assigned(FDoc) then
       for I := 0 to FDoc.Root.Animations.Count - 1 do
         AddRow(I, FDoc.Root.Animations[I]);
   finally
-    FList.EndUpdate;
+    lstAnimations.EndUpdate;
     FUpdating := False;
   end;
   ApplyWidth;
   UpdateSummary;
 end;
 
-procedure TglTFAnimationsPanel.Resize;
+procedure TglTFAnimationsFrame.Resize;
 begin
   inherited;
   ApplyWidth;
 end;
 
-procedure TglTFAnimationsPanel.ApplyWidth;
+procedure TglTFAnimationsFrame.ApplyWidth;
 var
   I: Integer;
 begin
-  if (FHeader = nil) or (FList = nil) or (FSummary = nil) then
-    Exit; // Resize during construction
-  LayoutRow(FHeader);
-  for I := 0 to FList.Count - 1 do
-    LayoutRow(FList.ListItems[I]);
+  if FColumns = nil then
+    Exit; // Resize while the frame is loaded
+  LayoutRow(layHeader);
+  for I := 0 to lstAnimations.Count - 1 do
+    LayoutRow(lstAnimations.ListItems[I]);
   // The summary needs the room the buttons leave
-  FSummary.Visible := Width >= 960;
+  lblSummary.Visible := Width >= 960;
 end;
 
-procedure TglTFAnimationsPanel.UpdateSummary;
+procedure TglTFAnimationsFrame.UpdateSummary;
 var
   LAnimation: TglTFAnimation;
   LCount, LExport, LImported: Integer;
@@ -402,23 +534,23 @@ begin
     end;
 
   if not LLoaded then
-    FSummary.Text := 'No file loaded'
+    lblSummary.Text := 'No file loaded'
   else if LCount = 0 then
-    FSummary.Text := 'No animations; import some from other files'
+    lblSummary.Text := 'No animations; import some from other files'
   else
-    FSummary.Text := Format('%d animation(s), %d imported; %d will be saved',
+    lblSummary.Text := Format('%d animation(s), %d imported; %d will be saved',
       [LCount, LImported, LExport]);
 
-  FBtnImport.Enabled := LLoaded;
-  FBtnAll.Enabled := LCount > 0;
-  FBtnNone.Enabled := LCount > 0;
-  FBtnClear.Enabled := LCount > 0;
+  btnImport.Enabled := LLoaded;
+  btnExportAll.Enabled := LCount > 0;
+  btnExportNone.Enabled := LCount > 0;
+  btnClear.Enabled := LCount > 0;
   // Offered while one animation is long enough to be several joined together
-  FBtnSplit.Visible := (LCount > 0) and
+  btnSplit.Visible := (LCount > 0) and
     (TglTFAnimationSplitter.FindLongAnimation(FDoc.Root) >= 0);
 end;
 
-procedure TglTFAnimationsPanel.ExportChange(Sender: TObject);
+procedure TglTFAnimationsFrame.ExportChange(Sender: TObject);
 var
   LCheck: TCheckBox;
 begin
@@ -427,9 +559,16 @@ begin
   LCheck := Sender as TCheckBox;
   FDoc.Root.Animations[LCheck.Tag].ExportOnSave := LCheck.IsChecked;
   UpdateSummary;
+  Changed;
 end;
 
-procedure TglTFAnimationsPanel.SetAll(AValue: Boolean);
+procedure TglTFAnimationsFrame.Changed;
+begin
+  if Assigned(FOnChange) then
+    FOnChange(Self);
+end;
+
+procedure TglTFAnimationsFrame.SetAll(AValue: Boolean);
 var
   LAnimation: TglTFAnimation;
   LCheck: TCheckBox;
@@ -447,32 +586,155 @@ begin
     FUpdating := False;
   end;
   UpdateSummary;
+  Changed;
 end;
 
-procedure TglTFAnimationsPanel.SplitClick(Sender: TObject);
+procedure TglTFAnimationsFrame.NameClick(Sender: TObject);
+begin
+  BeginRename(Sender as TLabel);
+end;
+
+procedure TglTFAnimationsFrame.BeginRename(ALabel: TLabel);
+var
+  LItem: TControl;
+begin
+  if not Assigned(FDoc) or not (ALabel.Parent is TListBoxItem) then
+    Exit;
+  LItem := TControl(ALabel.Parent);
+  if (LItem.Tag = FRenameIndex) and edtRename.Visible then
+    Exit; // already editing this one
+  // Another name being edited is kept first, as when clicking elsewhere
+  CommitRename;
+  if (LItem.Tag < 0) or (LItem.Tag >= FDoc.Root.Animations.Count) then
+    Exit;
+
+  FRenameIndex := LItem.Tag;
+  FRenameLabel := ALabel;
+  edtRename.Parent := LItem;
+  edtRename.BoundsRect := ALabel.BoundsRect;
+  edtRename.Text := FDoc.Root.Animations[FRenameIndex].Name;
+  edtRename.Visible := True;
+  edtRename.BringToFront;
+  edtRename.SetFocus;
+  edtRename.SelectAll;
+  edtRenameChangeTracking(edtRename);
+end;
+
+procedure TglTFAnimationsFrame.EndRename;
+begin
+  if FRenameIndex < 0 then
+    Exit;
+  // Cleared first: hiding the edit box takes its focus, which would keep the
+  // name again (edtRenameExit)
+  FRenameIndex := -1;
+  FRenameLabel := nil;
+  edtRename.Visible := False;
+  // Out of the row, which may be freed with the list's rows
+  edtRename.Parent := Self;
+  UpdateSummary;
+end;
+
+procedure TglTFAnimationsFrame.CommitRename;
+var
+  LIndex: Integer;
+  LLabel: TLabel;
+  LOld, LNew, LProblem: string;
+begin
+  if (FRenameIndex < 0) or not Assigned(FDoc) then
+    Exit;
+  LIndex := FRenameIndex;
+  LLabel := FRenameLabel;
+  LNew := Trim(edtRename.Text);
+  EndRename;
+  if (LIndex >= FDoc.Root.Animations.Count) then
+    Exit;
+  LOld := FDoc.Root.Animations[LIndex].Name;
+  if LNew = LOld then
+    Exit; // unchanged
+
+  // Only a name no other animation has, case ignored
+  LProblem := TglTFEdit.RenameAnimation(FDoc.Root, LIndex, LNew);
+  if LProblem <> '' then
+  begin
+    TDialogService.ShowMessage(Format('Animation %d keeps its name "%s": %s.',
+      [LIndex, LOld, LProblem]));
+    Exit;
+  end;
+  LLabel.Text := FDoc.Root.Animations[LIndex].Name;
+  Changed;
+  if Assigned(FOnRename) then
+    FOnRename(Self, LIndex, LOld, FDoc.Root.Animations[LIndex].Name);
+end;
+
+procedure TglTFAnimationsFrame.edtRenameKeyDown(Sender: TObject; var Key: Word;
+  var KeyChar: Char; Shift: TShiftState);
+begin
+  case Key of
+    vkReturn:
+      begin
+        Key := 0;
+        CommitRename;
+      end;
+    vkEscape:
+      begin
+        Key := 0;
+        EndRename;
+      end;
+  end;
+end;
+
+procedure TglTFAnimationsFrame.edtRenameExit(Sender: TObject);
+begin
+  CommitRename;
+end;
+
+procedure TglTFAnimationsFrame.edtRenameChangeTracking(Sender: TObject);
+var
+  LProblem: string;
+begin
+  if (FRenameIndex < 0) or not Assigned(FDoc) then
+    Exit;
+  // Red, with the reason in the hint and the summary, while it cannot be used
+  LProblem := TglTFEdit.AnimationNameProblem(FDoc.Root, edtRename.Text, FRenameIndex);
+  if LProblem <> '' then
+  begin
+    edtRename.StyledSettings := edtRename.StyledSettings - [TStyledSetting.FontColor];
+    edtRename.TextSettings.FontColor := TAlphaColors.Red;
+    lblSummary.Text := LProblem;
+  end
+  else
+  begin
+    edtRename.StyledSettings := edtRename.StyledSettings + [TStyledSetting.FontColor];
+    lblSummary.Text := 'Enter keeps the new name, Escape the old one';
+  end;
+  edtRename.Hint := LProblem;
+  edtRename.ShowHint := LProblem <> '';
+end;
+
+procedure TglTFAnimationsFrame.btnSplitClick(Sender: TObject);
 begin
   if Assigned(FOnSplit) then
     FOnSplit(Self);
 end;
 
-procedure TglTFAnimationsPanel.ClearClick(Sender: TObject);
+procedure TglTFAnimationsFrame.btnClearClick(Sender: TObject);
 begin
   if Assigned(FOnClear) then
     FOnClear(Self);
 end;
 
-procedure TglTFAnimationsPanel.ImportClick(Sender: TObject);
+procedure TglTFAnimationsFrame.btnImportClick(Sender: TObject);
 begin
   if Assigned(FOnImport) then
     FOnImport(Self);
 end;
 
-procedure TglTFAnimationsPanel.AllClick(Sender: TObject);
+procedure TglTFAnimationsFrame.btnExportAllClick(Sender: TObject);
 begin
   SetAll(True);
 end;
 
-procedure TglTFAnimationsPanel.NoneClick(Sender: TObject);
+procedure TglTFAnimationsFrame.btnExportNoneClick(Sender: TObject);
 begin
   SetAll(False);
 end;

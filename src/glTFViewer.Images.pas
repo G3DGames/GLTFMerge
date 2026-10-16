@@ -1,6 +1,6 @@
 //** @abstract(The Images tab of the viewer: every image of a document, and how images are saved.)
 //**
-//** @link(TglTFImagesPanel) shows one row per image with the columns #, Name, Type, Source,
+//** @link(TglTFImagesFrame) shows one row per image with the columns #, Name, Type, Source,
 //** Size, Status and Used. Rows of images whose file is missing are shown in grey. Used tells
 //** whether a mesh of the model shows the image, through a material and a texture @(see
 //** @code(TglTFEdit.ImagesInUse)@); a save leaves out the images marked "No", such as those of
@@ -10,21 +10,21 @@
 //** glTF writes every image as a separate file next to it. Ticking "Alter image save mode"
 //** shows a second, short list beside the first, with an Embed tick and the name of each image
 //** that is saved, so that each image can be stored inside the file or as a separate file
-//** instead; @link(TglTFImagesPanel.AlterSaveMode) tells the main form to save that way. The box
+//** instead; @link(TglTFImagesFrame.AlterSaveMode) tells the main form to save that way. The box
 //** is unticked again for each document loaded.
 //**
 //** On narrow screens, such as phones in portrait, the Type and Source columns are hidden, and
 //** Size too when narrower still, so the name stays readable.
 //**
-//** The panel is built in code, so the unit needs no .fmx file. Headings and rows are laid
-//** out by glTFViewer.Columns, so the columns line up.
+//** The frame is designed in glTFViewer.Images.fmx. The headings and the rows follow the
+//** column lists in the code and are laid out by glTFViewer.Columns, so the columns line up.
 unit glTFViewer.Images;
 
 {
   The Images tab of the viewer: every image of a document, and how images are
   saved.
 
-  TglTFImagesPanel shows one row per image with the columns #, Name, Type,
+  TglTFImagesFrame shows one row per image with the columns #, Name, Type,
   Source, Size, Status and Used. Rows of images whose file is missing are shown
   in grey. Used tells whether a mesh of the model shows the image, through a
   material and a texture (see TglTFEdit.ImagesInUse); a save leaves out the
@@ -41,8 +41,9 @@ unit glTFViewer.Images;
   On narrow screens, such as phones in portrait, the Type and Source columns
   are hidden, and Size too when narrower still, so the name stays readable.
 
-  The panel is built in code, so the unit needs no .fmx file. Headings and rows
-  are laid out by glTFViewer.Columns, so the columns line up.
+  The frame is designed in glTFViewer.Images.fmx. The headings and the rows
+  follow the column lists in the code and are laid out by glTFViewer.Columns,
+  so the columns line up.
 }
 
 interface
@@ -50,77 +51,167 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Math,
   System.Generics.Collections,
-  FMX.Types, FMX.Controls, FMX.StdCtrls, FMX.Layouts, FMX.ListBox,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.StdCtrls, FMX.Layouts, FMX.ListBox,
   FMX.Graphics, FMX.Controls.Presentation,
 
   glTF.Classes, glTF.Document,
   glTFViewer.Columns;
 
 type
-  //** @abstract(Panel listing the images of a document, with an optional list to choose how
+  //** @abstract(Frame listing the images of a document, with an optional list to choose how
   //** each one is saved.)
   //**
   //** Place it on a tab with Align = Client and call @link(Bind) after each load. Must be used
   //** on the main thread.
-  /// <summary>Panel listing the images of a document, with an optional list to choose how each
+  /// <summary>Frame listing the images of a document, with an optional list to choose how each
   /// one is saved.</summary>
   /// <remarks>Place it on a tab with Align = Client and call <see cref="Bind"/> after each
   /// load. Must be used on the main thread.</remarks>
-  TglTFImagesPanel = class(TLayout)
+  TglTFImagesFrame = class(TFrame)
+    //** @abstract(The bar with the save mode box, Locate missing and the summary.)
+    /// <summary>The bar with the save mode box, Locate missing and the summary.</summary>
+    layBar: TLayout;
+
+    //** @abstract("Alter image save mode": shows the list of Embed choices.)
+    /// <summary>"Alter image save mode": shows the list of Embed choices.</summary>
+    chkAlter: TCheckBox;
+
+    //** @abstract(Raises OnLocateMissing; enabled while files are missing.)
+    /// <summary>Raises OnLocateMissing; enabled while files are missing.</summary>
+    btnLocate: TButton;
+
+    //** @abstract(How many images are saved, and how.)
+    /// <summary>How many images are saved, and how.</summary>
+    lblSummary: TLabel;
+
+    //** @abstract(Separates the Embed choices from the list of images.)
+    /// <summary>Separates the Embed choices from the list of images.</summary>
+    splEmbed: TSplitter;
+
+    //** @abstract(The Embed choices, on the right, shown while chkAlter is ticked.)
+    /// <summary>The Embed choices, on the right, shown while chkAlter is ticked.</summary>
+    layEmbed: TLayout;
+
+    //** @abstract(What a tick in the Embed list means.)
+    /// <summary>What a tick in the Embed list means.</summary>
+    lblEmbedNote: TLabel;
+
+    //** @abstract(The headings of the Embed list, filled in from its column list.)
+    /// <summary>The headings of the Embed list, filled in from its column list.</summary>
+    layEmbedHeader: TLayout;
+
+    //** @abstract(One row per image that is saved, with its Embed tick.)
+    /// <summary>One row per image that is saved, with its Embed tick.</summary>
+    lstEmbed: TListBox;
+
+    //** @abstract(The headings of the list of images, filled in from its column list.)
+    /// <summary>The headings of the list of images, filled in from its column list.</summary>
+    layHeader: TLayout;
+
+    //** @abstract(One row per image.)
+    /// <summary>One row per image.</summary>
+    lstImages: TListBox;
+
+    //** @abstract(Shows or hides the Embed choices.)
+    //**
+    //** The first time for a document, every image starts ticked, as a GLB would store it.
+    //**
+    //** @param(Sender The checkbox.)
+    /// <summary>Shows or hides the Embed choices.</summary>
+    /// <param name="Sender">The checkbox.</param>
+    /// <remarks>The first time for a document, every image starts ticked, as a GLB would store
+    /// it.</remarks>
+    procedure chkAlterChange(Sender: TObject);
+
+    //** @abstract(Raises OnLocateMissing.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Raises OnLocateMissing.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnLocateClick(Sender: TObject);
+
+    //** @abstract(Lays out the headings of the list of images again.)
+    //**
+    //** @param(Sender The heading row.)
+    /// <summary>Lays out the headings of the list of images again.</summary>
+    /// <param name="Sender">The heading row.</param>
+    procedure layHeaderResize(Sender: TObject);
+
+    //** @abstract(Lays out the headings of the Embed list again.)
+    //**
+    //** @param(Sender The heading row.)
+    /// <summary>Lays out the headings of the Embed list again.</summary>
+    /// <param name="Sender">The heading row.</param>
+    procedure layEmbedHeaderResize(Sender: TObject);
+
+    //** @abstract(Keeps the headings above the cells of the images.)
+    //**
+    //** @param(Sender The list.)
+    //**
+    //** @param(Canvas The canvas painted on.)
+    //**
+    //** @param(ARect The area painted.)
+    /// <summary>Keeps the headings above the cells of the images.</summary>
+    /// <param name="Sender">The list.</param>
+    /// <param name="Canvas">The canvas painted on.</param>
+    /// <param name="ARect">The area painted.</param>
+    procedure lstImagesPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
+
+    //** @abstract(Keeps the headings above the cells of the Embed list.)
+    //**
+    //** @param(Sender The list.)
+    //**
+    //** @param(Canvas The canvas painted on.)
+    //**
+    //** @param(ARect The area painted.)
+    /// <summary>Keeps the headings above the cells of the Embed list.</summary>
+    /// <param name="Sender">The list.</param>
+    /// <param name="Canvas">The canvas painted on.</param>
+    /// <param name="ARect">The area painted.</param>
+    procedure lstEmbedPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
   private
     FDoc: TglTFDocument;
-    FSummary: TLabel;
-    FAlter: TCheckBox;
-    FBtnLocate: TButton;
-    FHeader: TLayout;
-    FList: TListBox;
-    FEmbedPanel: TLayout;
-    FEmbedSplitter: TSplitter;
-    FEmbedHeader: TLayout;
-    FEmbedList: TListBox;
     FUpdating: Boolean;
     // The Embed ticks were set to the starting choice for this document
     FAlterStarted: Boolean;
     // Parallel to the images: whether a mesh shows each one
     FUsed: TArray<Boolean>;
     FOnLocateMissing: TNotifyEvent;
+    FOnChange: TNotifyEvent;
     FColumns: TColumnDefs;
     FEmbedColumns: TColumnDefs;
-    procedure BuildControls;
-    function AddHeader(AParent: TFmxObject; const AColumns: TColumnDefs; AOrder: Single): TLayout;
-    procedure ListPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
-    procedure EmbedListPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
     procedure RowResize(Sender: TObject);
     procedure EmbedRowResize(Sender: TObject);
     procedure AddRow(AIndex: Integer; AImage: TglTFImage; AUsed: Boolean);
     procedure AddEmbedRow(AIndex: Integer; AImage: TglTFImage);
     function IsMissing(AImage: TglTFImage): Boolean;
     function GetAlterSaveMode: Boolean;
-    procedure AlterChange(Sender: TObject);
     procedure EmbedChange(Sender: TObject);
-    procedure LocateClick(Sender: TObject);
+    procedure Changed;
     procedure ShowEmbedList;
     procedure UpdateSummary;
     procedure ApplyWidth;
   protected
+    //** @abstract(Lays the rows out again for the new width.)
+    /// <summary>Lays the rows out again for the new width.</summary>
     procedure Resize; override;
   public
-    //** @abstract(Creates the panel with an empty list.)
+    //** @abstract(Creates the frame with an empty list.)
     //**
-    //** @param(AOwner Owner of the panel.)
-    /// <summary>Creates the panel with an empty list.</summary>
-    /// <param name="AOwner">Owner of the panel.</param>
+    //** @param(AOwner Owner of the frame.)
+    /// <summary>Creates the frame with an empty list.</summary>
+    /// <param name="AOwner">Owner of the frame.</param>
     constructor Create(AOwner: TComponent); override;
 
     //** @abstract(Shows the images of a document.)
     //**
-    //** "Alter image save mode" is unticked again. The panel keeps a reference to ADoc but does
+    //** "Alter image save mode" is unticked again. The frame keeps a reference to ADoc but does
     //** not own it; call Bind@(nil@) before freeing the document.
     //**
     //** @param(ADoc The document to show; nil clears the list.)
     /// <summary>Shows the images of a document.</summary>
     /// <param name="ADoc">The document to show; nil clears the list.</param>
-    /// <remarks>"Alter image save mode" is unticked again. The panel keeps a reference to ADoc
+    /// <remarks>"Alter image save mode" is unticked again. The frame keeps a reference to ADoc
     /// but does not own it; call Bind(nil) before freeing the document.</remarks>
     procedure Bind(ADoc: TglTFDocument);
 
@@ -149,9 +240,14 @@ type
     /// <remarks>The handler is expected to let the user find the files and then call
     /// <see cref="RefreshList"/>.</remarks>
     property OnLocateMissing: TNotifyEvent read FOnLocateMissing write FOnLocateMissing;
+    //** @abstract(Occurs when the user changes what a save writes: "Alter image save mode" or an Embed tick.)
+    /// <summary>Occurs when the user changes what a save writes: "Alter image save mode" or an Embed tick.</summary>
+    property OnChange: TNotifyEvent read FOnChange write FOnChange;
   end;
 
 implementation
+
+{$R *.fmx}
 
 uses
   glTF.Edit;
@@ -172,11 +268,11 @@ const
   ECOL_EMBED = 0;
   ECOL_NAME = 1;
 
-  // Below these panel widths (phones in portrait) some columns are hidden
+  // Below these frame widths (phones in portrait) some columns are hidden
   NARROW_WIDTH = 640;
   VERY_NARROW_WIDTH = 420;
 
-  // Widest the list of Embed choices gets, and its share of narrow panels
+  // Widest the list of Embed choices gets, and its share of narrow frames
   EMBED_WIDTH = 320;
   EMBED_SHARE = 0.45;
 
@@ -204,9 +300,9 @@ begin
   Result := '(unnamed)';
 end;
 
-{ TglTFImagesPanel }
+{ TglTFImagesFrame }
 
-constructor TglTFImagesPanel.Create(AOwner: TComponent);
+constructor TglTFImagesFrame.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FColumns := [
@@ -220,140 +316,65 @@ begin
   FEmbedColumns := [
     TColumnDef.Create('Embed', 64, chNever, True),
     TColumnDef.Create('Name', 0)];
-  BuildControls;
+  // The headings come from the same lists as the rows' cells, so they match
+  TColumnLayout.AddHeadings(layHeader, FColumns);
+  TColumnLayout.AddHeadings(layEmbedHeader, FEmbedColumns);
   Bind(nil);
 end;
 
-function TglTFImagesPanel.AddHeader(AParent: TFmxObject; const AColumns: TColumnDefs;
-  AOrder: Single): TLayout;
-begin
-  // Column headings, laid out like the rows
-  Result := TLayout.Create(Self);
-  Result.Parent := AParent;
-  Result.Align := TAlignLayout.Top;
-  Result.Height := ROW_HEIGHT;
-  Result.Position.Y := AOrder;
-  Result.Padding.Rect := TRectF.Create(TColumnLayout.RowPadding, 0, TColumnLayout.RowPadding, 0);
-  TColumnLayout.AddHeadings(Result, AColumns);
-end;
-
-procedure TglTFImagesPanel.BuildControls;
-var
-  LBar: TLayout;
-  LNote: TLabel;
-begin
-  // 1. Bar: the save mode box, Locate missing and the summary
-  LBar := TLayout.Create(Self);
-  LBar.Parent := Self;
-  LBar.Align := TAlignLayout.Top;
-  LBar.Height := 40;
-  LBar.Padding.Rect := TRectF.Create(6, 6, 6, 6);
-
-  FAlter := TCheckBox.Create(Self);
-  FAlter.Parent := LBar;
-  FAlter.Align := TAlignLayout.Left;
-  FAlter.Width := 180;
-  FAlter.Position.X := 0;
-  FAlter.Text := 'Alter image save mode';
-  FAlter.Hint := 'Choose for each image whether it is stored inside the saved file. Unticked, ' +
-    'a GLB stores every image inside it and a glTF saves every image as a separate file';
-  FAlter.ShowHint := True;
-  FAlter.OnChange := AlterChange;
-
-  FBtnLocate := TButton.Create(Self);
-  FBtnLocate.Parent := LBar;
-  FBtnLocate.Align := TAlignLayout.Left;
-  FBtnLocate.Margins.Left := 18;
-  FBtnLocate.Width := 130;
-  FBtnLocate.Position.X := 400;
-  FBtnLocate.Text := 'Locate missing...';
-  FBtnLocate.OnClick := LocateClick;
-
-  FSummary := TLabel.Create(Self);
-  FSummary.Parent := LBar;
-  FSummary.Align := TAlignLayout.Client;
-  FSummary.Margins.Left := 14;
-  FSummary.TextSettings.WordWrap := False;
-  FSummary.TextSettings.Trimming := TTextTrimming.Character;
-
-  // 2. The Embed choices, on the right, shown only while the box is ticked
-  FEmbedPanel := TLayout.Create(Self);
-  FEmbedPanel.Parent := Self;
-  FEmbedPanel.Align := TAlignLayout.Right;
-  FEmbedPanel.Position.X := 10000;
-  FEmbedPanel.Width := EMBED_WIDTH;
-  FEmbedPanel.Visible := False;
-  FEmbedSplitter := TSplitter.Create(Self);
-  FEmbedSplitter.Parent := Self;
-  FEmbedSplitter.Align := TAlignLayout.Right;
-  FEmbedSplitter.Position.X := 9000; // left of the panel
-  FEmbedSplitter.Width := 6;
-  FEmbedSplitter.Visible := False;
-
-  LNote := TLabel.Create(Self);
-  LNote.Parent := FEmbedPanel;
-  LNote.Align := TAlignLayout.Top;
-  LNote.Height := 40;
-  LNote.Margins.Rect := TRectF.Create(6, 2, 6, 2);
-  LNote.TextSettings.WordWrap := True;
-  LNote.Text := 'Ticked: stored inside the saved file. Unticked: saved as a separate file ' +
-    'next to it. Only the images that are saved are listed.';
-  FEmbedHeader := AddHeader(FEmbedPanel, FEmbedColumns, 100);
-  FEmbedHeader.OnResize := EmbedRowResize;
-  FEmbedList := TListBox.Create(Self);
-  FEmbedList.Parent := FEmbedPanel;
-  FEmbedList.Align := TAlignLayout.Client;
-  FEmbedList.ItemHeight := ROW_HEIGHT;
-  FEmbedList.OnPainting := EmbedListPainting;
-
-  // 3. Every image, taking the rest
-  FHeader := AddHeader(Self, FColumns, 100);
-  FHeader.OnResize := RowResize;
-  FList := TListBox.Create(Self);
-  FList.Parent := Self;
-  FList.Align := TAlignLayout.Client;
-  FList.ItemHeight := ROW_HEIGHT;
-  FList.OnPainting := ListPainting;
-end;
-
-procedure TglTFImagesPanel.ListPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
+procedure TglTFImagesFrame.lstImagesPainting(Sender: TObject; Canvas: TCanvas;
+  const ARect: TRectF);
 begin
   // The headings follow the rows, whose room the list's border and scroll
   // bar reduce
-  if TColumnLayout.AlignHeader(FHeader, FList) then
-    RowResize(FHeader);
+  if TColumnLayout.AlignHeader(layHeader, lstImages) then
+    RowResize(layHeader);
 end;
 
-procedure TglTFImagesPanel.EmbedListPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
+procedure TglTFImagesFrame.lstEmbedPainting(Sender: TObject; Canvas: TCanvas;
+  const ARect: TRectF);
 begin
-  if TColumnLayout.AlignHeader(FEmbedHeader, FEmbedList) then
-    EmbedRowResize(FEmbedHeader);
+  if TColumnLayout.AlignHeader(layEmbedHeader, lstEmbed) then
+    EmbedRowResize(layEmbedHeader);
 end;
 
-procedure TglTFImagesPanel.RowResize(Sender: TObject);
+procedure TglTFImagesFrame.layHeaderResize(Sender: TObject);
 begin
-  if FList = nil then
-    Exit; // the heading resized during construction
-  TColumnLayout.LayoutRow(Sender as TControl, FColumns, FList.Width, NARROW_WIDTH, VERY_NARROW_WIDTH);
+  RowResize(layHeader);
 end;
 
-procedure TglTFImagesPanel.EmbedRowResize(Sender: TObject);
+procedure TglTFImagesFrame.layEmbedHeaderResize(Sender: TObject);
 begin
+  EmbedRowResize(layEmbedHeader);
+end;
+
+procedure TglTFImagesFrame.RowResize(Sender: TObject);
+begin
+  if FColumns = nil then
+    Exit; // the heading resized while the frame is loaded
+  TColumnLayout.LayoutRow(Sender as TControl, FColumns, lstImages.Width, NARROW_WIDTH,
+    VERY_NARROW_WIDTH);
+end;
+
+procedure TglTFImagesFrame.EmbedRowResize(Sender: TObject);
+begin
+  if FEmbedColumns = nil then
+    Exit; // the heading resized while the frame is loaded
   // Two columns only: nothing to hide
-  TColumnLayout.LayoutRow(Sender as TControl, FEmbedColumns, FEmbedPanel.Width, 0, 0);
+  TColumnLayout.LayoutRow(Sender as TControl, FEmbedColumns, layEmbed.Width, 0, 0);
 end;
 
-function TglTFImagesPanel.IsMissing(AImage: TglTFImage): Boolean;
+function TglTFImagesFrame.IsMissing(AImage: TglTFImage): Boolean;
 begin
   Result := AImage.Data = nil;
 end;
 
-function TglTFImagesPanel.GetAlterSaveMode: Boolean;
+function TglTFImagesFrame.GetAlterSaveMode: Boolean;
 begin
-  Result := FAlter.IsChecked;
+  Result := chkAlter.IsChecked;
 end;
 
-procedure TglTFImagesPanel.AddRow(AIndex: Integer; AImage: TglTFImage; AUsed: Boolean);
+procedure TglTFImagesFrame.AddRow(AIndex: Integer; AImage: TglTFImage; AUsed: Boolean);
 var
   LItem: TListBoxItem;
   LUsedLabel: TLabel;
@@ -387,8 +408,8 @@ begin
   if LType = '' then
     LType := '?';
 
-  LItem := TListBoxItem.Create(FList);
-  LItem.Parent := FList;
+  LItem := TListBoxItem.Create(lstImages);
+  LItem.Parent := lstImages;
   LItem.Height := ROW_HEIGHT;
   LItem.Text := '';
   LItem.Padding.Rect := TRectF.Create(TColumnLayout.RowPadding, 0, TColumnLayout.RowPadding, 0);
@@ -421,13 +442,13 @@ begin
   RowResize(LItem);
 end;
 
-procedure TglTFImagesPanel.AddEmbedRow(AIndex: Integer; AImage: TglTFImage);
+procedure TglTFImagesFrame.AddEmbedRow(AIndex: Integer; AImage: TglTFImage);
 var
   LItem: TListBoxItem;
   LCheck: TCheckBox;
 begin
-  LItem := TListBoxItem.Create(FEmbedList);
-  LItem.Parent := FEmbedList;
+  LItem := TListBoxItem.Create(lstEmbed);
+  LItem.Parent := lstEmbed;
   LItem.Height := ROW_HEIGHT;
   LItem.Text := '';
   LItem.Padding.Rect := TRectF.Create(TColumnLayout.RowPadding, 0, TColumnLayout.RowPadding, 0);
@@ -443,13 +464,13 @@ begin
   EmbedRowResize(LItem);
 end;
 
-procedure TglTFImagesPanel.Bind(ADoc: TglTFDocument);
+procedure TglTFImagesFrame.Bind(ADoc: TglTFDocument);
 begin
   FDoc := ADoc;
   // Normally unticked: each document starts saving by format
   FUpdating := True;
   try
-    FAlter.IsChecked := False;
+    chkAlter.IsChecked := False;
   finally
     FUpdating := False;
   end;
@@ -457,15 +478,15 @@ begin
   RefreshList;
 end;
 
-procedure TglTFImagesPanel.RefreshList;
+procedure TglTFImagesFrame.RefreshList;
 var
   I: Integer;
 begin
   FUpdating := True;
   try
-    FList.BeginUpdate;
+    lstImages.BeginUpdate;
     try
-      FList.Clear;
+      lstImages.Clear;
       if Assigned(FDoc) then
       begin
         FUsed := TglTFEdit.ImagesInUse(FDoc.Root);
@@ -475,19 +496,19 @@ begin
       else
         FUsed := nil;
     finally
-      FList.EndUpdate;
+      lstImages.EndUpdate;
     end;
 
     // The Embed choices: the images that are saved, those a mesh shows
-    FEmbedList.BeginUpdate;
+    lstEmbed.BeginUpdate;
     try
-      FEmbedList.Clear;
-      if Assigned(FDoc) and FAlter.IsChecked then
+      lstEmbed.Clear;
+      if Assigned(FDoc) and chkAlter.IsChecked then
         for I := 0 to FDoc.Root.Images.Count - 1 do
           if FUsed[I] then
             AddEmbedRow(I, FDoc.Root.Images[I]);
     finally
-      FEmbedList.EndUpdate;
+      lstEmbed.EndUpdate;
     end;
   finally
     FUpdating := False;
@@ -497,13 +518,13 @@ begin
   UpdateSummary;
 end;
 
-procedure TglTFImagesPanel.ShowEmbedList;
+procedure TglTFImagesFrame.ShowEmbedList;
 begin
-  FEmbedPanel.Visible := FAlter.IsChecked;
-  FEmbedSplitter.Visible := FAlter.IsChecked;
+  layEmbed.Visible := chkAlter.IsChecked;
+  splEmbed.Visible := chkAlter.IsChecked;
 end;
 
-procedure TglTFImagesPanel.AlterChange(Sender: TObject);
+procedure TglTFImagesFrame.chkAlterChange(Sender: TObject);
 var
   LImage: TglTFImage;
 begin
@@ -512,16 +533,23 @@ begin
   // The first time for this document, every image starts ticked, as a GLB,
   // the format suggested when saving, would store it; later the choices
   // made are kept
-  if FAlter.IsChecked and not FAlterStarted and Assigned(FDoc) then
+  if chkAlter.IsChecked and not FAlterStarted and Assigned(FDoc) then
   begin
     for LImage in FDoc.Root.Images do
       LImage.Embed := True;
     FAlterStarted := True;
   end;
   RefreshList;
+  Changed;
 end;
 
-procedure TglTFImagesPanel.EmbedChange(Sender: TObject);
+procedure TglTFImagesFrame.Changed;
+begin
+  if Assigned(FOnChange) then
+    FOnChange(Self);
+end;
+
+procedure TglTFImagesFrame.EmbedChange(Sender: TObject);
 var
   LCheck: TCheckBox;
 begin
@@ -531,31 +559,32 @@ begin
   if (LCheck.Tag >= 0) and (LCheck.Tag < FDoc.Root.Images.Count) then
     FDoc.Root.Images[LCheck.Tag].Embed := LCheck.IsChecked;
   UpdateSummary;
+  Changed;
 end;
 
-procedure TglTFImagesPanel.Resize;
+procedure TglTFImagesFrame.Resize;
 begin
   inherited;
   ApplyWidth;
 end;
 
-procedure TglTFImagesPanel.ApplyWidth;
+procedure TglTFImagesFrame.ApplyWidth;
 var
   I: Integer;
 begin
-  if (FHeader = nil) or (FList = nil) or (FEmbedPanel = nil) or (FEmbedList = nil) then
-    Exit; // Resize during construction
+  if FColumns = nil then
+    Exit; // Resize while the frame is loaded
   // The Embed choices take at most their share of a narrow panel
-  FEmbedPanel.Width := Min(EMBED_WIDTH, Max(160, Width * EMBED_SHARE));
-  RowResize(FHeader);
-  for I := 0 to FList.Count - 1 do
-    RowResize(FList.ListItems[I]);
-  EmbedRowResize(FEmbedHeader);
-  for I := 0 to FEmbedList.Count - 1 do
-    EmbedRowResize(FEmbedList.ListItems[I]);
+  layEmbed.Width := Min(EMBED_WIDTH, Max(160, Width * EMBED_SHARE));
+  RowResize(layHeader);
+  for I := 0 to lstImages.Count - 1 do
+    RowResize(lstImages.ListItems[I]);
+  EmbedRowResize(layEmbedHeader);
+  for I := 0 to lstEmbed.Count - 1 do
+    EmbedRowResize(lstEmbed.ListItems[I]);
 end;
 
-procedure TglTFImagesPanel.UpdateSummary;
+procedure TglTFImagesFrame.UpdateSummary;
 var
   LImage: TglTFImage;
   LEmbed, LMissing, LCount, LUsed, I: Integer;
@@ -586,7 +615,7 @@ begin
     LText := 'This file has no images'
   else
   begin
-    if FAlter.IsChecked then
+    if chkAlter.IsChecked then
       LText := Format('%d image(s) saved: %d inside the file, %d as separate files',
         [LUsed, LEmbed, LUsed - LEmbed])
     else
@@ -597,13 +626,13 @@ begin
     if LCount > LUsed then
       LText := LText + Format('; %d not used, left out', [LCount - LUsed]);
   end;
-  FSummary.Text := LText;
+  lblSummary.Text := LText;
 
-  FAlter.Enabled := LCount > 0;
-  FBtnLocate.Enabled := Assigned(FDoc) and FDoc.HasMissingResources;
+  chkAlter.Enabled := LCount > 0;
+  btnLocate.Enabled := Assigned(FDoc) and FDoc.HasMissingResources;
 end;
 
-procedure TglTFImagesPanel.LocateClick(Sender: TObject);
+procedure TglTFImagesFrame.btnLocateClick(Sender: TObject);
 begin
   if Assigned(FOnLocateMissing) then
     FOnLocateMissing(Self);

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.BulkOrient: Class TBulkOrientForm</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TBulkOrientForm"></span><h1 class="cio">Class TBulkOrientForm</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.BulkOrient.html">glTFViewer.BulkOrient</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TBulkOrientForm = class(TForm)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Asks for the folders, file types and turn of a bulk re-orientation.</p>
+<p>
+
+
+<p>Use <a class="normal" href="glTFViewer.BulkOrient.TBulkOrientForm.html#Execute-TBulkOrientDoneProc-">Execute</a> rather than creating it directly. Must be used on the main thread.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TForm</li>
+<li class="thisitem">TBulkOrientForm</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#layFields">layFields</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#layInput">layInput</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#lblInput">lblInput</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#btnInputBrowse">btnInputBrowse</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#edtInput">edtInput</a></strong>: TEdit;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#layInputTypes">layInputTypes</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#lblInputTypes">lblInputTypes</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#rbInputGLB">rbInputGLB</a></strong>: TRadioButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#rbInputGLTF">rbInputGLTF</a></strong>: TRadioButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#rbInputBoth">rbInputBoth</a></strong>: TRadioButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#layOutput">layOutput</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#lblOutput">lblOutput</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#btnOutputBrowse">btnOutputBrowse</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#edtOutput">edtOutput</a></strong>: TEdit;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#layOutputType">layOutputType</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#lblOutputType">lblOutputType</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#rbOutputGLB">rbOutputGLB</a></strong>: TRadioButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#rbOutputGLTF">rbOutputGLTF</a></strong>: TRadioButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#lblFolders">lblFolders</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#layOrient">layOrient</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#lblProblem">lblProblem</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#layButtons">layButtons</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#btnCancel">btnCancel</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#btnRun">btnRun</a></strong>: TButton;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#btnInputBrowseClick-TObject-">btnInputBrowseClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#btnOutputBrowseClick-TObject-">btnOutputBrowseClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#FieldChange-TObject-">FieldChange</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#btnRunClick-TObject-">btnRunClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#FormClose-TObject-TCloseAction-">FormClose</a></strong>(Sender: TObject; var Action: TCloseAction);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#Create-TComponent-">Create</a></strong>(AOwner: TComponent); override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.BulkOrient.TBulkOrientForm.html#Execute-TBulkOrientDoneProc-">Execute</a></strong>(const ADone: <a href="glTFViewer.BulkOrient.html#TBulkOrientDoneProc">TBulkOrientDoneProc</a>);</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layFields"></span><code><strong>layFields</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The folders and file types, at the top.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layInput"></span><code><strong>layInput</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The row of the input folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblInput"></span><code><strong>lblInput</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The caption of the input folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnInputBrowse"></span><code><strong>btnInputBrowse</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Chooses the input folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtInput"></span><code><strong>edtInput</strong>: TEdit;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The folder searched, with its sub-folders.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layInputTypes"></span><code><strong>layInputTypes</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The row of the input file types.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblInputTypes"></span><code><strong>lblInputTypes</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The caption of the input file types.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="rbInputGLB"></span><code><strong>rbInputGLB</strong>: TRadioButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Turn .glb files only.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="rbInputGLTF"></span><code><strong>rbInputGLTF</strong>: TRadioButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Turn .gltf files only.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="rbInputBoth"></span><code><strong>rbInputBoth</strong>: TRadioButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Turn both .glb and .gltf files.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layOutput"></span><code><strong>layOutput</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The row of the output folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblOutput"></span><code><strong>lblOutput</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The caption of the output folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnOutputBrowse"></span><code><strong>btnOutputBrowse</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Chooses the output folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtOutput"></span><code><strong>edtOutput</strong>: TEdit;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The folder the turned copies go in.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layOutputType"></span><code><strong>layOutputType</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The row of the format saved.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblOutputType"></span><code><strong>lblOutputType</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The caption of the format saved.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="rbOutputGLB"></span><code><strong>rbOutputGLB</strong>: TRadioButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Save as .glb, the default.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="rbOutputGLTF"></span><code><strong>rbOutputGLTF</strong>: TRadioButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Save as .gltf, with separate image and buffer files.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblFolders"></span><code><strong>lblFolders</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+How the folders are used.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layOrient"></span><code><strong>layOrient</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Holds the Re-Orient frame, created at run time.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblProblem"></span><code><strong>lblProblem</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Why the options cannot be used yet.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layButtons"></span><code><strong>layButtons</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Holds the buttons, at the bottom.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnCancel"></span><code><strong>btnCancel</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Closes the dialog without doing anything.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnRun"></span><code><strong>btnRun</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Closes the dialog and starts the work; enabled while every field is valid.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnInputBrowseClick-TObject-"></span><code>procedure <strong>btnInputBrowseClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Chooses the input folder.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnOutputBrowseClick-TObject-"></span><code>procedure <strong>btnOutputBrowseClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Chooses the output folder.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FieldChange-TObject-"></span><code>procedure <strong>FieldChange</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Checks the fields again after any change.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The field changed.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnRunClick-TObject-"></span><code>procedure <strong>btnRunClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Remembers the choices and closes the dialog with mrOk, when they are valid.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FormClose-TObject-TCloseAction-"></span><code>procedure <strong>FormClose</strong>(Sender: TObject; var Action: TCloseAction);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the form when it closes.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The form.</dd>
+<dt>Action</dt>
+<dd>Set to caFree.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-TComponent-"></span><code>constructor <strong>Create</strong>(AOwner: TComponent); override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the dialog with the choices made last time.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOwner</dt>
+<dd>Owner of the form.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Execute-TBulkOrientDoneProc-"></span><code>class procedure <strong>Execute</strong>(const ADone: <a href="glTFViewer.BulkOrient.html#TBulkOrientDoneProc">TBulkOrientDoneProc</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Shows the dialog modally, centred on the main form.</p>
+<p>
+
+
+<p>It does not block: ADone is called once the user presses &quot;Re-Orient models&quot;, and not at all on Cancel. The dialog frees itself.
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ADone</dt>
+<dd>Called with the options chosen.</dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

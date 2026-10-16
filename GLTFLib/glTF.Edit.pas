@@ -336,6 +336,85 @@ type
     /// a skin, also uses are kept; see <see cref="DeleteUnusedData"/>.</remarks>
     class function ClearAnimations(ARoot: TglTF; AWarnings: TStrings): Integer; static;
 
+    //** @abstract(Tells whether two names are the same name, as duplicate checks see it.)
+    //**
+    //** Case is ignored, in every alphabet, and so are spaces at either end. Every duplicate
+    //** check on names uses this, so that names differing only in case cannot both be used.
+    //**
+    //** @param(A A name.)
+    //**
+    //** @param(B Another name.)
+    //**
+    //** @returns(True when they are the same name.)
+    /// <summary>Tells whether two names are the same name, as duplicate checks see
+    /// it.</summary>
+    /// <param name="A">A name.</param>
+    /// <param name="B">Another name.</param>
+    /// <returns>True when they are the same name.</returns>
+    /// <remarks>Case is ignored, in every alphabet, and so are spaces at either end. Every
+    /// duplicate check on names uses this, so that names differing only in case cannot both be
+    /// used.</remarks>
+    class function SameName(const A, B: string): Boolean; static;
+
+    //** @abstract(Finds the animation with a name, case ignored.)
+    //**
+    //** @param(ARoot The tree to search.)
+    //**
+    //** @param(AName The name; an empty one is never found.)
+    //**
+    //** @param(AExcept An animation to skip, such as the one being renamed; -1 for none.)
+    //**
+    //** @returns(Index in @code(ARoot.Animations), or -1 when no other animation has the
+    //** name.)
+    /// <summary>Finds the animation with a name, case ignored.</summary>
+    /// <param name="ARoot">The tree to search.</param>
+    /// <param name="AName">The name; an empty one is never found.</param>
+    /// <param name="AExcept">An animation to skip, such as the one being renamed; -1 for
+    /// none.</param>
+    /// <returns>Index in <c>ARoot.Animations</c>, or -1 when no other animation has the
+    /// name.</returns>
+    class function FindAnimation(ARoot: TglTF; const AName: string;
+      AExcept: Integer = -1): Integer; static;
+
+    //** @abstract(Tells why a name cannot be given to an animation.)
+    //**
+    //** @param(ARoot The tree holding the animations.)
+    //**
+    //** @param(AName The name wanted.)
+    //**
+    //** @param(AExcept The animation that is to get the name, which may already have it in
+    //** another case; -1 for a new animation.)
+    //**
+    //** @returns(The reason, or an empty string when the name can be used: it is not empty and
+    //** no other animation has it, case ignored.)
+    /// <summary>Tells why a name cannot be given to an animation.</summary>
+    /// <param name="ARoot">The tree holding the animations.</param>
+    /// <param name="AName">The name wanted.</param>
+    /// <param name="AExcept">The animation that is to get the name, which may already have it
+    /// in another case; -1 for a new animation.</param>
+    /// <returns>The reason, or an empty string when the name can be used: it is not empty and
+    /// no other animation has it, case ignored.</returns>
+    class function AnimationNameProblem(ARoot: TglTF; const AName: string;
+      AExcept: Integer = -1): string; static;
+
+    //** @abstract(Renames an animation, when the name passes AnimationNameProblem.)
+    //**
+    //** @param(ARoot The tree holding the animation.)
+    //**
+    //** @param(AIndex Index in @code(ARoot.Animations).)
+    //**
+    //** @param(AName The new name; spaces at either end are removed.)
+    //**
+    //** @returns(An empty string when renamed; otherwise why not, and nothing is changed.)
+    /// <summary>Renames an animation, when the name passes AnimationNameProblem.</summary>
+    /// <param name="ARoot">The tree holding the animation.</param>
+    /// <param name="AIndex">Index in <c>ARoot.Animations</c>.</param>
+    /// <param name="AName">The new name; spaces at either end are removed.</param>
+    /// <returns>An empty string when renamed; otherwise why not, and nothing is
+    /// changed.</returns>
+    class function RenameAnimation(ARoot: TglTF; AIndex: Integer;
+      const AName: string): string; static;
+
     //** @abstract(Returns the buffer new binary data should be appended to, creating one when
     //** needed.)
     //**
@@ -727,6 +806,48 @@ begin
 end;
 
 { TglTFEdit }
+
+class function TglTFEdit.SameName(const A, B: string): Boolean;
+begin
+  // AnsiSameText compares with the platform's case rules, so not only A-Z
+  Result := AnsiSameText(Trim(A), Trim(B));
+end;
+
+class function TglTFEdit.FindAnimation(ARoot: TglTF; const AName: string;
+  AExcept: Integer): Integer;
+var
+  I: Integer;
+begin
+  if Trim(AName) <> '' then
+    for I := 0 to ARoot.Animations.Count - 1 do
+      if (I <> AExcept) and SameName(ARoot.Animations[I].Name, AName) then
+        Exit(I);
+  Result := -1;
+end;
+
+class function TglTFEdit.AnimationNameProblem(ARoot: TglTF; const AName: string;
+  AExcept: Integer): string;
+var
+  LExisting: Integer;
+begin
+  if Trim(AName) = '' then
+    Exit('The name is empty');
+  LExisting := FindAnimation(ARoot, AName, AExcept);
+  if LExisting >= 0 then
+    Exit(Format('Animation %d is already called "%s"', [LExisting,
+      ARoot.Animations[LExisting].Name]));
+  Result := '';
+end;
+
+class function TglTFEdit.RenameAnimation(ARoot: TglTF; AIndex: Integer;
+  const AName: string): string;
+begin
+  if (AIndex < 0) or (AIndex >= ARoot.Animations.Count) then
+    Exit(Format('There is no animation %d', [AIndex]));
+  Result := AnimationNameProblem(ARoot, AName, AIndex);
+  if Result = '' then
+    ARoot.Animations[AIndex].Name := Trim(AName);
+end;
 
 class function TglTFEdit.UsesBufferViewExtension(ARoot: TglTF; out AName: string): Boolean;
 var

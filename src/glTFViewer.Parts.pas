@@ -1,30 +1,31 @@
 //** @abstract(The Parts tab of the viewer: body parts and outfit pieces to put on the model, and
 //** those on it.)
 //**
-//** @link(TglTFPartsPanel) has two lists. The upper one, "Parts loaded", shows every part found
+//** @link(TglTFPartsFrame) has two lists. The upper one, "Parts loaded", shows every part found
 //** in the part files loaded @(see glTF.Parts@), one row each with the columns Use, Part,
 //** File, Triangles, Covers and Status; Covers lists the bones the part covers with their
 //** shares. The lower one, "Parts on the model", shows the parts put on the model, with the
 //** columns Take off, Node, Part, From, Triangles and Covers.
 //**
-//** "Add part files..." raises @link(TglTFPartsPanel.OnAddFiles), "Put on ticked parts"
-//** @link(TglTFPartsPanel.OnApply) and "Take off ticked parts" @link(TglTFPartsPanel.OnRemove);
+//** "Add part files..." raises @link(TglTFPartsFrame.OnAddFiles), "Put on ticked parts"
+//** @link(TglTFPartsFrame.OnApply) and "Take off ticked parts" @link(TglTFPartsFrame.OnRemove);
 //** the main form does the work and then calls RefreshList. The settings row decides how
 //** much of the body is hidden under the parts: how close a part's surface must come to the
 //** skin, as a share of the body's height, and the bones never hidden. "Use on the model"
-//** hides the body again with them, through @link(TglTFPartsPanel.OnRefreshModel); otherwise
+//** hides the body again with them, through @link(TglTFPartsFrame.OnRefreshModel); otherwise
 //** they apply from the next change.
 //**
 //** On narrow screens the File and From columns are hidden, and Triangles too when narrower
-//** still. The panel is built in code, so the unit needs no .fmx file; headings and rows are
-//** laid out by glTFViewer.Columns, so the columns line up.
+//** still. The frame is designed in glTFViewer.Parts.fmx. The headings and the rows follow
+//** the column lists in the code and are laid out by glTFViewer.Columns, so the columns line
+//** up.
 unit glTFViewer.Parts;
 
 {
   The Parts tab of the viewer: body parts and outfit pieces to put on the
   model, and those on it.
 
-  TglTFPartsPanel has two lists. The upper one, "Parts loaded", shows every
+  TglTFPartsFrame has two lists. The upper one, "Parts loaded", shows every
   part found in the part files loaded (see glTF.Parts), one row each with the
   columns Use, Part, File, Triangles, Covers and Status; Covers lists the bones
   the part covers with their shares. The lower one, "Parts on the model",
@@ -40,9 +41,9 @@ unit glTFViewer.Parts;
   next change.
 
   On narrow screens the File and From columns are hidden, and Triangles too
-  when narrower still. The panel is built in code, so the unit needs no .fmx
-  file; headings and rows are laid out by glTFViewer.Columns, so the columns
-  line up.
+  when narrower still. The frame is designed in glTFViewer.Parts.fmx. The
+  headings and the rows follow the column lists in the code and are laid out
+  by glTFViewer.Columns, so the columns line up.
 }
 
 interface
@@ -50,40 +51,188 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes,
   System.Generics.Collections,
-  FMX.Types, FMX.Controls, FMX.StdCtrls, FMX.Layouts, FMX.ListBox, FMX.Edit,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.StdCtrls, FMX.Layouts, FMX.ListBox, FMX.Edit,
   FMX.SpinBox, FMX.EditBox, FMX.Graphics, FMX.Controls.Presentation,
 
   glTF.Classes, glTF.Document, glTF.Parts,
   glTFViewer.Columns;
 
 type
-  //** @abstract(Panel listing the parts loaded and the parts on the model.)
+  //** @abstract(Frame listing the parts loaded and the parts on the model.)
   //**
   //** Place it on a tab with Align = Client, set @link(PartLibrary) once, and call
   //** @link(Bind) after each load and @link(RefreshList) after each change. Must be used on
   //** the main thread.
-  /// <summary>Panel listing the parts loaded and the parts on the model.</summary>
+  /// <summary>Frame listing the parts loaded and the parts on the model.</summary>
   /// <remarks>Place it on a tab with Align = Client, set <see cref="PartLibrary"/> once, and
   /// call <see cref="Bind"/> after each load and <see cref="RefreshList"/> after each change.
   /// Must be used on the main thread.</remarks>
-  TglTFPartsPanel = class(TLayout)
+  TglTFPartsFrame = class(TFrame)
+    //** @abstract(The buttons for the parts loaded and the summary, at the top.)
+    /// <summary>The buttons for the parts loaded and the summary, at the top.</summary>
+    layBar: TLayout;
+
+    //** @abstract(Raises OnAddFiles.)
+    /// <summary>Raises OnAddFiles.</summary>
+    btnAddFiles: TButton;
+
+    //** @abstract(Raises OnClearList; enabled while parts are loaded.)
+    /// <summary>Raises OnClearList; enabled while parts are loaded.</summary>
+    btnClearList: TButton;
+
+    //** @abstract(Raises OnApply; enabled while a part is ticked.)
+    /// <summary>Raises OnApply; enabled while a part is ticked.</summary>
+    btnApply: TButton;
+
+    //** @abstract(How many parts are loaded, usable and ticked.)
+    /// <summary>How many parts are loaded, usable and ticked.</summary>
+    lblSummary: TLabel;
+
+    //** @abstract(The settings row: how much of the body is hidden under the parts.)
+    /// <summary>The settings row: how much of the body is hidden under the parts.</summary>
+    laySettings: TLayout;
+
+    //** @abstract(The text before the closeness setting.)
+    /// <summary>The text before the closeness setting.</summary>
+    lblGapBefore: TLabel;
+
+    //** @abstract(How close a part must come to the skin to hide it, in percent of the body's height.)
+    /// <summary>How close a part must come to the skin to hide it, in percent of the body's height.</summary>
+    spnGap: TSpinBox;
+
+    //** @abstract(The text after the closeness setting.)
+    /// <summary>The text after the closeness setting.</summary>
+    lblGapAfter: TLabel;
+
+    //** @abstract(The bones never hidden, separated by commas.)
+    /// <summary>The bones never hidden, separated by commas.</summary>
+    edtKeep: TEdit;
+
+    //** @abstract(Raises OnRefreshModel; enabled while parts are on the model.)
+    /// <summary>Raises OnRefreshModel; enabled while parts are on the model.</summary>
+    btnRefresh: TButton;
+
+    //** @abstract(Separates the two lists.)
+    /// <summary>Separates the two lists.</summary>
+    splApplied: TSplitter;
+
+    //** @abstract(The parts on the model, at the bottom.)
+    /// <summary>The parts on the model, at the bottom.</summary>
+    layApplied: TLayout;
+
+    //** @abstract(The title and the button of the lower list.)
+    /// <summary>The title and the button of the lower list.</summary>
+    layAppliedBar: TLayout;
+
+    //** @abstract("Parts on the model" with their number.)
+    /// <summary>"Parts on the model" with their number.</summary>
+    lblAppliedTitle: TLabel;
+
+    //** @abstract(Raises OnRemove; enabled while a part on the model is ticked.)
+    /// <summary>Raises OnRemove; enabled while a part on the model is ticked.</summary>
+    btnRemove: TButton;
+
+    //** @abstract(The headings of the lower list, filled in from its column list.)
+    /// <summary>The headings of the lower list, filled in from its column list.</summary>
+    layAppliedHeader: TLayout;
+
+    //** @abstract(One row per part on the model.)
+    /// <summary>One row per part on the model.</summary>
+    lstApplied: TListBox;
+
+    //** @abstract(The headings of the upper list, filled in from its column list.)
+    /// <summary>The headings of the upper list, filled in from its column list.</summary>
+    layPartsHeader: TLayout;
+
+    //** @abstract(One row per part loaded.)
+    /// <summary>One row per part loaded.</summary>
+    lstParts: TListBox;
+
+    //** @abstract(Raises OnAddFiles.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Raises OnAddFiles.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnAddFilesClick(Sender: TObject);
+
+    //** @abstract(Raises OnClearList.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Raises OnClearList.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnClearListClick(Sender: TObject);
+
+    //** @abstract(Raises OnApply.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Raises OnApply.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnApplyClick(Sender: TObject);
+
+    //** @abstract(Raises OnRemove.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Raises OnRemove.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnRemoveClick(Sender: TObject);
+
+    //** @abstract(Raises OnRefreshModel.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Raises OnRefreshModel.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnRefreshClick(Sender: TObject);
+
+    //** @abstract(Shows the Covers columns for the new settings; the model follows with "Use on the model" or the next change.)
+    //**
+    //** @param(Sender The setting changed.)
+    /// <summary>Shows the Covers columns for the new settings; the model follows with "Use on the model" or the next change.</summary>
+    /// <param name="Sender">The setting changed.</param>
+    procedure SettingsChange(Sender: TObject);
+
+    //** @abstract(Lays out the headings of the upper list again.)
+    //**
+    //** @param(Sender The heading row.)
+    /// <summary>Lays out the headings of the upper list again.</summary>
+    /// <param name="Sender">The heading row.</param>
+    procedure layPartsHeaderResize(Sender: TObject);
+
+    //** @abstract(Lays out the headings of the lower list again.)
+    //**
+    //** @param(Sender The heading row.)
+    /// <summary>Lays out the headings of the lower list again.</summary>
+    /// <param name="Sender">The heading row.</param>
+    procedure layAppliedHeaderResize(Sender: TObject);
+
+    //** @abstract(Keeps the headings above the cells of the upper list.)
+    //**
+    //** @param(Sender The list.)
+    //**
+    //** @param(Canvas The canvas painted on.)
+    //**
+    //** @param(ARect The area painted.)
+    /// <summary>Keeps the headings above the cells of the upper list.</summary>
+    /// <param name="Sender">The list.</param>
+    /// <param name="Canvas">The canvas painted on.</param>
+    /// <param name="ARect">The area painted.</param>
+    procedure lstPartsPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
+
+    //** @abstract(Keeps the headings above the cells of the lower list.)
+    //**
+    //** @param(Sender The list.)
+    //**
+    //** @param(Canvas The canvas painted on.)
+    //**
+    //** @param(ARect The area painted.)
+    /// <summary>Keeps the headings above the cells of the lower list.</summary>
+    /// <param name="Sender">The list.</param>
+    /// <param name="Canvas">The canvas painted on.</param>
+    /// <param name="ARect">The area painted.</param>
+    procedure lstAppliedPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
   private
     FDoc: TglTFDocument;
     FApplier: TglTFPartApplier;
     FLibrary: TglTFPartLibrary;
-    FSummary: TLabel;
-    FBtnAdd: TButton;
-    FBtnClear: TButton;
-    FBtnApply: TButton;
-    FBtnRemove: TButton;
-    FBtnRefresh: TButton;
-    FGap: TSpinBox;
-    FKeep: TEdit;
-    FPartsHeader: TLayout;
-    FPartsList: TListBox;
-    FAppliedHeader: TLayout;
-    FAppliedList: TListBox;
-    FAppliedTitle: TLabel;
     FPartChecks: TList<TCheckBox>;
     FAppliedChecks: TList<TCheckBox>;
     FApplied: TArray<TglTFAppliedPart>;
@@ -95,41 +244,33 @@ type
     FOnApply: TNotifyEvent;
     FOnRemove: TNotifyEvent;
     FOnRefreshModel: TNotifyEvent;
-    procedure BuildControls;
-    function AddButton(AParent: TFmxObject; const AText: string; AWidth, AGap, AOrder: Single;
-      AOnClick: TNotifyEvent): TButton;
-    function AddLabel(AParent: TFmxObject; const AText: string; AAlign: TAlignLayout;
-      AWidth, AOrder: Single): TLabel;
-    function AddList(out AHeader: TLayout; const AColumns: TColumnDefs; AParent: TFmxObject;
-      AOrder: Single): TListBox;
-    procedure PartsPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
-    procedure AppliedPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
     procedure PartRowResize(Sender: TObject);
     procedure AppliedRowResize(Sender: TObject);
     procedure AddPartRow(AIndex: Integer; APart: TglTFPart; const AOptions: TglTFPartOptions);
     procedure AddAppliedRow(const AItem: TglTFAppliedPart);
     procedure CheckChange(Sender: TObject);
-    procedure SettingsChange(Sender: TObject);
-    procedure ButtonClick(Sender: TObject);
+    procedure DoEvent(const AEvent: TNotifyEvent);
     procedure UpdateButtons;
     procedure ApplyWidth;
   protected
+    //** @abstract(Lays the rows out again for the new width.)
+    /// <summary>Lays the rows out again for the new width.</summary>
     procedure Resize; override;
   public
-    //** @abstract(Creates the panel with empty lists.)
+    //** @abstract(Creates the frame with empty lists.)
     //**
-    //** @param(AOwner Owner of the panel.)
-    /// <summary>Creates the panel with empty lists.</summary>
-    /// <param name="AOwner">Owner of the panel.</param>
+    //** @param(AOwner Owner of the frame.)
+    /// <summary>Creates the frame with empty lists.</summary>
+    /// <param name="AOwner">Owner of the frame.</param>
     constructor Create(AOwner: TComponent); override;
 
-    //** @abstract(Frees the panel and its rows.)
-    /// <summary>Frees the panel and its rows.</summary>
+    //** @abstract(Frees the frame and its rows.)
+    /// <summary>Frees the frame and its rows.</summary>
     destructor Destroy; override;
 
     //** @abstract(Shows the parts on a model.)
     //**
-    //** The panel keeps references to both but owns neither; call Bind@(nil, nil@) before
+    //** The frame keeps references to both but owns neither; call Bind@(nil, nil@) before
     //** freeing them.
     //**
     //** @param(ADoc The model; nil when none is loaded.)
@@ -138,7 +279,7 @@ type
     /// <summary>Shows the parts on a model.</summary>
     /// <param name="ADoc">The model; nil when none is loaded.</param>
     /// <param name="AApplier">The applier for that model; nil with ADoc.</param>
-    /// <remarks>The panel keeps references to both but owns neither; call Bind(nil, nil)
+    /// <remarks>The frame keeps references to both but owns neither; call Bind(nil, nil)
     /// before freeing them.</remarks>
     procedure Bind(ADoc: TglTFDocument; AApplier: TglTFPartApplier);
 
@@ -210,9 +351,10 @@ type
 
 implementation
 
+{$R *.fmx}
+
 const
   ROW_HEIGHT = 26;
-  APPLIED_HEIGHT = 230;
 
   // Upper list columns, in display order; Part takes the rest
   PCOL_USE = 0;
@@ -230,20 +372,13 @@ const
   ACOL_TRIANGLES = 4;
   ACOL_COVERS = 5;
 
-  // Below these panel widths (phones in portrait) some columns are hidden
+  // Below these frame widths (phones in portrait) some columns are hidden
   NARROW_WIDTH = 700;
   VERY_NARROW_WIDTH = 480;
 
-  // Tags of the buttons, for ButtonClick
-  TAG_ADD = 1;
-  TAG_CLEAR = 2;
-  TAG_APPLY = 3;
-  TAG_REMOVE = 4;
-  TAG_REFRESH = 5;
+{ TglTFPartsFrame }
 
-{ TglTFPartsPanel }
-
-constructor TglTFPartsPanel.Create(AOwner: TComponent);
+constructor TglTFPartsFrame.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FPartChecks := TList<TCheckBox>.Create;
@@ -262,173 +397,64 @@ begin
     TColumnDef.Create('From', 170, chNarrow),
     TColumnDef.Create('Triangles', 80, chVeryNarrow),
     TColumnDef.Create('Covers', 230)];
-  BuildControls;
+  // The library's defaults
+  FUpdating := True;
+  try
+    spnGap.Value := Round(100 * TglTFPartOptions.Default.CoverGap);
+    edtKeep.Text := string.Join(', ', TglTFPartOptions.Default.KeepBones);
+  finally
+    FUpdating := False;
+  end;
+  // The headings come from the same lists as the rows' cells, so they match
+  TColumnLayout.AddHeadings(layPartsHeader, FPartColumns);
+  TColumnLayout.AddHeadings(layAppliedHeader, FAppliedColumns);
   Bind(nil, nil);
 end;
 
-destructor TglTFPartsPanel.Destroy;
+destructor TglTFPartsFrame.Destroy;
 begin
   FAppliedChecks.Free;
   FPartChecks.Free;
   inherited;
 end;
 
-function TglTFPartsPanel.AddButton(AParent: TFmxObject; const AText: string;
-  AWidth, AGap, AOrder: Single; AOnClick: TNotifyEvent): TButton;
-begin
-  Result := TButton.Create(Self);
-  Result.Parent := AParent;
-  Result.Align := TAlignLayout.Left;
-  Result.Width := AWidth;
-  Result.Margins.Left := AGap;
-  Result.Position.X := AOrder; // same-side alignment is ordered by position
-  Result.Text := AText;
-  Result.OnClick := AOnClick;
-end;
-
-function TglTFPartsPanel.AddLabel(AParent: TFmxObject; const AText: string;
-  AAlign: TAlignLayout; AWidth, AOrder: Single): TLabel;
-begin
-  Result := TLabel.Create(Self);
-  Result.Parent := AParent;
-  Result.Align := AAlign;
-  if AWidth > 0 then
-    Result.Width := AWidth;
-  Result.Position.X := AOrder;
-  Result.Position.Y := AOrder;
-  Result.Text := AText;
-  Result.TextSettings.WordWrap := False;
-  Result.TextSettings.Trimming := TTextTrimming.Character;
-end;
-
-function TglTFPartsPanel.AddList(out AHeader: TLayout; const AColumns: TColumnDefs;
-  AParent: TFmxObject; AOrder: Single): TListBox;
-begin
-  // Column headings, laid out like the rows, above the list
-  AHeader := TLayout.Create(Self);
-  AHeader.Parent := AParent;
-  AHeader.Align := TAlignLayout.Top;
-  AHeader.Height := ROW_HEIGHT;
-  AHeader.Position.Y := AOrder;
-  AHeader.Padding.Rect := TRectF.Create(TColumnLayout.RowPadding, 0, TColumnLayout.RowPadding, 0);
-  TColumnLayout.AddHeadings(AHeader, AColumns);
-
-  Result := TListBox.Create(Self);
-  Result.Parent := AParent;
-  Result.Align := TAlignLayout.Client;
-  Result.ItemHeight := ROW_HEIGHT;
-end;
-
-procedure TglTFPartsPanel.BuildControls;
-var
-  LBar, LSettings, LLower, LLowerBar: TLayout;
-  LSplitter: TSplitter;
-begin
-  // 1. Buttons for the parts loaded
-  LBar := TLayout.Create(Self);
-  LBar.Parent := Self;
-  LBar.Align := TAlignLayout.Top;
-  LBar.Height := 40;
-  LBar.Padding.Rect := TRectF.Create(6, 6, 6, 6);
-  FBtnAdd := AddButton(LBar, 'Add part files...', 130, 0, 0, ButtonClick);
-  FBtnAdd.Tag := TAG_ADD;
-  FBtnClear := AddButton(LBar, 'Clear list', 90, 6, 200, ButtonClick);
-  FBtnClear.Tag := TAG_CLEAR;
-  FBtnApply := AddButton(LBar, 'Put on ticked parts', 150, 18, 400, ButtonClick);
-  FBtnApply.Tag := TAG_APPLY;
-  FSummary := AddLabel(LBar, '', TAlignLayout.Client, 0, 1000);
-  FSummary.Margins.Left := 14;
-
-  // 2. Settings: which bones a part covers
-  LSettings := TLayout.Create(Self);
-  LSettings.Parent := Self;
-  LSettings.Align := TAlignLayout.Top;
-  LSettings.Position.Y := 100;
-  LSettings.Height := 36;
-  LSettings.Padding.Rect := TRectF.Create(6, 4, 6, 4);
-  AddLabel(LSettings, 'Hide the body where a part comes within', TAlignLayout.Left, 250, 0);
-  FGap := TSpinBox.Create(Self);
-  FGap.Parent := LSettings;
-  FGap.Align := TAlignLayout.Left;
-  FGap.Position.X := 100;
-  FGap.Width := 90;
-  FGap.Min := 0;
-  FGap.Max := 20;
-  FGap.Value := Round(100 * TglTFPartOptions.Default.CoverGap);
-  FGap.Hint := 'As a share of the body''s height. Raise it for loose clothes if skin shows ' +
-    'through; lower it if skin near a part goes missing';
-  FGap.ShowHint := True;
-  FGap.OnChange := SettingsChange;
-  AddLabel(LSettings, '% of its height. Never hide:', TAlignLayout.Left, 175, 200).Margins.Left := 6;
-  FKeep := TEdit.Create(Self);
-  FKeep.Parent := LSettings;
-  FKeep.Align := TAlignLayout.Left;
-  FKeep.Position.X := 300;
-  FKeep.Width := 160;
-  FKeep.Text := string.Join(', ', TglTFPartOptions.Default.KeepBones);
-  FKeep.TextPrompt := 'bone names, e.g. Head';
-  FKeep.OnChange := SettingsChange;
-  FBtnRefresh := AddButton(LSettings, 'Use on the model', 130, 8, 400, ButtonClick);
-  FBtnRefresh.Tag := TAG_REFRESH;
-
-  // 3. The parts on the model, at the bottom, below a splitter
-  // Bottom-aligned controls stack by position: the larger Y goes lower
-  LLower := TLayout.Create(Self);
-  LLower.Parent := Self;
-  LLower.Align := TAlignLayout.Bottom;
-  LLower.Position.Y := 10000;
-  LLower.Height := APPLIED_HEIGHT;
-  LSplitter := TSplitter.Create(Self);
-  LSplitter.Parent := Self;
-  LSplitter.Align := TAlignLayout.Bottom;
-  LSplitter.Position.Y := 9000;
-  LSplitter.Height := 6;
-
-  LLowerBar := TLayout.Create(Self);
-  LLowerBar.Parent := LLower;
-  LLowerBar.Align := TAlignLayout.Top;
-  LLowerBar.Height := 40;
-  LLowerBar.Padding.Rect := TRectF.Create(6, 6, 6, 6);
-  FAppliedTitle := AddLabel(LLowerBar, 'Parts on the model', TAlignLayout.Left, 260, 0);
-  FAppliedTitle.StyledSettings := FAppliedTitle.StyledSettings - [TStyledSetting.Style];
-  FAppliedTitle.TextSettings.Font.Style := [TFontStyle.fsBold];
-  FBtnRemove := AddButton(LLowerBar, 'Take off ticked parts', 160, 12, 400, ButtonClick);
-  FBtnRemove.Tag := TAG_REMOVE;
-  FAppliedList := AddList(FAppliedHeader, FAppliedColumns, LLower, 100);
-  FAppliedList.OnPainting := AppliedPainting;
-  FAppliedHeader.OnResize := AppliedRowResize;
-
-  // 4. The parts loaded, taking the rest
-  FPartsList := AddList(FPartsHeader, FPartColumns, Self, 200);
-  FPartsList.OnPainting := PartsPainting;
-  FPartsHeader.OnResize := PartRowResize;
-end;
-
-procedure TglTFPartsPanel.PartsPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
+procedure TglTFPartsFrame.lstPartsPainting(Sender: TObject; Canvas: TCanvas;
+  const ARect: TRectF);
 begin
   // The headings follow the rows, whose room the list's border and scroll
   // bar reduce
-  if TColumnLayout.AlignHeader(FPartsHeader, FPartsList) then
-    PartRowResize(FPartsHeader);
+  if TColumnLayout.AlignHeader(layPartsHeader, lstParts) then
+    PartRowResize(layPartsHeader);
 end;
 
-procedure TglTFPartsPanel.AppliedPainting(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);
+procedure TglTFPartsFrame.lstAppliedPainting(Sender: TObject; Canvas: TCanvas;
+  const ARect: TRectF);
 begin
-  if TColumnLayout.AlignHeader(FAppliedHeader, FAppliedList) then
-    AppliedRowResize(FAppliedHeader);
+  if TColumnLayout.AlignHeader(layAppliedHeader, lstApplied) then
+    AppliedRowResize(layAppliedHeader);
 end;
 
-procedure TglTFPartsPanel.PartRowResize(Sender: TObject);
+procedure TglTFPartsFrame.layPartsHeaderResize(Sender: TObject);
+begin
+  PartRowResize(layPartsHeader);
+end;
+
+procedure TglTFPartsFrame.layAppliedHeaderResize(Sender: TObject);
+begin
+  AppliedRowResize(layAppliedHeader);
+end;
+
+procedure TglTFPartsFrame.PartRowResize(Sender: TObject);
 begin
   TColumnLayout.LayoutRow(Sender as TControl, FPartColumns, Width, NARROW_WIDTH, VERY_NARROW_WIDTH);
 end;
 
-procedure TglTFPartsPanel.AppliedRowResize(Sender: TObject);
+procedure TglTFPartsFrame.AppliedRowResize(Sender: TObject);
 begin
   TColumnLayout.LayoutRow(Sender as TControl, FAppliedColumns, Width, NARROW_WIDTH, VERY_NARROW_WIDTH);
 end;
 
-procedure TglTFPartsPanel.AddPartRow(AIndex: Integer; APart: TglTFPart;
+procedure TglTFPartsFrame.AddPartRow(AIndex: Integer; APart: TglTFPart;
   const AOptions: TglTFPartOptions);
 var
   LItem: TListBoxItem;
@@ -437,8 +463,8 @@ var
   LStatus: string;
 begin
   LUsable := APart.Error = '';
-  LItem := TListBoxItem.Create(FPartsList);
-  LItem.Parent := FPartsList;
+  LItem := TListBoxItem.Create(lstParts);
+  LItem.Parent := lstParts;
   LItem.Height := ROW_HEIGHT;
   LItem.Text := '';
   LItem.Padding.Rect := TRectF.Create(TColumnLayout.RowPadding, 0, TColumnLayout.RowPadding, 0);
@@ -467,13 +493,13 @@ begin
   PartRowResize(LItem);
 end;
 
-procedure TglTFPartsPanel.AddAppliedRow(const AItem: TglTFAppliedPart);
+procedure TglTFPartsFrame.AddAppliedRow(const AItem: TglTFAppliedPart);
 var
   LItem: TListBoxItem;
   LCheck: TCheckBox;
 begin
-  LItem := TListBoxItem.Create(FAppliedList);
-  LItem.Parent := FAppliedList;
+  LItem := TListBoxItem.Create(lstApplied);
+  LItem.Parent := lstApplied;
   LItem.Height := ROW_HEIGHT;
   LItem.Text := '';
   LItem.Padding.Rect := TRectF.Create(TColumnLayout.RowPadding, 0, TColumnLayout.RowPadding, 0);
@@ -494,14 +520,14 @@ begin
   AppliedRowResize(LItem);
 end;
 
-procedure TglTFPartsPanel.Bind(ADoc: TglTFDocument; AApplier: TglTFPartApplier);
+procedure TglTFPartsFrame.Bind(ADoc: TglTFDocument; AApplier: TglTFPartApplier);
 begin
   FDoc := ADoc;
   FApplier := AApplier;
   RefreshList;
 end;
 
-procedure TglTFPartsPanel.RefreshList;
+procedure TglTFPartsFrame.RefreshList;
 var
   LOptions: TglTFPartOptions;
   LTicked: TArray<Boolean>;
@@ -522,9 +548,9 @@ begin
 
   FUpdating := True;
   try
-    FPartsList.BeginUpdate;
+    lstParts.BeginUpdate;
     try
-      FPartsList.Clear;
+      lstParts.Clear;
       FPartChecks.Clear;
       if Assigned(FLibrary) then
         for I := 0 to FLibrary.Count - 1 do
@@ -534,12 +560,12 @@ begin
             FPartChecks[I].IsChecked := LTicked[I];
         end;
     finally
-      FPartsList.EndUpdate;
+      lstParts.EndUpdate;
     end;
 
-    FAppliedList.BeginUpdate;
+    lstApplied.BeginUpdate;
     try
-      FAppliedList.Clear;
+      lstApplied.Clear;
       FAppliedChecks.Clear;
       if Assigned(FApplier) then
         FApplied := FApplier.AppliedParts(LOptions)
@@ -548,17 +574,17 @@ begin
       for LItem in FApplied do
         AddAppliedRow(LItem);
     finally
-      FAppliedList.EndUpdate;
+      lstApplied.EndUpdate;
     end;
   finally
     FUpdating := False;
   end;
-  FAppliedTitle.Text := Format('Parts on the model (%d)', [Length(FApplied)]);
+  lblAppliedTitle.Text := Format('Parts on the model (%d)', [Length(FApplied)]);
   ApplyWidth;
   UpdateButtons;
 end;
 
-procedure TglTFPartsPanel.UntickParts;
+procedure TglTFPartsFrame.UntickParts;
 var
   LCheck: TCheckBox;
 begin
@@ -572,25 +598,23 @@ begin
   UpdateButtons;
 end;
 
-function TglTFPartsPanel.Options: TglTFPartOptions;
+function TglTFPartsFrame.Options: TglTFPartOptions;
 var
   LBones: TArray<string>;
   LBone: string;
 begin
   Result := TglTFPartOptions.Default;
-  if Assigned(FGap) then
-    Result.CoverGap := FGap.Value / 100;
-  if Assigned(FKeep) then
-  begin
-    Result.KeepBones := nil;
-    LBones := FKeep.Text.Split([',', ';']);
-    for LBone in LBones do
-      if Trim(LBone) <> '' then
-        Result.KeepBones := Result.KeepBones + [Trim(LBone)];
-  end;
+  if FPartColumns = nil then
+    Exit; // asked while the frame is loaded
+  Result.CoverGap := spnGap.Value / 100;
+  Result.KeepBones := nil;
+  LBones := edtKeep.Text.Split([',', ';']);
+  for LBone in LBones do
+    if Trim(LBone) <> '' then
+      Result.KeepBones := Result.KeepBones + [Trim(LBone)];
 end;
 
-function TglTFPartsPanel.TickedParts: TArray<TglTFPart>;
+function TglTFPartsFrame.TickedParts: TArray<TglTFPart>;
 var
   LCheck: TCheckBox;
 begin
@@ -602,7 +626,7 @@ begin
       Result := Result + [FLibrary[LCheck.Tag]];
 end;
 
-function TglTFPartsPanel.TickedApplied: TArray<Integer>;
+function TglTFPartsFrame.TickedApplied: TArray<Integer>;
 var
   LCheck: TCheckBox;
 begin
@@ -612,38 +636,52 @@ begin
       Result := Result + [LCheck.Tag];
 end;
 
-procedure TglTFPartsPanel.CheckChange(Sender: TObject);
+procedure TglTFPartsFrame.CheckChange(Sender: TObject);
 begin
   if not FUpdating then
     UpdateButtons;
 end;
 
-procedure TglTFPartsPanel.SettingsChange(Sender: TObject);
+procedure TglTFPartsFrame.SettingsChange(Sender: TObject);
 begin
   // The Covers columns follow the settings at once; the model only with
   // "Use on the model" or the next change
-  if not FUpdating then
+  if not FUpdating and (FPartChecks <> nil) then
     RefreshList;
 end;
 
-procedure TglTFPartsPanel.ButtonClick(Sender: TObject);
-var
-  LEvent: TNotifyEvent;
+procedure TglTFPartsFrame.DoEvent(const AEvent: TNotifyEvent);
 begin
-  case (Sender as TComponent).Tag of
-    TAG_ADD: LEvent := FOnAddFiles;
-    TAG_CLEAR: LEvent := FOnClearList;
-    TAG_APPLY: LEvent := FOnApply;
-    TAG_REMOVE: LEvent := FOnRemove;
-    TAG_REFRESH: LEvent := FOnRefreshModel;
-  else
-    LEvent := nil;
-  end;
-  if Assigned(LEvent) then
-    LEvent(Self);
+  if Assigned(AEvent) then
+    AEvent(Self);
 end;
 
-procedure TglTFPartsPanel.UpdateButtons;
+procedure TglTFPartsFrame.btnAddFilesClick(Sender: TObject);
+begin
+  DoEvent(FOnAddFiles);
+end;
+
+procedure TglTFPartsFrame.btnClearListClick(Sender: TObject);
+begin
+  DoEvent(FOnClearList);
+end;
+
+procedure TglTFPartsFrame.btnApplyClick(Sender: TObject);
+begin
+  DoEvent(FOnApply);
+end;
+
+procedure TglTFPartsFrame.btnRemoveClick(Sender: TObject);
+begin
+  DoEvent(FOnRemove);
+end;
+
+procedure TglTFPartsFrame.btnRefreshClick(Sender: TObject);
+begin
+  DoEvent(FOnRefreshModel);
+end;
+
+procedure TglTFPartsFrame.UpdateButtons;
 var
   LLoaded: Boolean;
   LParts, LUsable, LTicked, LApplied: Integer;
@@ -668,36 +706,35 @@ begin
       Inc(LApplied);
 
   if LParts = 0 then
-    FSummary.Text := 'No part files loaded; add some, such as the pieces of an outfit pack'
+    lblSummary.Text := 'No part files loaded; add some, such as the pieces of an outfit pack'
   else
-    FSummary.Text := Format('%d part(s), %d usable; %d ticked', [LParts, LUsable, LTicked]);
-  FBtnClear.Enabled := LParts > 0;
-  FBtnApply.Enabled := LLoaded and (LTicked > 0);
-  FBtnRemove.Enabled := LLoaded and (LApplied > 0);
-  FBtnRefresh.Enabled := LLoaded and (Length(FApplied) > 0);
+    lblSummary.Text := Format('%d part(s), %d usable; %d ticked', [LParts, LUsable, LTicked]);
+  btnClearList.Enabled := LParts > 0;
+  btnApply.Enabled := LLoaded and (LTicked > 0);
+  btnRemove.Enabled := LLoaded and (LApplied > 0);
+  btnRefresh.Enabled := LLoaded and (Length(FApplied) > 0);
 end;
 
-procedure TglTFPartsPanel.Resize;
+procedure TglTFPartsFrame.Resize;
 begin
   inherited;
   ApplyWidth;
 end;
 
-procedure TglTFPartsPanel.ApplyWidth;
+procedure TglTFPartsFrame.ApplyWidth;
 var
   I: Integer;
 begin
-  if (FPartsHeader = nil) or (FPartsList = nil) or (FAppliedHeader = nil) or
-     (FAppliedList = nil) or (FSummary = nil) then
-    Exit; // Resize during construction
-  PartRowResize(FPartsHeader);
-  for I := 0 to FPartsList.Count - 1 do
-    PartRowResize(FPartsList.ListItems[I]);
-  AppliedRowResize(FAppliedHeader);
-  for I := 0 to FAppliedList.Count - 1 do
-    AppliedRowResize(FAppliedList.ListItems[I]);
+  if FPartColumns = nil then
+    Exit; // Resize while the frame is loaded
+  PartRowResize(layPartsHeader);
+  for I := 0 to lstParts.Count - 1 do
+    PartRowResize(lstParts.ListItems[I]);
+  AppliedRowResize(layAppliedHeader);
+  for I := 0 to lstApplied.Count - 1 do
+    AppliedRowResize(lstApplied.ListItems[I]);
   // The summary needs the room the buttons leave
-  FSummary.Visible := Width >= 640;
+  lblSummary.Visible := Width >= 640;
 end;
 
 end.

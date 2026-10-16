@@ -1,0 +1,95 @@
+object MissingFilesForm: TMissingFilesForm
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  Caption = 'Missing media files'
+  ClientHeight = 400
+  ClientWidth = 720
+  Position = MainFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnClose = FormClose
+  DesignerMasterStyle = 0
+  object lblInfo: TLabel
+    Align = Top
+    Size.Width = 700.000000000000000000
+    Size.Height = 54.000000000000000000
+    Position.X = 10.000000000000000000
+    Position.Y = 10.000000000000000000
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 10.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 4.000000000000000000
+    StyledSettings = [Family, Size, Style, FontColor]
+    TextSettings.WordWrap = True
+    TextSettings.VertAlign = Leading
+    Size.PlatformDefault = False
+  end
+  object lstMissing: TListBox
+    Align = Client
+    Position.X = 10.000000000000000000
+    Position.Y = 72.000000000000000000
+    Size.Width = 700.000000000000000000
+    Size.Height = 272.000000000000000000
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 4.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 4.000000000000000000
+    OnChange = lstMissingChange
+    Size.PlatformDefault = False
+  end
+  object lblStatus: TLabel
+    Align = Bottom
+    Size.Width = 700.000000000000000000
+    Size.Height = 22.000000000000000000
+    Position.X = 10.000000000000000000
+    Position.Y = 350.000000000000000000
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 2.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object layButtons: TLayout
+    Align = Bottom
+    Size.Width = 720.000000000000000000
+    Size.Height = 46.000000000000000000
+    Position.Y = 354.000000000000000000
+    Padding.Left = 10.000000000000000000
+    Padding.Top = 8.000000000000000000
+    Padding.Right = 10.000000000000000000
+    Padding.Bottom = 10.000000000000000000
+    Size.PlatformDefault = False
+    object btnSearchFolder: TButton
+      Align = Left
+      Size.Width = 130.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Search folder...'
+      Position.X = 10.000000000000000000
+      Position.Y = 8.000000000000000000
+      OnClick = btnSearchFolderClick
+      Size.PlatformDefault = False
+    end
+    object btnLocateFile: TButton
+      Align = Left
+      Size.Width = 130.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Locate file...'
+      Position.X = 148.000000000000000000
+      Position.Y = 8.000000000000000000
+      Margins.Left = 8.000000000000000000
+      OnClick = btnLocateFileClick
+      Size.PlatformDefault = False
+    end
+    object btnContinue: TButton
+      Align = Right
+      Size.Width = 100.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Continue'
+      Position.X = 610.000000000000000000
+      Position.Y = 8.000000000000000000
+      ModalResult = 1
+      Size.PlatformDefault = False
+    end
+  end
+end

@@ -1,14 +1,14 @@
 //** @abstract(Progress display shown over the main form while a model loads or animations are
 //** imported.)
 //**
-//** @link(TProgressOverlay) covers the form with a dimmed layer that takes all clicks, with a
+//** @link(TProgressFrame) covers the form with a dimmed layer that takes all clicks, with a
 //** box in the middle showing a title, the current model as "Model 2 of 5: walk.glb", the
 //** stage, and a progress bar for the whole operation. It is fed with the
 //** @code(TglTFProgress) values that TglTFDocument and TglTFAnimationImporter report. When
 //** started with an abort action it also shows an Abort button, which is disabled once
 //** pressed, while the work finishes the step it is on.
 //**
-//** Built in code, so the unit needs no .fmx file. Use it on the main thread only: progress
+//** The frame is designed in glTFViewer.Progress.fmx. Use it on the main thread only: progress
 //** reported from a background thread must be passed on with TThread.Queue.
 unit glTFViewer.Progress;
 
@@ -16,7 +16,7 @@ unit glTFViewer.Progress;
   Progress display shown over the main form while a model loads or animations
   are imported.
 
-  TProgressOverlay covers the form with a dimmed layer that takes all clicks,
+  TProgressFrame covers the form with a dimmed layer that takes all clicks,
   with a box in the middle showing a title, the current model as
   "Model 2 of 5: walk.glb", the stage, and a progress bar for the whole
   operation. It is fed with the TglTFProgress values that TglTFDocument and
@@ -24,7 +24,7 @@ unit glTFViewer.Progress;
   shows an Abort button, which is disabled once pressed, while the work
   finishes the step it is on.
 
-  Built in code, so the unit needs no .fmx file. Use it on the main thread
+  The frame is designed in glTFViewer.Progress.fmx. Use it on the main thread
   only: progress reported from a background thread must be passed on with
   TThread.Queue.
 }
@@ -33,7 +33,7 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Math,
-  FMX.Types, FMX.Controls, FMX.StdCtrls, FMX.Layouts, FMX.Objects, FMX.Graphics,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.StdCtrls, FMX.Layouts, FMX.Objects, FMX.Graphics,
   FMX.Controls.Presentation,
 
   glTF.Document;
@@ -41,24 +41,55 @@ uses
 type
   //** @abstract(A modal progress box drawn over its parent.)
   //**
-  //** Create it with the form as parent; it stays hidden until @link(Start).
+  //** Create it with the form as parent; it covers the form, and stays hidden until
+  //** @link(Start).
   /// <summary>A modal progress box drawn over its parent.</summary>
-  /// <remarks>Create it with the form as parent; it stays hidden until
+  /// <remarks>Create it with the form as parent; it covers the form, and stays hidden until
   /// <see cref="Start"/>.</remarks>
-  TProgressOverlay = class(TLayout)
+  TProgressFrame = class(TFrame)
+    //** @abstract(Dims the form and takes the clicks meant for it.)
+    /// <summary>Dims the form and takes the clicks meant for it.</summary>
+    rectShade: TRectangle;
+
+    //** @abstract(The box in the middle.)
+    /// <summary>The box in the middle.</summary>
+    rectBox: TRectangle;
+
+    //** @abstract(What is being done.)
+    /// <summary>What is being done.</summary>
+    lblTitle: TLabel;
+
+    //** @abstract(The current model, as "Model 2 of 5: walk.glb".)
+    /// <summary>The current model, as "Model 2 of 5: walk.glb".</summary>
+    lblModel: TLabel;
+
+    //** @abstract(The stage the work is at.)
+    /// <summary>The stage the work is at.</summary>
+    lblStage: TLabel;
+
+    //** @abstract(How far the whole operation has got, from 0 to 1000.)
+    /// <summary>How far the whole operation has got, from 0 to 1000.</summary>
+    pbOverall: TProgressBar;
+
+    //** @abstract(Holds the Abort button; shown when the work can be aborted.)
+    /// <summary>Holds the Abort button; shown when the work can be aborted.</summary>
+    layButtons: TLayout;
+
+    //** @abstract(Stops the work after the step it is on.)
+    /// <summary>Stops the work after the step it is on.</summary>
+    btnAbort: TButton;
+
+    //** @abstract(Disables the button and calls the abort action.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Disables the button and calls the abort action.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnAbortClick(Sender: TObject);
   private
-    FShade: TRectangle;
-    FBox: TRectangle;
-    FTitle: TLabel;
-    FModel: TLabel;
-    FStage: TLabel;
-    FBar: TProgressBar;
-    FButtons: TLayout;
-    FAbort: TButton;
     FOnAbort: TProc;
-    function AddLabel(ABold: Boolean; AOrder: Single): TLabel;
-    procedure AbortClick(Sender: TObject);
   protected
+    //** @abstract(Keeps the box narrower than the form, for phones in portrait.)
+    /// <summary>Keeps the box narrower than the form, for phones in portrait.</summary>
     procedure Resize; override;
   public
     //** @abstract(Creates the hidden overlay.)
@@ -107,139 +138,78 @@ type
 
 implementation
 
+{$R *.fmx}
+
 const
   BOX_WIDTH = 440;
   BOX_HEIGHT = 150;
   BUTTONS_HEIGHT = 44;
-  BAR_MAX = 1000;
 
-{ TProgressOverlay }
+{ TProgressFrame }
 
-constructor TProgressOverlay.Create(AOwner: TComponent);
+constructor TProgressFrame.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   Align := TAlignLayout.Contents;
   HitTest := True; // takes the clicks meant for the form below
   Visible := False;
-
-  FShade := TRectangle.Create(Self);
-  FShade.Parent := Self;
-  FShade.Align := TAlignLayout.Contents;
-  FShade.Fill.Color := $66000000;
-  FShade.Stroke.Kind := TBrushKind.None;
-  FShade.HitTest := True;
-
-  FBox := TRectangle.Create(Self);
-  FBox.Parent := Self;
-  FBox.Align := TAlignLayout.Center;
-  FBox.Width := BOX_WIDTH;
-  FBox.Height := BOX_HEIGHT;
-  FBox.Fill.Color := TAlphaColors.White;
-  FBox.Stroke.Color := TAlphaColors.Gray;
-  FBox.XRadius := 6;
-  FBox.YRadius := 6;
-  FBox.Padding.Rect := TRectF.Create(16, 12, 16, 12);
-
-  FTitle := AddLabel(True, 0);
-  FModel := AddLabel(False, 100);
-  FStage := AddLabel(False, 200);
-
-  FBar := TProgressBar.Create(Self);
-  FBar.Parent := FBox;
-  FBar.Align := TAlignLayout.Top;
-  FBar.Position.Y := 300;
-  FBar.Margins.Top := 8;
-  FBar.Height := 20;
-  FBar.Min := 0;
-  FBar.Max := BAR_MAX;
-
-  FButtons := TLayout.Create(Self);
-  FButtons.Parent := FBox;
-  FButtons.Align := TAlignLayout.Top;
-  FButtons.Position.Y := 400;
-  FButtons.Height := BUTTONS_HEIGHT;
-  FButtons.Padding.Top := 10;
-  FButtons.Visible := False;
-
-  FAbort := TButton.Create(Self);
-  FAbort.Parent := FButtons;
-  FAbort.Align := TAlignLayout.Right;
-  FAbort.Width := 200;
-  FAbort.Text := 'Abort';
-  FAbort.OnClick := AbortClick;
 end;
 
-procedure TProgressOverlay.AbortClick(Sender: TObject);
+procedure TProgressFrame.btnAbortClick(Sender: TObject);
 begin
   // Once only: the work stops after the step it is on
-  FAbort.Enabled := False;
-  FAbort.Text := 'Stopping...';
+  btnAbort.Enabled := False;
+  btnAbort.Text := 'Stopping...';
   if Assigned(FOnAbort) then
     FOnAbort();
 end;
 
-function TProgressOverlay.AddLabel(ABold: Boolean; AOrder: Single): TLabel;
-begin
-  Result := TLabel.Create(Self);
-  Result.Parent := FBox;
-  Result.Align := TAlignLayout.Top;
-  Result.Position.Y := AOrder;
-  Result.Height := 24;
-  // Dark text on the white box, whatever the style
-  Result.StyledSettings := Result.StyledSettings - [TStyledSetting.FontColor, TStyledSetting.Style];
-  Result.TextSettings.FontColor := TAlphaColors.Black;
-  if ABold then
-    Result.TextSettings.Font.Style := [TFontStyle.fsBold];
-  Result.TextSettings.Trimming := TTextTrimming.Character;
-  Result.TextSettings.WordWrap := False;
-end;
-
-procedure TProgressOverlay.Resize;
+procedure TProgressFrame.Resize;
 begin
   inherited;
   // Narrower on phones in portrait
-  if Assigned(FBox) then
-    FBox.Width := Min(BOX_WIDTH, Max(160, Width - 32));
+  if Assigned(rectBox) then
+    rectBox.Width := Min(BOX_WIDTH, Max(160, Width - 32));
 end;
 
-procedure TProgressOverlay.Start(const ATitle: string; const AOnAbort: TProc);
+procedure TProgressFrame.Start(const ATitle: string; const AOnAbort: TProc);
 begin
   FOnAbort := AOnAbort;
-  FButtons.Visible := Assigned(AOnAbort);
-  FAbort.Enabled := True;
-  FAbort.Text := 'Abort';
+  layButtons.Visible := Assigned(AOnAbort);
+  btnAbort.Enabled := True;
+  btnAbort.Text := 'Abort';
   if Assigned(AOnAbort) then
-    FBox.Height := BOX_HEIGHT + BUTTONS_HEIGHT
+    rectBox.Height := BOX_HEIGHT + BUTTONS_HEIGHT
   else
-    FBox.Height := BOX_HEIGHT;
-  FTitle.Text := ATitle;
-  FModel.Text := '';
-  FStage.Text := 'Starting...';
-  FBar.Value := 0;
+    rectBox.Height := BOX_HEIGHT;
+  lblTitle.Text := ATitle;
+  lblModel.Text := '';
+  lblStage.Text := 'Starting...';
+  pbOverall.Value := 0;
   Visible := True;
   BringToFront;
 end;
 
-procedure TProgressOverlay.ShowProgress(const AProgress: TglTFProgress);
+procedure TProgressFrame.ShowProgress(const AProgress: TglTFProgress);
 begin
   if not Visible then
     Exit; // a late report after Finish
-  FModel.Text := AProgress.ModelText;
-  FStage.Text := AProgress.Stage;
-  FBar.Value := Round(AProgress.Overall * BAR_MAX);
+  lblModel.Text := AProgress.ModelText;
+  lblStage.Text := AProgress.Stage;
+  pbOverall.Value := Round(AProgress.Overall * pbOverall.Max);
 end;
 
-procedure TProgressOverlay.Finish;
+procedure TProgressFrame.Finish;
 begin
   Visible := False;
   FOnAbort := nil;
 end;
 
-function TProgressOverlay.Abort: Boolean;
+function TProgressFrame.Abort: Boolean;
 begin
-  Result := Visible and Assigned(FOnAbort) and FAbort.Enabled;
+  Result := Visible and Assigned(FOnAbort) and btnAbort.Enabled;
   if Result then
-    AbortClick(FAbort);
+    btnAbortClick(btnAbort);
 end;
 
 end.

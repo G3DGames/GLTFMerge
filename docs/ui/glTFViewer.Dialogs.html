@@ -35,7 +35,9 @@ File and confirmation dialogs that work the same way on every FireMonkey platfor
 <p>
 
 
-<p><a class="normal" href="glTFViewer.Dialogs.TPlatformDialogs.html">TPlatformDialogs</a> offers open-file (one or several), save-file, select-folder and confirmation dialogs. On Windows, macOS and Linux they are the native dialogs. iOS and Android have no FireMonkey file dialogs, so there a file browser built into this unit is shown instead: it starts in the app's documents folder, which needs no storage permission, and can switch to the shared Documents and Downloads folders where the system allows access.
+<p><a class="normal" href="glTFViewer.Dialogs.TPlatformDialogs.html">TPlatformDialogs</a> offers open-file (one or several), save-file, select-folder and confirmation dialogs. On Windows, macOS and Linux they are the native dialogs. iOS and Android have no FireMonkey file dialogs, so there the file browser of glTFViewer.FileBrowser is shown instead: it starts in the app's documents folder, which needs no storage permission, and can switch to the shared Documents and Downloads folders where the system allows access.
+
+<p>Each file dialog is given a key naming its kind, such as &quot;openModel&quot;: the folder chosen is remembered under it in the settings file (see glTFViewer.Settings) and offered the next time, so opening and saving each keep their own folder. A dialog never used before starts in the folder any dialog used most recently, and with no settings at all in the platform's usual folder.
 
 <p>Every dialog reports its result through a callback rather than a return value, because dialogs do not block on Android. On the desktop the callback runs before the call returns; on mobile it runs later, when the user closes the dialog. Code that follows a dialog must therefore go in the callback. Call these routines on the main thread only.
 

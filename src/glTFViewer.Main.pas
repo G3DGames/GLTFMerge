@@ -10,14 +10,25 @@
 //** pieces from other files and puts them on the model in place of the parts they replace @(see
 //** glTFViewer.Parts and glTF.Parts@). The Re-Orient tab turns the model about X, Y and Z
 //** when it is saved @(see glTFViewer.Orient and glTF.Orient@). The Output tab logs loading,
-//** saving and the
-//** self-tests,
-//** and shows errors with their line in the glTF text; it comes to the front when a load fails,
-//** when saving and when the self-tests run.
+//** saving and the self-tests, and shows errors with their line in the glTF text; it comes to
+//** the front when a load fails, when saving and when the self-tests run.
+//**
+//** The File menu has Open, Save As, Bulk Re-Orient and Exit. Bulk Re-Orient turns every
+//** model in a folder tree and saves the copies in another folder with the same sub-folders
+//** @(see glTFViewer.BulkOrient and glTF.Bulk@). The window's title shows the file loaded,
+//** with a * in front while there are changes not yet saved: animations imported, split or cleared,
+//** parts put on or taken off, and changes on the tabs to what a save writes. Exit, closing the
+//** window and opening another file ask first, with OK and Cancel, while there are such
+//** changes. On iOS and Android, which show no main menu, the File menu is shown in a menu bar
+//** at the top of the form instead, without Exit.
 //**
 //** Missing media files are offered for locating after a load and before a save @(see
-//** glTFViewer.Missing@). Self-tests run only when asked for, with the "Run self-tests" button
-//** or --selftest.
+//** glTFViewer.Missing@). Every file dialog remembers its folder in the settings file @(see
+//** glTFViewer.Settings and glTFViewer.Dialogs@).
+//**
+//** The self-tests are left out of the build unless SELF_TESTS is defined, at the top of this
+//** unit. When they are built in, File has a "Run self-tests" item, created at run time, and
+//** --selftest on the command line runs them.
 //**
 //** Loading a model, importing animations, loading part files and putting parts on run in a
 //** background thread, with a progress box
@@ -33,6 +44,7 @@
 //**
 //** @preformatted(
 //** Command line @(desktop@):  glTFDemo [file.gltf|file.glb] [--selftest]
+//**                          --selftest only with SELF_TESTS
 //** )
 unit glTFViewer.Main;
 
@@ -50,14 +62,27 @@ unit glTFViewer.Main;
   other files and puts them on the model in place of the parts they replace
   (see glTFViewer.Parts and glTF.Parts). The Re-Orient tab turns the model
   about X, Y and Z when it is saved (see glTFViewer.Orient and glTF.Orient).
-  The Output tab logs loading, saving and the
-  self-tests, and shows errors with their line in
-  the glTF text; it comes to the front when a load fails, when saving and when
-  the self-tests run.
+  The Output tab logs loading, saving and the self-tests, and shows errors
+  with their line in the glTF text; it comes to the front when a load fails,
+  when saving and when the self-tests run.
+
+  The File menu has Open, Save As, Bulk Re-Orient and Exit. Bulk Re-Orient
+  turns every model in a folder tree and saves the copies in another folder
+  with the same sub-folders (see glTFViewer.BulkOrient and glTF.Bulk). The
+  window's title shows the file loaded, with a * in front while there are changes not yet saved: animations
+  imported, split or cleared, parts put on or taken off, and changes on the
+  tabs to what a save writes. Exit, closing the window and opening another
+  file ask first, with OK and Cancel, while there are such changes. On iOS and
+  Android, which show no main menu, the File menu is shown in a menu bar at
+  the top of the form instead, without Exit.
 
   Missing media files are offered for locating after a load and before a save
-  (see glTFViewer.Missing). Self-tests run only when asked for, with the "Run
-  self-tests" button or --selftest.
+  (see glTFViewer.Missing). Every file dialog remembers its folder in the
+  settings file (see glTFViewer.Settings and glTFViewer.Dialogs).
+
+  The self-tests are left out of the build unless SELF_TESTS is defined, at
+  the top of this unit. When they are built in, File has a "Run self-tests"
+  item, created at run time, and --selftest on the command line runs them.
 
   Loading a model, importing animations, loading part files and putting parts
   on run in a background thread, with a progress box over the form (see glTFViewer.Progress) showing the model
@@ -72,7 +97,13 @@ unit glTFViewer.Main;
   continue in callbacks. There is no command line on iOS and Android.
 
     Command line (desktop):  glTFDemo [file.gltf|file.glb] [--selftest]
+                             --selftest only with SELF_TESTS
 }
+
+// The self-tests are normally left out of the build. Remove the // in front
+// of the next line to build them in: File then has "Run self-tests", and
+// --selftest on the command line runs them
+// {$DEFINE SELF_TESTS}
 
 interface
 
@@ -80,9 +111,9 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.IOUtils,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
   FMX.Controls.Presentation, FMX.TabControl, FMX.Memo.Types, FMX.ScrollBox,
-  FMX.Memo, FMX.Layouts, FMX.TreeView,
+  FMX.Memo, FMX.Layouts, FMX.TreeView, FMX.Menus,
 
-  glTF.Base, glTF.Classes, glTF.Document, glTF.Animations, glTF.Parts,
+  glTF.Base, glTF.Classes, glTF.Document, glTF.Animations, glTF.Parts, glTF.Bulk,
   glTFViewer.Images, glTFViewer.Animations, glTFViewer.Progress, glTFViewer.Duplicates,
   glTFViewer.Parts, glTFViewer.Orient;
 
@@ -97,26 +128,36 @@ type
   /// model and importing animations run in a background thread while a progress box blocks
   /// the window; everything else, saving included, runs on the main thread.</remarks>
   TglTFMainForm = class(TForm)
-    //** @abstract(Toolbar with the Open, Save as and self-test buttons and the file name.)
-    /// <summary>Toolbar with the Open, Save as and self-test buttons and the file
-    /// name.</summary>
-    ToolBar: TToolBar;
+    //** @abstract(The main menu, with the File menu.)
+    /// <summary>The main menu, with the File menu.</summary>
+    MainMenu: TMainMenu;
+
+    //** @abstract(The File menu: Open, Save As, Bulk Re-Orient and Exit, and Run self-tests when
+    //** built in.)
+    /// <summary>The File menu: Open, Save As, Bulk Re-Orient and Exit, and Run self-tests when
+    /// built in.</summary>
+    miFile: TMenuItem;
 
     //** @abstract(Opens a .gltf or .glb file.)
     /// <summary>Opens a .gltf or .glb file.</summary>
-    btnOpen: TButton;
+    miOpen: TMenuItem;
 
     //** @abstract(Saves the document as .gltf or .glb; enabled once a file is loaded.)
     /// <summary>Saves the document as .gltf or .glb; enabled once a file is loaded.</summary>
-    btnSave: TButton;
+    miSaveAs: TMenuItem;
 
-    //** @abstract(Runs the self-tests and shows their results on the Output tab.)
-    /// <summary>Runs the self-tests and shows their results on the Output tab.</summary>
-    btnSelfTest: TButton;
+    //** @abstract(Re-orients every model in a folder tree into another folder.)
+    /// <summary>Re-orients every model in a folder tree into another folder.</summary>
+    miBulkOrient: TMenuItem;
 
-    //** @abstract(Shows the loaded file's path, or why it failed to load.)
-    /// <summary>Shows the loaded file's path, or why it failed to load.</summary>
-    lblFile: TLabel;
+    //** @abstract(The line above Exit.)
+    /// <summary>The line above Exit.</summary>
+    miExitSeparator: TMenuItem;
+
+    //** @abstract(Closes the application, asking first while there are unsaved changes.)
+    /// <summary>Closes the application, asking first while there are unsaved
+    /// changes.</summary>
+    miExit: TMenuItem;
 
     //** @abstract(Holds the Structure, Images, Animations, Parts, Re-Orient and Output tabs.)
     /// <summary>Holds the Structure, Images, Animations, Parts, Re-Orient and Output
@@ -131,21 +172,21 @@ type
     /// <summary>The Structure tab, holding the tree.</summary>
     tabStructure: TTabItem;
 
-    //** @abstract(The Images tab, holding the images panel created at start-up.)
-    /// <summary>The Images tab, holding the images panel created at start-up.</summary>
+    //** @abstract(The Images tab, holding the images frame created at start-up.)
+    /// <summary>The Images tab, holding the images frame created at start-up.</summary>
     tabImages: TTabItem;
 
-    //** @abstract(The Animations tab, holding the animations panel created at start-up.)
-    /// <summary>The Animations tab, holding the animations panel created at
+    //** @abstract(The Animations tab, holding the animations frame created at start-up.)
+    /// <summary>The Animations tab, holding the animations frame created at
     /// start-up.</summary>
     tabAnimations: TTabItem;
 
-    //** @abstract(The Parts tab, holding the parts panel created at start-up.)
-    /// <summary>The Parts tab, holding the parts panel created at start-up.</summary>
+    //** @abstract(The Parts tab, holding the parts frame created at start-up.)
+    /// <summary>The Parts tab, holding the parts frame created at start-up.</summary>
     tabParts: TTabItem;
 
-    //** @abstract(The Re-Orient tab, holding the panel with the turn applied when saving.)
-    /// <summary>The Re-Orient tab, holding the panel with the turn applied when
+    //** @abstract(The Re-Orient tab, holding the frame with the turn applied when saving.)
+    /// <summary>The Re-Orient tab, holding the frame with the turn applied when
     /// saving.</summary>
     tabOrient: TTabItem;
 
@@ -158,18 +199,18 @@ type
     /// <summary>The structure tree of the loaded document.</summary>
     tvStructure: TTreeView;
 
-    //** @abstract(Sets up the dialogs and the Images, Animations and Parts tabs, then loads
-    //** the file and runs the self-tests given on the command line.)
+    //** @abstract(Sets up the menu and the tabs, then loads the file and runs the self-tests
+    //** given on the command line.)
     //**
-    //** Command line: an optional file name and an optional --selftest, -selftest or /selftest,
-    //** in any order.
+    //** Command line: an optional file name and, with SELF_TESTS, an optional --selftest,
+    //** -selftest or /selftest, in any order.
     //**
     //** @param(Sender The control that raised the event.)
-    /// <summary>Sets up the dialogs and the Images, Animations and Parts tabs, then loads the
-    /// file and runs the self-tests given on the command line.</summary>
+    /// <summary>Sets up the menu and the tabs, then loads the file and runs the self-tests
+    /// given on the command line.</summary>
     /// <param name="Sender">The control that raised the event.</param>
-    /// <remarks>Command line: an optional file name and an optional --selftest, -selftest or
-    /// /selftest, in any order.</remarks>
+    /// <remarks>Command line: an optional file name and, with SELF_TESTS, an optional
+    /// --selftest, -selftest or /selftest, in any order.</remarks>
     procedure FormCreate(Sender: TObject);
 
     //** @abstract(Frees the document.)
@@ -186,10 +227,13 @@ type
 
     //** @abstract(Asks for a .gltf or .glb file and loads it.)
     //**
+    //** While there are unsaved changes, asks first whether to lose them.
+    //**
     //** @param(Sender The control that raised the event.)
     /// <summary>Asks for a .gltf or .glb file and loads it.</summary>
     /// <param name="Sender">The control that raised the event.</param>
-    procedure btnOpenClick(Sender: TObject);
+    /// <remarks>While there are unsaved changes, asks first whether to lose them.</remarks>
+    procedure miOpenClick(Sender: TObject);
 
     //** @abstract(Asks for a file name and saves the document.)
     //**
@@ -206,22 +250,43 @@ type
     /// it decides the extension and format, whatever was typed; replacing an existing file is
     /// confirmed. The result, every file written or copied and any warnings are
     /// logged.</remarks>
-    procedure btnSaveClick(Sender: TObject);
+    procedure miSaveAsClick(Sender: TObject);
 
-    //** @abstract(Shows the Output tab and runs the self-tests.)
+    //** @abstract(Shows the Bulk Re-Orient dialog and, when confirmed, turns every model it
+    //** finds.)
+    //**
+    //** The search and the conversion run in the background with the progress box, which can
+    //** abort after the model being saved; output files that already exist are replaced only
+    //** after OK. The loaded model is not touched. The result is logged on the Output tab.
     //**
     //** @param(Sender The control that raised the event.)
-    /// <summary>Shows the Output tab and runs the self-tests.</summary>
+    /// <summary>Shows the Bulk Re-Orient dialog and, when confirmed, turns every model it
+    /// finds.</summary>
     /// <param name="Sender">The control that raised the event.</param>
-    procedure btnSelfTestClick(Sender: TObject);
+    /// <remarks>The search and the conversion run in the background with the progress box,
+    /// which can abort after the model being saved; output files that already exist are
+    /// replaced only after OK. The loaded model is not touched. The result is logged on the
+    /// Output tab.</remarks>
+    procedure miBulkOrientClick(Sender: TObject);
+
+    //** @abstract(Closes the form, and with it the application.)
+    //**
+    //** While there are unsaved changes, FormCloseQuery asks first, with OK and Cancel.
+    //**
+    //** @param(Sender The control that raised the event.)
+    /// <summary>Closes the form, and with it the application.</summary>
+    /// <param name="Sender">The control that raised the event.</param>
+    /// <remarks>While there are unsaved changes, FormCloseQuery asks first, with OK and
+    /// Cancel.</remarks>
+    procedure miExitClick(Sender: TObject);
   private
     FDoc: TglTFDocument;
-    FImages: TglTFImagesPanel;
-    FAnimations: TglTFAnimationsPanel;
-    FProgress: TProgressOverlay;
-    FDuplicates: TDuplicatePanel;
-    FParts: TglTFPartsPanel;
-    FOrient: TglTFOrientPanel;
+    FImages: TglTFImagesFrame;
+    FAnimations: TglTFAnimationsFrame;
+    FProgress: TProgressFrame;
+    FDuplicates: TDuplicateFrame;
+    FParts: TglTFPartsFrame;
+    FOrient: TglTFOrientFrame;
     // The part files loaded; kept across model loads
     FPartLibrary: TglTFPartLibrary;
     // Puts parts on FDoc; replaced with the document
@@ -233,8 +298,26 @@ type
     FBusy: Boolean;
     // The form was asked to close during the work; it closes when EndWork runs
     FCloseRequested: Boolean;
+    // Changes not yet saved; shown as a * in the caption
+    FModified: Boolean;
+    // The user agreed to close without saving
+    FCloseConfirmed: Boolean;
+{$IFDEF SELF_TESTS}
     FSelfTestAfterLoad: Boolean;
+    // File > Run self-tests, created at run time
+    FSelfTestItem: TMenuItem;
+{$ENDIF}
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure SetUpMobileMenu;
+    procedure DocumentEdited(Sender: TObject);
+    procedure SetModified(AValue: Boolean);
+    procedure UpdateCaption;
+    procedure UpdateMenu;
+    procedure ConfirmDiscard(const AQuestion: string; const AProceed: TProc);
+    procedure BulkSearch(const AOptions: TglTFBulkOptions);
+    procedure BulkSearchFinished(ABulk: TglTFBulkReorienter; const AError: string);
+    procedure BulkRun(ABulk: TglTFBulkReorienter);
+    procedure BulkFinished(ABulk: TglTFBulkReorienter; const AError: string);
     procedure BeginWork(const ATitle: string; const AOnAbort: TProc = nil);
     procedure EndWork;
     procedure WorkProgress(Sender: TObject; const AProgress: TglTFProgress);
@@ -244,6 +327,8 @@ type
     procedure AnimationsImport(Sender: TObject);
     procedure AnimationsClear(Sender: TObject);
     procedure AnimationsSplit(Sender: TObject);
+    procedure AnimationsRename(Sender: TObject; AIndex: Integer;
+      const AOldName, ANewName: string);
     procedure LogLongAnimationHint;
     procedure ImportAnimationFiles(const AFiles: TArray<string>);
     procedure AskDuplicate(AImporter: TglTFAnimationImporter;
@@ -266,17 +351,21 @@ type
     procedure LocateMissingFiles(const AContext: string; const ADone: TProc = nil);
     procedure ChooseSaveFile;
     procedure SaveAs(const AFileName: string);
-    function StartFolder: string;
     procedure DumpDocument;
+{$IFDEF SELF_TESTS}
+    procedure SelfTestClick(Sender: TObject);
     procedure ExpectError(const ATitle: string; const ALines: array of string;
       AExpected: ExceptClass);
     procedure RoundTripTest(AFormat: TglTFFileFormat);
     procedure AnimationImportTest;
     procedure AnimationSplitTest;
+    procedure AnimationRenameTest;
     procedure ReorientTest;
+    procedure BulkReorientTest;
     procedure PartsTest;
     procedure UnusedImagesTest;
     procedure RunSelfTests;
+{$ENDIF}
   end;
 
 var
@@ -289,11 +378,13 @@ implementation
 {$R *.fmx}
 
 uses
-  System.StrUtils, System.Math, System.JSON,
+  System.StrUtils, System.Math, System.JSON, System.Generics.Collections,
   System.NetEncoding, System.Threading,
   System.SyncObjs,
   glTF.Edit, glTF.AnimationSplit, glTF.Orient,
-  glTFViewer.Split, glTFViewer.Tree, glTFViewer.Missing, glTFViewer.Dialogs;
+  FMX.DialogService,
+  glTFViewer.Split, glTFViewer.Tree, glTFViewer.Missing, glTFViewer.Dialogs,
+  glTFViewer.BulkOrient;
 
 type
   // Example of mapping an extension onto your own class (see DumpDocument)
@@ -310,6 +401,14 @@ const
   // Most nodes and accessors listed on the Output tab after a load
   DUMP_MAX = 100;
 
+  APP_TITLE = 'glTF Viewer';
+
+  // The kinds of file dialog, each with its own folder in the settings
+  KEY_OPEN_MODEL = 'openModel';
+  KEY_SAVE_MODEL = 'saveModel';
+  KEY_IMPORT_ANIMATIONS = 'importAnimations';
+  KEY_ADD_PARTS = 'addPartFiles';
+
 function FloatText(AValue: Double): string;
 begin
   Result := FloatToStr(AValue, TFormatSettings.Invariant);
@@ -320,8 +419,10 @@ end;
 procedure TglTFMainForm.FormCreate(Sender: TObject);
 var
   LFileName, LParam: string;
-  LSelfTest: Boolean;
   I: Integer;
+{$IFDEF SELF_TESTS}
+  LSelfTest: Boolean;
+{$ENDIF}
 begin
   FDoc := TglTFDocument.Create;
 
@@ -335,21 +436,24 @@ begin
   memOutput.TextSettings.Font.Family := 'monospace';
 {$ENDIF}
 
-  FImages := TglTFImagesPanel.Create(Self);
+  FImages := TglTFImagesFrame.Create(Self);
   FImages.Parent := tabImages;
   FImages.Align := TAlignLayout.Client;
   FImages.OnLocateMissing := ImagesLocateMissing;
+  FImages.OnChange := DocumentEdited;
 
-  FAnimations := TglTFAnimationsPanel.Create(Self);
+  FAnimations := TglTFAnimationsFrame.Create(Self);
   FAnimations.Parent := tabAnimations;
   FAnimations.Align := TAlignLayout.Client;
   FAnimations.OnImport := AnimationsImport;
   FAnimations.OnClear := AnimationsClear;
   FAnimations.OnSplit := AnimationsSplit;
+  FAnimations.OnChange := DocumentEdited;
+  FAnimations.OnRename := AnimationsRename;
 
   FPartLibrary := TglTFPartLibrary.Create;
   FPartApplier := TglTFPartApplier.Create(FDoc);
-  FParts := TglTFPartsPanel.Create(Self);
+  FParts := TglTFPartsFrame.Create(Self);
   FParts.Parent := tabParts;
   FParts.Align := TAlignLayout.Client;
   FParts.PartLibrary := FPartLibrary;
@@ -357,49 +461,310 @@ begin
   FParts.OnClearList := PartsClearList;
   FParts.OnApply := PartsApply;
   FParts.OnRemove := PartsRemove;
-
-  FOrient := TglTFOrientPanel.Create(Self);
-  FOrient.Parent := tabOrient;
-  FOrient.Align := TAlignLayout.Client;
   FParts.OnRefreshModel := PartsRefreshModel;
   FParts.Bind(FDoc, FPartApplier);
 
+  FOrient := TglTFOrientFrame.Create(Self);
+  FOrient.Parent := tabOrient;
+  FOrient.Align := TAlignLayout.Client;
+  FOrient.OnChange := DocumentEdited;
+
   // Shown over everything while a model loads or animations are imported
-  FProgress := TProgressOverlay.Create(Self);
+  FProgress := TProgressFrame.Create(Self);
   FProgress.Parent := Self;
   // The duplicate question, over the progress box while an import waits
-  FDuplicates := TDuplicatePanel.Create(Self);
+  FDuplicates := TDuplicateFrame.Create(Self);
   FDuplicates.Parent := Self;
   OnCloseQuery := FormCloseQuery;
 
+{$IFDEF SELF_TESTS}
+  // Only in builds with the self-tests, so made here rather than designed
+  FSelfTestItem := TMenuItem.Create(Self);
+  FSelfTestItem.Text := 'Run self-tests';
+  FSelfTestItem.OnClick := SelfTestClick;
+  miFile.InsertObject(miExitSeparator.Index, FSelfTestItem);
+  MainMenu.RecreateOSMenu;
+{$ENDIF}
+  SetUpMobileMenu;
+
   TabControl.ActiveTab := tabStructure;
-  TglTFTreeBuilder.ShowMessage(tvStructure, 'No glTF file loaded - use "Open..."');
+  TglTFTreeBuilder.ShowMessage(tvStructure, 'No glTF file loaded - use File, Open...');
+  UpdateCaption;
+  UpdateMenu;
 
   // Command line: [file.gltf] [--selftest]
   LFileName := '';
+{$IFDEF SELF_TESTS}
   LSelfTest := False;
+{$ENDIF}
   for I := 1 to ParamCount do
   begin
     LParam := ParamStr(I);
+{$IFDEF SELF_TESTS}
     if SameText(LParam, '--selftest') or SameText(LParam, '-selftest') or
        SameText(LParam, '/selftest') then
-      LSelfTest := True
-    else
-      LFileName := LParam;
+    begin
+      LSelfTest := True;
+      Continue;
+    end;
+{$ENDIF}
+    LFileName := LParam;
   end;
 
   // Loading runs in the background, so the self-tests wait for it to finish
   if LFileName <> '' then
   begin
+{$IFDEF SELF_TESTS}
     FSelfTestAfterLoad := LSelfTest;
+{$ENDIF}
     LoadFile(LFileName);
   end
   else
   begin
-    Log('Use "Open..." to load a .gltf file.');
+    Log('Use File, Open... to load a .gltf file.');
+{$IFDEF SELF_TESTS}
     if LSelfTest then
       RunSelfTests;
+{$ENDIF}
   end;
+end;
+
+procedure TglTFMainForm.SetUpMobileMenu;
+{$IF DEFINED(ANDROID) or DEFINED(IOS)}
+var
+  LBar: TMenuBar;
+begin
+  // iOS and Android show no main menu: the File menu goes in a menu bar at
+  // the top of the form. Apps there are not exited by the user, so no Exit
+  LBar := TMenuBar.Create(Self);
+  LBar.Parent := Self;
+  LBar.Align := TAlignLayout.Top;
+  miExitSeparator.Visible := False;
+  miExit.Visible := False;
+  miFile.Parent := LBar;
+end;
+{$ELSE}
+begin
+  // The desktop shows MainMenu as the platform's menu
+end;
+{$ENDIF}
+
+procedure TglTFMainForm.DocumentEdited(Sender: TObject);
+begin
+  // A change on a tab to what a save writes; only once a model is loaded
+  if FDoc.FileFormat <> gffNone then
+    SetModified(True);
+end;
+
+procedure TglTFMainForm.SetModified(AValue: Boolean);
+begin
+  if FModified = AValue then
+    Exit;
+  FModified := AValue;
+  UpdateCaption;
+end;
+
+procedure TglTFMainForm.UpdateCaption;
+begin
+  // "*walk.glb - glTF Viewer" while there are unsaved changes
+  if FDoc.FileFormat = gffNone then
+    Caption := APP_TITLE
+  else if FModified then
+    Caption := Format('*%s - %s', [ExtractFileName(FDoc.FileName), APP_TITLE])
+  else
+    Caption := Format('%s - %s', [ExtractFileName(FDoc.FileName), APP_TITLE]);
+end;
+
+procedure TglTFMainForm.UpdateMenu;
+begin
+  // Nothing that uses the document while the work runs; Exit closes once
+  // the work has finished
+  miOpen.Enabled := not FBusy;
+  miSaveAs.Enabled := not FBusy and (FDoc.FileFormat <> gffNone);
+  miBulkOrient.Enabled := not FBusy;
+{$IFDEF SELF_TESTS}
+  FSelfTestItem.Enabled := not FBusy;
+{$ENDIF}
+end;
+
+procedure TglTFMainForm.ConfirmDiscard(const AQuestion: string; const AProceed: TProc);
+begin
+  if not FModified then
+  begin
+    AProceed;
+    Exit;
+  end;
+  TDialogService.MessageDialog(Format('%s has changes that are not saved.',
+    [ExtractFileName(FDoc.FileName)]) + sLineBreak + sLineBreak + AQuestion,
+    TMsgDlgType.mtWarning, [TMsgDlgBtn.mbOK, TMsgDlgBtn.mbCancel], TMsgDlgBtn.mbCancel, 0,
+    procedure(const AResult: TModalResult)
+    begin
+      // Run after the dialog has gone, also where it does not block
+      if AResult = mrOk then
+        TThread.ForceQueue(nil,
+          procedure
+          begin
+            AProceed;
+          end);
+    end);
+end;
+
+procedure TglTFMainForm.miBulkOrientClick(Sender: TObject);
+begin
+  if FBusy then
+    Exit;
+  TBulkOrientForm.Execute(
+    procedure(const AOptions: TglTFBulkOptions)
+    begin
+      // Reached once the dialog has closed
+      if not FBusy and not FCloseRequested then
+        BulkSearch(AOptions);
+    end);
+end;
+
+procedure TglTFMainForm.BulkSearch(const AOptions: TglTFBulkOptions);
+var
+  LBulk: TglTFBulkReorienter;
+begin
+  TabControl.ActiveTab := tabOutput;
+  Log;
+  Log('Bulk Re-Orient: %s models in %s and its sub-folders, turned by X %s, Y %s, Z %s ' +
+    'degrees, saved as %s in %s', [
+    System.StrUtils.IfThen(AOptions.Input = biGLB, 'GLB',
+      System.StrUtils.IfThen(AOptions.Input = biGLTF, 'glTF', 'GLB and glTF')),
+    AOptions.InputFolder, FloatText(AOptions.RotateX), FloatText(AOptions.RotateY),
+    FloatText(AOptions.RotateZ),
+    System.StrUtils.IfThen(AOptions.OutputFormat = gffJSON, 'glTF', 'GLB'),
+    AOptions.OutputFolder]);
+
+  // 1. Find the models, in the background: a big folder tree takes a while
+  LBulk := TglTFBulkReorienter.Create(AOptions);
+  LBulk.OnProgress := WorkProgress;
+  BeginWork('Looking for models',
+    procedure
+    begin
+      LBulk.RequestAbort;
+    end);
+  TTask.Run(
+    procedure
+    var
+      LError: string;
+    begin
+      LError := '';
+      try
+        LBulk.FindModels;
+      except
+        on E: Exception do
+          LError := E.Message;
+      end;
+      TThread.Queue(nil,
+        procedure
+        begin
+          BulkSearchFinished(LBulk, LError);
+        end);
+    end);
+end;
+
+procedure TglTFMainForm.BulkSearchFinished(ABulk: TglTFBulkReorienter; const AError: string);
+var
+  LLine: string;
+  LExisting: Integer;
+begin
+  EndWork;
+  for LLine in ABulk.Log do
+    Log('  %s', [LLine]);
+  ABulk.Log.Clear;
+  if (AError <> '') or ABulk.AbortRequested or (Length(ABulk.Items) = 0) or
+     FCloseRequested then
+  begin
+    if AError <> '' then
+      Log('ERROR: %s', [AError])
+    else if ABulk.AbortRequested or FCloseRequested then
+      Log('Bulk Re-Orient aborted while looking for models')
+    else
+      Log('No models found to re-orient');
+    ABulk.Free;
+    Exit;
+  end;
+  Log('%d model(s) found', [Length(ABulk.Items)]);
+
+  // 2. Files already in the output folder are replaced only after OK
+  LExisting := ABulk.ExistingTargets;
+  if LExisting = 0 then
+  begin
+    BulkRun(ABulk);
+    Exit;
+  end;
+  TDialogService.MessageDialog(Format('%d of the %d file(s) to save already exist in %s.' +
+    sLineBreak + sLineBreak + 'Replace them?', [LExisting, Length(ABulk.Items),
+    ABulk.Options.OutputFolder]),
+    TMsgDlgType.mtConfirmation, [TMsgDlgBtn.mbOK, TMsgDlgBtn.mbCancel], TMsgDlgBtn.mbCancel, 0,
+    procedure(const AResult: TModalResult)
+    begin
+      // Run after the dialog has gone, also where it does not block
+      TThread.ForceQueue(nil,
+        procedure
+        begin
+          if (AResult = mrOk) and not FBusy and not FCloseRequested then
+            BulkRun(ABulk)
+          else
+          begin
+            Log('Bulk Re-Orient cancelled: no file replaced');
+            ABulk.Free;
+          end;
+        end);
+    end);
+end;
+
+procedure TglTFMainForm.BulkRun(ABulk: TglTFBulkReorienter);
+begin
+  // 3. Load, turn and save each model, in the background; Abort stops after
+  // the model being saved
+  BeginWork('Re-orienting models',
+    procedure
+    begin
+      ABulk.RequestAbort;
+    end);
+  TTask.Run(
+    procedure
+    var
+      LError: string;
+    begin
+      LError := '';
+      try
+        ABulk.Run;
+      except
+        on E: Exception do
+          LError := E.Message;
+      end;
+      TThread.Queue(nil,
+        procedure
+        begin
+          BulkFinished(ABulk, LError);
+        end);
+    end);
+end;
+
+procedure TglTFMainForm.BulkFinished(ABulk: TglTFBulkReorienter; const AError: string);
+var
+  LLine: string;
+begin
+  ABulk.OnProgress := nil;
+  EndWork;
+  for LLine in ABulk.Log do
+    Log('  %s', [LLine]);
+  if AError <> '' then
+    Log('ERROR: %s', [AError]);
+  Log('Bulk Re-Orient: %d of %d model(s) saved in %s; %d failed, %d with warnings',
+    [ABulk.Saved, Length(ABulk.Items), ABulk.Options.OutputFolder, ABulk.Failed,
+     ABulk.Warned]);
+  ABulk.Free;
+  TabControl.ActiveTab := tabOutput;
+end;
+
+procedure TglTFMainForm.miExitClick(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TglTFMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -409,7 +774,25 @@ begin
   // import is asked to stop (a duplicate question waiting for an answer is
   // answered with Abort) and a load runs to its end; EndWork then closes
   CanClose := not FBusy;
-  if CanClose or FCloseRequested then
+  if CanClose then
+  begin
+    // A close put off during the work is decided now: Cancel below keeps the
+    // form working normally
+    FCloseRequested := False;
+    // Unsaved changes: closing waits for OK, which closes again
+    if FModified and not FCloseConfirmed then
+    begin
+      CanClose := False;
+      ConfirmDiscard('Close without saving them?',
+        procedure
+        begin
+          FCloseConfirmed := True;
+          Close;
+        end);
+    end;
+    Exit;
+  end;
+  if FCloseRequested then
     Exit;
   FCloseRequested := True;
   FDuplicates.Cancel;
@@ -422,9 +805,7 @@ end;
 procedure TglTFMainForm.BeginWork(const ATitle: string; const AOnAbort: TProc);
 begin
   FBusy := True;
-  btnOpen.Enabled := False;
-  btnSave.Enabled := False;
-  btnSelfTest.Enabled := False;
+  UpdateMenu;
   // The progress box takes the mouse and touch input, not the keyboard: a
   // focused checkbox or button on a tab would still change the document
   // (Space on an Export tick, Enter on "Export all") while the import thread
@@ -439,9 +820,7 @@ begin
   FProgress.Finish;
   FBusy := False;
   TabControl.Enabled := True;
-  btnOpen.Enabled := True;
-  btnSave.Enabled := FDoc.FileFormat <> gffNone;
-  btnSelfTest.Enabled := True;
+  UpdateMenu;
 
   // Closed during the work: close now, after the caller has finished. The
   // task has queued its last call (the caller), so nothing more arrives
@@ -469,7 +848,7 @@ end;
 
 procedure TglTFMainForm.FormDestroy(Sender: TObject);
 begin
-  // The panel is freed later, with the form: it lets go of these first
+  // The frame is freed later, with the form: it lets go of these first
   FParts.Bind(nil, nil);
   FParts.PartLibrary := nil;
   FPartApplier.Free;
@@ -477,33 +856,30 @@ begin
   FDoc.Free;
 end;
 
-function TglTFMainForm.StartFolder: string;
-begin
-  // The loaded file's folder, else the platform default (on iOS and Android
-  // the app's documents folder)
-  Result := FDoc.BaseDirectory;
-  if (Result = '') or not TDirectory.Exists(Result) then
-    Result := TPlatformDialogs.DefaultFolder;
-end;
-
-procedure TglTFMainForm.btnOpenClick(Sender: TObject);
+procedure TglTFMainForm.miOpenClick(Sender: TObject);
 begin
   if FBusy then
     Exit;
-  TPlatformDialogs.OpenFile('Open glTF file',
-    [TFileType.Create('glTF files', ['.gltf', '.glb']),
-     TFileType.Create('glTF JSON', ['.gltf']),
-     TFileType.Create('Binary glTF', ['.glb']),
-     TFileType.Create('All files', ['*'])],
-    StartFolder, '',
-    procedure(AFileName: string)
+  ConfirmDiscard('Open another file and lose them?',
+    procedure
     begin
-      if AFileName <> '' then
-        LoadFile(AFileName);
+      if FBusy then
+        Exit;
+      TPlatformDialogs.OpenFile(KEY_OPEN_MODEL, 'Open glTF file',
+        [TFileType.Create('glTF files', ['.gltf', '.glb']),
+         TFileType.Create('glTF JSON', ['.gltf']),
+         TFileType.Create('Binary glTF', ['.glb']),
+         TFileType.Create('All files', ['*'])],
+        '', '',
+        procedure(AFileName: string)
+        begin
+          if AFileName <> '' then
+            LoadFile(AFileName);
+        end);
     end);
 end;
 
-procedure TglTFMainForm.btnSaveClick(Sender: TObject);
+procedure TglTFMainForm.miSaveAsClick(Sender: TObject);
 var
   LUsed: TArray<Boolean>;
   LItem: TglTFMissingResource;
@@ -538,9 +914,9 @@ begin
   // loaded file's name (without extension) is suggested
   LType := TYPE_GLB;
 
-  TPlatformDialogs.SaveFile('Save glTF file',
+  TPlatformDialogs.SaveFile(KEY_SAVE_MODEL, 'Save glTF file',
     [TFileType.Create('Binary glTF', ['.glb']), TFileType.Create('glTF JSON', ['.gltf'])],
-    LType, StartFolder, TPath.GetFileNameWithoutExtension(FDoc.FileName),
+    LType, '', TPath.GetFileNameWithoutExtension(FDoc.FileName),
     procedure(AFileName: string; ATypeIndex: Integer)
     var
       LFileName, LExt: string;
@@ -664,6 +1040,7 @@ begin
     Log('The saved file is file-complete: everything it refers to is next to it')
   else
     Log('Warning: the saved file is NOT file-complete (see the warnings above)');
+  SetModified(False);
 end;
 
 procedure TglTFMainForm.ImagesLocateMissing(Sender: TObject);
@@ -696,10 +1073,10 @@ procedure TglTFMainForm.AnimationsImport(Sender: TObject);
 begin
   if FBusy then
     Exit;
-  TPlatformDialogs.OpenFiles('Import animations',
+  TPlatformDialogs.OpenFiles(KEY_IMPORT_ANIMATIONS, 'Import animations',
     [TFileType.Create('glTF files', ['.gltf', '.glb']),
      TFileType.Create('All files', ['*'])],
-    StartFolder,
+    '',
     procedure(AFiles: TArray<string>)
     begin
       if Length(AFiles) > 0 then
@@ -845,6 +1222,8 @@ begin
       [AImporter.ImportedCount])
   else
     Log('%d animation(s) imported', [AImporter.ImportedCount]);
+  if AImporter.ImportedCount > 0 then
+    SetModified(True);
   Log('The model now has %d animation(s)', [FDoc.Root.Animations.Count]);
   LogLongAnimationHint;
   AImporter.Free;
@@ -877,7 +1256,7 @@ begin
   if LIndex < 0 then
     Exit;
   LName := FDoc.Root.Animations[LIndex].Name;
-  TSplitAnimationForm.Execute(FDoc.Root, LIndex, StartFolder,
+  TSplitAnimationForm.Execute(FDoc.Root, LIndex,
     procedure(const ARanges: TglTFAnimationRanges; AFrameRate: Double)
     var
       LWarnings: TStringList;
@@ -889,6 +1268,7 @@ begin
         try
           LCount := TglTFAnimationSplitter.Split(FDoc.Root, LIndex, AFrameRate, ARanges,
             LWarnings);
+          SetModified(True);
           Log;
           Log('Split "%s" into %d animation(s) at %s frames per second', [LName, LCount,
             FloatToStr(AFrameRate, TFormatSettings.Invariant)]);
@@ -904,6 +1284,14 @@ begin
       TglTFTreeBuilder.Build(tvStructure, FDoc);
       FAnimations.RefreshList;
     end);
+end;
+
+procedure TglTFMainForm.AnimationsRename(Sender: TObject; AIndex: Integer;
+  const AOldName, ANewName: string);
+begin
+  // The frame renamed it and marked the change; the tree shows names too
+  Log('Animation %d renamed from "%s" to "%s"', [AIndex, AOldName, ANewName]);
+  TglTFTreeBuilder.Build(tvStructure, FDoc);
 end;
 
 procedure TglTFMainForm.AnimationsClear(Sender: TObject);
@@ -924,6 +1312,7 @@ begin
       LWarnings := TStringList.Create;
       try
         LCount := TglTFEdit.ClearAnimations(FDoc.Root, LWarnings);
+        SetModified(True);
         Log;
         Log('Cleared %d animation(s)', [LCount]);
         for LWarning in LWarnings do
@@ -940,10 +1329,10 @@ procedure TglTFMainForm.PartsAddFiles(Sender: TObject);
 begin
   if FBusy then
     Exit;
-  TPlatformDialogs.OpenFiles('Add part files',
+  TPlatformDialogs.OpenFiles(KEY_ADD_PARTS, 'Add part files',
     [TFileType.Create('glTF files', ['.gltf', '.glb']),
      TFileType.Create('All files', ['*'])],
-    StartFolder,
+    '',
     procedure(AFiles: TArray<string>)
     begin
       if Length(AFiles) > 0 then
@@ -958,7 +1347,7 @@ begin
   Log;
   Log('Loading %d part file(s)', [Length(AFiles)]);
 
-  // The library is only read by the panel, which takes no input meanwhile
+  // The library is only read by the frame, which takes no input meanwhile
   FPartLibrary.OnProgress := WorkProgress;
   BeginWork('Loading part files',
     procedure
@@ -1069,6 +1458,8 @@ begin
     Log('Aborted: %d part(s) were put on before it stopped and stay on the model', [ACount])
   else
     Log('%d part(s) put on', [ACount]);
+  if ACount > 0 then
+    SetModified(True);
   FParts.UntickParts;
   ModelChanged;
   TabControl.ActiveTab := tabParts;
@@ -1089,6 +1480,8 @@ begin
   Log('Taking %d part(s) off', [Length(LNodes)]);
   try
     LCount := FPartApplier.Remove(LNodes, FParts.Options);
+    if LCount > 0 then
+      SetModified(True);
     LogPartChanges;
     Log('%d part(s) taken off', [LCount]);
   except
@@ -1109,6 +1502,7 @@ begin
   Log('Hiding the body under the parts again with the new settings');
   try
     FPartApplier.Refresh(FParts.Options);
+    SetModified(True);
     LogPartChanges;
   except
     on E: Exception do
@@ -1138,14 +1532,6 @@ begin
   if FDoc.HasMissingResources then
     Log('Warning: %d media file(s) are missing; see the Images tab',
       [Length(FDoc.MissingResources)]);
-end;
-
-procedure TglTFMainForm.btnSelfTestClick(Sender: TObject);
-begin
-  if FBusy then
-    Exit;
-  TabControl.ActiveTab := tabOutput;
-  RunSelfTests;
 end;
 
 procedure TglTFMainForm.Log(const AText: string);
@@ -1215,13 +1601,12 @@ begin
       Log('ERROR: %s', [AError])
     else
       Log('ERROR (%s): %s', [AErrorClass, AError]);
-    lblFile.Text := ExtractFileName(AFileName) + ' - failed to load';
     TglTFTreeBuilder.ShowMessage(tvStructure, 'Load failed: ' + AError);
     TabControl.ActiveTab := tabOutput;
   end
   else
   begin
-    // The panels let go of the old document before it is freed. The
+    // The frames let go of the old document before it is freed. The
     // applier remembers the old body's triangles, so a new one is made
     FImages.Bind(nil);
     FAnimations.Bind(nil);
@@ -1232,7 +1617,9 @@ begin
     FPartApplier := TglTFPartApplier.Create(FDoc);
     EndWork;
 
-    lblFile.Text := FDoc.FileName;
+    SetModified(False);
+    UpdateCaption;
+    UpdateMenu;
     Log('Loaded OK');
     for LWarning in FDoc.Warnings do
       Log('Warning: %s', [LWarning]);
@@ -1267,6 +1654,7 @@ begin
         end);
   end;
 
+{$IFDEF SELF_TESTS}
   // --selftest on the command line: run once the file is in
   if FSelfTestAfterLoad and not FCloseRequested then
   begin
@@ -1274,6 +1662,7 @@ begin
     TabControl.ActiveTab := tabOutput;
     RunSelfTests;
   end;
+{$ENDIF}
 end;
 
 procedure TglTFMainForm.DumpDocument;
@@ -1384,6 +1773,18 @@ begin
     memOutput.Lines.EndUpdate;
   end;
   memOutput.GoToTextEnd;
+end;
+
+{$IFDEF SELF_TESTS}
+
+// The self-tests, built in only with SELF_TESTS (see the top of the unit)
+
+procedure TglTFMainForm.SelfTestClick(Sender: TObject);
+begin
+  if FBusy then
+    Exit;
+  TabControl.ActiveTab := tabOutput;
+  RunSelfTests;
 end;
 
 procedure TglTFMainForm.ExpectError(const ATitle: string; const ALines: array of string;
@@ -1628,6 +2029,137 @@ begin
   end;
 end;
 
+procedure TglTFMainForm.BulkReorientTest;
+const
+  MODEL = '{"asset":{"version":"2.0"},"scene":0,"scenes":[{"nodes":[0]}],' +
+    '"nodes":[{"name":"Root","translation":[1,2,3]}]}';
+var
+  LTemp, LIn, LOut: string;
+  LOptions: TglTFBulkOptions;
+  LBulk: TglTFBulkReorienter;
+  LDoc: TglTFDocument;
+  LTranslation: TArray<Double>;
+  LFailures: Integer;
+
+  procedure Check(ACondition: Boolean; const AText: string);
+  begin
+    if not ACondition then
+    begin
+      Inc(LFailures);
+      Log('  FAIL: %s', [AText]);
+    end;
+  end;
+
+  function Found(AInput: TglTFBulkInput; const AOutput: string): Integer;
+  var
+    LFind: TglTFBulkReorienter;
+  begin
+    LOptions.Input := AInput;
+    LOptions.OutputFolder := AOutput;
+    LFind := TglTFBulkReorienter.Create(LOptions);
+    try
+      Result := LFind.FindModels;
+    finally
+      LFind.Free;
+    end;
+  end;
+
+begin
+  Log;
+  Log('Self-test: bulk re-orienting a folder tree (X -90) into another folder');
+  LFailures := 0;
+  // A temporary tree: in\a.gltf, in\c.gltf, in\c.glb, in\sub\b.gltf and a
+  // text file
+  LTemp := TPath.Combine(TPath.GetTempPath, 'glTFBulkTest_' +
+    TGUID.NewGuid.ToString.Replace('{', '').Replace('}', ''));
+  LIn := TPath.Combine(LTemp, 'in');
+  LOut := TPath.Combine(LTemp, 'out');
+  try
+    try
+      ForceDirectories(TPath.Combine(LIn, 'sub'));
+      TFile.WriteAllBytes(TPath.Combine(LIn, 'a.gltf'), TEncoding.UTF8.GetBytes(MODEL));
+      TFile.WriteAllBytes(TPath.Combine(LIn, 'c.gltf'), TEncoding.UTF8.GetBytes(MODEL));
+      TFile.WriteAllBytes(TPath.Combine(LIn, 'sub' + PathDelim + 'b.gltf'),
+        TEncoding.UTF8.GetBytes(MODEL));
+      // Written without a byte order mark, as models usually are
+      TFile.WriteAllBytes(TPath.Combine(LIn, 'notes.txt'),
+        TEncoding.UTF8.GetBytes('not a model'));
+      LDoc := TglTFDocument.Create;
+      try
+        LDoc.LoadFromString(MODEL);
+        LDoc.SaveToFile(TPath.Combine(LIn, 'c.glb'));
+      finally
+        LDoc.Free;
+      end;
+
+      LOptions := TglTFBulkOptions.Default;
+      LOptions.InputFolder := LIn;
+      LOptions.RotateX := -90;
+      LOptions.OutputFolder := LIn;
+      Check(TglTFBulkReorienter.Problem(LOptions) <> '',
+        'the input folder should be refused as the output folder');
+      LOptions.OutputFolder := LTemp;
+      Check(TglTFBulkReorienter.Problem(LOptions) <> '',
+        'an output folder holding the input folder should be refused');
+      LOptions.OutputFolder := LOut;
+      Check(TglTFBulkReorienter.Problem(LOptions) = '', 'the options should be accepted: ' +
+        TglTFBulkReorienter.Problem(LOptions));
+      Check(Found(biGLB, LOut) = 1, 'GLB only should find 1 model');
+      Check(Found(biGLTF, LOut) = 3, 'glTF only should find 3 models');
+      Check(Found(biBoth, TPath.Combine(LIn, 'sub')) = 3,
+        'an output folder inside the input folder should be left out of the search');
+
+      LOptions.Input := biBoth;
+      LOptions.OutputFolder := LOut;
+      LBulk := TglTFBulkReorienter.Create(LOptions);
+      try
+        Check(LBulk.FindModels = 4, 'both types should find 4 models');
+        Check(LBulk.ExistingTargets = 0, 'nothing should be in the output folder yet');
+        Check(LBulk.Run = 4, Format('4 models should be saved, not %d: %s',
+          [LBulk.Saved, LBulk.Log.Text]));
+        Check(LBulk.Failed = 0, 'no model should fail');
+      finally
+        LBulk.Free;
+      end;
+      Check(TFile.Exists(TPath.Combine(LOut, 'a.glb')), 'out\a.glb should exist');
+      Check(TFile.Exists(TPath.Combine(LOut, 'c.glb')), 'out\c.glb should exist');
+      Check(TFile.Exists(TPath.Combine(LOut, 'c_gltf.glb')),
+        'c.gltf should be saved as c_gltf.glb, as c.glb takes c.glb');
+      Check(TFile.Exists(TPath.Combine(LOut, 'sub' + PathDelim + 'b.glb')),
+        'out\sub\b.glb should exist: the sub-folder is kept');
+      Check(not TFile.Exists(TPath.Combine(LOut, 'notes.txt')), 'other files are not copied');
+      Check(TEncoding.UTF8.GetString(TFile.ReadAllBytes(TPath.Combine(LIn, 'a.gltf'))) =
+        MODEL,
+        'the input files should not change');
+
+      // (1, 2, 3) turned by X -90 is (1, 3, -2)
+      LDoc := TglTFDocument.Create;
+      try
+        LDoc.LoadFromFile(TPath.Combine(LOut, 'sub' + PathDelim + 'b.glb'));
+        LTranslation := LDoc.Root.Nodes[0].Translation;
+        Check((Length(LTranslation) = 3) and (Abs(LTranslation[0] - 1) < 1e-6) and
+          (Abs(LTranslation[1] - 3) < 1e-6) and (Abs(LTranslation[2] + 2) < 1e-6),
+          'the saved model should be turned: (1, 2, 3) to (1, 3, -2)');
+      finally
+        LDoc.Free;
+      end;
+
+      if LFailures = 0 then
+        Log('  PASS: models found by type, sub-folders kept, names kept apart, turned, ' +
+          'inputs unchanged');
+    except
+      on E: Exception do
+        Check(False, E.ClassName + ': ' + E.Message);
+    end;
+  finally
+    try
+      TDirectory.Delete(LTemp, True);
+    except
+      // a temporary folder left behind does no harm
+    end;
+  end;
+end;
+
 procedure TglTFMainForm.ReorientTest;
 var
   LDoc, LCopy: TglTFDocument;
@@ -1853,6 +2385,72 @@ begin
     end;
   finally
     LSaved.Free;
+    LDoc.Free;
+  end;
+end;
+
+procedure TglTFMainForm.AnimationRenameTest;
+var
+  LDoc: TglTFDocument;
+  LRoot: TglTF;
+  LAnimation: string;
+  LFailures: Integer;
+
+  procedure Check(ACondition: Boolean; const AText: string);
+  begin
+    if not ACondition then
+    begin
+      Inc(LFailures);
+      Log('  FAIL: %s', [AText]);
+    end;
+  end;
+
+begin
+  Log;
+  Log('Self-test: renaming animations, duplicates found whatever the case');
+  LFailures := 0;
+  LDoc := TglTFDocument.Create;
+  try
+    try
+      // Three animations moving node 0 between two keys; "L\u00e4ufer" is
+      // "Laeufer" with an a-umlaut, to check case beyond A-Z
+      LAnimation := '"channels":[{"sampler":0,"target":{"node":0,"path":"translation"}}],' +
+        '"samplers":[{"input":0,"output":1}]}';
+      LDoc.LoadFromString('{"asset":{"version":"2.0"},"nodes":[{"name":"Hips"}],' +
+        '"buffers":[{"byteLength":32,"uri":"' +
+          FloatsDataUri(TArray<Single>.Create(0, 1, 0, 0, 0, 1, 0, 0)) + '"}],' +
+        '"bufferViews":[{"buffer":0,"byteLength":8},' +
+          '{"buffer":0,"byteOffset":8,"byteLength":24}],' +
+        '"accessors":[{"bufferView":0,"componentType":5126,"count":2,"type":"SCALAR",' +
+          '"min":[0],"max":[1]},' +
+          '{"bufferView":1,"componentType":5126,"count":2,"type":"VEC3"}],' +
+        '"animations":[{"name":"Walk",' + LAnimation + ',' +
+          '{"name":"L\u00e4ufer",' + LAnimation + ',' +
+          '{"name":"Run",' + LAnimation + ']}');
+      LRoot := LDoc.Root;
+      Check(TglTFEdit.FindAnimation(LRoot, 'walk') = 0, '"walk" should find "Walk"');
+      Check(TglTFEdit.FindAnimation(LRoot, ' WALK ') = 0,
+        'spaces at either end should be ignored');
+      Check(TglTFEdit.FindAnimation(LRoot, 'Walk', 0) = -1,
+        'the animation being renamed should not count as a duplicate');
+      Check(TglTFEdit.AnimationNameProblem(LRoot, 'L' + #$00C4 + 'UFER', 2) <> '',
+        'a name differing only in the case of a letter beyond A-Z should be a duplicate');
+      Check(TglTFEdit.RenameAnimation(LRoot, 2, 'WALK') <> '',
+        'renaming to another animation''s name in another case should be refused');
+      Check(LRoot.Animations[2].Name = 'Run', 'a refused rename should change nothing');
+      Check(TglTFEdit.RenameAnimation(LRoot, 2, '   ') <> '', 'an empty name should be refused');
+      Check(TglTFEdit.RenameAnimation(LRoot, 2, 'RUN') = '',
+        'an animation should take its own name in another case');
+      Check(LRoot.Animations[2].Name = 'RUN', 'the name should now be "RUN"');
+      Check(TglTFEdit.RenameAnimation(LRoot, 2, '  Sprint ') = '', '"Sprint" should be free');
+      Check(LRoot.Animations[2].Name = 'Sprint', 'spaces at either end should be removed');
+      if LFailures = 0 then
+        Log('  PASS: duplicates found in any case, renames checked before they are made');
+    except
+      on E: Exception do
+        Check(False, E.ClassName + ': ' + E.Message);
+    end;
+  finally
     LDoc.Free;
   end;
 end;
@@ -2452,7 +3050,9 @@ begin
 
   AnimationImportTest;
   AnimationSplitTest;
+  AnimationRenameTest;
   ReorientTest;
+  BulkReorientTest;
   PartsTest;
   UnusedImagesTest;
 
@@ -2470,5 +3070,7 @@ begin
   Log;
   Log('==== Self-tests finished ====');
 end;
+
+{$ENDIF}
 
 end.

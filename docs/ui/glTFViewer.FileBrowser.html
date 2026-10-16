@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.FileBrowser</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<h1 class="unit">Unit glTFViewer.FileBrowser</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objects and Records</a></div><div class="one_section"><a class="section" href="#PasDoc-Types">Types</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="description">Description</h2>
+<p>
+The file browser shown on iOS and Android, which have no FireMonkey file dialogs.</p>
+<p>
+
+
+<p><a class="normal" href="glTFViewer.FileBrowser.TFileBrowserForm.html">TFileBrowserForm</a> lists the folders and files of one folder at a time. Up goes to the parent folder; App files, Documents and Downloads go to those folders and are shown only where they exist. Depending on its <a class="normal" href="glTFViewer.FileBrowser.html#TBrowseMode">TBrowseMode</a> it opens one file, ticks several, asks for a name to save under, or chooses a folder. glTFViewer.Dialogs shows it; use TPlatformDialogs rather than this form.
+
+<p>The form is designed in glTFViewer.FileBrowser.fmx. The name box and the type list are hidden in the modes that do not use them.</p>
+<span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
+<span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTFViewer.FileBrowser.TFileBrowserForm.html"><code>TFileBrowserForm</code></a></td>
+<td class="itemdesc">A file browser for platforms without file dialogs.</td>
+</tr>
+</table>
+<span id="PasDoc-Types"></span><h3 class="summary">Types</h3>
+<table class="summary wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.html#TBrowseMode">TBrowseMode</a></strong> = (...);</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Types</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TBrowseMode"></span><code><strong>TBrowseMode</strong> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+What the file browser is for.</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+<span id="bmOpen">bmOpen</span>: Open one file: tapping a file chooses it.</li>
+<li>
+<span id="bmOpenMany">bmOpenMany</span>: Open several files: tapping a file ticks or unticks it.</li>
+<li>
+<span id="bmSave">bmSave</span>: Save: a file name is typed, or taken from a file tapped.</li>
+<li>
+<span id="bmFolder">bmFolder</span>: Choose the folder shown.</li>
+</ul>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

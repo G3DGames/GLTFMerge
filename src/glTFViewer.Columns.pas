@@ -1,8 +1,8 @@
-//** @abstract(Column layout shared by the list panels of the viewer, so headings and rows line
+//** @abstract(Column layout shared by the list frames of the viewer, so headings and rows line
 //** up.)
 //**
 //** The Images and Animations tabs show a heading row above a list box whose rows hold one
-//** control per column. Each panel describes its columns once, as an array of
+//** control per column. Each frame describes its columns once, as an array of
 //** @link(TColumnDef), and @link(TColumnLayout) places every cell, heading or row, at an x
 //** position it computes itself from that array: columns appear exactly in array order, each
 //** fixed column at its width, and the one column with no width takes what is left. Nothing
@@ -14,11 +14,11 @@
 unit glTFViewer.Columns;
 
 {
-  Column layout shared by the list panels of the viewer, so headings and rows
+  Column layout shared by the list frames of the viewer, so headings and rows
   line up.
 
   The Images and Animations tabs show a heading row above a list box whose
-  rows hold one control per column. Each panel describes its columns once, as
+  rows hold one control per column. Each frame describes its columns once, as
   an array of TColumnDef, and TColumnLayout places every cell, heading or
   row, at an x position it computes itself from that array: columns appear
   exactly in array order, each fixed column at its width, and the one column
@@ -45,16 +45,16 @@ type
     /// <summary>Always shown.</summary>
     chNever,
 
-    //** @abstract(Hidden when the panel is narrower than its narrow width.)
-    /// <summary>Hidden when the panel is narrower than its narrow width.</summary>
+    //** @abstract(Hidden when the frame is narrower than its narrow width.)
+    /// <summary>Hidden when the frame is narrower than its narrow width.</summary>
     chNarrow,
 
-    //** @abstract(Hidden when the panel is narrower than its very narrow width.)
-    /// <summary>Hidden when the panel is narrower than its very narrow width.</summary>
+    //** @abstract(Hidden when the frame is narrower than its very narrow width.)
+    /// <summary>Hidden when the frame is narrower than its very narrow width.</summary>
     chVeryNarrow);
 
-  //** @abstract(One column of a list panel.)
-  /// <summary>One column of a list panel.</summary>
+  //** @abstract(One column of a list frame.)
+  /// <summary>One column of a list frame.</summary>
   TColumnDef = record
     //** @abstract(The heading.)
     /// <summary>The heading.</summary>
@@ -96,8 +96,8 @@ type
       ACentered: Boolean = False): TColumnDef; static;
   end;
 
-  //** @abstract(The columns of a list panel, in display order.)
-  /// <summary>The columns of a list panel, in display order.</summary>
+  //** @abstract(The columns of a list frame, in display order.)
+  /// <summary>The columns of a list frame, in display order.</summary>
   TColumnDefs = TArray<TColumnDef>;
 
   //** @abstract(Creates heading and row cells and places them at computed positions.)
@@ -131,7 +131,7 @@ type
     //**
     //** @param(ARow The row; it owns the cell.)
     //**
-    //** @param(AColumn Index of the column in the panel's TColumnDefs.)
+    //** @param(AColumn Index of the column in the frame's TColumnDefs.)
     //**
     //** @param(AText The text; longer text is cut with an ellipsis.)
     //**
@@ -144,7 +144,7 @@ type
     //** @returns(The label.)
     /// <summary>Adds a text cell to a row.</summary>
     /// <param name="ARow">The row; it owns the cell.</param>
-    /// <param name="AColumn">Index of the column in the panel's TColumnDefs.</param>
+    /// <param name="AColumn">Index of the column in the frame's TColumnDefs.</param>
     /// <param name="AText">The text; longer text is cut with an ellipsis.</param>
     /// <param name="AGrey">Grey text, for rows of missing items.</param>
     /// <param name="ABold">Bold text, for headings.</param>
@@ -157,12 +157,12 @@ type
     //**
     //** @param(ARow The row; it owns the cell.)
     //**
-    //** @param(AColumn Index of the column in the panel's TColumnDefs.)
+    //** @param(AColumn Index of the column in the frame's TColumnDefs.)
     //**
     //** @returns(The checkbox, without text.)
     /// <summary>Adds a checkbox cell to a row, the checkbox centred in its column.</summary>
     /// <param name="ARow">The row; it owns the cell.</param>
-    /// <param name="AColumn">Index of the column in the panel's TColumnDefs.</param>
+    /// <param name="AColumn">Index of the column in the frame's TColumnDefs.</param>
     /// <returns>The checkbox, without text.</returns>
     class function AddCheck(ARow: TControl; AColumn: Integer): TCheckBox; static;
 
@@ -175,27 +175,27 @@ type
     //**
     //** @param(ARow The heading row or a list box item.)
     //**
-    //** @param(AColumns The panel's columns.)
+    //** @param(AColumns The frame's columns.)
     //**
-    //** @param(APanelWidth The panel's width, which decides which columns are hidden.)
+    //** @param(AFrameWidth The frame's width, which decides which columns are hidden.)
     //**
-    //** @param(ANarrow Below this panel width chNarrow columns are hidden.)
+    //** @param(ANarrow Below this frame width chNarrow columns are hidden.)
     //**
-    //** @param(AVeryNarrow Below this panel width chVeryNarrow columns are hidden too.)
+    //** @param(AVeryNarrow Below this frame width chVeryNarrow columns are hidden too.)
     /// <summary>Places the cells of a row in their columns.</summary>
     /// <param name="ARow">The heading row or a list box item.</param>
-    /// <param name="AColumns">The panel's columns.</param>
-    /// <param name="APanelWidth">The panel's width, which decides which columns are
+    /// <param name="AColumns">The frame's columns.</param>
+    /// <param name="AFrameWidth">The frame's width, which decides which columns are
     /// hidden.</param>
-    /// <param name="ANarrow">Below this panel width chNarrow columns are hidden.</param>
-    /// <param name="AVeryNarrow">Below this panel width chVeryNarrow columns are hidden
+    /// <param name="ANarrow">Below this frame width chNarrow columns are hidden.</param>
+    /// <param name="AVeryNarrow">Below this frame width chVeryNarrow columns are hidden
     /// too.</param>
     /// <remarks>The cells go between the row's left and right padding: hidden columns take no
     /// room, fixed columns their width in array order, and the column with no width the rest,
     /// never less than 40 pixels. Each cell is as tall as the row. Call it when the row is
     /// created and whenever its width changes.</remarks>
     class procedure LayoutRow(ARow: TControl; const AColumns: TColumnDefs;
-      APanelWidth, ANarrow, AVeryNarrow: Single); static;
+      AFrameWidth, ANarrow, AVeryNarrow: Single); static;
 
     //** @abstract(Sets the heading's padding so its cells sit exactly above those of the
     //** rows.)
@@ -312,7 +312,7 @@ begin
 end;
 
 class procedure TColumnLayout.LayoutRow(ARow: TControl; const AColumns: TColumnDefs;
-  APanelWidth, ANarrow, AVeryNarrow: Single);
+  AFrameWidth, ANarrow, AVeryNarrow: Single);
 var
   LVisible: TArray<Boolean>;
   LLefts, LWidths: TArray<Single>;
@@ -329,8 +329,8 @@ begin
   for I := 0 to High(AColumns) do
   begin
     case AColumns[I].Hide of
-      chNarrow: LVisible[I] := APanelWidth >= ANarrow;
-      chVeryNarrow: LVisible[I] := APanelWidth >= AVeryNarrow;
+      chNarrow: LVisible[I] := AFrameWidth >= ANarrow;
+      chVeryNarrow: LVisible[I] := AFrameWidth >= AVeryNarrow;
     else
       LVisible[I] := True;
     end;

@@ -35,9 +35,9 @@ Progress display shown over the main form while a model loads or animations are 
 <p>
 
 
-<p><a class="normal" href="glTFViewer.Progress.TProgressOverlay.html">TProgressOverlay</a> covers the form with a dimmed layer that takes all clicks, with a box in the middle showing a title, the current model as &quot;Model 2 of 5: walk.glb&quot;, the stage, and a progress bar for the whole operation. It is fed with the <code>TglTFProgress</code> values that TglTFDocument and TglTFAnimationImporter report. When started with an abort action it also shows an Abort button, which is disabled once pressed, while the work finishes the step it is on.
+<p><a class="normal" href="glTFViewer.Progress.TProgressFrame.html">TProgressFrame</a> covers the form with a dimmed layer that takes all clicks, with a box in the middle showing a title, the current model as &quot;Model 2 of 5: walk.glb&quot;, the stage, and a progress bar for the whole operation. It is fed with the <code>TglTFProgress</code> values that TglTFDocument and TglTFAnimationImporter report. When started with an abort action it also shows an Abort button, which is disabled once pressed, while the work finishes the step it is on.
 
-<p>Built in code, so the unit needs no .fmx file. Use it on the main thread only: progress reported from a background thread must be passed on with TThread.Queue.</p>
+<p>The frame is designed in glTFViewer.Progress.fmx. Use it on the main thread only: progress reported from a background thread must be passed on with TThread.Queue.</p>
 <span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
 <span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
 <table class="classestable wide_list">
@@ -46,7 +46,7 @@ Progress display shown over the main form while a model loads or animations are 
 <th class="itemdesc">Description</th>
 </tr>
 <tr class="list">
-<td class="itemname">Class&nbsp;<a class="bold" href="glTFViewer.Progress.TProgressOverlay.html"><code>TProgressOverlay</code></a></td>
+<td class="itemname">Class&nbsp;<a class="bold" href="glTFViewer.Progress.TProgressFrame.html"><code>TProgressFrame</code></a></td>
 <td class="itemdesc">A modal progress box drawn over its parent.</td>
 </tr>
 </table>

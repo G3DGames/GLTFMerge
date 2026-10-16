@@ -1,0 +1,127 @@
+object glTFImagesFrame: TglTFImagesFrame
+  Size.Width = 960.000000000000000000
+  Size.Height = 574.000000000000000000
+  Size.PlatformDefault = False
+  object layBar: TLayout
+    Align = Top
+    Size.Width = 960.000000000000000000
+    Size.Height = 40.000000000000000000
+    Padding.Left = 6.000000000000000000
+    Padding.Top = 6.000000000000000000
+    Padding.Right = 6.000000000000000000
+    Padding.Bottom = 6.000000000000000000
+    Size.PlatformDefault = False
+    object chkAlter: TCheckBox
+      Align = Left
+      Position.X = 6.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 180.000000000000000000
+      Size.Height = 28.000000000000000000
+      Hint = 'Choose for each image whether it is stored inside the saved ' +
+        'file. Unticked, a GLB stores every image inside it and a ' +
+        'glTF saves every image as a separate file'
+      ShowHint = True
+      Text = 'Alter image save mode'
+      OnChange = chkAlterChange
+      Size.PlatformDefault = False
+    end
+    object btnLocate: TButton
+      Align = Left
+      Size.Width = 130.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Locate missing...'
+      Position.X = 204.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 18.000000000000000000
+      OnClick = btnLocateClick
+      Size.PlatformDefault = False
+    end
+    object lblSummary: TLabel
+      Align = Client
+      Size.Width = 600.000000000000000000
+      Size.Height = 28.000000000000000000
+      Position.X = 348.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 14.000000000000000000
+      StyledSettings = [Family, Size, Style, FontColor]
+      TextSettings.WordWrap = False
+      TextSettings.Trimming = Character
+      Size.PlatformDefault = False
+    end
+  end
+  object splEmbed: TSplitter
+    Align = Right
+    Cursor = crHSplit
+    MinSize = 20.000000000000000000
+    Position.X = 634.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 6.000000000000000000
+    Size.Height = 534.000000000000000000
+    Visible = False
+    Size.PlatformDefault = False
+  end
+  object layEmbed: TLayout
+    Align = Right
+    Size.Width = 320.000000000000000000
+    Size.Height = 534.000000000000000000
+    Position.X = 640.000000000000000000
+    Position.Y = 40.000000000000000000
+    Visible = False
+    Size.PlatformDefault = False
+    object lblEmbedNote: TLabel
+      Align = Top
+      Size.Width = 308.000000000000000000
+      Size.Height = 40.000000000000000000
+      Position.X = 6.000000000000000000
+      Position.Y = 2.000000000000000000
+      Margins.Left = 6.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 6.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      StyledSettings = [Family, Size, Style, FontColor]
+      TextSettings.WordWrap = True
+      Text = 'Ticked: stored inside the saved file. Unticked: saved as a ' +
+        'separate file next to it. Only the images that are saved ' +
+        'are listed.'
+      Size.PlatformDefault = False
+    end
+    object layEmbedHeader: TLayout
+      Align = Top
+      Size.Width = 320.000000000000000000
+      Size.Height = 26.000000000000000000
+      Padding.Left = 8.000000000000000000
+      Padding.Right = 8.000000000000000000
+      OnResize = layEmbedHeaderResize
+      Position.Y = 44.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object lstEmbed: TListBox
+      Align = Client
+      Size.Width = 320.000000000000000000
+      Size.Height = 464.000000000000000000
+      ItemHeight = 26.000000000000000000
+      Position.Y = 70.000000000000000000
+      OnPainting = lstEmbedPainting
+      Size.PlatformDefault = False
+    end
+  end
+  object layHeader: TLayout
+    Align = Top
+    Size.Width = 634.000000000000000000
+    Size.Height = 26.000000000000000000
+    Padding.Left = 8.000000000000000000
+    Padding.Right = 8.000000000000000000
+    OnResize = layHeaderResize
+    Position.Y = 40.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lstImages: TListBox
+    Align = Client
+    Size.Width = 634.000000000000000000
+    Size.Height = 508.000000000000000000
+    ItemHeight = 26.000000000000000000
+    Position.Y = 66.000000000000000000
+    OnPainting = lstImagesPainting
+    Size.PlatformDefault = False
+  end
+end

@@ -57,21 +57,25 @@ Open, save, folder and confirmation dialogs for every FireMonkey platform.</p>
 </tr>
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#OpenFile-string-TArrayTFileType-string-string-TProcstring-">OpenFile</a></strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir, AFileName: string; const ADone: TProc&lt;string&gt;); static;</code></td>
+<td class="itemcode"><code>class function <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#StartFolder-string-string-">StartFolder</a></strong>(const AKey, AInitialDir: string): string; static;</code></td>
 </tr>
 <tr class="list2 visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#OpenFiles-string-TArrayTFileType-string-TProcTArraystring-">OpenFiles</a></strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir: string; const ADone: TProc&lt;TArray&lt;string&gt;&gt;); static;</code></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#OpenFile-string-string-TArrayTFileType-string-string-TProcstring-">OpenFile</a></strong>(const AKey, ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir, AFileName: string; const ADone: TProc&lt;string&gt;); static;</code></td>
 </tr>
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#SaveFile-string-TArrayTFileType-Integer-string-string-TProcstringInteger-">SaveFile</a></strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; ATypeIndex: Integer; const AInitialDir, AFileName: string; const ADone: TProc&lt;string, Integer&gt;); static;</code></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#OpenFiles-string-string-TArrayTFileType-string-TProcTArraystring-">OpenFiles</a></strong>(const AKey, ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir: string; const ADone: TProc&lt;TArray&lt;string&gt;&gt;); static;</code></td>
 </tr>
 <tr class="list2 visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#SelectFolder-string-string-TProcstring-">SelectFolder</a></strong>(const ATitle, AInitialDir: string; const ADone: TProc&lt;string&gt;); static;</code></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#SaveFile-string-string-TArrayTFileType-Integer-string-string-TProcstringInteger-">SaveFile</a></strong>(const AKey, ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; ATypeIndex: Integer; const AInitialDir, AFileName: string; const ADone: TProc&lt;string, Integer&gt;); static;</code></td>
 </tr>
 <tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#SelectFolder-string-string-string-TProcstring-">SelectFolder</a></strong>(const AKey, ATitle, AInitialDir: string; const ADone: TProc&lt;string&gt;); static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
 <td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Dialogs.TPlatformDialogs.html#Confirm-string-TProcBoolean-">Confirm</a></strong>(const AMessage: string; const ADone: TProc&lt;Boolean&gt;); static;</code></td>
 </tr>
@@ -111,7 +115,35 @@ Returns the folder dialogs start in when no other is given.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="OpenFile-string-TArrayTFileType-string-string-TProcstring-"></span><code>class procedure <strong>OpenFile</strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir, AFileName: string; const ADone: TProc&lt;string&gt;); static;</code></td>
+<td class="itemcode"><span id="StartFolder-string-string-"></span><code>class function <strong>StartFolder</strong>(const AKey, AInitialDir: string): string; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the folder a dialog starts in.</p>
+<p>
+
+
+<p>In this order: AInitialDir; the folder remembered for AKey; the folder any dialog used most recently; and when none of them exists, an empty string, which leaves the choice to the platform (the native dialog's own folder on the desktop, DefaultFolder on iOS and Android).
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AKey</dt>
+<dd>The kind of dialog.</dd>
+<dt>AInitialDir</dt>
+<dd>The caller's own choice; may be empty.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">An existing folder, or an empty string.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OpenFile-string-string-TArrayTFileType-string-string-TProcstring-"></span><code>class procedure <strong>OpenFile</strong>(const AKey, ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir, AFileName: string; const ADone: TProc&lt;string&gt;); static;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
@@ -129,15 +161,19 @@ Lets the user choose an existing file.</p>
 
 <p>
 
+<p>
+
 <p></p>
 <h6 class="description_section">Parameters</h6>
 <dl class="parameters">
+<dt>AKey</dt>
+<dd>The kind of dialog, for example &quot;openModel&quot;: the folder chosen is remembered under it, in the settings file, for the next time.</dd>
 <dt>ATitle</dt>
 <dd>Title of the dialog.</dd>
 <dt>ATypes</dt>
 <dd>File types offered; the first is selected.</dd>
 <dt>AInitialDir</dt>
-<dd>Folder to start in; empty or missing uses DefaultFolder on mobile.</dd>
+<dd>Folder to start in, when the caller knows a better one than the one remembered; empty to use StartFolder.</dd>
 <dt>AFileName</dt>
 <dd>File name to suggest; may be empty.</dd>
 <dt>ADone</dt>
@@ -148,7 +184,7 @@ Lets the user choose an existing file.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="OpenFiles-string-TArrayTFileType-string-TProcTArraystring-"></span><code>class procedure <strong>OpenFiles</strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir: string; const ADone: TProc&lt;TArray&lt;string&gt;&gt;); static;</code></td>
+<td class="itemcode"><span id="OpenFiles-string-string-TArrayTFileType-string-TProcTArraystring-"></span><code>class procedure <strong>OpenFiles</strong>(const AKey, ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; const AInitialDir: string; const ADone: TProc&lt;TArray&lt;string&gt;&gt;); static;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
@@ -164,15 +200,19 @@ Lets the user choose one or more existing files.</p>
 
 <p>
 
+<p>
+
 <p></p>
 <h6 class="description_section">Parameters</h6>
 <dl class="parameters">
+<dt>AKey</dt>
+<dd>The kind of dialog, for example &quot;openModel&quot;: the folder chosen is remembered under it, in the settings file, for the next time.</dd>
 <dt>ATitle</dt>
 <dd>Title of the dialog.</dd>
 <dt>ATypes</dt>
 <dd>File types offered; the first is selected.</dd>
 <dt>AInitialDir</dt>
-<dd>Folder to start in; empty or missing uses DefaultFolder on mobile.</dd>
+<dd>Folder to start in, when the caller knows a better one than the one remembered; empty to use StartFolder.</dd>
 <dt>ADone</dt>
 <dd>Called with the full paths of the chosen files, in the order they were chosen on mobile; an empty array when cancelled.</dd>
 </dl>
@@ -181,7 +221,7 @@ Lets the user choose one or more existing files.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="SaveFile-string-TArrayTFileType-Integer-string-string-TProcstringInteger-"></span><code>class procedure <strong>SaveFile</strong>(const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; ATypeIndex: Integer; const AInitialDir, AFileName: string; const ADone: TProc&lt;string, Integer&gt;); static;</code></td>
+<td class="itemcode"><span id="SaveFile-string-string-TArrayTFileType-Integer-string-string-TProcstringInteger-"></span><code>class procedure <strong>SaveFile</strong>(const AKey, ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; ATypeIndex: Integer; const AInitialDir, AFileName: string; const ADone: TProc&lt;string, Integer&gt;); static;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
@@ -201,9 +241,13 @@ Lets the user choose a file name to save to.</p>
 
 <p>
 
+<p>
+
 <p></p>
 <h6 class="description_section">Parameters</h6>
 <dl class="parameters">
+<dt>AKey</dt>
+<dd>The kind of dialog, for example &quot;openModel&quot;: the folder chosen is remembered under it, in the settings file, for the next time.</dd>
 <dt>ATitle</dt>
 <dd>Title of the dialog.</dd>
 <dt>ATypes</dt>
@@ -211,7 +255,7 @@ Lets the user choose a file name to save to.</p>
 <dt>ATypeIndex</dt>
 <dd>Index in ATypes of the type selected at first.</dd>
 <dt>AInitialDir</dt>
-<dd>Folder to start in.</dd>
+<dd>Folder to start in, when the caller knows a better one than the one remembered; empty to use StartFolder.</dd>
 <dt>AFileName</dt>
 <dd>File name to suggest; may be empty.</dd>
 <dt>ADone</dt>
@@ -222,7 +266,7 @@ Lets the user choose a file name to save to.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="SelectFolder-string-string-TProcstring-"></span><code>class procedure <strong>SelectFolder</strong>(const ATitle, AInitialDir: string; const ADone: TProc&lt;string&gt;); static;</code></td>
+<td class="itemcode"><span id="SelectFolder-string-string-string-TProcstring-"></span><code>class procedure <strong>SelectFolder</strong>(const AKey, ATitle, AInitialDir: string; const ADone: TProc&lt;string&gt;); static;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
@@ -234,13 +278,17 @@ Lets the user choose a folder.</p>
 
 <p>
 
+<p>
+
 <p></p>
 <h6 class="description_section">Parameters</h6>
 <dl class="parameters">
+<dt>AKey</dt>
+<dd>The kind of dialog, for example &quot;openModel&quot;: the folder chosen is remembered under it, in the settings file, for the next time.</dd>
 <dt>ATitle</dt>
 <dd>Title of the dialog.</dd>
 <dt>AInitialDir</dt>
-<dd>Folder to start in.</dd>
+<dd>Folder to start in, when the caller knows a better one than the one remembered; empty to use StartFolder.</dd>
 <dt>ADone</dt>
 <dd>Called with the chosen folder, or an empty string when cancelled.</dd>
 </dl>

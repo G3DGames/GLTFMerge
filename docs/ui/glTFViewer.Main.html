@@ -35,9 +35,13 @@ Main form of the glTF viewer: open, inspect and save glTF and GLB files.</p>
 <p>
 
 
-<p>The Structure tab shows the document as a tree (see glTFViewer.Tree); it is shown at start-up and after every successful load. The Images tab lists every image and whether a mesh uses it; a GLB is saved with its images inside, a glTF with separate image files, unless &quot;Alter image save mode&quot; is ticked there to choose per image (see glTFViewer.Images). The Animations tab lists every animation with its Export choice and imports animations from other files (see glTFViewer.Animations); duplicate names are resolved with glTFViewer.Duplicates. The Parts tab loads body parts and outfit pieces from other files and puts them on the model in place of the parts they replace (see glTFViewer.Parts and glTF.Parts). The Output tab logs loading, saving and the self-tests, and shows errors with their line in the glTF text; it comes to the front when a load fails, when saving and when the self-tests run.
+<p>The Structure tab shows the document as a tree (see glTFViewer.Tree); it is shown at start-up and after every successful load. The Images tab lists every image and whether a mesh uses it; a GLB is saved with its images inside, a glTF with separate image files, unless &quot;Alter image save mode&quot; is ticked there to choose per image (see glTFViewer.Images). The Animations tab lists every animation with its Export choice and imports animations from other files (see glTFViewer.Animations); duplicate names are resolved with glTFViewer.Duplicates. The Parts tab loads body parts and outfit pieces from other files and puts them on the model in place of the parts they replace (see glTFViewer.Parts and glTF.Parts). The Re-Orient tab turns the model about X, Y and Z when it is saved (see glTFViewer.Orient and glTF.Orient). The Output tab logs loading, saving and the self-tests, and shows errors with their line in the glTF text; it comes to the front when a load fails, when saving and when the self-tests run.
 
-<p>Missing media files are offered for locating after a load and before a save (see glTFViewer.Missing). Self-tests run only when asked for, with the &quot;Run self-tests&quot; button or &ndash;selftest.
+<p>The File menu has Open, Save As, Bulk Re-Orient and Exit. Bulk Re-Orient turns every model in a folder tree and saves the copies in another folder with the same sub-folders (see glTFViewer.BulkOrient and glTF.Bulk). The window's title shows the file loaded, with a * in front while there are changes not yet saved: animations imported, split or cleared, parts put on or taken off, and changes on the tabs to what a save writes. Exit, closing the window and opening another file ask first, with OK and Cancel, while there are such changes. On iOS and Android, which show no main menu, the File menu is shown in a menu bar at the top of the form instead, without Exit.
+
+<p>Missing media files are offered for locating after a load and before a save (see glTFViewer.Missing). Every file dialog remembers its folder in the settings file (see glTFViewer.Settings and glTFViewer.Dialogs).
+
+<p>The self-tests are left out of the build unless SELF_TESTS is defined, at the top of this unit. When they are built in, File has a &quot;Run self-tests&quot; item, created at run time, and &ndash;selftest on the command line runs them.
 
 <p>Loading a model, importing animations, loading part files and putting parts on run in a background thread, with a progress box over the form (see glTFViewer.Progress) showing the model number, model count and stage. The form takes no input meanwhile, from the mouse, touch or the keyboard: the tabs are disabled, and every handler that uses the document checks that no work is running. Closing the form during the work stops an import and closes once the work has finished.
 
@@ -46,7 +50,8 @@ Main form of the glTF viewer: open, inspect and save glTF and GLB files.</p>
 <p></p>
 
 <pre class="preformatted">
-Command line (desktop):  glTFDemo [file.gltf|file.glb] [--selftest]</pre>
+Command line (desktop):  glTFDemo [file.gltf|file.glb] [--selftest]
+                         --selftest only with SELF_TESTS</pre>
 
 <p></p>
 <span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>

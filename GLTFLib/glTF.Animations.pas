@@ -889,27 +889,16 @@ begin
 end;
 
 function TglTFAnimationImporter.FindDuplicate(const AName: string): Integer;
-var
-  I: Integer;
 begin
-  for I := 0 to FTarget.Root.Animations.Count - 1 do
-    if (FTarget.Root.Animations[I].Name <> '') and
-       SameText(FTarget.Root.Animations[I].Name, Trim(AName)) then
-      Exit(I);
-  Result := GLTF_UNDEFINED_INDEX;
+  // Case ignored, as by every duplicate check (TglTFEdit.SameName)
+  Result := TglTFEdit.FindAnimation(FTarget.Root, AName);
+  if Result < 0 then
+    Result := GLTF_UNDEFINED_INDEX;
 end;
 
 function TglTFAnimationImporter.NameProblem(const AName: string): string;
-var
-  LExisting: Integer;
 begin
-  if Trim(AName) = '' then
-    Exit('The name is empty');
-  LExisting := FindDuplicate(AName);
-  if LExisting <> GLTF_UNDEFINED_INDEX then
-    Exit(Format('The model already has an animation called "%s"',
-      [FTarget.Root.Animations[LExisting].Name]));
-  Result := '';
+  Result := TglTFEdit.AnimationNameProblem(FTarget.Root, AName);
 end;
 
 function TglTFAnimationImporter.SuggestName(const AName: string): string;

@@ -28,7 +28,7 @@
 <div class="container-fluid py-3 px-4">
 <span id="TMissingFilesForm"></span><h1 class="cio">Class TMissingFilesForm</h1>
 <div class="sections">
-<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
 <span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
 <p class="unitlink">
 <a href="glTFViewer.Missing.html">glTFViewer.Missing</a></p>
@@ -45,8 +45,55 @@ Modal dialog listing a document's missing media files, with ways to find them.</
 <span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
 <ul class="hierarchy"><li class="ancestor">TForm</li>
 <li class="thisitem">TMissingFilesForm</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Missing.TMissingFilesForm.html#lblInfo">lblInfo</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Missing.TMissingFilesForm.html#lstMissing">lstMissing</a></strong>: TListBox;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Missing.TMissingFilesForm.html#lblStatus">lblStatus</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Missing.TMissingFilesForm.html#layButtons">layButtons</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Missing.TMissingFilesForm.html#btnSearchFolder">btnSearchFolder</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Missing.TMissingFilesForm.html#btnLocateFile">btnLocateFile</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Missing.TMissingFilesForm.html#btnContinue">btnContinue</a></strong>: TButton;</code></td>
+</tr>
+</table>
 <span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
 <table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Missing.TMissingFilesForm.html#btnSearchFolderClick-TObject-">btnSearchFolderClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Missing.TMissingFilesForm.html#btnLocateFileClick-TObject-">btnLocateFileClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Missing.TMissingFilesForm.html#lstMissingChange-TObject-">lstMissingChange</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Missing.TMissingFilesForm.html#FormClose-TObject-TCloseAction-">FormClose</a></strong>(Sender: TObject; var Action: TCloseAction);</code></td>
+</tr>
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
 <td class="itemcode"><code>constructor <strong><a href="glTFViewer.Missing.TMissingFilesForm.html#CreateFor-TComponent-TglTFDocument-string-TProcstring-">CreateFor</a></strong>(AOwner: TComponent; ADoc: TglTFDocument; const AContext: string; const ALog: TProc&lt;string&gt;);</code></td>
@@ -57,7 +104,158 @@ Modal dialog listing a document's missing media files, with ways to find them.</
 </tr>
 </table>
 <h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblInfo"></span><code><strong>lblInfo</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Why the dialog is shown and what to do.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstMissing"></span><code><strong>lstMissing</strong>: TListBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+One row per missing file, with where it was expected.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblStatus"></span><code><strong>lblStatus</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+What the last search found.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layButtons"></span><code><strong>layButtons</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Holds the buttons, at the bottom.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnSearchFolder"></span><code><strong>btnSearchFolder</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Looks for every missing file in a folder and its sub-folders.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnLocateFile"></span><code><strong>btnLocateFile</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Picks the file of the selected entry, then looks for the rest in its folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnContinue"></span><code><strong>btnContinue</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Closes the dialog; reads Close once every file is found.</p>
+</td></tr>
+</table>
 <h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnSearchFolderClick-TObject-"></span><code>procedure <strong>btnSearchFolderClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks for a folder and looks for every missing file in it.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnLocateFileClick-TObject-"></span><code>procedure <strong>btnLocateFileClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks for the file of the selected entry.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstMissingChange-TObject-"></span><code>procedure <strong>lstMissingChange</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Enables &quot;Locate file...&quot; while an entry is selected.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The list.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FormClose-TObject-TCloseAction-"></span><code>procedure <strong>FormClose</strong>(Sender: TObject; var Action: TCloseAction);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the form when it closes.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The form.</dd>
+<dt>Action</dt>
+<dd>Set to caFree.</dd>
+</dl>
+</td></tr>
+</table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Orient</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<h1 class="unit">Unit glTF.Orient</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objects and Records</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="description">Description</h2>
+<p>
+Re-orients a whole glTF model: turns it about the X, Y and Z axes and bakes the turn into the data.</p>
+<p>
+
+
+<p>Models are often exported with a different up or forward axis from the one an engine expects, and are then given a starting rotation in the engine. <a class="normal" href="glTF.Orient.TglTFReorienter.html">TglTFReorienter</a> does that turn once, in the file: the model saved afterwards is the right way up, with nothing extra to apply.
+
+<p>The turn is X degrees about the X axis, then Y about the Y axis, then Z about the Z axis, each counter-clockwise looking down the axis towards the origin, as usual in glTF's right-handed space. For example X = -90 turns a Z-up model into glTF's Y-up.
+
+<p>Every vertex ends up exactly where the turn takes it, and so does everything else:
+
+<p></p>
+
+<ul class="paragraph_spacing">
+  <li><p>Mesh data: positions, normals and tangents, and the same in morph targets, are turned; the min and max of the accessors that have them are computed again.</p></li>
+  <li><p>Nodes: each node's transform R L R-1 keeps the hierarchy as it was, turned as a whole; the root nodes take the turn itself.</p></li>
+  <li><p>Animations: translation, rotation and scale key frames are turned the same way as the transforms they animate, including CUBICSPLINE tangents.</p></li>
+  <li><p>Skins: the inverse bind matrices are turned to match.</p></li>
+  <li><p>Cameras and lights, which look down their node's -Z axis, keep their node's turn, so they still point the same way in the turned model.</p></li>
+</ul>
+
+<p>
+
+<p>Winding and handedness do not change, as a rotation is not a mirror. A non-uniform scale can only be turned exactly by a multiple of 90 degrees; otherwise the node becomes a matrix, or a warning is given when its scale is animated. Quantized data (KHR_mesh_quantization) is turned and quantized again. Positions given by the EXT_mesh_gpu_instancing extension are not turned; a warning says so.</p>
+<span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
+<span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold" href="glTF.Orient.TglTFReorienter.html"><code>TglTFReorienter</code></a></td>
+<td class="itemdesc">Turns a whole model about the X, Y and Z axes.</td>
+</tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

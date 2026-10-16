@@ -1,0 +1,204 @@
+object glTFOrientFrame: TglTFOrientFrame
+  Size.Width = 960.000000000000000000
+  Size.Height = 574.000000000000000000
+  Size.PlatformDefault = False
+  object layBox: TLayout
+    Align = Client
+    Size.Width = 960.000000000000000000
+    Size.Height = 574.000000000000000000
+    Padding.Left = 16.000000000000000000
+    Padding.Top = 12.000000000000000000
+    Padding.Right = 16.000000000000000000
+    Padding.Bottom = 12.000000000000000000
+    Size.PlatformDefault = False
+    object lblInfo: TLabel
+      Align = Top
+      Size.Width = 928.000000000000000000
+      Size.Height = 64.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 12.000000000000000000
+      StyledSettings = [Family, Size, Style, FontColor]
+      TextSettings.WordWrap = True
+      TextSettings.VertAlign = Leading
+      Text = 'Turns the whole model when it is saved, so it has the up ' +
+        'and forward axes your engine expects without a starting ' +
+        'rotation. Meshes, normals, nodes, animations and skins are ' +
+        'all turned; the loaded model is not changed. X is applied ' +
+        'first, then Y, then Z. Leave all three at 0 to save the ' +
+        'model as it is.'
+      Size.PlatformDefault = False
+    end
+    object layX: TLayout
+      Align = Top
+      Size.Width = 928.000000000000000000
+      Size.Height = 34.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 76.000000000000000000
+      Padding.Top = 3.000000000000000000
+      Padding.Bottom = 3.000000000000000000
+      Size.PlatformDefault = False
+      object lblX: TLabel
+        Align = Left
+        Size.Width = 190.000000000000000000
+        Size.Height = 28.000000000000000000
+        Position.Y = 3.000000000000000000
+        Text = 'Turn about X (degrees):'
+        Size.PlatformDefault = False
+      end
+      object edtX: TEdit
+        Align = Left
+        Position.X = 190.000000000000000000
+        Position.Y = 3.000000000000000000
+        Size.Width = 100.000000000000000000
+        Size.Height = 28.000000000000000000
+        TextPrompt = '0'
+        OnChangeTracking = AngleChangeTracking
+        Size.PlatformDefault = False
+      end
+    end
+    object layY: TLayout
+      Align = Top
+      Size.Width = 928.000000000000000000
+      Size.Height = 34.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 110.000000000000000000
+      Padding.Top = 3.000000000000000000
+      Padding.Bottom = 3.000000000000000000
+      Size.PlatformDefault = False
+      object lblY: TLabel
+        Align = Left
+        Size.Width = 190.000000000000000000
+        Size.Height = 28.000000000000000000
+        Position.Y = 3.000000000000000000
+        Text = 'Turn about Y (degrees):'
+        Size.PlatformDefault = False
+      end
+      object edtY: TEdit
+        Align = Left
+        Position.X = 190.000000000000000000
+        Position.Y = 3.000000000000000000
+        Size.Width = 100.000000000000000000
+        Size.Height = 28.000000000000000000
+        TextPrompt = '0'
+        OnChangeTracking = AngleChangeTracking
+        Size.PlatformDefault = False
+      end
+    end
+    object layZ: TLayout
+      Align = Top
+      Size.Width = 928.000000000000000000
+      Size.Height = 34.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 144.000000000000000000
+      Padding.Top = 3.000000000000000000
+      Padding.Bottom = 3.000000000000000000
+      Size.PlatformDefault = False
+      object lblZ: TLabel
+        Align = Left
+        Size.Width = 190.000000000000000000
+        Size.Height = 28.000000000000000000
+        Position.Y = 3.000000000000000000
+        Text = 'Turn about Z (degrees):'
+        Size.PlatformDefault = False
+      end
+      object edtZ: TEdit
+        Align = Left
+        Position.X = 190.000000000000000000
+        Position.Y = 3.000000000000000000
+        Size.Width = 100.000000000000000000
+        Size.Height = 28.000000000000000000
+        TextPrompt = '0'
+        OnChangeTracking = AngleChangeTracking
+        Size.PlatformDefault = False
+      end
+    end
+    object layPresets: TLayout
+      Align = Top
+      Size.Width = 928.000000000000000000
+      Size.Height = 182.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 178.000000000000000000
+      Padding.Top = 10.000000000000000000
+      Padding.Bottom = 2.000000000000000000
+      Size.PlatformDefault = False
+      object layPresetColumn: TLayout
+        Align = Left
+        Size.Width = 240.000000000000000000
+        Size.Height = 170.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.PlatformDefault = False
+        object btnZUpToYUp: TButton
+          Align = Top
+          Size.Width = 240.000000000000000000
+          Size.Height = 28.000000000000000000
+          Text = 'Z-up to Y-up (X -90)'
+          Position.X = 0.000000000000000000
+          Position.Y = 0.000000000000000000
+          Margins.Bottom = 6.000000000000000000
+          Tag = 0
+          OnClick = PresetClick
+          Size.PlatformDefault = False
+        end
+        object btnYUpToZUp: TButton
+          Align = Top
+          Size.Width = 240.000000000000000000
+          Size.Height = 28.000000000000000000
+          Text = 'Y-up to Z-up (X 90)'
+          Position.X = 0.000000000000000000
+          Position.Y = 34.000000000000000000
+          Margins.Bottom = 6.000000000000000000
+          Tag = 1
+          OnClick = PresetClick
+          Size.PlatformDefault = False
+        end
+        object btnTurnAround: TButton
+          Align = Top
+          Size.Width = 240.000000000000000000
+          Size.Height = 28.000000000000000000
+          Text = 'Face the other way (Y 180)'
+          Position.X = 0.000000000000000000
+          Position.Y = 68.000000000000000000
+          Margins.Bottom = 6.000000000000000000
+          Tag = 2
+          OnClick = PresetClick
+          Size.PlatformDefault = False
+        end
+        object btnFlip: TButton
+          Align = Top
+          Size.Width = 240.000000000000000000
+          Size.Height = 28.000000000000000000
+          Text = 'Flip upside down (X 180)'
+          Position.X = 0.000000000000000000
+          Position.Y = 102.000000000000000000
+          Margins.Bottom = 6.000000000000000000
+          Tag = 3
+          OnClick = PresetClick
+          Size.PlatformDefault = False
+        end
+        object btnNoTurn: TButton
+          Align = Top
+          Size.Width = 240.000000000000000000
+          Size.Height = 28.000000000000000000
+          Text = 'No turn'
+          Position.X = 0.000000000000000000
+          Position.Y = 136.000000000000000000
+          Margins.Bottom = 6.000000000000000000
+          Tag = 4
+          OnClick = PresetClick
+          Size.PlatformDefault = False
+        end
+      end
+    end
+    object lblStatus: TLabel
+      Align = Top
+      Size.Width = 928.000000000000000000
+      Size.Height = 44.000000000000000000
+      Position.X = 16.000000000000000000
+      Position.Y = 360.000000000000000000
+      Margins.Top = 8.000000000000000000
+      StyledSettings = [Family, Size, Style]
+      TextSettings.WordWrap = True
+      Size.PlatformDefault = False
+    end
+  end
+end

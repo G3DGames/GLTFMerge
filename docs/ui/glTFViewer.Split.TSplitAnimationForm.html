@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.Split: Class TSplitAnimationForm</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TSplitAnimationForm"></span><h1 class="cio">Class TSplitAnimationForm</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.Split.html">glTFViewer.Split</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TSplitAnimationForm = class(TForm)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Lets the user enter the frame ranges a long animation is split into.</p>
+<p>
+
+
+<p>Use <a class="normal" href="glTFViewer.Split.TSplitAnimationForm.html#Execute-TglTF-Integer-TSplitDoneProc-">Execute</a> rather than creating it directly. Must be used on the main thread.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TForm</li>
+<li class="thisitem">TSplitAnimationForm</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#layTop">layTop</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#lblInfo">lblInfo</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#layFields">layFields</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#lblRate">lblRate</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#edtRate">edtRate</a></strong>: TEdit;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#lblLastFrame">lblLastFrame</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#edtLastFrame">edtLastFrame</a></strong>: TEdit;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#lblHint">lblHint</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#lblHowTo">lblHowTo</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#chkIncreasing">chkIncreasing</a></strong>: TCheckBox;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#grdRanges">grdRanges</a></strong>: TStringGrid;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#colRow">colRow</a></strong>: TStringColumn;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#colName">colName</a></strong>: TStringColumn;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#colStart">colStart</a></strong>: TStringColumn;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#colEnd">colEnd</a></strong>: TStringColumn;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#lblProblems">lblProblems</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#layButtons">layButtons</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnSaveSheet">btnSaveSheet</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnLoadSheet">btnLoadSheet</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnImportList">btnImportList</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnClear">btnClear</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnCancel">btnCancel</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnConvert">btnConvert</a></strong>: TButton;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#edtRateChangeTracking-TObject-">edtRateChangeTracking</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#edtLastFrameChangeTracking-TObject-">edtLastFrameChangeTracking</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#chkIncreasingChange-TObject-">chkIncreasingChange</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnSaveSheetClick-TObject-">btnSaveSheetClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnLoadSheetClick-TObject-">btnLoadSheetClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnImportListClick-TObject-">btnImportListClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnClearClick-TObject-">btnClearClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#btnConvertClick-TObject-">btnConvertClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#grdRangesEditingDone-TObject-Integer-Integer-">grdRangesEditingDone</a></strong>(Sender: TObject; const ACol, ARow: Integer);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#FormClose-TObject-TCloseAction-">FormClose</a></strong>(Sender: TObject; var Action: TCloseAction);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class procedure <strong><a href="glTFViewer.Split.TSplitAnimationForm.html#Execute-TglTF-Integer-TSplitDoneProc-">Execute</a></strong>(ARoot: TglTF; AIndex: Integer; const ADone: <a href="glTFViewer.Split.html#TSplitDoneProc">TSplitDoneProc</a>);</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layTop"></span><code><strong>layTop</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+What is split, the frame rate, the last frame and the checkbox.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblInfo"></span><code><strong>lblInfo</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The animation's name and length.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layFields"></span><code><strong>layFields</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Holds the frame rate and the last frame.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblRate"></span><code><strong>lblRate</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The caption of the frame rate.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtRate"></span><code><strong>edtRate</strong>: TEdit;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frames per second; the last frame follows it.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblLastFrame"></span><code><strong>lblLastFrame</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The caption of the last frame.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtLastFrame"></span><code><strong>edtLastFrame</strong>: TEdit;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The last frame; the frame rate follows it.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblHint"></span><code><strong>lblHint</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The frame rate the key frames suggest.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblHowTo"></span><code><strong>lblHowTo</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+How to fill in the grid.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="chkIncreasing"></span><code><strong>chkIncreasing</strong>: TCheckBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether each row must start at or after the end of the row before.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="grdRanges"></span><code><strong>grdRanges</strong>: TStringGrid;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+One row per range, with an empty row at the end to type into.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="colRow"></span><code><strong>colRow</strong>: TStringColumn;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The row number; read-only.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="colName"></span><code><strong>colName</strong>: TStringColumn;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The name of the new animation.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="colStart"></span><code><strong>colStart</strong>: TStringColumn;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The frame the range starts at.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="colEnd"></span><code><strong>colEnd</strong>: TStringColumn;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The frame the range ends at.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblProblems"></span><code><strong>lblProblems</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+What is wrong with the rows, the first few problems.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layButtons"></span><code><strong>layButtons</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Holds the buttons, at the bottom.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnSaveSheet"></span><code><strong>btnSaveSheet</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Saves the rows as typed, to finish later.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnLoadSheet"></span><code><strong>btnLoadSheet</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads rows saved before.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnImportList"></span><code><strong>btnImportList</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Fills the grid from a text file with a list of ranges.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnClear"></span><code><strong>btnClear</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Empties the grid, after asking.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnCancel"></span><code><strong>btnCancel</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Closes the dialog without splitting.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnConvert"></span><code><strong>btnConvert</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Closes the dialog and splits; enabled once every row is valid.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtRateChangeTracking-TObject-"></span><code>procedure <strong>edtRateChangeTracking</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Updates the last frame from the frame rate typed.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The edit box.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtLastFrameChangeTracking-TObject-"></span><code>procedure <strong>edtLastFrameChangeTracking</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Updates the frame rate from the last frame typed.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The edit box.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="chkIncreasingChange-TObject-"></span><code>procedure <strong>chkIncreasingChange</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Checks the rows again.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The checkbox.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnSaveSheetClick-TObject-"></span><code>procedure <strong>btnSaveSheetClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks for a file name and saves the rows.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnLoadSheetClick-TObject-"></span><code>procedure <strong>btnLoadSheetClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks for a sheet and loads its rows.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnImportListClick-TObject-"></span><code>procedure <strong>btnImportListClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks for a text file and reads the ranges from it.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnClearClick-TObject-"></span><code>procedure <strong>btnClearClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks, then empties the grid.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnConvertClick-TObject-"></span><code>procedure <strong>btnConvertClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Checks the rows and, when they are valid, closes the dialog with mrOk.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="grdRangesEditingDone-TObject-Integer-Integer-"></span><code>procedure <strong>grdRangesEditingDone</strong>(Sender: TObject; const ACol, ARow: Integer);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Adds an empty row when needed, checks the rows and warns of a row that goes back in time.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The grid.</dd>
+<dt>ACol</dt>
+<dd>The column of the cell edited.</dd>
+<dt>ARow</dt>
+<dd>The row of the cell edited.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FormClose-TObject-TCloseAction-"></span><code>procedure <strong>FormClose</strong>(Sender: TObject; var Action: TCloseAction);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the form when it closes.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The form.</dd>
+<dt>Action</dt>
+<dd>Set to caFree.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Execute-TglTF-Integer-TSplitDoneProc-"></span><code>class procedure <strong>Execute</strong>(ARoot: TglTF; AIndex: Integer; const ADone: <a href="glTFViewer.Split.html#TSplitDoneProc">TSplitDoneProc</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Shows the dialog modally for one animation.</p>
+<p>
+
+
+<p>The dialog frees itself when it closes; ADone is only called when the user presses Convert. Nothing is changed by the dialog itself.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree holding the animation; read for its length, its key frames and the names already used.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Animations</code> of the animation to split.</dd>
+<dt>ADone</dt>
+<dd>Called with the ranges and the frame rate on Convert.</dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

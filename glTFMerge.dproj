@@ -356,17 +356,57 @@
         <DCCReference Include="GLTFLib\glTF.Parts.pas"/>
         <DCCReference Include="GLTFLib\glTF.AnimationSplit.pas"/>
         <DCCReference Include="GLTFLib\glTF.Orient.pas"/>
+        <DCCReference Include="GLTFLib\glTF.Bulk.pas"/>
         <DCCReference Include="src\glTFViewer.Tree.pas"/>
+        <DCCReference Include="src\glTFViewer.Settings.pas"/>
         <DCCReference Include="src\glTFViewer.Dialogs.pas"/>
-        <DCCReference Include="src\glTFViewer.Missing.pas"/>
+        <DCCReference Include="src\glTFViewer.FileBrowser.pas">
+            <Form>FileBrowserForm</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="src\glTFViewer.Missing.pas">
+            <Form>MissingFilesForm</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
         <DCCReference Include="src\glTFViewer.Columns.pas"/>
-        <DCCReference Include="src\glTFViewer.Progress.pas"/>
-        <DCCReference Include="src\glTFViewer.Images.pas"/>
-        <DCCReference Include="src\glTFViewer.Animations.pas"/>
-        <DCCReference Include="src\glTFViewer.Duplicates.pas"/>
-        <DCCReference Include="src\glTFViewer.Parts.pas"/>
-        <DCCReference Include="src\glTFViewer.Split.pas"/>
-        <DCCReference Include="src\glTFViewer.Orient.pas"/>
+        <DCCReference Include="src\glTFViewer.Progress.pas">
+            <Form>ProgressFrame</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\glTFViewer.Images.pas">
+            <Form>glTFImagesFrame</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\glTFViewer.Animations.pas">
+            <Form>glTFAnimationsFrame</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\glTFViewer.Duplicates.pas">
+            <Form>DuplicateFrame</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\glTFViewer.Parts.pas">
+            <Form>glTFPartsFrame</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\glTFViewer.Split.pas">
+            <Form>SplitAnimationForm</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="src\glTFViewer.Orient.pas">
+            <Form>glTFOrientFrame</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\glTFViewer.BulkOrient.pas">
+            <Form>BulkOrientForm</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
         <DCCReference Include="src\glTFViewer.Main.pas">
             <Form>glTFMainForm</Form>
         </DCCReference>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.Duplicates: Class TDuplicateFrame</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TDuplicateFrame"></span><h1 class="cio">Class TDuplicateFrame</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.Duplicates.html">glTFViewer.Duplicates</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TDuplicateFrame = class(TFrame)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Asks, over its parent form, what to do with a duplicate animation.</p>
+<p>
+
+
+<p>Create it once with the form as parent; it covers the form, and stays hidden until <a class="normal" href="glTFViewer.Duplicates.TDuplicateFrame.html#Ask-string-string-TFuncstringstring-TProcTDuplicateChoice-">Ask</a>. Use it on the main thread only.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TFrame</li>
+<li class="thisitem">TDuplicateFrame</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#rectShade">rectShade</a></strong>: TRectangle;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#rectBox">rectBox</a></strong>: TRectangle;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#lblInfo">lblInfo</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#rbReplace">rbReplace</a></strong>: TRadioButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#rbKeep">rbKeep</a></strong>: TRadioButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#rbRename">rbRename</a></strong>: TRadioButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#edtName">edtName</a></strong>: TEdit;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#lblError">lblError</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#chkForAll">chkForAll</a></strong>: TCheckBox;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#layButtons">layButtons</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#btnAbortImport">btnAbortImport</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#btnOK">btnOK</a></strong>: TButton;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#RadioChange-TObject-">RadioChange</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#edtNameChangeTracking-TObject-">edtNameChangeTracking</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#btnOKClick-TObject-">btnOKClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#btnAbortImportClick-TObject-">btnAbortImportClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#Resize">Resize</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#Create-TComponent-">Create</a></strong>(AOwner: TComponent); override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#Ask-string-string-TFuncstringstring-TProcTDuplicateChoice-">Ask</a></strong>(const AMessage, ASuggestedName: string; const AValidate: TFunc&lt;string, string&gt;; const ADone: TProc&lt;<a href="glTFViewer.Duplicates.TDuplicateChoice.html">TDuplicateChoice</a>&gt;);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Duplicates.TDuplicateFrame.html#Cancel">Cancel</a></strong>;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="rectShade"></span><code><strong>rectShade</strong>: TRectangle;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Dims the form and takes the input meant for it.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="rectBox"></span><code><strong>rectBox</strong>: TRectangle;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The box in the middle.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblInfo"></span><code><strong>lblInfo</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+What clashes with what.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="rbReplace"></span><code><strong>rbReplace</strong>: TRadioButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Replace the old animation with the imported one.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="rbKeep"></span><code><strong>rbKeep</strong>: TRadioButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Keep the old animation and ignore the imported one.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="rbRename"></span><code><strong>rbRename</strong>: TRadioButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Import the animation under the name in edtName.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtName"></span><code><strong>edtName</strong>: TEdit;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The new name, a unique one suggested.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblError"></span><code><strong>lblError</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Why the name typed cannot be used.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="chkForAll"></span><code><strong>chkForAll</strong>: TCheckBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Do the same for the other duplicates of the import.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layButtons"></span><code><strong>layButtons</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Holds the buttons, at the bottom of the box.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnAbortImport"></span><code><strong>btnAbortImport</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Stops the import after the animations already added.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnOK"></span><code><strong>btnOK</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Answers with the choice made.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RadioChange-TObject-"></span><code>procedure <strong>RadioChange</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Enables the name box while Rename is chosen.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The radio button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtNameChangeTracking-TObject-"></span><code>procedure <strong>edtNameChangeTracking</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Checks the name as it is typed.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The edit box.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnOKClick-TObject-"></span><code>procedure <strong>btnOKClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Answers with the choice made, unless the new name cannot be used.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnAbortImportClick-TObject-"></span><code>procedure <strong>btnAbortImportClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Answers &quot;Abort import&quot;.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button; nil when called by Cancel.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="Resize"></span><code>procedure <strong>Resize</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Keeps the box narrower than the form, for phones in portrait.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-TComponent-"></span><code>constructor <strong>Create</strong>(AOwner: TComponent); override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the hidden frame.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOwner</dt>
+<dd>Owner of the frame.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Ask-string-string-TFuncstringstring-TProcTDuplicateChoice-"></span><code>procedure <strong>Ask</strong>(const AMessage, ASuggestedName: string; const AValidate: TFunc&lt;string, string&gt;; const ADone: TProc&lt;<a href="glTFViewer.Duplicates.TDuplicateChoice.html">TDuplicateChoice</a>&gt;);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Shows the question; returns at once.</p>
+<p>
+
+
+<p>The frame covers the form and takes all input until the user answers. Rename is selected at first, with ASuggestedName in its edit box.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AMessage</dt>
+<dd>What clashes with what, shown at the top.</dd>
+<dt>ASuggestedName</dt>
+<dd>A unique name to offer for renaming.</dd>
+<dt>AValidate</dt>
+<dd>Returns why a name cannot be used, or an empty string when it can.</dd>
+<dt>ADone</dt>
+<dd>Called on the main thread with the answer, after the panel is hidden.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Cancel"></span><code>procedure <strong>Cancel</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Answers the question shown with &quot;Abort import&quot;, as if the user had pressed it; does nothing when no question is shown.</p>
+<p>
+
+
+<p>Used when the form is closed while an import waits for an answer.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

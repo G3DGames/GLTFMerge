@@ -49,23 +49,31 @@ The viewer's main window.</p>
 <table class="summary wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#ToolBar">ToolBar</a></strong>: TToolBar;</code></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#MainMenu">MainMenu</a></strong>: TMainMenu;</code></td>
 </tr>
 <tr class="list2 visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#btnOpen">btnOpen</a></strong>: TButton;</code></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#miFile">miFile</a></strong>: TMenuItem;</code></td>
 </tr>
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#btnSave">btnSave</a></strong>: TButton;</code></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#miOpen">miOpen</a></strong>: TMenuItem;</code></td>
 </tr>
 <tr class="list2 visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#btnSelfTest">btnSelfTest</a></strong>: TButton;</code></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#miSaveAs">miSaveAs</a></strong>: TMenuItem;</code></td>
 </tr>
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#lblFile">lblFile</a></strong>: TLabel;</code></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#miBulkOrient">miBulkOrient</a></strong>: TMenuItem;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#miExitSeparator">miExitSeparator</a></strong>: TMenuItem;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#miExit">miExit</a></strong>: TMenuItem;</code></td>
 </tr>
 <tr class="list2 visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
@@ -93,9 +101,13 @@ The viewer's main window.</p>
 </tr>
 <tr class="list2 visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#memOutput">memOutput</a></strong>: TMemo;</code></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#tabOrient">tabOrient</a></strong>: TTabItem;</code></td>
 </tr>
 <tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#memOutput">memOutput</a></strong>: TMemo;</code></td>
+</tr>
+<tr class="list2 visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
 <td class="itemcode"><code><strong><a href="glTFViewer.Main.TglTFMainForm.html#tvStructure">tvStructure</a></strong>: TTreeView;</code></td>
 </tr>
@@ -112,15 +124,19 @@ The viewer's main window.</p>
 </tr>
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Main.TglTFMainForm.html#btnOpenClick-TObject-">btnOpenClick</a></strong>(Sender: TObject);</code></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Main.TglTFMainForm.html#miOpenClick-TObject-">miOpenClick</a></strong>(Sender: TObject);</code></td>
 </tr>
 <tr class="list2 visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Main.TglTFMainForm.html#btnSaveClick-TObject-">btnSaveClick</a></strong>(Sender: TObject);</code></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Main.TglTFMainForm.html#miSaveAsClick-TObject-">miSaveAsClick</a></strong>(Sender: TObject);</code></td>
 </tr>
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Main.TglTFMainForm.html#btnSelfTestClick-TObject-">btnSelfTestClick</a></strong>(Sender: TObject);</code></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Main.TglTFMainForm.html#miBulkOrientClick-TObject-">miBulkOrientClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Main.TglTFMainForm.html#miExitClick-TObject-">miExitClick</a></strong>(Sender: TObject);</code></td>
 </tr>
 </table>
 <h2 class="description">Description</h2>
@@ -128,17 +144,27 @@ The viewer's main window.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="ToolBar"></span><code><strong>ToolBar</strong>: TToolBar;</code></td>
+<td class="itemcode"><span id="MainMenu"></span><code><strong>MainMenu</strong>: TMainMenu;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
-Toolbar with the Open, Save as and self-test buttons and the file name.</p>
+The main menu, with the File menu.</p>
 </td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="btnOpen"></span><code><strong>btnOpen</strong>: TButton;</code></td>
+<td class="itemcode"><span id="miFile"></span><code><strong>miFile</strong>: TMenuItem;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The File menu: Open, Save As, Bulk Re-Orient and Exit, and Run self-tests when built in.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="miOpen"></span><code><strong>miOpen</strong>: TMenuItem;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
@@ -148,7 +174,7 @@ Opens a .gltf or .glb file.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="btnSave"></span><code><strong>btnSave</strong>: TButton;</code></td>
+<td class="itemcode"><span id="miSaveAs"></span><code><strong>miSaveAs</strong>: TMenuItem;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
@@ -158,21 +184,31 @@ Saves the document as .gltf or .glb; enabled once a file is loaded.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="btnSelfTest"></span><code><strong>btnSelfTest</strong>: TButton;</code></td>
+<td class="itemcode"><span id="miBulkOrient"></span><code><strong>miBulkOrient</strong>: TMenuItem;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
-Runs the self-tests and shows their results on the Output tab.</p>
+Re-orients every model in a folder tree into another folder.</p>
 </td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="lblFile"></span><code><strong>lblFile</strong>: TLabel;</code></td>
+<td class="itemcode"><span id="miExitSeparator"></span><code><strong>miExitSeparator</strong>: TMenuItem;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
-Shows the loaded file's path, or why it failed to load.</p>
+The line above Exit.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="miExit"></span><code><strong>miExit</strong>: TMenuItem;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Closes the application, asking first while there are unsaved changes.</p>
 </td></tr>
 </table>
 <table class="detail visibility-public wide_list">
@@ -182,7 +218,7 @@ Shows the loaded file's path, or why it failed to load.</p>
 </tr>
 <tr><td colspan="2">
 <p>
-Holds the Structure, Images, Animations and Output tabs.</p>
+Holds the Structure, Images, Animations, Parts, Re-Orient and Output tabs.</p>
 </td></tr>
 </table>
 <table class="detail visibility-public wide_list">
@@ -212,7 +248,7 @@ The Structure tab, holding the tree.</p>
 </tr>
 <tr><td colspan="2">
 <p>
-The Images tab, holding the images panel created at start-up.</p>
+The Images tab, holding the images frame created at start-up.</p>
 </td></tr>
 </table>
 <table class="detail visibility-public wide_list">
@@ -222,7 +258,7 @@ The Images tab, holding the images panel created at start-up.</p>
 </tr>
 <tr><td colspan="2">
 <p>
-The Animations tab, holding the animations panel created at start-up.</p>
+The Animations tab, holding the animations frame created at start-up.</p>
 </td></tr>
 </table>
 <table class="detail visibility-public wide_list">
@@ -232,7 +268,17 @@ The Animations tab, holding the animations panel created at start-up.</p>
 </tr>
 <tr><td colspan="2">
 <p>
-The Parts tab, holding the parts panel created at start-up.</p>
+The Parts tab, holding the parts frame created at start-up.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="tabOrient"></span><code><strong>tabOrient</strong>: TTabItem;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The Re-Orient tab, holding the frame with the turn applied when saving.</p>
 </td></tr>
 </table>
 <table class="detail visibility-public wide_list">
@@ -263,11 +309,11 @@ The structure tree of the loaded document.</p>
 </tr>
 <tr><td colspan="2">
 <p>
-Sets up the dialogs and the Images, Animations and Parts tabs, then loads the file and runs the self-tests given on the command line.</p>
+Sets up the menu and the tabs, then loads the file and runs the self-tests given on the command line.</p>
 <p>
 
 
-<p>Command line: an optional file name and an optional &ndash;selftest, -selftest or /selftest, in any order.
+<p>Command line: an optional file name and, with SELF_TESTS, an optional &ndash;selftest, -selftest or /selftest, in any order.
 
 <p></p>
 <h6 class="description_section">Parameters</h6>
@@ -301,13 +347,15 @@ Frees the document.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="btnOpenClick-TObject-"></span><code>procedure <strong>btnOpenClick</strong>(Sender: TObject);</code></td>
+<td class="itemcode"><span id="miOpenClick-TObject-"></span><code>procedure <strong>miOpenClick</strong>(Sender: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
 Asks for a .gltf or .glb file and loads it.</p>
 <p>
 
+
+<p>While there are unsaved changes, asks first whether to lose them.
 
 <p></p>
 <h6 class="description_section">Parameters</h6>
@@ -320,7 +368,7 @@ Asks for a .gltf or .glb file and loads it.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="btnSaveClick-TObject-"></span><code>procedure <strong>btnSaveClick</strong>(Sender: TObject);</code></td>
+<td class="itemcode"><span id="miSaveAsClick-TObject-"></span><code>procedure <strong>miSaveAsClick</strong>(Sender: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
@@ -341,13 +389,36 @@ Asks for a file name and saves the document.</p>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
-<td class="itemcode"><span id="btnSelfTestClick-TObject-"></span><code>procedure <strong>btnSelfTestClick</strong>(Sender: TObject);</code></td>
+<td class="itemcode"><span id="miBulkOrientClick-TObject-"></span><code>procedure <strong>miBulkOrientClick</strong>(Sender: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
-Shows the Output tab and runs the self-tests.</p>
+Shows the Bulk Re-Orient dialog and, when confirmed, turns every model it finds.</p>
 <p>
 
+
+<p>The search and the conversion run in the background with the progress box, which can abort after the model being saved; output files that already exist are replaced only after OK. The loaded model is not touched. The result is logged on the Output tab.
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The control that raised the event.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="miExitClick-TObject-"></span><code>procedure <strong>miExitClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Closes the form, and with it the application.</p>
+<p>
+
+
+<p>While there are unsaved changes, FormCloseQuery asks first, with OK and Cancel.
 
 <p></p>
 <h6 class="description_section">Parameters</h6>

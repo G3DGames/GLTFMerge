@@ -1,6 +1,6 @@
 //** @abstract(Question shown when an imported animation's name is already used.)
 //**
-//** @link(TDuplicatePanel) offers the choices of @code(TglTFDuplicateAction): replace the old
+//** @link(TDuplicateFrame) offers the choices of @code(TglTFDuplicateAction): replace the old
 //** animation, keep the old one and ignore the imported one, or rename the imported one, with a
 //** unique name suggested and editable. A tick applies the same choice to the remaining
 //** duplicates of the import, and "Abort import" stops the import after the animations
@@ -8,14 +8,14 @@
 //**
 //** It is not a separate modal form but a panel drawn over the main form, like the progress
 //** box, so the application keeps running normally while it waits: the import, waiting in
-//** its background thread, gets the answer through a callback. The panel is built in code,
-//** so the unit needs no .fmx file.
+//** its background thread, gets the answer through a callback. The frame is designed in
+//** glTFViewer.Duplicates.fmx.
 unit glTFViewer.Duplicates;
 
 {
   Question shown when an imported animation's name is already used.
 
-  TDuplicatePanel offers the choices of TglTFDuplicateAction: replace the old
+  TDuplicateFrame offers the choices of TglTFDuplicateAction: replace the old
   animation, keep the old one and ignore the imported one, or rename the
   imported one, with a unique name suggested and editable. A tick applies the
   same choice to the remaining duplicates of the import, and "Abort import"
@@ -24,14 +24,14 @@ unit glTFViewer.Duplicates;
   It is not a separate modal form but a panel drawn over the main form, like
   the progress box, so the application keeps running normally while it waits:
   the import, waiting in its background thread, gets the answer through a
-  callback. The panel is built in code, so the unit needs no .fmx file.
+  callback. The frame is designed in glTFViewer.Duplicates.fmx.
 }
 
 interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Math,
-  FMX.Types, FMX.Controls, FMX.StdCtrls, FMX.Layouts, FMX.Edit, FMX.Objects,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.StdCtrls, FMX.Layouts, FMX.Edit, FMX.Objects,
   FMX.Graphics, FMX.Controls.Presentation,
 
   glTF.Animations;
@@ -61,44 +61,106 @@ type
 
   //** @abstract(Asks, over its parent form, what to do with a duplicate animation.)
   //**
-  //** Create it once with the form as parent; it stays hidden until @link(Ask). Use it on the
-  //** main thread only.
+  //** Create it once with the form as parent; it covers the form, and stays hidden until
+  //** @link(Ask). Use it on the main thread only.
   /// <summary>Asks, over its parent form, what to do with a duplicate animation.</summary>
-  /// <remarks>Create it once with the form as parent; it stays hidden until
-  /// <see cref="Ask"/>. Use it on the main thread only.</remarks>
-  TDuplicatePanel = class(TLayout)
+  /// <remarks>Create it once with the form as parent; it covers the form, and stays hidden
+  /// until <see cref="Ask"/>. Use it on the main thread only.</remarks>
+  TDuplicateFrame = class(TFrame)
+    //** @abstract(Dims the form and takes the input meant for it.)
+    /// <summary>Dims the form and takes the input meant for it.</summary>
+    rectShade: TRectangle;
+
+    //** @abstract(The box in the middle.)
+    /// <summary>The box in the middle.</summary>
+    rectBox: TRectangle;
+
+    //** @abstract(What clashes with what.)
+    /// <summary>What clashes with what.</summary>
+    lblInfo: TLabel;
+
+    //** @abstract(Replace the old animation with the imported one.)
+    /// <summary>Replace the old animation with the imported one.</summary>
+    rbReplace: TRadioButton;
+
+    //** @abstract(Keep the old animation and ignore the imported one.)
+    /// <summary>Keep the old animation and ignore the imported one.</summary>
+    rbKeep: TRadioButton;
+
+    //** @abstract(Import the animation under the name in edtName.)
+    /// <summary>Import the animation under the name in edtName.</summary>
+    rbRename: TRadioButton;
+
+    //** @abstract(The new name, a unique one suggested.)
+    /// <summary>The new name, a unique one suggested.</summary>
+    edtName: TEdit;
+
+    //** @abstract(Why the name typed cannot be used.)
+    /// <summary>Why the name typed cannot be used.</summary>
+    lblError: TLabel;
+
+    //** @abstract(Do the same for the other duplicates of the import.)
+    /// <summary>Do the same for the other duplicates of the import.</summary>
+    chkForAll: TCheckBox;
+
+    //** @abstract(Holds the buttons, at the bottom of the box.)
+    /// <summary>Holds the buttons, at the bottom of the box.</summary>
+    layButtons: TLayout;
+
+    //** @abstract(Stops the import after the animations already added.)
+    /// <summary>Stops the import after the animations already added.</summary>
+    btnAbortImport: TButton;
+
+    //** @abstract(Answers with the choice made.)
+    /// <summary>Answers with the choice made.</summary>
+    btnOK: TButton;
+
+    //** @abstract(Enables the name box while Rename is chosen.)
+    //**
+    //** @param(Sender The radio button.)
+    /// <summary>Enables the name box while Rename is chosen.</summary>
+    /// <param name="Sender">The radio button.</param>
+    procedure RadioChange(Sender: TObject);
+
+    //** @abstract(Checks the name as it is typed.)
+    //**
+    //** @param(Sender The edit box.)
+    /// <summary>Checks the name as it is typed.</summary>
+    /// <param name="Sender">The edit box.</param>
+    procedure edtNameChangeTracking(Sender: TObject);
+
+    //** @abstract(Answers with the choice made, unless the new name cannot be used.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Answers with the choice made, unless the new name cannot be used.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnOKClick(Sender: TObject);
+
+    //** @abstract(Answers "Abort import".)
+    //**
+    //** @param(Sender The button; nil when called by Cancel.)
+    /// <summary>Answers "Abort import".</summary>
+    /// <param name="Sender">The button; nil when called by Cancel.</param>
+    procedure btnAbortImportClick(Sender: TObject);
   private
-    FShade: TRectangle;
-    FBox: TRectangle;
-    FInfo: TLabel;
-    FReplace: TRadioButton;
-    FKeep: TRadioButton;
-    FRename: TRadioButton;
-    FNameEdit: TEdit;
-    FError: TLabel;
-    FForAll: TCheckBox;
     FValidate: TFunc<string, string>;
     FDone: TProc<TDuplicateChoice>;
-    function AddRadio(const AText: string; AOrder: Single): TRadioButton;
-    function AddDarkLabel(AOrder, AHeight: Single): TLabel;
-    procedure RadioChange(Sender: TObject);
-    procedure NameChange(Sender: TObject);
-    procedure OKClick(Sender: TObject);
-    procedure AbortClick(Sender: TObject);
     procedure Answer(const AChoice: TDuplicateChoice);
   protected
+    //** @abstract(Keeps the box narrower than the form, for phones in portrait.)
+    /// <summary>Keeps the box narrower than the form, for phones in portrait.</summary>
     procedure Resize; override;
   public
-    //** @abstract(Creates the hidden panel.)
+    //** @abstract(Creates the hidden frame.)
     //**
-    //** @param(AOwner Owner of the panel.)
-    /// <summary>Creates the hidden panel.</summary>
-    /// <param name="AOwner">Owner of the panel.</param>
+    //** @param(AOwner Owner of the frame.)
+    /// <summary>Creates the hidden frame.</summary>
+    /// <param name="AOwner">Owner of the frame.</param>
     constructor Create(AOwner: TComponent); override;
 
     //** @abstract(Shows the question; returns at once.)
     //**
-    //** The panel covers the form and takes all input until the user answers. Rename is
+    //** The frame covers the form and takes all input until the user answers. Rename is
     //** selected at first, with ASuggestedName in its edit box.
     //**
     //** @param(AMessage What clashes with what, shown at the top.)
@@ -115,7 +177,7 @@ type
     /// can.</param>
     /// <param name="ADone">Called on the main thread with the answer, after the panel is
     /// hidden.</param>
-    /// <remarks>The panel covers the form and takes all input until the user answers. Rename
+    /// <remarks>The frame covers the form and takes all input until the user answers. Rename
     /// is selected at first, with ASuggestedName in its edit box.</remarks>
     procedure Ask(const AMessage, ASuggestedName: string;
       const AValidate: TFunc<string, string>; const ADone: TProc<TDuplicateChoice>);
@@ -132,158 +194,62 @@ type
 
 implementation
 
+{$R *.fmx}
+
 const
   BOX_WIDTH = 520;
-  BOX_HEIGHT = 330;
 
-{ TDuplicatePanel }
+{ TDuplicateFrame }
 
-constructor TDuplicatePanel.Create(AOwner: TComponent);
-var
-  LButtons: TLayout;
-  LButton: TButton;
+constructor TDuplicateFrame.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   Align := TAlignLayout.Contents;
   HitTest := True; // takes the input meant for the form below
   Visible := False;
-
-  FShade := TRectangle.Create(Self);
-  FShade.Parent := Self;
-  FShade.Align := TAlignLayout.Contents;
-  FShade.Fill.Color := $66000000;
-  FShade.Stroke.Kind := TBrushKind.None;
-  FShade.HitTest := True;
-
-  FBox := TRectangle.Create(Self);
-  FBox.Parent := Self;
-  FBox.Align := TAlignLayout.Center;
-  FBox.Width := BOX_WIDTH;
-  FBox.Height := BOX_HEIGHT;
-  FBox.Fill.Color := TAlphaColors.White;
-  FBox.Stroke.Color := TAlphaColors.Gray;
-  FBox.XRadius := 6;
-  FBox.YRadius := 6;
-  FBox.Padding.Rect := TRectF.Create(16, 12, 16, 12);
-
-  // Top to bottom; each Position.Y is larger than where the controls above
-  // end, so the order holds
-  FInfo := AddDarkLabel(0, 60);
-  FInfo.TextSettings.WordWrap := True;
-  FInfo.TextSettings.Font.Style := [TFontStyle.fsBold];
-
-  FReplace := AddRadio('Replace the old animation with this one', 1000);
-  FKeep := AddRadio('Keep the old animation and ignore this one', 2000);
-  FRename := AddRadio('Import this one under a new name:', 3000);
-
-  FNameEdit := TEdit.Create(Self);
-  FNameEdit.Parent := FBox;
-  FNameEdit.Align := TAlignLayout.Top;
-  FNameEdit.Position.Y := 4000;
-  FNameEdit.Margins.Rect := TRectF.Create(26, 2, 0, 2);
-  FNameEdit.OnChangeTracking := NameChange;
-
-  FError := AddDarkLabel(5000, 20);
-  FError.Margins.Left := 26;
-  FError.TextSettings.FontColor := TAlphaColors.Red;
-
-  FForAll := TCheckBox.Create(Self);
-  FForAll.Parent := FBox;
-  FForAll.Align := TAlignLayout.Top;
-  FForAll.Position.Y := 6000;
-  FForAll.Height := 26;
-  FForAll.Margins.Top := 4;
-  FForAll.Text := 'Do the same for the other duplicates of this import';
-
-  LButtons := TLayout.Create(Self);
-  LButtons.Parent := FBox;
-  LButtons.Align := TAlignLayout.Bottom;
-  LButtons.Height := 36;
-
-  LButton := TButton.Create(Self);
-  LButton.Parent := LButtons;
-  LButton.Align := TAlignLayout.Right;
-  LButton.Position.X := 2000;
-  LButton.Width := 100;
-  LButton.Text := 'OK';
-  LButton.OnClick := OKClick;
-
-  LButton := TButton.Create(Self);
-  LButton.Parent := LButtons;
-  LButton.Align := TAlignLayout.Right;
-  LButton.Position.X := 1000;
-  LButton.Margins.Right := 8;
-  LButton.Width := 120;
-  LButton.Text := 'Abort import';
-  LButton.OnClick := AbortClick;
 end;
 
-function TDuplicatePanel.AddDarkLabel(AOrder, AHeight: Single): TLabel;
-begin
-  Result := TLabel.Create(Self);
-  Result.Parent := FBox;
-  Result.Align := TAlignLayout.Top;
-  Result.Position.Y := AOrder;
-  Result.Height := AHeight;
-  // Dark text on the white box, whatever the style
-  Result.StyledSettings := Result.StyledSettings -
-    [TStyledSetting.FontColor, TStyledSetting.Style, TStyledSetting.Other];
-  Result.TextSettings.FontColor := TAlphaColors.Black;
-  Result.TextSettings.WordWrap := False;
-  Result.TextSettings.Trimming := TTextTrimming.Character;
-end;
-
-function TDuplicatePanel.AddRadio(const AText: string; AOrder: Single): TRadioButton;
-begin
-  Result := TRadioButton.Create(Self);
-  Result.Parent := FBox;
-  Result.Align := TAlignLayout.Top;
-  Result.Position.Y := AOrder;
-  Result.Height := 26;
-  Result.GroupName := 'gltf.duplicate';
-  Result.Text := AText;
-  Result.OnChange := RadioChange;
-end;
-
-procedure TDuplicatePanel.Resize;
+procedure TDuplicateFrame.Resize;
 begin
   inherited;
   // Narrower on phones in portrait
-  if Assigned(FBox) then
-    FBox.Width := Min(BOX_WIDTH, Max(200, Width - 32));
+  if Assigned(rectBox) then
+    rectBox.Width := Min(BOX_WIDTH, Max(200, Width - 32));
 end;
 
-procedure TDuplicatePanel.Ask(const AMessage, ASuggestedName: string;
+procedure TDuplicateFrame.Ask(const AMessage, ASuggestedName: string;
   const AValidate: TFunc<string, string>; const ADone: TProc<TDuplicateChoice>);
 begin
   FValidate := AValidate;
   FDone := ADone;
-  FInfo.Text := AMessage;
-  FNameEdit.Text := ASuggestedName;
-  FForAll.IsChecked := False;
-  FRename.IsChecked := True;
+  lblInfo.Text := AMessage;
+  edtName.Text := ASuggestedName;
+  chkForAll.IsChecked := False;
+  rbRename.IsChecked := True;
   RadioChange(nil);
   Visible := True;
   BringToFront;
 end;
 
-procedure TDuplicatePanel.RadioChange(Sender: TObject);
+procedure TDuplicateFrame.RadioChange(Sender: TObject);
 begin
-  if FNameEdit = nil then
-    Exit; // during construction
-  FNameEdit.Enabled := FRename.IsChecked;
-  NameChange(nil);
+  if (edtName = nil) or (rbRename = nil) then
+    Exit; // while the frame is loaded
+  edtName.Enabled := rbRename.IsChecked;
+  edtNameChangeTracking(nil);
 end;
 
-procedure TDuplicatePanel.NameChange(Sender: TObject);
+procedure TDuplicateFrame.edtNameChangeTracking(Sender: TObject);
 begin
-  if FRename.IsChecked and Assigned(FValidate) then
-    FError.Text := FValidate(FNameEdit.Text)
+  if lblError = nil then
+    Exit; // while the frame is loaded
+  if rbRename.IsChecked and Assigned(FValidate) then
+    lblError.Text := FValidate(edtName.Text)
   else
-    FError.Text := '';
+    lblError.Text := '';
 end;
 
-procedure TDuplicatePanel.Answer(const AChoice: TDuplicateChoice);
+procedure TDuplicateFrame.Answer(const AChoice: TDuplicateChoice);
 var
   LDone: TProc<TDuplicateChoice>;
 begin
@@ -296,33 +262,33 @@ begin
     LDone(AChoice);
 end;
 
-procedure TDuplicatePanel.OKClick(Sender: TObject);
+procedure TDuplicateFrame.btnOKClick(Sender: TObject);
 var
   LChoice: TDuplicateChoice;
 begin
-  if FRename.IsChecked then
+  if rbRename.IsChecked then
   begin
-    NameChange(nil);
-    if FError.Text <> '' then
+    edtNameChangeTracking(nil);
+    if lblError.Text <> '' then
       Exit; // the name cannot be used; the reason is shown
     LChoice.Action := daRename;
-    LChoice.NewName := Trim(FNameEdit.Text);
+    LChoice.NewName := Trim(edtName.Text);
   end
-  else if FReplace.IsChecked then
+  else if rbReplace.IsChecked then
     LChoice.Action := daReplace
   else
     LChoice.Action := daKeep;
-  LChoice.ForAll := FForAll.IsChecked;
+  LChoice.ForAll := chkForAll.IsChecked;
   Answer(LChoice);
 end;
 
-procedure TDuplicatePanel.Cancel;
+procedure TDuplicateFrame.Cancel;
 begin
   if Visible and Assigned(FDone) then
-    AbortClick(nil);
+    btnAbortImportClick(nil);
 end;
 
-procedure TDuplicatePanel.AbortClick(Sender: TObject);
+procedure TDuplicateFrame.btnAbortImportClick(Sender: TObject);
 var
   LChoice: TDuplicateChoice;
 begin

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.Bulk: Class TglTFBulkReorienter</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFBulkReorienter"></span><h1 class="cio">Class TglTFBulkReorienter</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.Bulk.html">glTF.Bulk</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFBulkReorienter = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Finds the models in a folder tree and saves re-oriented copies of them.</p>
+<p>
+
+
+<p>Call <a class="normal" href="glTF.Bulk.TglTFBulkReorienter.html#FindModels">FindModels</a>, then <a class="normal" href="glTF.Bulk.TglTFBulkReorienter.html#Run">Run</a>, usually from a background thread; read <a class="normal" href="glTF.Bulk.TglTFBulkReorienter.html#Log">Log</a> and the counts afterwards.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFBulkReorienter</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Create-TglTFBulkOptions-">Create</a></strong>(const AOptions: <a href="glTF.Bulk.TglTFBulkOptions.html">TglTFBulkOptions</a>);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Problem-TglTFBulkOptions-">Problem</a></strong>(const AOptions: <a href="glTF.Bulk.TglTFBulkOptions.html">TglTFBulkOptions</a>): string; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Extension-TglTFFileFormat-">Extension</a></strong>(AFormat: <a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a>): string; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#FindModels">FindModels</a></strong>: Integer;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#ExistingTargets">ExistingTargets</a></strong>: Integer;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Run">Run</a></strong>: Integer;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#RequestAbort">RequestAbort</a></strong>;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Options">Options</a></strong>: <a href="glTF.Bulk.TglTFBulkOptions.html">TglTFBulkOptions</a> read FOptions;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Items">Items</a></strong>: TArray&lt;<a href="glTF.Bulk.TglTFBulkItem.html">TglTFBulkItem</a>&gt; read FItems;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Log">Log</a></strong>: TStringList read FLog;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Saved">Saved</a></strong>: Integer read FSaved;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Failed">Failed</a></strong>: Integer read FFailed;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#Warned">Warned</a></strong>: Integer read FWarned;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#AbortRequested">AbortRequested</a></strong>: Boolean read FAbortRequested;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTF.Bulk.TglTFBulkReorienter.html#OnProgress">OnProgress</a></strong>: <a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a> read FOnProgress write FOnProgress;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-TglTFBulkOptions-"></span><code>constructor <strong>Create</strong>(const AOptions: <a href="glTF.Bulk.TglTFBulkOptions.html">TglTFBulkOptions</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the re-orienter.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOptions</dt>
+<dd>What to convert and how.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the re-orienter.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Problem-TglTFBulkOptions-"></span><code>class function <strong>Problem</strong>(const AOptions: <a href="glTF.Bulk.TglTFBulkOptions.html">TglTFBulkOptions</a>): string; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells why options cannot be used.</p>
+<p>
+
+
+<p>The input folder must exist and the output folder must be given. They must not be the same folder, and the input folder must not be inside the output folder, so no input file can be replaced. The output folder may be inside the input folder: it is then left out of the search. The angles must be from -360 to 360 and the output format GLB or glTF.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOptions</dt>
+<dd>The options.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The reason, or an empty string when the options can be used.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Extension-TglTFFileFormat-"></span><code>class function <strong>Extension</strong>(AFormat: <a href="glTF.Document.html#TglTFFileFormat">TglTFFileFormat</a>): string; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the extension of a format: .glb or .gltf.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AFormat</dt>
+<dd>gffGLB or gffJSON.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The extension, with its dot.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FindModels"></span><code>function <strong>FindModels</strong>: Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Searches the input folder and its sub-folders for the models to convert.</p>
+<p>
+
+
+<p>Folders that cannot be read are skipped and noted in the log. The models are sorted by path, and each gets its output file; two that would share one are told apart. RequestAbort stops the search early, with the models found so far.
+
+<p>
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of models found; see <a class="normal" href="glTF.Bulk.TglTFBulkReorienter.html#Items">Items</a>.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><code>EArgumentException</code></dt>
+<dd>The options cannot be used; see <a class="normal" href="glTF.Bulk.TglTFBulkReorienter.html#Problem-TglTFBulkOptions-">Problem</a>.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ExistingTargets"></span><code>function <strong>ExistingTargets</strong>: Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Counts the output files that already exist and would be replaced.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">The count, among <a class="normal" href="glTF.Bulk.TglTFBulkReorienter.html#Items">Items</a>.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Run"></span><code>function <strong>Run</strong>: Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Loads, turns and saves every model found.</p>
+<p>
+
+
+<p>Each model is loaded into its own document, saved to its output file with the turn and then freed. A failure is logged and counted, and the next model is done. Stops early, after the model being saved, when <a class="normal" href="glTF.Bulk.TglTFBulkReorienter.html#RequestAbort">RequestAbort</a> was called.
+
+<p></p>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of models saved.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RequestAbort"></span><code>procedure <strong>RequestAbort</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Asks Run to stop after the model it is on; may be called from any thread.</p>
+</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Options"></span><code>property <strong>Options</strong>: <a href="glTF.Bulk.TglTFBulkOptions.html">TglTFBulkOptions</a> read FOptions;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The options given.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Items"></span><code>property <strong>Items</strong>: TArray&lt;<a href="glTF.Bulk.TglTFBulkItem.html">TglTFBulkItem</a>&gt; read FItems;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The models found by FindModels, in the order Run converts them.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Log"></span><code>property <strong>Log</strong>: TStringList read FLog;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+One line per model and per warning, for the user.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Saved"></span><code>property <strong>Saved</strong>: Integer read FSaved;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The models saved by Run.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Failed"></span><code>property <strong>Failed</strong>: Integer read FFailed;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The models that could not be loaded or saved.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Warned"></span><code>property <strong>Warned</strong>: Integer read FWarned;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The models saved with warnings, for example missing media.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AbortRequested"></span><code>property <strong>AbortRequested</strong>: Boolean read FAbortRequested;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether RequestAbort was called.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnProgress"></span><code>property <strong>OnProgress</strong>: <a href="glTF.Document.html#TglTFProgressEvent">TglTFProgressEvent</a> read FOnProgress write FOnProgress;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Reports each model and how far its load and save have got; called on the thread that runs FindModels or Run.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

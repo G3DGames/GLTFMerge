@@ -6,7 +6,7 @@
 //** the file for one entry and then looks for the rest in the same folder. Found files are
 //** loaded into the document's objects; the uris in the glTF are not changed.
 //**
-//** The form is built in code, so the unit needs no .fmx file.
+//** The form is designed in glTFViewer.Missing.fmx.
 unit glTFViewer.Missing;
 
 {
@@ -19,7 +19,7 @@ unit glTFViewer.Missing;
   the same folder. Found files are loaded into the document's objects; the
   uris in the glTF are not changed.
 
-  The form is built in code, so the unit needs no .fmx file.
+  The form is designed in glTFViewer.Missing.fmx.
 }
 
 interface
@@ -40,26 +40,73 @@ type
   /// <remarks>Use <see cref="Execute"/> rather than creating it directly. Must be used on the
   /// main thread.</remarks>
   TMissingFilesForm = class(TForm)
+    //** @abstract(Why the dialog is shown and what to do.)
+    /// <summary>Why the dialog is shown and what to do.</summary>
+    lblInfo: TLabel;
+
+    //** @abstract(One row per missing file, with where it was expected.)
+    /// <summary>One row per missing file, with where it was expected.</summary>
+    lstMissing: TListBox;
+
+    //** @abstract(What the last search found.)
+    /// <summary>What the last search found.</summary>
+    lblStatus: TLabel;
+
+    //** @abstract(Holds the buttons, at the bottom.)
+    /// <summary>Holds the buttons, at the bottom.</summary>
+    layButtons: TLayout;
+
+    //** @abstract(Looks for every missing file in a folder and its sub-folders.)
+    /// <summary>Looks for every missing file in a folder and its sub-folders.</summary>
+    btnSearchFolder: TButton;
+
+    //** @abstract(Picks the file of the selected entry, then looks for the rest in its folder.)
+    /// <summary>Picks the file of the selected entry, then looks for the rest in its folder.</summary>
+    btnLocateFile: TButton;
+
+    //** @abstract(Closes the dialog; reads Close once every file is found.)
+    /// <summary>Closes the dialog; reads Close once every file is found.</summary>
+    btnContinue: TButton;
+
+    //** @abstract(Asks for a folder and looks for every missing file in it.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Asks for a folder and looks for every missing file in it.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnSearchFolderClick(Sender: TObject);
+
+    //** @abstract(Asks for the file of the selected entry.)
+    //**
+    //** @param(Sender The button.)
+    /// <summary>Asks for the file of the selected entry.</summary>
+    /// <param name="Sender">The button.</param>
+    procedure btnLocateFileClick(Sender: TObject);
+
+    //** @abstract(Enables "Locate file..." while an entry is selected.)
+    //**
+    //** @param(Sender The list.)
+    /// <summary>Enables "Locate file..." while an entry is selected.</summary>
+    /// <param name="Sender">The list.</param>
+    procedure lstMissingChange(Sender: TObject);
+
+    //** @abstract(Frees the form when it closes.)
+    //**
+    //** @param(Sender The form.)
+    //**
+    //** @param(Action Set to caFree.)
+    /// <summary>Frees the form when it closes.</summary>
+    /// <param name="Sender">The form.</param>
+    /// <param name="Action">Set to caFree.</param>
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     FDoc: TglTFDocument;
     FLog: TProc<string>;
     FMissing: TArray<TglTFMissingResource>;
     FLastDir: string;
-    FInfo: TLabel;
-    FStatus: TLabel;
-    FList: TListBox;
-    FBtnFolder: TButton;
-    FBtnFile: TButton;
-    FBtnClose: TButton;
-    procedure BuildControls(const AContext: string);
     procedure RefreshList;
     procedure SetStatus(const AText: string);
     function IsLoaded(const AItem: TglTFMissingResource): Boolean;
     procedure LogLocated(const ABefore: TArray<TglTFMissingResource>; const AWhere: string);
-    procedure FolderClick(Sender: TObject);
-    procedure FileClick(Sender: TObject);
-    procedure ListChange(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FileChosen(const AItem: TglTFMissingResource; AItemIndex: Integer;
       const AFileName: string);
   public
@@ -113,8 +160,17 @@ type
 
 implementation
 
+{$R *.fmx}
+
 uses
   glTFViewer.Dialogs;
+
+const
+  // The kinds of dialog, whose folders are remembered in the settings. The
+  // dialogs start in the model's folder, where missing files usually are,
+  // then in the folder last used here
+  KEY_SEARCH_FOLDER = 'searchMissingFolder';
+  KEY_LOCATE_FILE = 'locateMissingFile';
 
 { TMissingFilesForm }
 
@@ -150,75 +206,14 @@ end;
 constructor TMissingFilesForm.CreateFor(AOwner: TComponent; ADoc: TglTFDocument;
   const AContext: string; const ALog: TProc<string>);
 begin
-  inherited CreateNew(AOwner);
-  OnClose := FormClose;
+  inherited Create(AOwner);
   FDoc := ADoc;
   FLog := ALog;
   FLastDir := ADoc.BaseDirectory;
-  BuildControls(AContext);
-  RefreshList;
-end;
-
-procedure TMissingFilesForm.BuildControls(const AContext: string);
-var
-  LButtons: TLayout;
-begin
-  Caption := 'Missing media files';
-  Width := 720;
-  Height := 400;
-  Position := TFormPosition.MainFormCenter;
-  BorderIcons := [TBorderIcon.biSystemMenu];
-
-  FInfo := TLabel.Create(Self);
-  FInfo.Parent := Self;
-  FInfo.Align := TAlignLayout.Top;
-  FInfo.Margins.Rect := TRectF.Create(10, 10, 10, 4);
-  FInfo.Height := 54;
-  FInfo.WordWrap := True;
-  FInfo.VertTextAlign := TTextAlign.Leading;
-  FInfo.Text := AContext + sLineBreak +
+  lblInfo.Text := AContext + sLineBreak +
     'Search a folder, or select an entry and locate its file. ' +
     'Files that stay missing are saved as uri references only.';
-
-  LButtons := TLayout.Create(Self);
-  LButtons.Parent := Self;
-  LButtons.Align := TAlignLayout.Bottom;
-  LButtons.Height := 46;
-  LButtons.Padding.Rect := TRectF.Create(10, 8, 10, 10);
-
-  FBtnFolder := TButton.Create(Self);
-  FBtnFolder.Parent := LButtons;
-  FBtnFolder.Align := TAlignLayout.Left;
-  FBtnFolder.Width := 130;
-  FBtnFolder.Text := 'Search folder...';
-  FBtnFolder.OnClick := FolderClick;
-
-  FBtnFile := TButton.Create(Self);
-  FBtnFile.Parent := LButtons;
-  FBtnFile.Align := TAlignLayout.Left;
-  FBtnFile.Margins.Left := 8;
-  FBtnFile.Width := 130;
-  FBtnFile.Text := 'Locate file...';
-  FBtnFile.OnClick := FileClick;
-
-  FBtnClose := TButton.Create(Self);
-  FBtnClose.Parent := LButtons;
-  FBtnClose.Align := TAlignLayout.Right;
-  FBtnClose.Width := 100;
-  FBtnClose.Text := 'Continue';
-  FBtnClose.ModalResult := mrOk;
-
-  FStatus := TLabel.Create(Self);
-  FStatus.Parent := Self;
-  FStatus.Align := TAlignLayout.Bottom;
-  FStatus.Margins.Rect := TRectF.Create(10, 2, 10, 0);
-  FStatus.Height := 22;
-
-  FList := TListBox.Create(Self);
-  FList.Parent := Self;
-  FList.Align := TAlignLayout.Client;
-  FList.Margins.Rect := TRectF.Create(10, 4, 10, 4);
-  FList.OnChange := ListChange;
+  RefreshList;
 end;
 
 procedure TMissingFilesForm.RefreshList;
@@ -227,30 +222,30 @@ var
 begin
   FMissing := FDoc.MissingResources;
 
-  FList.BeginUpdate;
+  lstMissing.BeginUpdate;
   try
-    FList.Clear;
+    lstMissing.Clear;
     for LItem in FMissing do
-      FList.Items.Add(Format('%s  -  expected at %s', [LItem.Description, LItem.ExpectedPath]));
+      lstMissing.Items.Add(Format('%s  -  expected at %s', [LItem.Description, LItem.ExpectedPath]));
   finally
-    FList.EndUpdate;
+    lstMissing.EndUpdate;
   end;
 
   if Length(FMissing) > 0 then
-    FList.ItemIndex := 0;
+    lstMissing.ItemIndex := 0;
 
-  FBtnFolder.Enabled := Length(FMissing) > 0;
-  FBtnFile.Enabled := FList.ItemIndex >= 0;
+  btnSearchFolder.Enabled := Length(FMissing) > 0;
+  btnLocateFile.Enabled := lstMissing.ItemIndex >= 0;
   if Length(FMissing) = 0 then
   begin
     SetStatus('All files located.');
-    FBtnClose.Text := 'Close';
+    btnContinue.Text := 'Close';
   end;
 end;
 
 procedure TMissingFilesForm.SetStatus(const AText: string);
 begin
-  FStatus.Text := AText;
+  lblStatus.Text := AText;
 end;
 
 function TMissingFilesForm.IsLoaded(const AItem: TglTFMissingResource): Boolean;
@@ -273,14 +268,15 @@ begin
       FLog(Format('Located %s in %s', [LItem.Description, AWhere]));
 end;
 
-procedure TMissingFilesForm.ListChange(Sender: TObject);
+procedure TMissingFilesForm.lstMissingChange(Sender: TObject);
 begin
-  FBtnFile.Enabled := FList.ItemIndex >= 0;
+  if btnLocateFile <> nil then // nil while the form is loaded
+    btnLocateFile.Enabled := lstMissing.ItemIndex >= 0;
 end;
 
-procedure TMissingFilesForm.FolderClick(Sender: TObject);
+procedure TMissingFilesForm.btnSearchFolderClick(Sender: TObject);
 begin
-  TPlatformDialogs.SelectFolder('Folder containing the missing files', FLastDir,
+  TPlatformDialogs.SelectFolder(KEY_SEARCH_FOLDER, 'Folder containing the missing files', FLastDir,
     procedure(ADir: string)
     var
       LFound: Integer;
@@ -300,13 +296,13 @@ begin
     end);
 end;
 
-procedure TMissingFilesForm.FileClick(Sender: TObject);
+procedure TMissingFilesForm.btnLocateFileClick(Sender: TObject);
 var
   LItem: TglTFMissingResource;
   LItemIndex: Integer;
   LTypes: TArray<TFileType>;
 begin
-  LItemIndex := FList.ItemIndex;
+  LItemIndex := lstMissing.ItemIndex;
   if (LItemIndex < 0) or (LItemIndex > High(FMissing)) then
     Exit;
   LItem := FMissing[LItemIndex];
@@ -317,7 +313,8 @@ begin
   else
     LTypes := [TFileType.Create('Binary buffers', ['.bin']), TFileType.Create('All files', ['*'])];
 
-  TPlatformDialogs.OpenFile('Locate ' + LItem.Description, LTypes, FLastDir, LItem.FileName,
+  TPlatformDialogs.OpenFile(KEY_LOCATE_FILE, 'Locate ' + LItem.Description, LTypes, FLastDir,
+    LItem.FileName,
     procedure(AFileName: string)
     begin
       if AFileName <> '' then

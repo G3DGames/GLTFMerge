@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTF.AnimationSplit: Class TglTFAnimationSplitter</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFAnimationSplitter"></span><h1 class="cio">Class TglTFAnimationSplitter</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Constants">Constants</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTF.AnimationSplit.html">glTF.AnimationSplit</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFAnimationSplitter = class sealed(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Finds long animations and splits them by frame ranges.</p>
+<p>
+
+
+<p>All methods are class methods. They work on a TglTF whose buffer data is loaded.
+
+<p></p>
+
+<pre class="longcode">
+<span class="pascal_keyword">Index</span> := TglTFAnimationSplitter.FindLongAnimation(Doc.Root);
+<span class="pascal_keyword">if</span> <span class="pascal_keyword">Index</span> &gt;= <span class="pascal_numeric">0</span> <span class="pascal_keyword">then</span>
+<span class="pascal_keyword">begin</span>
+  Fps := TglTFAnimationSplitter.DetectFrameRate(Doc.Root, Doc.Root.Animations[<span class="pascal_keyword">Index</span>]);
+  TglTFAnimationSplitter.Split(Doc.Root, <span class="pascal_keyword">Index</span>, Fps,
+    [TglTFAnimationRange.Create(<span class="pascal_string">'walk'</span>, <span class="pascal_numeric">0</span>, <span class="pascal_numeric">90</span>),
+     TglTFAnimationRange.Create(<span class="pascal_string">'run'</span>, <span class="pascal_numeric">120</span>, <span class="pascal_numeric">300</span>)], <span class="pascal_keyword">nil</span>);
+<span class="pascal_keyword">end</span>;</pre>
+
+<p></p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TglTFAnimationSplitter</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Constants"></span><h3 class="summary">Constants</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#LongAnimationSeconds">LongAnimationSeconds</a></strong> = 10.0;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#ReadAccessor-TglTF-Integer-">ReadAccessor</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): TArray&lt;Single&gt;; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#Duration-TglTF-TglTFAnimation-">Duration</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AAnimation: <a href="glTF.Classes.TglTFAnimation.html">TglTFAnimation</a>): Double; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#DetectFrameRate-TglTF-TglTFAnimation-">DetectFrameRate</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AAnimation: <a href="glTF.Classes.TglTFAnimation.html">TglTFAnimation</a>): Double; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#LastFrame-Double-Double-">LastFrame</a></strong>(ADuration, AFrameRate: Double): Integer; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#FindLongAnimation-TglTF-Double-">FindLongAnimation</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AMinSeconds: Double = <a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#LongAnimationSeconds">LongAnimationSeconds</a>): Integer; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#ValidateRanges-TglTF-Integer-Integer-TglTFAnimationRanges-TArraystring-">ValidateRanges</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex, ALastFrame: Integer; const ARanges: <a href="glTF.AnimationSplit.html#TglTFAnimationRanges">TglTFAnimationRanges</a>; out AProblems: TArray&lt;string&gt;): Boolean; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#ParseRangeList-string-TglTFRangeList-">ParseRangeList</a></strong>(const AText: string; out AList: <a href="glTF.AnimationSplit.TglTFRangeList.html">TglTFRangeList</a>): Boolean; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#Split-TglTF-Integer-Double-TglTFAnimationRanges-TStrings-">Split</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer; AFrameRate: Double; const ARanges: <a href="glTF.AnimationSplit.html#TglTFAnimationRanges">TglTFAnimationRanges</a>; AWarnings: TStrings): Integer; static;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Constants</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LongAnimationSeconds"></span><code><strong>LongAnimationSeconds</strong> = 10.0;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Length in seconds above which an animation is likely to be several joined together.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ReadAccessor-TglTF-Integer-"></span><code>class function <strong>ReadAccessor</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer): TArray&lt;Single&gt;; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Reads an accessor's elements as floats.</p>
+<p>
+
+
+<p>Handles every component type, normalized integers (converted to -1..1 or 0..1), byteStride and sparse accessors. An accessor without a bufferView starts as zeros.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Accessors</code>.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">Count times the number of components floats, element after element.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The accessor's data is missing or lies outside its buffer.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Duration-TglTF-TglTFAnimation-"></span><code>class function <strong>Duration</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AAnimation: <a href="glTF.Classes.TglTFAnimation.html">TglTFAnimation</a>): Double; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the length of an animation in seconds.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree.</dd>
+<dt>AAnimation</dt>
+<dd>The animation.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The time of its last key frame: the largest &quot;max&quot; of its sampler inputs, or the largest time in their data when &quot;max&quot; is missing; 0 when unknown.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DetectFrameRate-TglTF-TglTFAnimation-"></span><code>class function <strong>DetectFrameRate</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AAnimation: <a href="glTF.Classes.TglTFAnimation.html">TglTFAnimation</a>): Double; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Estimates the frame rate an animation was made at.</p>
+<p>
+
+
+<p>Uses the median gap between two key frames, over all samplers. A result within 1% of a usual rate (12, 15, 23.976, 24, 25, 29.97, 30, 48, 50, 59.94, 60, 120) is snapped to it; otherwise it is rounded to a whole number.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree.</dd>
+<dt>AAnimation</dt>
+<dd>The animation.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">Frames per second; 30 when it cannot be told.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LastFrame-Double-Double-"></span><code>class function <strong>LastFrame</strong>(ADuration, AFrameRate: Double): Integer; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the last frame of an animation.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ADuration</dt>
+<dd>Length in seconds.</dd>
+<dt>AFrameRate</dt>
+<dd>Frames per second.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">ADuration times AFrameRate, rounded; frames run from 0 to this.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FindLongAnimation-TglTF-Double-"></span><code>class function <strong>FindLongAnimation</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AMinSeconds: Double = <a href="glTF.AnimationSplit.TglTFAnimationSplitter.html#LongAnimationSeconds">LongAnimationSeconds</a>): Integer; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Finds the longest animation that is likely to be several joined together.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree.</dd>
+<dt>AMinSeconds</dt>
+<dd>Only animations longer than this count.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">Index in <code>ARoot.Animations</code>; -1 when no animation is that long.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ValidateRanges-TglTF-Integer-Integer-TglTFAnimationRanges-TArraystring-"></span><code>class function <strong>ValidateRanges</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex, ALastFrame: Integer; const ARanges: <a href="glTF.AnimationSplit.html#TglTFAnimationRanges">TglTFAnimationRanges</a>; out AProblems: TArray&lt;string&gt;): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Checks the ranges an animation is to be split into.</p>
+<p>
+
+
+<p>Each name is required and must be unique, ignoring case, among the ranges and among the model's other animations. Frames must be from 0 to ALastFrame, and EndFrame must be after StartFrame. Gaps and overlaps between ranges are allowed.
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Animations</code> of the animation to split.</dd>
+<dt>ALastFrame</dt>
+<dd>The animation's last frame.</dd>
+<dt>ARanges</dt>
+<dd>The ranges.</dd>
+<dt>AProblems</dt>
+<dd>One entry per range: empty when it is fine, otherwise what is wrong.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when there is at least one range and none has a problem.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ParseRangeList-string-TglTFRangeList-"></span><code>class function <strong>ParseRangeList</strong>(const AText: string; out AList: <a href="glTF.AnimationSplit.TglTFRangeList.html">TglTFRangeList</a>): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Reads animation ranges from a text, such as the list that comes with an animation file.</p>
+<p>
+
+
+<p>A line holds a range when it has two whole numbers, the start frame and then the end frame, separated only by spaces, tabs and signs such as &quot;-&quot;, &quot;~&quot;, &quot;:&quot; or &quot;..&quot;, or by the word &quot;to&quot;; a &quot;-&quot; is never a minus sign, as frames are never negative. The name is the text before the numbers or, when there is none, the text after them. It ends at a tab, two spaces, &quot;(&quot;, &quot;[&quot;, &quot;#&quot;, &quot;;&quot; or &quot;//&quot;, so notes after it are ignored, and must contain a letter. Quotes are removed, and so are a leading list number such as &quot;3.&quot; and surrounding signs such as &quot;:&quot; or &quot;,&quot;. Digits inside a name, as in walk_01, are part of it.
+
+<p>Lines before the first range and after the last, such as a title or a note, are ignored. Lines between them that hold text but no range are skipped and listed. The ranges are not checked; see ValidateRanges.
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+
+<pre class="longcode">
+<span class="pascal_numeric">10</span> - <span class="pascal_numeric">40</span>  walk_01           -&gt; walk_01, <span class="pascal_numeric">10</span>, <span class="pascal_numeric">40</span>
+Look Around    <span class="pascal_numeric">415</span> - <span class="pascal_numeric">555</span>  -&gt; Look Around, <span class="pascal_numeric">415</span>, <span class="pascal_numeric">555</span>
+&quot;Run&quot; <span class="pascal_numeric">625-685</span> (<span class="pascal_numeric">3</span> loops)   -&gt; Run, <span class="pascal_numeric">625</span>, </pre>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AText</dt>
+<dd>The text, with any line ends.</dd>
+<dt>AList</dt>
+<dd>What was found.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when at least one range was found.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Split-TglTF-Integer-Double-TglTFAnimationRanges-TStrings-"></span><code>class function <strong>Split</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer; AFrameRate: Double; const ARanges: <a href="glTF.AnimationSplit.html#TglTFAnimationRanges">TglTFAnimationRanges</a>; AWarnings: TStrings): Integer; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Replaces an animation with one new animation per range.</p>
+<p>
+
+
+<p>The new animations take the old one's place in the list, in the order of ARanges, with its Origin and with ExportOnSave True. Their key frame data is appended to the model's buffer in one go, and the data only the old animation used is removed. The ranges are checked first; nothing changes when they are invalid or the data cannot be read.
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to change.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Animations</code> of the animation to split.</dd>
+<dt>AFrameRate</dt>
+<dd>Frames per second used to turn frames into seconds.</dd>
+<dt>ARanges</dt>
+<dd>The parts, see ValidateRanges.</dd>
+<dt>AWarnings</dt>
+<dd>Receives a line for each clean-up step skipped; may be nil.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The number of animations created.</p><h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>The ranges are invalid, or the animation's data cannot be read.</dd>
+</dl>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

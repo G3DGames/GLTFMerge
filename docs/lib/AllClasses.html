@@ -109,9 +109,19 @@
 <td class="itemdesc"><p>Imports the animations of other glTF files into a document, one animation at a time.</p></td>
 </tr>
 <tr class="list2">
+<td class="itemname"><a class="bold" href="glTF.AnimationSplit.TglTFAnimationRange.html">TglTFAnimationRange</a></td>
+<td class="itemunit"><a class="bold" href="glTF.AnimationSplit.html">glTF.AnimationSplit</a></td>
+<td class="itemdesc"><p>One part of a long animation: a name and a frame range.</p></td>
+</tr>
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFAnimationSampler.html">TglTFAnimationSampler</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF animation sampler: key frame times, values and how to interpolate between them.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="glTF.AnimationSplit.TglTFAnimationSplitter.html">TglTFAnimationSplitter</a></td>
+<td class="itemunit"><a class="bold" href="glTF.AnimationSplit.html">glTF.AnimationSplit</a></td>
+<td class="itemdesc"><p>Finds long animations and splits them by frame ranges.</p></td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Parts.TglTFAppliedPart.html">TglTFAppliedPart</a></td>
@@ -134,161 +144,186 @@
 <td class="itemdesc"><p>A glTF bufferView: a range of bytes in a buffer.</p></td>
 </tr>
 <tr class="list">
+<td class="itemname"><a class="bold" href="glTF.Bulk.TglTFBulkItem.html">TglTFBulkItem</a></td>
+<td class="itemunit"><a class="bold" href="glTF.Bulk.html">glTF.Bulk</a></td>
+<td class="itemdesc"><p>One model to convert: where it is read from and where it is saved.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="glTF.Bulk.TglTFBulkOptions.html">TglTFBulkOptions</a></td>
+<td class="itemunit"><a class="bold" href="glTF.Bulk.html">glTF.Bulk</a></td>
+<td class="itemdesc"><p>What a bulk re-orientation does.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="glTF.Bulk.TglTFBulkReorienter.html">TglTFBulkReorienter</a></td>
+<td class="itemunit"><a class="bold" href="glTF.Bulk.html">glTF.Bulk</a></td>
+<td class="itemdesc"><p>Finds the models in a folder tree and saves re-oriented copies of them.</p></td>
+</tr>
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFCamera.html">TglTFCamera</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF camera: a perspective or orthographic projection.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFCameraOrthographic.html">TglTFCameraOrthographic</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>The orthographic projection of a camera.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFCameraPerspective.html">TglTFCameraPerspective</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>The perspective projection of a camera.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Base.TglTFChildOfRootProperty.html">TglTFChildOfRootProperty</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Base.html">glTF.Base</a></td>
 <td class="itemdesc"><p>Abstract base of the objects stored in the root's arrays, glTFChildOfRootProperty in the schema.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Document.TglTFDocument.html">TglTFDocument</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Document.html">glTF.Document</a></td>
 <td class="itemdesc"><p>A glTF 2.0 document: its object tree and loading and saving.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Edit.TglTFEdit.html">TglTFEdit</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Edit.html">glTF.Edit</a></td>
 <td class="itemdesc"><p>Editing operations on a glTF object tree that keep its indices consistent.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFImage.html">TglTFImage</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF image: texture data stored in a file, a data URI or a bufferView.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Base.TglTFList.generic.html">TglTFList</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Base.html">glTF.Base</a></td>
 <td class="itemdesc"><p>Owning list of glTF objects, loaded from and saved to a JSON array.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFMaterial.html">TglTFMaterial</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF material: how a surface looks.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Base.TglTFMemberInfo.html">TglTFMemberInfo</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Base.html">glTF.Base</a></td>
 <td class="itemdesc"><p>Describes one simple-value property that is read from and written to JSON.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFMesh.html">TglTFMesh</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF mesh: a set of primitives drawn together.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFMeshPrimitive.html">TglTFMeshPrimitive</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF mesh primitive: geometry drawn with one material.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Document.TglTFMissingResource.html">TglTFMissingResource</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Document.html">glTF.Document</a></td>
 <td class="itemdesc"><p>An external buffer or image file whose data is not loaded.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFNode.html">TglTFNode</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF node: an element of the scene hierarchy with a transform.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFNormalTextureInfo.html">TglTFNormalTextureInfo</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A reference to a normal map, with its scale.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFOcclusionTextureInfo.html">TglTFOcclusionTextureInfo</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A reference to an occlusion map, with its strength.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Parts.TglTFPart.html">TglTFPart</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Parts.html">glTF.Parts</a></td>
 <td class="itemdesc"><p>One skinned mesh found in a part file: a piece that can be put on a model.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Parts.TglTFPartApplier.html">TglTFPartApplier</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Parts.html">glTF.Parts</a></td>
 <td class="itemdesc"><p>Puts parts on a model and takes them off again.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Parts.TglTFPartLibrary.html">TglTFPartLibrary</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Parts.html">glTF.Parts</a></td>
 <td class="itemdesc"><p>The part files loaded and the parts found in them.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Parts.TglTFPartOptions.html">TglTFPartOptions</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Parts.html">glTF.Parts</a></td>
 <td class="itemdesc"><p>Settings that decide which bones a part covers and what it replaces.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFPbrMetallicRoughness.html">TglTFPbrMetallicRoughness</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>The metallic-roughness parameters of a material.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Document.TglTFProgress.html">TglTFProgress</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Document.html">glTF.Document</a></td>
 <td class="itemdesc"><p>How far a long operation has got: which model, which stage, how much of it.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Base.TglTFProperty.html">TglTFProperty</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Base.html">glTF.Base</a></td>
 <td class="itemdesc"><p>Abstract base of every glTF object, glTFProperty in the schema.</p></td>
 </tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="glTF.AnimationSplit.TglTFRangeList.html">TglTFRangeList</a></td>
+<td class="itemunit"><a class="bold" href="glTF.AnimationSplit.html">glTF.AnimationSplit</a></td>
+<td class="itemdesc"><p>What <a class="normal" href="glTF.AnimationSplit.TglTFAnimationSplitter.html#ParseRangeList-string-TglTFRangeList-">TglTFAnimationSplitter.ParseRangeList</a> found in a text.</p></td>
+</tr>
 <tr class="list2">
+<td class="itemname"><a class="bold" href="glTF.Orient.TglTFReorienter.html">TglTFReorienter</a></td>
+<td class="itemunit"><a class="bold" href="glTF.Orient.html">glTF.Orient</a></td>
+<td class="itemdesc"><p>Turns a whole model about the X, Y and Z axes.</p></td>
+</tr>
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFSampler.html">TglTFSampler</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF sampler: texture filtering and wrapping.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Document.TglTFSaveOptions.html">TglTFSaveOptions</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Document.html">glTF.Document</a></td>
 <td class="itemdesc"><p>Settings for <a class="normal" href="glTF.Document.TglTFDocument.html#SaveToFile-string-TglTFSaveOptions-">TglTFDocument.SaveToFile</a> and <a class="normal" href="glTF.Document.TglTFDocument.html#SaveToStream-TStream-TglTFFileFormat-TglTFSaveOptions-">TglTFDocument.SaveToStream</a>.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFScene.html">TglTFScene</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF scene: the root nodes of a hierarchy to show.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFSkin.html">TglTFSkin</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF skin: the joints that deform a skinned mesh.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.SourceMap.TglTFSourceMap.html">TglTFSourceMap</a></td>
 <td class="itemunit"><a class="bold" href="glTF.SourceMap.html">glTF.SourceMap</a></td>
 <td class="itemdesc"><p>Positions of every value of a JSON text, looked up by JSON path.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.SourceMap.TglTFSourceSpan.html">TglTFSourceSpan</a></td>
 <td class="itemunit"><a class="bold" href="glTF.SourceMap.html">glTF.SourceMap</a></td>
 <td class="itemdesc"><p>Where a value is in the source text; all positions are 1-based.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFTexture.html">TglTFTexture</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A glTF texture: an image combined with a sampler.</p></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold" href="glTF.Classes.TglTFTextureInfo.html">TglTFTextureInfo</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Classes.html">glTF.Classes</a></td>
 <td class="itemdesc"><p>A reference from a material to a texture.</p></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold" href="glTF.Base.TglTFTypeInfo.html">TglTFTypeInfo</a></td>
 <td class="itemunit"><a class="bold" href="glTF.Base.html">glTF.Base</a></td>
 <td class="itemdesc"><p>Metadata of one glTF object class, collected once through RTTI.</p></td>

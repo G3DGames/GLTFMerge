@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.Images: Class TglTFImagesFrame</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TglTFImagesFrame"></span><h1 class="cio">Class TglTFImagesFrame</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.Images.html">glTFViewer.Images</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TglTFImagesFrame = class(TFrame)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Frame listing the images of a document, with an optional list to choose how each one is saved.</p>
+<p>
+
+
+<p>Place it on a tab with Align = Client and call <a class="normal" href="glTFViewer.Images.TglTFImagesFrame.html#Bind-TglTFDocument-">Bind</a> after each load. Must be used on the main thread.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TFrame</li>
+<li class="thisitem">TglTFImagesFrame</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#layBar">layBar</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#chkAlter">chkAlter</a></strong>: TCheckBox;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#btnLocate">btnLocate</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#lblSummary">lblSummary</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#splEmbed">splEmbed</a></strong>: TSplitter;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#layEmbed">layEmbed</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#lblEmbedNote">lblEmbedNote</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#layEmbedHeader">layEmbedHeader</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#lstEmbed">lstEmbed</a></strong>: TListBox;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#layHeader">layHeader</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.Images.TglTFImagesFrame.html#lstImages">lstImages</a></strong>: TListBox;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#chkAlterChange-TObject-">chkAlterChange</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#btnLocateClick-TObject-">btnLocateClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#layHeaderResize-TObject-">layHeaderResize</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#layEmbedHeaderResize-TObject-">layEmbedHeaderResize</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#lstImagesPainting-TObject-TCanvas-TRectF-">lstImagesPainting</a></strong>(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#lstEmbedPainting-TObject-TCanvas-TRectF-">lstEmbedPainting</a></strong>(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);</code></td>
+</tr>
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#Resize">Resize</a></strong>; override;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#Create-TComponent-">Create</a></strong>(AOwner: TComponent); override;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#Bind-TglTFDocument-">Bind</a></strong>(ADoc: TglTFDocument);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#RefreshList">RefreshList</a></strong>;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#AlterSaveMode">AlterSaveMode</a></strong>: Boolean read GetAlterSaveMode;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#OnLocateMissing">OnLocateMissing</a></strong>: TNotifyEvent read FOnLocateMissing write FOnLocateMissing;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.Images.TglTFImagesFrame.html#OnChange">OnChange</a></strong>: TNotifyEvent read FOnChange write FOnChange;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layBar"></span><code><strong>layBar</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The bar with the save mode box, Locate missing and the summary.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="chkAlter"></span><code><strong>chkAlter</strong>: TCheckBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+&quot;Alter image save mode&quot;: shows the list of Embed choices.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnLocate"></span><code><strong>btnLocate</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnLocateMissing; enabled while files are missing.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblSummary"></span><code><strong>lblSummary</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+How many images are saved, and how.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="splEmbed"></span><code><strong>splEmbed</strong>: TSplitter;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Separates the Embed choices from the list of images.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layEmbed"></span><code><strong>layEmbed</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The Embed choices, on the right, shown while chkAlter is ticked.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblEmbedNote"></span><code><strong>lblEmbedNote</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+What a tick in the Embed list means.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layEmbedHeader"></span><code><strong>layEmbedHeader</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The headings of the Embed list, filled in from its column list.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstEmbed"></span><code><strong>lstEmbed</strong>: TListBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+One row per image that is saved, with its Embed tick.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layHeader"></span><code><strong>layHeader</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The headings of the list of images, filled in from its column list.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstImages"></span><code><strong>lstImages</strong>: TListBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+One row per image.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="chkAlterChange-TObject-"></span><code>procedure <strong>chkAlterChange</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Shows or hides the Embed choices.</p>
+<p>
+
+
+<p>The first time for a document, every image starts ticked, as a GLB would store it.
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The checkbox.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnLocateClick-TObject-"></span><code>procedure <strong>btnLocateClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Raises OnLocateMissing.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layHeaderResize-TObject-"></span><code>procedure <strong>layHeaderResize</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lays out the headings of the list of images again.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The heading row.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layEmbedHeaderResize-TObject-"></span><code>procedure <strong>layEmbedHeaderResize</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lays out the headings of the Embed list again.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The heading row.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstImagesPainting-TObject-TCanvas-TRectF-"></span><code>procedure <strong>lstImagesPainting</strong>(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Keeps the headings above the cells of the images.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The list.</dd>
+<dt>Canvas</dt>
+<dd>The canvas painted on.</dd>
+<dt>ARect</dt>
+<dd>The area painted.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstEmbedPainting-TObject-TCanvas-TRectF-"></span><code>procedure <strong>lstEmbedPainting</strong>(Sender: TObject; Canvas: TCanvas; const ARect: TRectF);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Keeps the headings above the cells of the Embed list.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The list.</dd>
+<dt>Canvas</dt>
+<dd>The canvas painted on.</dd>
+<dt>ARect</dt>
+<dd>The area painted.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-protected wide_list">
+<tr class="list visibility-protected">
+<td class="visibility"><span class="badge vis-protected">Protected</span></td>
+<td class="itemcode"><span id="Resize"></span><code>procedure <strong>Resize</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lays the rows out again for the new width.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-TComponent-"></span><code>constructor <strong>Create</strong>(AOwner: TComponent); override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the frame with an empty list.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AOwner</dt>
+<dd>Owner of the frame.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Bind-TglTFDocument-"></span><code>procedure <strong>Bind</strong>(ADoc: TglTFDocument);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Shows the images of a document.</p>
+<p>
+
+
+<p>&quot;Alter image save mode&quot; is unticked again. The frame keeps a reference to ADoc but does not own it; call Bind(nil) before freeing the document.
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ADoc</dt>
+<dd>The document to show; nil clears the list.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RefreshList"></span><code>procedure <strong>RefreshList</strong>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Rebuilds the rows from the current document.</p>
+<p>
+
+
+<p>Call it after the document changes, for example after missing files were located or parts were put on or taken off; the Used column is worked out again. The state of &quot;Alter image save mode&quot; is kept.</p>
+</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AlterSaveMode"></span><code>property <strong>AlterSaveMode</strong>: Boolean read GetAlterSaveMode;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Whether &quot;Alter image save mode&quot; is ticked: each image's Embed tick then decides how it is saved, instead of the format.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnLocateMissing"></span><code>property <strong>OnLocateMissing</strong>: TNotifyEvent read FOnLocateMissing write FOnLocateMissing;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user clicks &quot;Locate missing...&quot;.</p>
+<p>
+
+
+<p>The handler is expected to let the user find the files and then call <a class="normal" href="glTFViewer.Images.TglTFImagesFrame.html#RefreshList">RefreshList</a>.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="OnChange"></span><code>property <strong>OnChange</strong>: TNotifyEvent read FOnChange write FOnChange;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Occurs when the user changes what a save writes: &quot;Alter image save mode&quot; or an Embed tick.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

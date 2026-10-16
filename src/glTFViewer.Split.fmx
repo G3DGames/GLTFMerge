@@ -1,0 +1,250 @@
+object SplitAnimationForm: TSplitAnimationForm
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  Caption = 'Split animation'
+  ClientHeight = 580
+  ClientWidth = 860
+  Position = MainFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Padding.Left = 12.000000000000000000
+  Padding.Top = 10.000000000000000000
+  Padding.Right = 12.000000000000000000
+  Padding.Bottom = 10.000000000000000000
+  OnClose = FormClose
+  DesignerMasterStyle = 0
+  object layTop: TLayout
+    Align = Top
+    Size.Width = 836.000000000000000000
+    Size.Height = 128.000000000000000000
+    Position.X = 12.000000000000000000
+    Position.Y = 10.000000000000000000
+    Size.PlatformDefault = False
+    object lblInfo: TLabel
+      Align = Top
+      Size.Width = 836.000000000000000000
+      Size.Height = 22.000000000000000000
+      StyledSettings = [Family, Size, FontColor, Other]
+      TextSettings.Font.Style = [fsBold]
+      Size.PlatformDefault = False
+    end
+    object layFields: TLayout
+      Align = Top
+      Size.Width = 836.000000000000000000
+      Size.Height = 32.000000000000000000
+      Position.Y = 22.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Size.PlatformDefault = False
+      object lblRate: TLabel
+        Align = Left
+        Size.Width = 150.000000000000000000
+        Size.Height = 24.000000000000000000
+        Position.X = 0.000000000000000000
+        Position.Y = 4.000000000000000000
+        AutoSize = True
+        Margins.Right = 6.000000000000000000
+        StyledSettings = [Family, Size, Style, FontColor]
+        TextSettings.WordWrap = False
+        Text = 'Frame rate (per second):'
+        Size.PlatformDefault = False
+      end
+      object edtRate: TEdit
+        Align = Left
+        Position.X = 156.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 80.000000000000000000
+        Size.Height = 24.000000000000000000
+        Margins.Right = 18.000000000000000000
+        OnChangeTracking = edtRateChangeTracking
+        Size.PlatformDefault = False
+      end
+      object lblLastFrame: TLabel
+        Align = Left
+        Size.Width = 150.000000000000000000
+        Size.Height = 24.000000000000000000
+        Position.X = 260.000000000000000000
+        Position.Y = 4.000000000000000000
+        AutoSize = True
+        Margins.Right = 6.000000000000000000
+        StyledSettings = [Family, Size, Style, FontColor]
+        TextSettings.WordWrap = False
+        Text = 'Last frame:'
+        Size.PlatformDefault = False
+      end
+      object edtLastFrame: TEdit
+        Align = Left
+        Position.X = 416.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 80.000000000000000000
+        Size.Height = 24.000000000000000000
+        Margins.Right = 18.000000000000000000
+        OnChangeTracking = edtLastFrameChangeTracking
+        Size.PlatformDefault = False
+      end
+    end
+    object lblHint: TLabel
+      Align = Top
+      Size.Width = 836.000000000000000000
+      Size.Height = 20.000000000000000000
+      Position.Y = 54.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object lblHowTo: TLabel
+      Align = Top
+      Size.Width = 836.000000000000000000
+      Size.Height = 20.000000000000000000
+      Position.Y = 74.000000000000000000
+      Text = 'Type one row per animation; a new empty row appears as you ' +
+        'go. Gaps between the ranges are fine, and a row left empty ' +
+        'is ignored.'
+      Size.PlatformDefault = False
+    end
+    object chkIncreasing: TCheckBox
+      Align = Top
+      Position.Y = 94.000000000000000000
+      Size.Width = 836.000000000000000000
+      Size.Height = 24.000000000000000000
+      IsChecked = True
+      Text = 'Frames increase from row to row (a row may start where the ' +
+        'row before ends)'
+      OnChange = chkIncreasingChange
+      Size.PlatformDefault = False
+    end
+  end
+  object grdRanges: TStringGrid
+    Align = Client
+    CanFocus = True
+    ClipChildren = True
+    Position.X = 12.000000000000000000
+    Position.Y = 138.000000000000000000
+    Size.Width = 836.000000000000000000
+    Size.Height = 306.000000000000000000
+    RowCount = 1
+    OnEditingDone = grdRangesEditingDone
+    Size.PlatformDefault = False
+    object colRow: TStringColumn
+      Header = 'Row'
+      Size.Width = 50.000000000000000000
+      ReadOnly = True
+      Size.PlatformDefault = False
+    end
+    object colName: TStringColumn
+      Header = 'Animation Name'
+      Size.Width = 280.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object colStart: TStringColumn
+      Header = 'Start Frame'
+      Size.Width = 110.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object colEnd: TStringColumn
+      Header = 'End Frame'
+      Size.Width = 110.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object lblProblems: TLabel
+    Align = Bottom
+    Size.Width = 836.000000000000000000
+    Size.Height = 80.000000000000000000
+    Position.X = 12.000000000000000000
+    Position.Y = 450.000000000000000000
+    Margins.Top = 6.000000000000000000
+    StyledSettings = [Family, Size, Style]
+    TextSettings.FontColor = claRed
+    TextSettings.WordWrap = True
+    TextSettings.VertAlign = Leading
+    Size.PlatformDefault = False
+  end
+  object layButtons: TLayout
+    Align = Bottom
+    Size.Width = 836.000000000000000000
+    Size.Height = 40.000000000000000000
+    Position.X = 12.000000000000000000
+    Position.Y = 530.000000000000000000
+    Padding.Top = 8.000000000000000000
+    Size.PlatformDefault = False
+    object btnSaveSheet: TButton
+      Align = Left
+      Size.Width = 110.000000000000000000
+      Size.Height = 32.000000000000000000
+      Text = 'Save sheet...'
+      Position.X = 4.000000000000000000
+      Position.Y = 8.000000000000000000
+      Margins.Left = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      OnClick = btnSaveSheetClick
+      Size.PlatformDefault = False
+    end
+    object btnLoadSheet: TButton
+      Align = Left
+      Size.Width = 110.000000000000000000
+      Size.Height = 32.000000000000000000
+      Text = 'Load sheet...'
+      Position.X = 122.000000000000000000
+      Position.Y = 8.000000000000000000
+      Margins.Left = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      OnClick = btnLoadSheetClick
+      Size.PlatformDefault = False
+    end
+    object btnImportList: TButton
+      Align = Left
+      Size.Width = 110.000000000000000000
+      Size.Height = 32.000000000000000000
+      Text = 'Import list...'
+      Position.X = 240.000000000000000000
+      Position.Y = 8.000000000000000000
+      Margins.Left = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      OnClick = btnImportListClick
+      Hint = 'Read the ranges from a text file, such as the list that ' +
+        'comes with the animation'
+      ShowHint = True
+      Size.PlatformDefault = False
+    end
+    object btnClear: TButton
+      Align = Left
+      Size.Width = 110.000000000000000000
+      Size.Height = 32.000000000000000000
+      Text = 'Clear'
+      Position.X = 358.000000000000000000
+      Position.Y = 8.000000000000000000
+      Margins.Left = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      OnClick = btnClearClick
+      Hint = 'Empty the grid'
+      ShowHint = True
+      Size.PlatformDefault = False
+    end
+    object btnCancel: TButton
+      Align = Right
+      Size.Width = 110.000000000000000000
+      Size.Height = 32.000000000000000000
+      Text = 'Cancel'
+      Position.X = 604.000000000000000000
+      Position.Y = 8.000000000000000000
+      Margins.Left = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      Cancel = True
+      ModalResult = 2
+      Size.PlatformDefault = False
+    end
+    object btnConvert: TButton
+      Align = Right
+      Size.Width = 110.000000000000000000
+      Size.Height = 32.000000000000000000
+      Text = 'Convert'
+      Position.X = 722.000000000000000000
+      Position.Y = 8.000000000000000000
+      Margins.Left = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      OnClick = btnConvertClick
+      Size.PlatformDefault = False
+    end
+  end
+end

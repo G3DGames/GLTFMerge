@@ -35,9 +35,9 @@ Question shown when an imported animation's name is already used.</p>
 <p>
 
 
-<p><a class="normal" href="glTFViewer.Duplicates.TDuplicatePanel.html">TDuplicatePanel</a> offers the choices of <code>TglTFDuplicateAction</code>: replace the old animation, keep the old one and ignore the imported one, or rename the imported one, with a unique name suggested and editable. A tick applies the same choice to the remaining duplicates of the import, and &quot;Abort import&quot; stops the import after the animations already added.
+<p><a class="normal" href="glTFViewer.Duplicates.TDuplicateFrame.html">TDuplicateFrame</a> offers the choices of <code>TglTFDuplicateAction</code>: replace the old animation, keep the old one and ignore the imported one, or rename the imported one, with a unique name suggested and editable. A tick applies the same choice to the remaining duplicates of the import, and &quot;Abort import&quot; stops the import after the animations already added.
 
-<p>It is not a separate modal form but a panel drawn over the main form, like the progress box, so the application keeps running normally while it waits: the import, waiting in its background thread, gets the answer through a callback. The panel is built in code, so the unit needs no .fmx file.</p>
+<p>It is not a separate modal form but a panel drawn over the main form, like the progress box, so the application keeps running normally while it waits: the import, waiting in its background thread, gets the answer through a callback. The frame is designed in glTFViewer.Duplicates.fmx.</p>
 <span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
 <span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
 <table class="classestable wide_list">
@@ -50,7 +50,7 @@ Question shown when an imported animation's name is already used.</p>
 <td class="itemdesc">The answer given to the duplicate question.</td>
 </tr>
 <tr class="list2">
-<td class="itemname">Class&nbsp;<a class="bold" href="glTFViewer.Duplicates.TDuplicatePanel.html"><code>TDuplicatePanel</code></a></td>
+<td class="itemname">Class&nbsp;<a class="bold" href="glTFViewer.Duplicates.TDuplicateFrame.html"><code>TDuplicateFrame</code></a></td>
 <td class="itemdesc">Asks, over its parent form, what to do with a duplicate animation.</td>
 </tr>
 </table>

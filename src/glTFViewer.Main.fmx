@@ -10,68 +10,44 @@ object glTFMainForm: TglTFMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   DesignerMasterStyle = 0
-  object ToolBar: TToolBar
-    Size.Width = 960.000000000000000000
-    Size.Height = 40.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 0
-    object btnOpen: TButton
-      Align = Left
-      Margins.Left = 6.000000000000000000
-      Margins.Top = 6.000000000000000000
-      Margins.Bottom = 6.000000000000000000
-      Position.X = 6.000000000000000000
-      Position.Y = 6.000000000000000000
-      Size.Width = 90.000000000000000000
-      Size.Height = 28.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-      Text = 'Open...'
-      OnClick = btnOpenClick
-    end
-    object btnSave: TButton
-      Align = Left
-      Enabled = False
-      Margins.Left = 6.000000000000000000
-      Margins.Top = 6.000000000000000000
-      Margins.Bottom = 6.000000000000000000
-      Position.X = 102.000000000000000000
-      Position.Y = 6.000000000000000000
-      Size.Width = 90.000000000000000000
-      Size.Height = 28.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 1
-      Text = 'Save as...'
-      OnClick = btnSaveClick
-    end
-    object btnSelfTest: TButton
-      Align = Left
-      Margins.Left = 6.000000000000000000
-      Margins.Top = 6.000000000000000000
-      Margins.Bottom = 6.000000000000000000
-      Position.X = 198.000000000000000000
-      Position.Y = 6.000000000000000000
-      Size.Width = 120.000000000000000000
-      Size.Height = 28.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 2
-      Text = 'Run self-tests'
-      OnClick = btnSelfTestClick
-    end
-    object lblFile: TLabel
-      Align = Client
-      Margins.Left = 12.000000000000000000
-      Margins.Right = 6.000000000000000000
-      Size.Width = 624.000000000000000000
-      Size.Height = 40.000000000000000000
-      Size.PlatformDefault = False
-      Text = 'No file loaded'
+  object MainMenu: TMainMenu
+    Left = 40
+    Top = 104
+    object miFile: TMenuItem
+      Text = '&File'
+      object miOpen: TMenuItem
+        Locked = True
+        ShortCut = 16463
+        Text = '&Open...'
+        OnClick = miOpenClick
+      end
+      object miSaveAs: TMenuItem
+        Locked = True
+        Enabled = False
+        ShortCut = 24659
+        Text = 'Save &As...'
+        OnClick = miSaveAsClick
+      end
+      object miBulkOrient: TMenuItem
+        Locked = True
+        Text = '&Bulk Re-Orient...'
+        OnClick = miBulkOrientClick
+      end
+      object miExitSeparator: TMenuItem
+        Locked = True
+        Text = '-'
+      end
+      object miExit: TMenuItem
+        Locked = True
+        Text = 'E&xit'
+        OnClick = miExitClick
+      end
     end
   end
   object TabControl: TTabControl
     Align = Client
     Size.Width = 960.000000000000000000
-    Size.Height = 600.000000000000000000
+    Size.Height = 640.000000000000000000
     Size.PlatformDefault = False
     TabIndex = 0
     TabOrder = 1

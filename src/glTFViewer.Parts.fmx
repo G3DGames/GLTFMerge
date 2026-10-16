@@ -1,0 +1,218 @@
+object glTFPartsFrame: TglTFPartsFrame
+  Size.Width = 960.000000000000000000
+  Size.Height = 574.000000000000000000
+  Size.PlatformDefault = False
+  object layBar: TLayout
+    Align = Top
+    Size.Width = 960.000000000000000000
+    Size.Height = 40.000000000000000000
+    Padding.Left = 6.000000000000000000
+    Padding.Top = 6.000000000000000000
+    Padding.Right = 6.000000000000000000
+    Padding.Bottom = 6.000000000000000000
+    Size.PlatformDefault = False
+    object btnAddFiles: TButton
+      Align = Left
+      Size.Width = 130.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Add part files...'
+      Position.X = 6.000000000000000000
+      Position.Y = 6.000000000000000000
+      OnClick = btnAddFilesClick
+      Size.PlatformDefault = False
+    end
+    object btnClearList: TButton
+      Align = Left
+      Size.Width = 90.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Clear list'
+      Position.X = 142.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 6.000000000000000000
+      OnClick = btnClearListClick
+      Size.PlatformDefault = False
+    end
+    object btnApply: TButton
+      Align = Left
+      Size.Width = 150.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Put on ticked parts'
+      Position.X = 250.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 18.000000000000000000
+      OnClick = btnApplyClick
+      Size.PlatformDefault = False
+    end
+    object lblSummary: TLabel
+      Align = Client
+      Size.Width = 526.000000000000000000
+      Size.Height = 28.000000000000000000
+      Position.X = 414.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 14.000000000000000000
+      StyledSettings = [Family, Size, Style, FontColor]
+      TextSettings.WordWrap = False
+      TextSettings.Trimming = Character
+      Size.PlatformDefault = False
+    end
+  end
+  object laySettings: TLayout
+    Align = Top
+    Size.Width = 960.000000000000000000
+    Size.Height = 36.000000000000000000
+    Position.Y = 40.000000000000000000
+    Padding.Left = 6.000000000000000000
+    Padding.Top = 4.000000000000000000
+    Padding.Right = 6.000000000000000000
+    Padding.Bottom = 4.000000000000000000
+    Size.PlatformDefault = False
+    object lblGapBefore: TLabel
+      Align = Left
+      Size.Width = 250.000000000000000000
+      Size.Height = 28.000000000000000000
+      Position.X = 6.000000000000000000
+      Position.Y = 4.000000000000000000
+      StyledSettings = [Family, Size, Style, FontColor]
+      TextSettings.WordWrap = False
+      TextSettings.Trimming = Character
+      Text = 'Hide the body where a part comes within'
+      Size.PlatformDefault = False
+    end
+    object spnGap: TSpinBox
+      Align = Left
+      Position.X = 256.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 90.000000000000000000
+      Size.Height = 28.000000000000000000
+      Max = 20.000000000000000000
+      Hint = 'As a share of the body''s height. Raise it for loose clothes ' +
+        'if skin shows through; lower it if skin near a part goes ' +
+        'missing'
+      ShowHint = True
+      OnChange = SettingsChange
+      Size.PlatformDefault = False
+    end
+    object lblGapAfter: TLabel
+      Align = Left
+      Size.Width = 175.000000000000000000
+      Size.Height = 28.000000000000000000
+      Position.X = 352.000000000000000000
+      Position.Y = 4.000000000000000000
+      Margins.Left = 6.000000000000000000
+      StyledSettings = [Family, Size, Style, FontColor]
+      TextSettings.WordWrap = False
+      TextSettings.Trimming = Character
+      Text = '% of its height. Never hide:'
+      Size.PlatformDefault = False
+    end
+    object edtKeep: TEdit
+      Align = Left
+      Position.X = 527.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 160.000000000000000000
+      Size.Height = 28.000000000000000000
+      TextPrompt = 'bone names, e.g. Head'
+      OnChange = SettingsChange
+      Size.PlatformDefault = False
+    end
+    object btnRefresh: TButton
+      Align = Left
+      Size.Width = 130.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Use on the model'
+      Position.X = 695.000000000000000000
+      Position.Y = 4.000000000000000000
+      Margins.Left = 8.000000000000000000
+      OnClick = btnRefreshClick
+      Size.PlatformDefault = False
+    end
+  end
+  object splApplied: TSplitter
+    Align = Bottom
+    Cursor = crVSplit
+    MinSize = 20.000000000000000000
+    Position.Y = 338.000000000000000000
+    Size.Width = 960.000000000000000000
+    Size.Height = 6.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object layApplied: TLayout
+    Align = Bottom
+    Size.Width = 960.000000000000000000
+    Size.Height = 230.000000000000000000
+    Position.Y = 344.000000000000000000
+    Size.PlatformDefault = False
+    object layAppliedBar: TLayout
+      Align = Top
+      Size.Width = 960.000000000000000000
+      Size.Height = 40.000000000000000000
+      Padding.Left = 6.000000000000000000
+      Padding.Top = 6.000000000000000000
+      Padding.Right = 6.000000000000000000
+      Padding.Bottom = 6.000000000000000000
+      Size.PlatformDefault = False
+      object lblAppliedTitle: TLabel
+        Align = Left
+        Size.Width = 260.000000000000000000
+        Size.Height = 28.000000000000000000
+        Position.X = 6.000000000000000000
+        Position.Y = 6.000000000000000000
+        StyledSettings = [Family, Size, FontColor]
+        TextSettings.Font.Style = [fsBold]
+        TextSettings.WordWrap = False
+        TextSettings.Trimming = Character
+        Text = 'Parts on the model'
+        Size.PlatformDefault = False
+      end
+      object btnRemove: TButton
+        Align = Left
+        Size.Width = 160.000000000000000000
+        Size.Height = 28.000000000000000000
+        Text = 'Take off ticked parts'
+        Position.X = 278.000000000000000000
+        Position.Y = 6.000000000000000000
+        Margins.Left = 12.000000000000000000
+        OnClick = btnRemoveClick
+        Size.PlatformDefault = False
+      end
+    end
+    object layAppliedHeader: TLayout
+      Align = Top
+      Size.Width = 960.000000000000000000
+      Size.Height = 26.000000000000000000
+      Padding.Left = 8.000000000000000000
+      Padding.Right = 8.000000000000000000
+      OnResize = layAppliedHeaderResize
+      Position.Y = 40.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object lstApplied: TListBox
+      Align = Client
+      Size.Width = 960.000000000000000000
+      Size.Height = 164.000000000000000000
+      ItemHeight = 26.000000000000000000
+      Position.Y = 66.000000000000000000
+      OnPainting = lstAppliedPainting
+      Size.PlatformDefault = False
+    end
+  end
+  object layPartsHeader: TLayout
+    Align = Top
+    Size.Width = 960.000000000000000000
+    Size.Height = 26.000000000000000000
+    Padding.Left = 8.000000000000000000
+    Padding.Right = 8.000000000000000000
+    OnResize = layPartsHeaderResize
+    Position.Y = 76.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lstParts: TListBox
+    Align = Client
+    Size.Width = 960.000000000000000000
+    Size.Height = 236.000000000000000000
+    ItemHeight = 26.000000000000000000
+    Position.Y = 102.000000000000000000
+    OnPainting = lstPartsPainting
+    Size.PlatformDefault = False
+  end
+end

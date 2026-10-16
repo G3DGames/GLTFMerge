@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>glTFViewer.FileBrowser: Class TFileBrowserForm</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.5.snapshot">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Documentation</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TFileBrowserForm"></span><h1 class="cio">Class TFileBrowserForm</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="glTFViewer.FileBrowser.html">glTFViewer.FileBrowser</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TFileBrowserForm = class(TForm)</code></p>
+<h2 class="description">Description</h2>
+<p>
+A file browser for platforms without file dialogs.</p>
+<p>
+
+
+<p>Create it with <a class="normal" href="glTFViewer.FileBrowser.TFileBrowserForm.html#CreateBrowser-TBrowseMode-string-TArrayTFileType-Integer-string-string-">CreateBrowser</a> and show it with ShowModal and a result procedure; it frees itself when it closes. Must be used on the main thread.</p>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TForm</li>
+<li class="thisitem">TFileBrowserForm</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#layTop">layTop</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#lblTitle">lblTitle</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#layLocations">layLocations</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#btnUp">btnUp</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#btnAppFiles">btnAppFiles</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#btnDocuments">btnDocuments</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#btnDownloads">btnDownloads</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#lblPath">lblPath</a></strong>: TLabel;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#lstFiles">lstFiles</a></strong>: TListBox;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#layBottom">layBottom</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#edtName">edtName</a></strong>: TEdit;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#cbType">cbType</a></strong>: TComboBox;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#layOKCancel">layOKCancel</a></strong>: TLayout;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#btnCancel">btnCancel</a></strong>: TButton;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code><strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#btnOK">btnOK</a></strong>: TButton;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#btnUpClick-TObject-">btnUpClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#LocationClick-TObject-">LocationClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#cbTypeChange-TObject-">cbTypeChange</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#lstFilesItemClick-TCustomListBox-TListBoxItem-">lstFilesItemClick</a></strong>(const Sender: TCustomListBox; const AItem: TListBoxItem);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#btnOKClick-TObject-">btnOKClick</a></strong>(Sender: TObject);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#FormClose-TObject-TCloseAction-">FormClose</a></strong>(Sender: TObject; var Action: TCloseAction);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#CreateBrowser-TBrowseMode-string-TArrayTFileType-Integer-string-string-">CreateBrowser</a></strong>(AMode: <a href="glTFViewer.FileBrowser.html#TBrowseMode">TBrowseMode</a>; const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; ATypeIndex: Integer; const AInitialDir, AFileName: string);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>destructor <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#Destroy">Destroy</a></strong>; override;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#ResultPath">ResultPath</a></strong>: string read FResult;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#Chosen">Chosen</a></strong>: TArray&lt;string&gt; read GetChosen;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="glTFViewer.FileBrowser.TFileBrowserForm.html#TypeIndex">TypeIndex</a></strong>: Integer read GetTypeIndex;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layTop"></span><code><strong>layTop</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The title, the folder buttons and the path, at the top.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblTitle"></span><code><strong>lblTitle</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+What the browser is asking for.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layLocations"></span><code><strong>layLocations</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Holds Up and the buttons of the usual folders.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnUp"></span><code><strong>btnUp</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Goes to the parent folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnAppFiles"></span><code><strong>btnAppFiles</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Goes to the app's own documents folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnDocuments"></span><code><strong>btnDocuments</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Goes to the shared Documents folder; hidden when it is the app's own.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnDownloads"></span><code><strong>btnDownloads</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Goes to the shared Downloads folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lblPath"></span><code><strong>lblPath</strong>: TLabel;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The folder shown.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstFiles"></span><code><strong>lstFiles</strong>: TListBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The folders, then the files of the type chosen.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layBottom"></span><code><strong>layBottom</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The name box, the type list and the buttons, at the bottom.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="edtName"></span><code><strong>edtName</strong>: TEdit;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The file name to save under; shown when saving.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="cbType"></span><code><strong>cbType</strong>: TComboBox;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The file types; hidden when choosing a folder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="layOKCancel"></span><code><strong>layOKCancel</strong>: TLayout;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Holds the OK and Cancel buttons.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnCancel"></span><code><strong>btnCancel</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Closes the browser without a choice.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnOK"></span><code><strong>btnOK</strong>: TButton;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Open, Save or Use folder, depending on the mode.</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnUpClick-TObject-"></span><code>procedure <strong>btnUpClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Goes to the parent folder.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="LocationClick-TObject-"></span><code>procedure <strong>LocationClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Goes to the folder in the button's TagString.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="cbTypeChange-TObject-"></span><code>procedure <strong>cbTypeChange</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Lists the files of the type chosen.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The type list.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="lstFilesItemClick-TCustomListBox-TListBoxItem-"></span><code>procedure <strong>lstFilesItemClick</strong>(const Sender: TCustomListBox; const AItem: TListBoxItem);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Opens a folder tapped, or chooses, ticks or names a file tapped.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The list.</dd>
+<dt>AItem</dt>
+<dd>The row tapped.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="btnOKClick-TObject-"></span><code>procedure <strong>btnOKClick</strong>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Closes the browser with mrOk once a choice is made.</p>
+<p>
+
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The button.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FormClose-TObject-TCloseAction-"></span><code>procedure <strong>FormClose</strong>(Sender: TObject; var Action: TCloseAction);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the form when it closes.</p>
+<p>
+
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The form.</dd>
+<dt>Action</dt>
+<dd>Set to caFree.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="CreateBrowser-TBrowseMode-string-TArrayTFileType-Integer-string-string-"></span><code>constructor <strong>CreateBrowser</strong>(AMode: <a href="glTFViewer.FileBrowser.html#TBrowseMode">TBrowseMode</a>; const ATitle: string; const ATypes: TArray&lt;<a href="glTFViewer.Dialogs.TFileType.html">TFileType</a>&gt;; ATypeIndex: Integer; const AInitialDir, AFileName: string);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates the browser.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AMode</dt>
+<dd>What the browser is for.</dd>
+<dt>ATitle</dt>
+<dd>What it asks for, shown at the top.</dd>
+<dt>ATypes</dt>
+<dd>The file types offered; empty to list every file.</dd>
+<dt>ATypeIndex</dt>
+<dd>The type chosen at first.</dd>
+<dt>AInitialDir</dt>
+<dd>The folder shown at first; the default folder when it does not exist.</dd>
+<dt>AFileName</dt>
+<dd>The file name offered when saving.</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <strong>Destroy</strong>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Frees the browser.</p>
+</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="ResultPath"></span><code>property <strong>ResultPath</strong>: string read FResult;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The file or folder chosen, after mrOk in the modes bmOpen, bmSave and bmFolder.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Chosen"></span><code>property <strong>Chosen</strong>: TArray&lt;string&gt; read GetChosen;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The files ticked, after mrOk in the mode bmOpenMany.</p>
+</td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="TypeIndex"></span><code>property <strong>TypeIndex</strong>: Integer read GetTypeIndex;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+The index of the file type chosen; -1 when no types are offered.</p>
+</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

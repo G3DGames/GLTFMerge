@@ -2,9 +2,9 @@
 //** files.)
 //**
 //** The units glTF.Base, glTF.Classes, glTF.SourceMap, glTF.Document, glTF.Edit,
-//** glTF.Animations, glTF.AnimationSplit, glTF.Parts and glTF.Orient are the glTF reader,
-//** writer, animation importer and splitter, part swapper and re-orienter and have no user
-//** interface; they are in the GLTFLib folder. The glTFViewer units and the form are the
+//** glTF.Animations, glTF.AnimationSplit, glTF.Parts, glTF.Orient and glTF.Bulk are the glTF
+//** reader, writer, animation importer and splitter, part swapper, re-orienter and bulk
+//** re-orienter and have no user interface; they are in the GLTFLib folder. The glTFViewer units and the form are the
 //** application, in the src folder. Neon
 //** @(https://github.com/paolo-rossi/delphi-neon@) is expected in the delphi-neon folder next
 //** to this file; its units are listed below. Needs Delphi 10.4 or later. Memory leaks are
@@ -17,6 +17,7 @@
 //**
 //** @preformatted(
 //** Command line @(desktop@):  glTFDemo [file.gltf|file.glb] [--selftest]
+//**                          --selftest only with SELF_TESTS, see glTFViewer.Main
 //** )
 program glTFMerge;
 
@@ -25,10 +26,10 @@ program glTFMerge;
   and GLB files.
 
   The units glTF.Base, glTF.Classes, glTF.SourceMap, glTF.Document, glTF.Edit,
-  glTF.Animations, glTF.AnimationSplit, glTF.Parts and glTF.Orient are the
-  glTF reader, writer, animation importer and splitter, part swapper and
-  re-orienter and have no user interface; they are in the GLTFLib folder. The glTFViewer units and the
-  form are the application, in the src folder. Neon
+  glTF.Animations, glTF.AnimationSplit, glTF.Parts, glTF.Orient and glTF.Bulk
+  are the glTF reader, writer, animation importer and splitter, part swapper,
+  re-orienter and bulk re-orienter and have no user interface; they are in
+  the GLTFLib folder. The glTFViewer units and the form are the application, in the src folder. Neon
   (https://github.com/paolo-rossi/delphi-neon) is expected in the
   delphi-neon folder next to this file; its units are listed below. Needs
   Delphi 10.4 or later. Memory leaks are reported on shutdown.
@@ -39,6 +40,7 @@ program glTFMerge;
   information so that files can be copied there with the Files app or Finder.
 
     Command line (desktop):  glTFDemo [file.gltf|file.glb] [--selftest]
+                             --selftest only with SELF_TESTS, see glTFViewer.Main
 }
 
 uses
@@ -60,17 +62,21 @@ uses
   glTF.Parts in 'GLTFLib\glTF.Parts.pas',
   glTF.AnimationSplit in 'GLTFLib\glTF.AnimationSplit.pas',
   glTF.Orient in 'GLTFLib\glTF.Orient.pas',
+  glTF.Bulk in 'GLTFLib\glTF.Bulk.pas',
   glTFViewer.Tree in 'src\glTFViewer.Tree.pas',
+  glTFViewer.Settings in 'src\glTFViewer.Settings.pas',
   glTFViewer.Dialogs in 'src\glTFViewer.Dialogs.pas',
-  glTFViewer.Missing in 'src\glTFViewer.Missing.pas',
+  glTFViewer.FileBrowser in 'src\glTFViewer.FileBrowser.pas' {FileBrowserForm},
+  glTFViewer.Missing in 'src\glTFViewer.Missing.pas' {MissingFilesForm},
   glTFViewer.Columns in 'src\glTFViewer.Columns.pas',
-  glTFViewer.Progress in 'src\glTFViewer.Progress.pas',
-  glTFViewer.Images in 'src\glTFViewer.Images.pas',
-  glTFViewer.Animations in 'src\glTFViewer.Animations.pas',
-  glTFViewer.Duplicates in 'src\glTFViewer.Duplicates.pas',
-  glTFViewer.Parts in 'src\glTFViewer.Parts.pas',
-  glTFViewer.Split in 'src\glTFViewer.Split.pas',
-  glTFViewer.Orient in 'src\glTFViewer.Orient.pas',
+  glTFViewer.Progress in 'src\glTFViewer.Progress.pas' {ProgressFrame: TFrame},
+  glTFViewer.Images in 'src\glTFViewer.Images.pas' {glTFImagesFrame: TFrame},
+  glTFViewer.Animations in 'src\glTFViewer.Animations.pas' {glTFAnimationsFrame: TFrame},
+  glTFViewer.Duplicates in 'src\glTFViewer.Duplicates.pas' {DuplicateFrame: TFrame},
+  glTFViewer.Parts in 'src\glTFViewer.Parts.pas' {glTFPartsFrame: TFrame},
+  glTFViewer.Split in 'src\glTFViewer.Split.pas' {SplitAnimationForm},
+  glTFViewer.Orient in 'src\glTFViewer.Orient.pas' {glTFOrientFrame: TFrame},
+  glTFViewer.BulkOrient in 'src\glTFViewer.BulkOrient.pas' {BulkOrientForm},
   glTFViewer.Main in 'src\glTFViewer.Main.pas' {glTFMainForm};
 
 begin

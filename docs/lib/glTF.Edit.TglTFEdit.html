@@ -113,6 +113,22 @@ TglTFEdit.DeleteAnimation(Doc.Root, <span class="pascal_numeric">2</span>, Warni
 </tr>
 <tr class="list visibility-public">
 <td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#SameName-string-string-">SameName</a></strong>(const A, B: string): Boolean; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#FindAnimation-TglTF-string-Integer-">FindAnimation</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AName: string; AExcept: Integer = -1): Integer; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#AnimationNameProblem-TglTF-string-Integer-">AnimationNameProblem</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AName: string; AExcept: Integer = -1): string; static;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#RenameAnimation-TglTF-Integer-string-">RenameAnimation</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer; const AName: string): string; static;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
 <td class="itemcode"><code>class function <strong><a href="glTF.Edit.TglTFEdit.html#DataBuffer-TglTF-">DataBuffer</a></strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>): Integer; static;</code></td>
 </tr>
 <tr class="list2 visibility-public">
@@ -531,6 +547,124 @@ Deletes every animation and the data only they used.</p>
 </dl>
 <h6 class="description_section">Returns</h6>
 <p class="return">The number of animations deleted.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SameName-string-string-"></span><code>class function <strong>SameName</strong>(const A, B: string): Boolean; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells whether two names are the same name, as duplicate checks see it.</p>
+<p>
+
+
+<p>Case is ignored, in every alphabet, and so are spaces at either end. Every duplicate check on names uses this, so that names differing only in case cannot both be used.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>A</dt>
+<dd>A name.</dd>
+<dt>B</dt>
+<dd>Another name.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True when they are the same name.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FindAnimation-TglTF-string-Integer-"></span><code>class function <strong>FindAnimation</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AName: string; AExcept: Integer = -1): Integer; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Finds the animation with a name, case ignored.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree to search.</dd>
+<dt>AName</dt>
+<dd>The name; an empty one is never found.</dd>
+<dt>AExcept</dt>
+<dd>An animation to skip, such as the one being renamed; -1 for none.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">Index in <code>ARoot.Animations</code>, or -1 when no other animation has the name.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="AnimationNameProblem-TglTF-string-Integer-"></span><code>class function <strong>AnimationNameProblem</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; const AName: string; AExcept: Integer = -1): string; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tells why a name cannot be given to an animation.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree holding the animations.</dd>
+<dt>AName</dt>
+<dd>The name wanted.</dd>
+<dt>AExcept</dt>
+<dd>The animation that is to get the name, which may already have it in another case; -1 for a new animation.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">The reason, or an empty string when the name can be used: it is not empty and no other animation has it, case ignored.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="RenameAnimation-TglTF-Integer-string-"></span><code>class function <strong>RenameAnimation</strong>(ARoot: <a href="glTF.Classes.TglTF.html">TglTF</a>; AIndex: Integer; const AName: string): string; static;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Renames an animation, when the name passes AnimationNameProblem.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ARoot</dt>
+<dd>The tree holding the animation.</dd>
+<dt>AIndex</dt>
+<dd>Index in <code>ARoot.Animations</code>.</dd>
+<dt>AName</dt>
+<dd>The new name; spaces at either end are removed.</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">An empty string when renamed; otherwise why not, and nothing is changed.</p></td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">

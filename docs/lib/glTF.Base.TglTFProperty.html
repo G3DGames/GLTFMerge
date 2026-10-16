@@ -167,6 +167,10 @@ Abstract base of every glTF object, glTFProperty in the schema.</p>
 <td class="visibility"><span class="badge vis-public">Public</span></td>
 <td class="itemcode"><code>function <strong><a href="glTF.Base.TglTFProperty.html#FindUnknownProperty-string-">FindUnknownProperty</a></strong>(const AName: string): TJSONValue;</code></td>
 </tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="glTF.Base.TglTFProperty.html#SetExtra-string-TJSONValue-">SetExtra</a></strong>(const AName: string; AValue: TJSONValue);</code></td>
+</tr>
 </table>
 <span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
@@ -866,6 +870,38 @@ Returns the JSON of a property the glTF schema does not define.</p>
 </dl>
 <h6 class="description_section">Returns</h6>
 <p class="return">The JSON, owned by this object; nil when absent.</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="SetExtra-string-TJSONValue-"></span><code>procedure <strong>SetExtra</strong>(const AName: string; AValue: TJSONValue);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Sets one member of the &quot;extras&quot; JSON object.</p>
+<p>
+
+
+<p>Creates &quot;extras&quot; as an object when it is absent and replaces a member with the same name. Written back by <a class="normal" href="glTF.Base.TglTFProperty.html#SaveToJSON">SaveToJSON</a>.
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>AName</dt>
+<dd>The member name.</dd>
+<dt>AValue</dt>
+<dd>The value; this object owns it from now on.</dd>
+</dl>
+<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><a class="normal" href="glTF.Base.EglTFError.html">EglTFError</a></dt>
+<dd>&quot;extras&quot; is present but is not a JSON object; AValue is freed.</dd>
+</dl>
+</td></tr>
 </table>
 <h3 class="detail">Properties</h3>
 <table class="detail visibility-public wide_list">

@@ -28,18 +28,20 @@
 <div class="container-fluid py-3 px-4">
 <h1 class="unit">Unit glTFViewer.Animations</h1>
 <div class="sections">
-<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objects and Records</a></div></div>
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objects and Records</a></div><div class="one_section"><a class="section" href="#PasDoc-Types">Types</a></div></div>
 <span id="PasDoc-Description"></span><h2 class="description">Description</h2>
 <p>
 The Animations tab of the viewer: every animation of a document, with its Export choice.</p>
 <p>
 
 
-<p><a class="normal" href="glTFViewer.Animations.TglTFAnimationsPanel.html">TglTFAnimationsPanel</a> shows one row per animation with the columns Export, #, Name, From, Channels and Duration. From is &quot;model&quot; for animations that came with the loaded file and the file name for imported ones. The Export column edits <code>TglTFAnimation.ExportOnSave</code>: a save leaves out the animations not ticked, with the data only they used. &quot;Export all&quot; and &quot;Export none&quot; change every flag at once.
+<p><a class="normal" href="glTFViewer.Animations.TglTFAnimationsFrame.html">TglTFAnimationsFrame</a> shows one row per animation with the columns Export, #, Name, From, Channels and Duration. From is &quot;model&quot; for animations that came with the loaded file and the file name for imported ones. The Export column edits <code>TglTFAnimation.ExportOnSave</code>: a save leaves out the animations not ticked, with the data only they used. &quot;Export all&quot; and &quot;Export none&quot; change every flag at once.
 
-<p>&quot;Clear animations&quot; raises <a class="normal" href="glTFViewer.Animations.TglTFAnimationsPanel.html#OnClear">TglTFAnimationsPanel.OnClear</a>, to empty the list. &quot;Import animations...&quot; raises <a class="normal" href="glTFViewer.Animations.TglTFAnimationsPanel.html#OnImport">TglTFAnimationsPanel.OnImport</a>; the main form shows the file dialog and does the import, then calls RefreshList.
+<p>Clicking a name edits it in place: Enter keeps the new name, Escape or a name left unchanged keeps the old one, and clicking elsewhere counts as Enter. A name is accepted only when it is not empty and no other animation has it, case ignored (see <code>TglTFEdit.AnimationNameProblem</code>); the text turns red while it cannot be used, and a name not accepted is reported and the old one kept.
 
-<p>On narrow screens the From column is hidden, and Channels too when narrower still. The panel is built in code, so the unit needs no .fmx file; headings and rows are laid out by glTFViewer.Columns, so the columns line up.</p>
+<p>&quot;Clear animations&quot; raises <a class="normal" href="glTFViewer.Animations.TglTFAnimationsFrame.html#OnClear">TglTFAnimationsFrame.OnClear</a>, to empty the list. &quot;Split long animation...&quot; appears while an animation is over 10 seconds long and raises <a class="normal" href="glTFViewer.Animations.TglTFAnimationsFrame.html#OnSplit">TglTFAnimationsFrame.OnSplit</a>. &quot;Import animations...&quot; raises <a class="normal" href="glTFViewer.Animations.TglTFAnimationsFrame.html#OnImport">TglTFAnimationsFrame.OnImport</a>; the main form shows the file dialog and does the import, then calls RefreshList.
+
+<p>On narrow screens the From column is hidden, and Channels too when narrower still. The frame is designed in glTFViewer.Animations.fmx. The headings and the rows follow the column list in the code and are laid out by glTFViewer.Columns, so the columns line up.</p>
 <span id="PasDoc-Uses"></span><h2 class="overview">Overview</h2>
 <span id="PasDoc-Classes"></span><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
 <table class="classestable wide_list">
@@ -48,9 +50,47 @@ The Animations tab of the viewer: every animation of a document, with its Export
 <th class="itemdesc">Description</th>
 </tr>
 <tr class="list">
-<td class="itemname">Class&nbsp;<a class="bold" href="glTFViewer.Animations.TglTFAnimationsPanel.html"><code>TglTFAnimationsPanel</code></a></td>
-<td class="itemdesc">Panel listing the animations of a document, with an Export checkbox per animation.</td>
+<td class="itemname">Class&nbsp;<a class="bold" href="glTFViewer.Animations.TglTFAnimationsFrame.html"><code>TglTFAnimationsFrame</code></a></td>
+<td class="itemdesc">Frame listing the animations of a document, with an Export checkbox per animation.</td>
 </tr>
+</table>
+<span id="PasDoc-Types"></span><h3 class="summary">Types</h3>
+<table class="summary wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="glTFViewer.Animations.html#TglTFAnimationRenameEvent">TglTFAnimationRenameEvent</a></strong> = procedure(Sender: TObject; AIndex: Integer; const AOldName, ANewName: string) of object;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Types</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="TglTFAnimationRenameEvent"></span><code><strong>TglTFAnimationRenameEvent</strong> = procedure(Sender: TObject; AIndex: Integer; const AOldName, ANewName: string) of object;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Reports that an animation was renamed.</p>
+<p>
+
+
+<p>
+
+<p>
+
+<p>
+
+<p></p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Sender</dt>
+<dd>The frame.</dd>
+<dt>AIndex</dt>
+<dd>Index of the animation in the document.</dd>
+<dt>AOldName</dt>
+<dd>The name it had.</dd>
+<dt>ANewName</dt>
+<dd>The name it has now.</dd>
+</dl>
+</td></tr>
 </table>
 <hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.5.snapshot</a>. </em>
 </span>
