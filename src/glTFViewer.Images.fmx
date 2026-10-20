@@ -36,11 +36,26 @@ object glTFImagesFrame: TglTFImagesFrame
       OnClick = btnLocateClick
       Size.PlatformDefault = False
     end
+    object chkNoExif: TCheckBox
+      Align = Left
+      Position.X = 352.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 170.000000000000000000
+      Size.Height = 28.000000000000000000
+      Margins.Left = 18.000000000000000000
+      Hint = 'Save every image without its EXIF data (camera, date, ' +
+        'place, thumbnail), inside a GLB and as separate files ' +
+        'alike. Remembered for next time'
+      ShowHint = True
+      Text = 'Don''t save EXIF data'
+      OnChange = chkNoExifChange
+      Size.PlatformDefault = False
+    end
     object lblSummary: TLabel
       Align = Client
-      Size.Width = 600.000000000000000000
+      Size.Width = 412.000000000000000000
       Size.Height = 28.000000000000000000
-      Position.X = 348.000000000000000000
+      Position.X = 536.000000000000000000
       Position.Y = 6.000000000000000000
       Margins.Left = 14.000000000000000000
       StyledSettings = [Family, Size, Style, FontColor]

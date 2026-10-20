@@ -2,10 +2,10 @@
 //** files.)
 //**
 //** The units glTF.Base, glTF.Classes, glTF.SourceMap, glTF.Document, glTF.Edit,
-//** glTF.Animations, glTF.AnimationSplit, glTF.Parts, glTF.Orient and glTF.Bulk are the glTF
-//** reader, writer, animation importer and splitter, part swapper, re-orienter and bulk
-//** re-orienter and have no user interface; they are in the GLTFLib folder. The glTFViewer units and the form are the
-//** application, in the src folder. Neon
+//** glTF.Animations, glTF.AnimationSplit, glTF.Parts, glTF.Orient, glTF.Bulk and glTF.Exif
+//** are the glTF reader, writer, animation importer and splitter, part swapper, re-orienter,
+//** bulk re-orienter and EXIF remover and have no user interface; they are in the GLTFLib
+//** folder. The glTFViewer units and the form are the application, in the src folder. Neon
 //** @(https://github.com/paolo-rossi/delphi-neon@) is expected in the delphi-neon folder next
 //** to this file; its units are listed below. Needs Delphi 10.4 or later. Memory leaks are
 //** reported on shutdown.
@@ -26,10 +26,11 @@ program glTFMerge;
   and GLB files.
 
   The units glTF.Base, glTF.Classes, glTF.SourceMap, glTF.Document, glTF.Edit,
-  glTF.Animations, glTF.AnimationSplit, glTF.Parts, glTF.Orient and glTF.Bulk
-  are the glTF reader, writer, animation importer and splitter, part swapper,
-  re-orienter and bulk re-orienter and have no user interface; they are in
-  the GLTFLib folder. The glTFViewer units and the form are the application, in the src folder. Neon
+  glTF.Animations, glTF.AnimationSplit, glTF.Parts, glTF.Orient, glTF.Bulk
+  and glTF.Exif are the glTF reader, writer, animation importer and splitter,
+  part swapper, re-orienter, bulk re-orienter and EXIF remover and have no
+  user interface; they are in the GLTFLib folder. The glTFViewer units and
+  the form are the application, in the src folder. Neon
   (https://github.com/paolo-rossi/delphi-neon) is expected in the
   delphi-neon folder next to this file; its units are listed below. Needs
   Delphi 10.4 or later. Memory leaks are reported on shutdown.
@@ -63,6 +64,7 @@ uses
   glTF.AnimationSplit in 'GLTFLib\glTF.AnimationSplit.pas',
   glTF.Orient in 'GLTFLib\glTF.Orient.pas',
   glTF.Bulk in 'GLTFLib\glTF.Bulk.pas',
+  glTF.Exif in 'GLTFLib\glTF.Exif.pas',
   glTFViewer.Tree in 'src\glTFViewer.Tree.pas',
   glTFViewer.Settings in 'src\glTFViewer.Settings.pas',
   glTFViewer.Dialogs in 'src\glTFViewer.Dialogs.pas',

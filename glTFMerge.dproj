@@ -357,6 +357,7 @@
         <DCCReference Include="GLTFLib\glTF.AnimationSplit.pas"/>
         <DCCReference Include="GLTFLib\glTF.Orient.pas"/>
         <DCCReference Include="GLTFLib\glTF.Bulk.pas"/>
+        <DCCReference Include="GLTFLib\glTF.Exif.pas"/>
         <DCCReference Include="src\glTFViewer.Tree.pas"/>
         <DCCReference Include="src\glTFViewer.Settings.pas"/>
         <DCCReference Include="src\glTFViewer.Dialogs.pas"/>

@@ -13,6 +13,11 @@
 //** instead; @link(TglTFImagesFrame.AlterSaveMode) tells the main form to save that way. The box
 //** is unticked again for each document loaded.
 //**
+//** "Don't save EXIF data" saves every image without its EXIF data, the camera, date, place
+//** and thumbnail photos often carry, whether it goes inside the file or next to it @(see
+//** @code(TglTFSaveOptions.StripExif)@). Unlike the save mode, it is a preference: it is
+//** remembered in the settings file and kept from one model and session to the next.
+//**
 //** On narrow screens, such as phones in portrait, the Type and Source columns are hidden, and
 //** Size too when narrower still, so the name stays readable.
 //**
@@ -37,6 +42,12 @@ unit glTFViewer.Images;
   be stored inside the file or as a separate file instead; AlterSaveMode tells
   the main form to save that way. The box is unticked again for each document
   loaded.
+
+  "Don't save EXIF data" saves every image without its EXIF data, the camera,
+  date, place and thumbnail photos often carry, whether it goes inside the
+  file or next to it (see TglTFSaveOptions.StripExif). Unlike the save mode,
+  it is a preference: it is remembered in the settings file and kept from one
+  model and session to the next.
 
   On narrow screens, such as phones in portrait, the Type and Source columns
   are hidden, and Size too when narrower still, so the name stays readable.
@@ -80,6 +91,10 @@ type
     /// <summary>Raises OnLocateMissing; enabled while files are missing.</summary>
     btnLocate: TButton;
 
+    //** @abstract("Don't save EXIF data": images are saved without it; remembered.)
+    /// <summary>"Don't save EXIF data": images are saved without it; remembered.</summary>
+    chkNoExif: TCheckBox;
+
     //** @abstract(How many images are saved, and how.)
     /// <summary>How many images are saved, and how.</summary>
     lblSummary: TLabel;
@@ -122,6 +137,13 @@ type
     /// <remarks>The first time for a document, every image starts ticked, as a GLB would store
     /// it.</remarks>
     procedure chkAlterChange(Sender: TObject);
+
+    //** @abstract(Remembers the EXIF choice in the settings file.)
+    //**
+    //** @param(Sender The checkbox.)
+    /// <summary>Remembers the EXIF choice in the settings file.</summary>
+    /// <param name="Sender">The checkbox.</param>
+    procedure chkNoExifChange(Sender: TObject);
 
     //** @abstract(Raises OnLocateMissing.)
     //**
@@ -186,6 +208,7 @@ type
     procedure AddEmbedRow(AIndex: Integer; AImage: TglTFImage);
     function IsMissing(AImage: TglTFImage): Boolean;
     function GetAlterSaveMode: Boolean;
+    function GetStripExif: Boolean;
     procedure EmbedChange(Sender: TObject);
     procedure Changed;
     procedure ShowEmbedList;
@@ -232,6 +255,12 @@ type
     /// how it is saved, instead of the format.</summary>
     property AlterSaveMode: Boolean read GetAlterSaveMode;
 
+    //** @abstract(Whether "Don't save EXIF data" is ticked: every image is then saved without
+    //** its EXIF data.)
+    /// <summary>Whether "Don't save EXIF data" is ticked: every image is then saved without its
+    /// EXIF data.</summary>
+    property StripExif: Boolean read GetStripExif;
+
     //** @abstract(Occurs when the user clicks "Locate missing...".)
     //**
     //** The handler is expected to let the user find the files and then call
@@ -250,10 +279,13 @@ implementation
 {$R *.fmx}
 
 uses
-  glTF.Edit;
+  glTF.Edit, glTFViewer.Settings;
 
 const
   ROW_HEIGHT = 26;
+
+  // The EXIF choice in the settings file: '1' ticked
+  VALUE_NO_EXIF = 'images.noExif';
 
   // Columns, in display order (see TColumnLayout); Name takes the rest
   COL_INDEX = 0;
@@ -319,6 +351,13 @@ begin
   // The headings come from the same lists as the rows' cells, so they match
   TColumnLayout.AddHeadings(layHeader, FColumns);
   TColumnLayout.AddHeadings(layEmbedHeader, FEmbedColumns);
+  // The EXIF choice as it was last time
+  FUpdating := True;
+  try
+    chkNoExif.IsChecked := AppSettings.ReadString(VALUE_NO_EXIF) = '1';
+  finally
+    FUpdating := False;
+  end;
   Bind(nil);
 end;
 
@@ -367,6 +406,22 @@ end;
 function TglTFImagesFrame.IsMissing(AImage: TglTFImage): Boolean;
 begin
   Result := AImage.Data = nil;
+end;
+
+function TglTFImagesFrame.GetStripExif: Boolean;
+begin
+  Result := chkNoExif.IsChecked;
+end;
+
+procedure TglTFImagesFrame.chkNoExifChange(Sender: TObject);
+begin
+  if FUpdating or (FColumns = nil) then
+    Exit; // set from the settings, or while the frame is loaded
+  if chkNoExif.IsChecked then
+    AppSettings.WriteString(VALUE_NO_EXIF, '1')
+  else
+    AppSettings.WriteString(VALUE_NO_EXIF, '0');
+  UpdateSummary;
 end;
 
 function TglTFImagesFrame.GetAlterSaveMode: Boolean;
@@ -625,6 +680,8 @@ begin
       LText := LText + Format('; %d missing', [LMissing]);
     if LCount > LUsed then
       LText := LText + Format('; %d not used, left out', [LCount - LUsed]);
+    if chkNoExif.IsChecked then
+      LText := LText + '; without EXIF data';
   end;
   lblSummary.Text := LText;
 

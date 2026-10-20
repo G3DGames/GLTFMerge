@@ -17,7 +17,8 @@
 //** out, together with the accessors, bufferViews and buffer bytes only they used, and so are
 //** images no mesh shows @(see @link(TglTFSaveOptions.LeaveOutUnusedImages)@). The saved model
 //** can also be turned about the X, Y and Z axes, baked into its data @(see
-//** @link(TglTFSaveOptions.RotateX)@).
+//** @link(TglTFSaveOptions.RotateX)@), and its images saved without their EXIF data @(see
+//** @link(TglTFSaveOptions.StripExif)@).
 //**
 //** A save to a file is made file-complete: every separate buffer and image file the
 //** saved glTF refers to is written or copied next to it, unless it is already there
@@ -55,7 +56,8 @@ unit glTF.Document;
   and buffer bytes only they used, and so are images no mesh shows (see
   TglTFSaveOptions.LeaveOutUnusedImages). The saved model can also be turned
   about the X, Y and Z axes, baked into its data (see
-  TglTFSaveOptions.RotateX).
+  TglTFSaveOptions.RotateX), and its images saved without their EXIF data
+  (see TglTFSaveOptions.StripExif).
 
   A save to a file is made file-complete: every separate buffer and image file
   the saved glTF refers to is written or copied next to it, unless it is
@@ -236,13 +238,34 @@ type
     /// <remarks>See RotateX.</remarks>
     RotateZ: Double;
 
+    //** @abstract(Saves every image without its EXIF data; False by default.)
+    //**
+    //** Applies to every image saved: separate files, images inside a GLB's BIN chunk and
+    //** data-URI images. JPEG, PNG and WebP images lose their EXIF data, the picture itself
+    //** unchanged @(see @code(TglTFExif) in glTF.Exif@); other formats are saved as they are.
+    //** An image already inside a buffer is stored again, without the EXIF data, and its old
+    //** bytes left out. Not done for an image with @code(TglTFImage.Shared) set, whose file
+    //** other models use as it is, nor for images inside the buffers of a file using Draco or
+    //** meshopt compression; SaveWarnings says so. @link(TglTFDocument.ExifRemoved) counts the
+    //** images changed. The document itself is not changed.
+    /// <summary>Saves every image without its EXIF data; False by default.</summary>
+    /// <remarks>Applies to every image saved: separate files, images inside a GLB's BIN chunk
+    /// and data-URI images. JPEG, PNG and WebP images lose their EXIF data, the picture itself
+    /// unchanged (see <c>TglTFExif</c> in glTF.Exif); other formats are saved as they are. An
+    /// image already inside a buffer is stored again, without the EXIF data, and its old bytes
+    /// left out. Not done for an image with <c>TglTFImage.Shared</c> set, whose file other
+    /// models use as it is, nor for images inside the buffers of a file using Draco or meshopt
+    /// compression; SaveWarnings says so. <see cref="TglTFDocument.ExifRemoved"/> counts the
+    /// images changed. The document itself is not changed.</remarks>
+    StripExif: Boolean;
+
     //** @abstract(Returns the default settings.)
     //**
     //** @returns(Buffers = rmKeep, PrettyPrint = True, LeaveOutUnusedImages = True,
-    //** ImageSaveMode = ismByFormat and no turn.)
+    //** ImageSaveMode = ismByFormat, no turn and StripExif = False.)
     /// <summary>Returns the default settings.</summary>
     /// <returns>Buffers = rmKeep, PrettyPrint = True, LeaveOutUnusedImages = True,
-    /// ImageSaveMode = ismByFormat and no turn.</returns>
+    /// ImageSaveMode = ismByFormat, no turn and StripExif = False.</returns>
     class function Default: TglTFSaveOptions; static;
   end;
 
@@ -414,6 +437,7 @@ type
     FSaveWarnings: TStringList;
     FSavedFiles: TStringList;
     FSaveComplete: Boolean;
+    FExifRemoved: Integer;
     FOnProgress: TglTFProgressEvent;
     FProgressName: string;
     procedure DoProgress(const AStage: string; ADone: Double);
@@ -428,7 +452,8 @@ type
     procedure LoadStream(AStream: TStream; const ASourceName, ABaseDir: string);
     function CreateSaveCopy: TglTF;
     procedure ReadUnloadedFiles(AOut: TglTF);
-    procedure TakeSeparateImagesOutOfBuffers(AOut: TglTF);
+    procedure TakeSeparateImagesOutOfBuffers(AOut: TglTF; const AMove: TArray<Boolean>);
+    function StripImagesExif(AOut: TglTF): TArray<Boolean>;
     procedure LeaveOutUnexportedAnimations(AOut: TglTF);
     procedure SaveInternal(AStream: TStream; AFormat: TglTFFileFormat;
       const AOptions: TglTFSaveOptions; const AOutDir, ABaseName: string);
@@ -973,6 +998,15 @@ type
     /// so it loads without missing files. False when a referenced file could not be found;
     /// <see cref="SaveWarnings"/> names it.</remarks>
     property SaveComplete: Boolean read FSaveComplete;
+
+    //** @abstract(How many images the last save wrote without their EXIF data.)
+    //**
+    //** 0 unless @code(TglTFSaveOptions.StripExif) was set; images that had no EXIF data are
+    //** not counted.
+    /// <summary>How many images the last save wrote without their EXIF data.</summary>
+    /// <remarks>0 unless <c>TglTFSaveOptions.StripExif</c> was set; images that had no EXIF
+    /// data are not counted.</remarks>
+    property ExifRemoved: Integer read FExifRemoved;
   end;
 
 
@@ -981,7 +1015,7 @@ implementation
 uses
   System.NetEncoding, System.StrUtils,
   Neon.Core.Persistence.JSON,
-  glTF.Edit, glTF.Orient;
+  glTF.Edit, glTF.Orient, glTF.Exif;
 
 const
   GLB_MAGIC: array[0..3] of Byte = ($67, $6C, $54, $46); // 'glTF'
@@ -1301,6 +1335,7 @@ begin
   Result.RotateX := 0;
   Result.RotateY := 0;
   Result.RotateZ := 0;
+  Result.StripExif := False;
 end;
 
 { TglTFMissingResource }
@@ -1986,25 +2021,37 @@ begin
         end;
 end;
 
-procedure TglTFDocument.TakeSeparateImagesOutOfBuffers(AOut: TglTF);
+procedure TglTFDocument.TakeSeparateImagesOutOfBuffers(AOut: TglTF;
+  const AMove: TArray<Boolean>);
 var
   LViews: TList<Integer>;
   LImage: TglTFImage;
   LAccessor: TglTFAccessor;
   LName: string;
+  I: Integer;
 
   procedure KeepIfUsed(AView: Integer);
   begin
     LViews.Remove(AView);
   end;
 
+  // Images leaving their bufferView: those saved as separate files, and
+  // those AMove marks, whose bytes changed (StripImagesExif)
+  function Moves(AIndex: Integer): Boolean;
+  begin
+    LImage := AOut.Images[AIndex];
+    Result := (LImage.Data <> nil) and
+      (not LImage.Embed or ((AIndex < Length(AMove)) and AMove[AIndex]));
+  end;
+
 begin
   // An image with Embed off is written as a separate file, so its bytes must
-  // not stay in a buffer as well. Works on the save copy only
+  // not stay in a buffer as well; nor may the old bytes of an image changed
+  // for the save. Works on the save copy only
   LViews := TList<Integer>.Create;
   try
-    for LImage in AOut.Images do
-      if not LImage.Embed and (LImage.Data <> nil) and
+    for I := 0 to AOut.Images.Count - 1 do
+      if Moves(I) and
          (LImage.BufferView >= 0) and (LImage.BufferView < AOut.BufferViews.Count) and
          not LViews.Contains(LImage.BufferView) then
         LViews.Add(LImage.BufferView);
@@ -2020,8 +2067,8 @@ begin
     end;
 
     // The images move out of their bufferViews...
-    for LImage in AOut.Images do
-      if not LImage.Embed and (LImage.Data <> nil) and LViews.Contains(LImage.BufferView) then
+    for I := 0 to AOut.Images.Count - 1 do
+      if Moves(I) and LViews.Contains(LImage.BufferView) then
       begin
         LImage.BufferView := GLTF_UNDEFINED_INDEX;
         LImage.Uri := '';
@@ -2046,6 +2093,43 @@ begin
     TglTFEdit.DeleteBufferViews(AOut, LViews.ToArray);
   finally
     LViews.Free;
+  end;
+end;
+
+function TglTFDocument.StripImagesExif(AOut: TglTF): TArray<Boolean>;
+var
+  LImage: TglTFImage;
+  LStripped: TBytes;
+  LName: string;
+  LFixedViews: Boolean;
+  I: Integer;
+begin
+  // Works on the save copy only: the document keeps its images as they are
+  SetLength(Result, AOut.Images.Count);
+  // Draco and meshopt refer to bufferViews by index: none may go
+  LFixedViews := TglTFEdit.UsesBufferViewExtension(AOut, LName);
+  for I := 0 to AOut.Images.Count - 1 do
+  begin
+    LImage := AOut.Images[I];
+    Result[I] := False;
+    if (LImage.Data = nil) or not TglTFExif.Strip(LImage.Data, LStripped) then
+      Continue;
+    if LImage.Shared then
+    begin
+      FSaveWarnings.Add(Format('Image %d keeps its EXIF data: it is shared with other models, ' +
+        'which use its file as it is', [I]));
+      Continue;
+    end;
+    if LFixedViews and (LImage.BufferView <> GLTF_UNDEFINED_INDEX) then
+    begin
+      FSaveWarnings.Add(Format('Image %d keeps its EXIF data: the file uses %s, which refers ' +
+        'to bufferViews in a way this program cannot renumber', [I, LName]));
+      Continue;
+    end;
+    // A new array: the document's data is shared with the copy, not changed
+    LImage.Data := LStripped;
+    Result[I] := True;
+    Inc(FExifRemoved);
   end;
 end;
 
@@ -2094,6 +2178,8 @@ var
   // with their bytes
   LUsed: TDictionary<string, TClaimedName>;
   LExisting: TClaimedName;
+  // Images whose EXIF data was removed, by index
+  LStripped: TArray<Boolean>;
   I: Integer;
 
   function NewFileName(const ASuffix, AExt: string): string;
@@ -2312,6 +2398,8 @@ var
         LNote := Format(' (renamed: %s is already used by another file)', [LWanted])
       else
         LNote := '';
+      if (AIndex < Length(LStripped)) and LStripped[AIndex] then
+        LNote := LNote + ' (EXIF data removed)';
       LUri := PercentEncodePath(LUri);
       if not LShared then
         AddExternal(LUri, AImage.Data, AImage.SourceFile, AImage.Shared, LNote);
@@ -2329,6 +2417,7 @@ begin
   FSaveWarnings.Clear;
   FSavedFiles.Clear;
   FSaveComplete := True;
+  FExifRemoved := 0;
   LBinary := nil;
   LHasBinary := False;
   LImageBuffer := nil;
@@ -2360,7 +2449,12 @@ begin
     if AOptions.ImageSaveMode = ismByFormat then
       for I := 0 to LOut.Images.Count - 1 do
         LOut.Images[I].Embed := AFormat = gffGLB;
-    TakeSeparateImagesOutOfBuffers(LOut);
+    // Without EXIF data when asked: changed images leave their bufferViews
+    if AOptions.StripExif then
+      LStripped := StripImagesExif(LOut)
+    else
+      LStripped := nil;
+    TakeSeparateImagesOutOfBuffers(LOut, LStripped);
 
     if (AFormat = gffGLB) and (LOut.Buffers.Count > 0) and (LOut.Buffers[0].Data = nil) then
       raise EglTFError.Create('Cannot write the GLB BIN chunk: the data of buffers[0] is not available');

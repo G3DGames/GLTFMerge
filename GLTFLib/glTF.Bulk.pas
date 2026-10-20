@@ -96,12 +96,18 @@ type
     /// <summary>Degrees about the Z axis, applied last.</summary>
     RotateZ: Double;
 
-    //** @abstract(Returns options for both input types, saved as GLB, with no turn and no
-    //** folders.)
+    //** @abstract(Saves the images without their EXIF data; see
+    //** @code(TglTFSaveOptions.StripExif).)
+    /// <summary>Saves the images without their EXIF data; see
+    /// <c>TglTFSaveOptions.StripExif</c>.</summary>
+    StripExif: Boolean;
+
+    //** @abstract(Returns options for both input types, saved as GLB, with no turn, EXIF data
+    //** kept and no folders.)
     //**
     //** @returns(The options.)
-    /// <summary>Returns options for both input types, saved as GLB, with no turn and no
-    /// folders.</summary>
+    /// <summary>Returns options for both input types, saved as GLB, with no turn, EXIF data
+    /// kept and no folders.</summary>
     /// <returns>The options.</returns>
     class function Default: TglTFBulkOptions; static;
   end;
@@ -294,6 +300,7 @@ begin
   Result.RotateX := 0;
   Result.RotateY := 0;
   Result.RotateZ := 0;
+  Result.StripExif := False;
 end;
 
 { TglTFBulkReorienter }
@@ -513,6 +520,7 @@ begin
   LSave.RotateX := FOptions.RotateX;
   LSave.RotateY := FOptions.RotateY;
   LSave.RotateZ := FOptions.RotateZ;
+  LSave.StripExif := FOptions.StripExif;
 
   for I := 0 to High(FItems) do
   begin
@@ -536,6 +544,8 @@ begin
         Inc(FSaved);
         FLog.Add(Format('Saved %s as %s', [LItem.RelativePath,
           ExtractRelativePath(LOutput, LItem.Target)]));
+        if LDoc.ExifRemoved > 0 then
+          FLog.Add(Format('  EXIF data removed from %d image(s)', [LDoc.ExifRemoved]));
         for LWarning in LDoc.Warnings do
           FLog.Add('  Warning: ' + LWarning);
         for LWarning in LDoc.SaveWarnings do

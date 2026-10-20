@@ -9,8 +9,9 @@
 //** or Escape closes the dialog at any time.
 //**
 //** The choices are remembered in the settings file for the next time, and the Browse buttons
-//** remember their folders like every file dialog. The dialog only collects the options: the
-//** caller does the work, with TglTFBulkReorienter. The form is designed in
+//** remember their folders like every file dialog. Images are saved with or without their EXIF
+//** data as "Don't save EXIF data" on the Images tab says. The dialog only collects the
+//** options: the caller does the work, with TglTFBulkReorienter. The form is designed in
 //** glTFViewer.BulkOrient.fmx and frees itself.
 unit glTFViewer.BulkOrient;
 
@@ -26,8 +27,9 @@ unit glTFViewer.BulkOrient;
   shown in red otherwise. Cancel or Escape closes the dialog at any time.
 
   The choices are remembered in the settings file for the next time, and the
-  Browse buttons remember their folders like every file dialog. The dialog
-  only collects the options: the caller does the work, with
+  Browse buttons remember their folders like every file dialog. Images are
+  saved with or without their EXIF data as "Don't save EXIF data" on the
+  Images tab says. The dialog only collects the options: the caller does the work, with
   TglTFBulkReorienter. The form is designed in glTFViewer.BulkOrient.fmx and
   frees itself.
 }

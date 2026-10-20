@@ -362,6 +362,7 @@ type
     procedure AnimationRenameTest;
     procedure ReorientTest;
     procedure BulkReorientTest;
+    procedure ExifTest;
     procedure PartsTest;
     procedure UnusedImagesTest;
     procedure RunSelfTests;
@@ -381,7 +382,7 @@ uses
   System.StrUtils, System.Math, System.JSON, System.Generics.Collections,
   System.NetEncoding, System.Threading,
   System.SyncObjs,
-  glTF.Edit, glTF.AnimationSplit, glTF.Orient,
+  glTF.Edit, glTF.AnimationSplit, glTF.Orient, glTF.Exif,
   FMX.DialogService,
   glTFViewer.Split, glTFViewer.Tree, glTFViewer.Missing, glTFViewer.Dialogs,
   glTFViewer.BulkOrient;
@@ -615,10 +616,17 @@ begin
     Exit;
   TBulkOrientForm.Execute(
     procedure(const AOptions: TglTFBulkOptions)
+    var
+      LOptions: TglTFBulkOptions;
     begin
       // Reached once the dialog has closed
       if not FBusy and not FCloseRequested then
-        BulkSearch(AOptions);
+      begin
+        // The Images tab's EXIF choice applies to every save
+        LOptions := AOptions;
+        LOptions.StripExif := FImages.StripExif;
+        BulkSearch(LOptions);
+      end;
     end);
 end;
 
@@ -636,6 +644,8 @@ begin
     FloatText(AOptions.RotateZ),
     System.StrUtils.IfThen(AOptions.OutputFormat = gffJSON, 'glTF', 'GLB'),
     AOptions.OutputFolder]);
+  if AOptions.StripExif then
+    Log('Images are saved without EXIF data, as chosen on the Images tab');
 
   // 1. Find the models, in the background: a big folder tree takes a while
   LBulk := TglTFBulkReorienter.Create(AOptions);
@@ -967,6 +977,8 @@ begin
   LOptions := TglTFSaveOptions.Default;
   if FImages.AlterSaveMode then
     LOptions.ImageSaveMode := ismPerImage;
+  // "Don't save EXIF data" on the Images tab
+  LOptions.StripExif := FImages.StripExif;
   // The turn on the Re-Orient tab; nothing is saved while it is not valid
   if not FOrient.GetAngles(LOptions.RotateX, LOptions.RotateY, LOptions.RotateZ) then
   begin
@@ -1011,6 +1023,8 @@ begin
         System.StrUtils.IfThen(LGLB, 'a GLB holds its images', 'a glTF refers to image files')]);
     if LSaved < FDoc.Root.Images.Count then
       Log('Images: %d no mesh shows are left out', [FDoc.Root.Images.Count - LSaved]);
+    if LOptions.StripExif then
+      Log('Images: saved without EXIF data, as chosen on the Images tab');
   end;
   if FDoc.Root.Animations.Count > 0 then
     Log('Animations: %d of %d saved (see the Animations tab)',
@@ -1034,6 +1048,8 @@ begin
     Log('Saved as glTF JSON, %d bytes', [TFile.GetSize(AFileName)]);
   for LWarning in FDoc.SavedFiles do
     Log('  %s', [LWarning]);
+  if FDoc.ExifRemoved > 0 then
+    Log('EXIF data removed from %d image(s)', [FDoc.ExifRemoved]);
   for LWarning in FDoc.SaveWarnings do
     Log('Warning: %s', [LWarning]);
   if FDoc.SaveComplete then
@@ -2026,6 +2042,156 @@ begin
     Result := 'data:application/octet-stream;base64,' + LEncoding.EncodeBytesToString(LBytes);
   finally
     LEncoding.Free;
+  end;
+end;
+
+procedure TglTFMainForm.ExifTest;
+const
+  // 2 x 2 images made with Pillow, with an EXIF "Make" of "Cam", and the
+  // same files without it, byte for byte
+  PNG_EXIF =
+    'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAGmVYSWZNTQAqAAAACAABAQ8AAgAAAARDYW0A' +
+    'AAAAAKRjkQEAAAAWSURBVHicYzwhp8HAwMDEwMDAwMAAAA1yARI5coXyAAAAAElFTkSuQmCC';
+  PNG_PLAIN =
+    'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGM8IafBwMDAxMDAwMDAAAANcgES' +
+    'OXKF8gAAAABJRU5ErkJggg==';
+  JPG_EXIF =
+    '/9j/4AAQSkZJRgABAQAAAQABAAD/4QAiRXhpZgAATU0AKgAAAAgAAQEPAAIAAAAEQ2FtAAAAAAD/2wBDABAL' +
+    'DA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/' +
+    '2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2Nj' +
+    'Y2NjY2P/wAARCAACAAIDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAA' +
+    'AgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJico' +
+    'KSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm' +
+    'p6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEB' +
+    'AQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEI' +
+    'FEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0' +
+    'dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk' +
+    '5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDIooorkPqD/9k=';
+  JPG_PLAIN =
+    '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxO' +
+    'QERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2Nj' +
+    'Y2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAACAAIDASIAAhEBAxEB/8QAHwAAAQUBAQEB' +
+    'AQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKB' +
+    'kaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1' +
+    'dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl' +
+    '5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcF' +
+    'BAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5' +
+    'OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0' +
+    'tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDIooorkPqD' +
+    '/9k=';
+var
+  LDoc, LCopy: TglTFDocument;
+  LOptions: TglTFSaveOptions;
+  LStream: TMemoryStream;
+  LPngExif, LPngPlain, LJpgExif, LJpgPlain, LStripped: TBytes;
+  LTemp, LFile: string;
+  LFiles: TArray<string>;
+  LFailures: Integer;
+
+  procedure Check(ACondition: Boolean; const AText: string);
+  begin
+    if not ACondition then
+    begin
+      Inc(LFailures);
+      Log('  FAIL: %s', [AText]);
+    end;
+  end;
+
+  function Same(const A, B: TBytes): Boolean;
+  begin
+    Result := (Length(A) = Length(B)) and ((Length(A) = 0) or CompareMem(@A[0], @B[0], Length(A)));
+  end;
+
+  // Saves LDoc as a GLB in memory and loads it into LCopy
+  procedure RoundTrip(AStrip: Boolean);
+  begin
+    LOptions := TglTFSaveOptions.Default;
+    LOptions.LeaveOutUnusedImages := False; // no mesh shows these images
+    LOptions.StripExif := AStrip;
+    LStream.Clear;
+    LDoc.SaveToStream(LStream, gffGLB, LOptions);
+    LStream.Position := 0;
+    LCopy.LoadFromStream(LStream);
+  end;
+
+begin
+  Log;
+  Log('Self-test: saving images without their EXIF data');
+  LFailures := 0;
+  LPngExif := TNetEncoding.Base64.DecodeStringToBytes(PNG_EXIF);
+  LPngPlain := TNetEncoding.Base64.DecodeStringToBytes(PNG_PLAIN);
+  LJpgExif := TNetEncoding.Base64.DecodeStringToBytes(JPG_EXIF);
+  LJpgPlain := TNetEncoding.Base64.DecodeStringToBytes(JPG_PLAIN);
+  LTemp := TPath.Combine(TPath.GetTempPath, 'glTFExifTest_' +
+    TGUID.NewGuid.ToString.Replace('{', '').Replace('}', ''));
+  LDoc := TglTFDocument.Create;
+  LCopy := TglTFDocument.Create;
+  LStream := TMemoryStream.Create;
+  try
+    try
+      Check(TglTFExif.Strip(LPngExif, LStripped) and Same(LStripped, LPngPlain),
+        'the PNG eXIf chunk should be removed, nothing else');
+      Check(TglTFExif.Strip(LJpgExif, LStripped) and Same(LStripped, LJpgPlain),
+        'the JPEG APP1 Exif segment should be removed, nothing else');
+      Check(not TglTFExif.Strip(LPngPlain, LStripped) and Same(LStripped, LPngPlain),
+        'an image without EXIF data should be left as it is');
+
+      // Image 0 in a bufferView, image 1 a data URI
+      LDoc.LoadFromString('{"asset":{"version":"2.0"},' +
+        '"buffers":[{"byteLength":' + IntToStr(Length(LPngExif)) +
+          ',"uri":"data:application/octet-stream;base64,' + PNG_EXIF + '"}],' +
+        '"bufferViews":[{"buffer":0,"byteLength":' + IntToStr(Length(LPngExif)) + '}],' +
+        '"images":[{"bufferView":0,"mimeType":"image/png"},' +
+          '{"uri":"data:image/jpeg;base64,' + JPG_EXIF + '"}]}');
+
+      RoundTrip(False);
+      Check(LDoc.ExifRemoved = 0, 'nothing should be removed unless asked');
+      Check(Same(LCopy.Root.Images[0].Data, LPngExif) and
+        Same(LCopy.Root.Images[1].Data, LJpgExif), 'unasked, the images should be saved as they are');
+
+      RoundTrip(True);
+      Check(LDoc.ExifRemoved = 2, Format('2 images should lose their EXIF data, not %d',
+        [LDoc.ExifRemoved]));
+      Check(Same(LCopy.Root.Images[0].Data, LPngPlain),
+        'the PNG inside the GLB should be saved without EXIF data');
+      Check(Same(LCopy.Root.Images[1].Data, LJpgPlain),
+        'the JPEG inside the GLB should be saved without EXIF data');
+      Check(LCopy.Root.Buffers[0].ByteLength < Length(LPngExif) + Length(LJpgExif),
+        'the old image bytes should not stay in the BIN chunk');
+      Check(Same(LDoc.Root.Images[0].Data, LPngExif) and Same(LDoc.Root.Images[1].Data, LJpgExif),
+        'the document itself should keep its images as they are');
+
+      // As a glTF with separate image files
+      LOptions := TglTFSaveOptions.Default;
+      LOptions.LeaveOutUnusedImages := False;
+      LOptions.StripExif := True;
+      ForceDirectories(LTemp);
+      LDoc.SaveToFile(TPath.Combine(LTemp, 'model.gltf'), LOptions);
+      LFiles := TDirectory.GetFiles(LTemp);
+      Check(Length(LFiles) = 3, Format('model.gltf and 2 image files expected, found %d',
+        [Length(LFiles)]));
+      for LFile in LFiles do
+        if not SameText(ExtractFileExt(LFile), '.gltf') then
+          Check(not TglTFExif.HasExif(TFile.ReadAllBytes(LFile)),
+            ExtractFileName(LFile) + ' should have no EXIF data');
+
+      if LFailures = 0 then
+        Log('  PASS: EXIF data removed from PNG and JPEG, inside a GLB and as separate files; ' +
+          'pictures and document unchanged');
+    except
+      on E: Exception do
+        Check(False, E.ClassName + ': ' + E.Message);
+    end;
+  finally
+    LStream.Free;
+    LCopy.Free;
+    LDoc.Free;
+    try
+      if TDirectory.Exists(LTemp) then
+        TDirectory.Delete(LTemp, True);
+    except
+      // a temporary folder left behind does no harm
+    end;
   end;
 end;
 
@@ -3053,6 +3219,7 @@ begin
   AnimationRenameTest;
   ReorientTest;
   BulkReorientTest;
+  ExifTest;
   PartsTest;
   UnusedImagesTest;
 
