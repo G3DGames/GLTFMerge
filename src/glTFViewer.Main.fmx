@@ -144,6 +144,20 @@ object glTFMainForm: TglTFMainForm
       ExplicitSize.cx = 80.000000000000000000
       ExplicitSize.cy = 26.000000000000000000
     end
+    object tabSplit: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 44.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Split'
+      ExplicitSize.cx = 44.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
     object tabOutput: TTabItem
       CustomIcon = <
         item

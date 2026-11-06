@@ -2,9 +2,9 @@
 //** files.)
 //**
 //** The units glTF.Base, glTF.Classes, glTF.SourceMap, glTF.Document, glTF.Edit,
-//** glTF.Animations, glTF.AnimationSplit, glTF.Parts, glTF.Orient, glTF.Bulk and glTF.Exif
-//** are the glTF reader, writer, animation importer and splitter, part swapper, re-orienter,
-//** bulk re-orienter and EXIF remover and have no user interface; they are in the GLTFLib
+//** glTF.Animations, glTF.AnimationSplit, glTF.Parts, glTF.Orient, glTF.Bulk, glTF.Exif and
+//** glTF.ModelSplit are the glTF reader, writer, animation importer and splitter, part swapper,
+//** re-orienter, bulk re-orienter, EXIF remover and model splitter and have no user interface; they are in the GLTFLib
 //** folder. The glTFViewer units and the form are the application, in the src folder. Neon
 //** @(https://github.com/paolo-rossi/delphi-neon@) is expected in the delphi-neon folder next
 //** to this file; its units are listed below. Needs Delphi 10.4 or later. Memory leaks are
@@ -16,7 +16,7 @@
 //** with the Files app or Finder.
 //**
 //** @preformatted(
-//** Command line @(desktop@):  glTFDemo [file.gltf|file.glb] [--selftest]
+//** Command line @(desktop@):  glTFMerge [file.gltf|file.glb] [--selftest]
 //**                          --selftest only with SELF_TESTS, see glTFViewer.Main
 //** )
 program glTFMerge;
@@ -26,10 +26,10 @@ program glTFMerge;
   and GLB files.
 
   The units glTF.Base, glTF.Classes, glTF.SourceMap, glTF.Document, glTF.Edit,
-  glTF.Animations, glTF.AnimationSplit, glTF.Parts, glTF.Orient, glTF.Bulk
-  and glTF.Exif are the glTF reader, writer, animation importer and splitter,
-  part swapper, re-orienter, bulk re-orienter and EXIF remover and have no
-  user interface; they are in the GLTFLib folder. The glTFViewer units and
+  glTF.Animations, glTF.AnimationSplit, glTF.Parts, glTF.Orient, glTF.Bulk,
+  glTF.Exif and glTF.ModelSplit are the glTF reader, writer, animation
+  importer and splitter, part swapper, re-orienter, bulk re-orienter, EXIF
+  remover and model splitter and have no user interface; they are in the GLTFLib folder. The glTFViewer units and
   the form are the application, in the src folder. Neon
   (https://github.com/paolo-rossi/delphi-neon) is expected in the
   delphi-neon folder next to this file; its units are listed below. Needs
@@ -40,7 +40,7 @@ program glTFMerge;
   default; on iOS, set UIFileSharingEnabled in the project's version
   information so that files can be copied there with the Files app or Finder.
 
-    Command line (desktop):  glTFDemo [file.gltf|file.glb] [--selftest]
+    Command line (desktop):  glTFMerge [file.gltf|file.glb] [--selftest]
                              --selftest only with SELF_TESTS, see glTFViewer.Main
 }
 
@@ -65,6 +65,7 @@ uses
   glTF.Orient in 'GLTFLib\glTF.Orient.pas',
   glTF.Bulk in 'GLTFLib\glTF.Bulk.pas',
   glTF.Exif in 'GLTFLib\glTF.Exif.pas',
+  glTF.ModelSplit in 'GLTFLib\glTF.ModelSplit.pas',
   glTFViewer.Tree in 'src\glTFViewer.Tree.pas',
   glTFViewer.Settings in 'src\glTFViewer.Settings.pas',
   glTFViewer.Dialogs in 'src\glTFViewer.Dialogs.pas',
@@ -79,6 +80,7 @@ uses
   glTFViewer.Split in 'src\glTFViewer.Split.pas' {SplitAnimationForm},
   glTFViewer.Orient in 'src\glTFViewer.Orient.pas' {glTFOrientFrame: TFrame},
   glTFViewer.BulkOrient in 'src\glTFViewer.BulkOrient.pas' {BulkOrientForm},
+  glTFViewer.SplitModels in 'src\glTFViewer.SplitModels.pas' {glTFSplitModelsFrame: TFrame},
   glTFViewer.Main in 'src\glTFViewer.Main.pas' {glTFMainForm};
 
 begin

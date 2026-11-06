@@ -1,0 +1,92 @@
+object glTFSplitModelsFrame: TglTFSplitModelsFrame
+  Size.Width = 960.000000000000000000
+  Size.Height = 574.000000000000000000
+  Size.PlatformDefault = False
+  object layBar: TLayout
+    Align = Top
+    Size.Width = 960.000000000000000000
+    Size.Height = 40.000000000000000000
+    Padding.Left = 6.000000000000000000
+    Padding.Top = 6.000000000000000000
+    Padding.Right = 6.000000000000000000
+    Padding.Bottom = 6.000000000000000000
+    Size.PlatformDefault = False
+    object btnSplit: TButton
+      Align = Left
+      Size.Width = 100.000000000000000000
+      Size.Height = 28.000000000000000000
+      Text = 'Split'
+      Position.X = 6.000000000000000000
+      Position.Y = 6.000000000000000000
+      OnClick = btnSplitClick
+      Hint = 'Choose a folder; every model listed is saved there as a ' +
+        'file of its own'
+      ShowHint = True
+      Size.PlatformDefault = False
+    end
+    object lblFormat: TLabel
+      Align = Left
+      Size.Width = 60.000000000000000000
+      Size.Height = 28.000000000000000000
+      Position.X = 124.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 18.000000000000000000
+      StyledSettings = [Family, Size, Style, FontColor]
+      TextSettings.WordWrap = False
+      Text = 'Save as:'
+      Size.PlatformDefault = False
+    end
+    object rbGLB: TRadioButton
+      Align = Left
+      Position.X = 184.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 70.000000000000000000
+      Size.Height = 28.000000000000000000
+      GroupName = 'split.format'
+      IsChecked = True
+      Text = 'GLB'
+      Size.PlatformDefault = False
+    end
+    object rbGLTF: TRadioButton
+      Align = Left
+      Position.X = 254.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 70.000000000000000000
+      Size.Height = 28.000000000000000000
+      GroupName = 'split.format'
+      Text = 'glTF'
+      Size.PlatformDefault = False
+    end
+    object lblSummary: TLabel
+      Align = Client
+      Size.Width = 616.000000000000000000
+      Size.Height = 28.000000000000000000
+      Position.X = 338.000000000000000000
+      Position.Y = 6.000000000000000000
+      Margins.Left = 14.000000000000000000
+      StyledSettings = [Family, Size, Style, FontColor]
+      TextSettings.WordWrap = False
+      TextSettings.Trimming = Character
+      Size.PlatformDefault = False
+    end
+  end
+  object layHeader: TLayout
+    Align = Top
+    Size.Width = 960.000000000000000000
+    Size.Height = 26.000000000000000000
+    Padding.Left = 8.000000000000000000
+    Padding.Right = 8.000000000000000000
+    OnResize = layHeaderResize
+    Position.Y = 40.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object lstModels: TListBox
+    Align = Client
+    Size.Width = 960.000000000000000000
+    Size.Height = 508.000000000000000000
+    ItemHeight = 26.000000000000000000
+    Position.Y = 66.000000000000000000
+    OnPainting = lstModelsPainting
+    Size.PlatformDefault = False
+  end
+end

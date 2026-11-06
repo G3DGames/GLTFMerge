@@ -9,15 +9,17 @@
 //** names are resolved with glTFViewer.Duplicates. The Parts tab loads body parts and outfit
 //** pieces from other files and puts them on the model in place of the parts they replace @(see
 //** glTFViewer.Parts and glTF.Parts@). The Re-Orient tab turns the model about X, Y and Z
-//** when it is saved @(see glTFViewer.Orient and glTF.Orient@). The Output tab logs loading,
+//** when it is saved @(see glTFViewer.Orient and glTF.Orient@). The Split tab lists the models
+//** a file holds, one per root node of the scene, and saves each as a file of its own in a
+//** folder @(see glTFViewer.SplitModels and glTF.ModelSplit@). The Output tab logs loading,
 //** saving and the self-tests, and shows errors with their line in the glTF text; it comes to
 //** the front when a load fails, when saving and when the self-tests run.
 //**
 //** The File menu has Open, Save As, Bulk Re-Orient and Exit. Bulk Re-Orient turns every
 //** model in a folder tree and saves the copies in another folder with the same sub-folders
 //** @(see glTFViewer.BulkOrient and glTF.Bulk@). The window's title shows the file loaded,
-//** with a * in front while there are changes not yet saved: animations imported, split or cleared,
-//** parts put on or taken off, and changes on the tabs to what a save writes. Exit, closing the
+//** with a * in front while there are changes not yet saved: animations imported, split or
+//** cleared, parts put on or taken off, and changes on the tabs to what a save writes. Exit, closing the
 //** window and opening another file ask first, with OK and Cancel, while there are such
 //** changes. On iOS and Android, which show no main menu, the File menu is shown in a menu bar
 //** at the top of the form instead, without Exit.
@@ -43,7 +45,7 @@
 //** and Android.
 //**
 //** @preformatted(
-//** Command line @(desktop@):  glTFDemo [file.gltf|file.glb] [--selftest]
+//** Command line @(desktop@):  glTFMerge [file.gltf|file.glb] [--selftest]
 //**                          --selftest only with SELF_TESTS
 //** )
 unit glTFViewer.Main;
@@ -62,15 +64,17 @@ unit glTFViewer.Main;
   other files and puts them on the model in place of the parts they replace
   (see glTFViewer.Parts and glTF.Parts). The Re-Orient tab turns the model
   about X, Y and Z when it is saved (see glTFViewer.Orient and glTF.Orient).
-  The Output tab logs loading, saving and the self-tests, and shows errors
+  The Split tab lists the models a file holds, one per root node of the
+  scene, and saves each as a file of its own in a folder (see
+  glTFViewer.SplitModels and glTF.ModelSplit). The Output tab logs loading, saving and the self-tests, and shows errors
   with their line in the glTF text; it comes to the front when a load fails,
   when saving and when the self-tests run.
 
   The File menu has Open, Save As, Bulk Re-Orient and Exit. Bulk Re-Orient
   turns every model in a folder tree and saves the copies in another folder
   with the same sub-folders (see glTFViewer.BulkOrient and glTF.Bulk). The
-  window's title shows the file loaded, with a * in front while there are changes not yet saved: animations
-  imported, split or cleared, parts put on or taken off, and changes on the
+  window's title shows the file loaded, with a * in front while there are
+  changes not yet saved: animations imported, split or cleared, parts put on or taken off, and changes on the
   tabs to what a save writes. Exit, closing the window and opening another
   file ask first, with OK and Cancel, while there are such changes. On iOS and
   Android, which show no main menu, the File menu is shown in a menu bar at
@@ -96,7 +100,7 @@ unit glTFViewer.Main;
   Android. As dialogs do not block on every platform, opening and saving
   continue in callbacks. There is no command line on iOS and Android.
 
-    Command line (desktop):  glTFDemo [file.gltf|file.glb] [--selftest]
+    Command line (desktop):  glTFMerge [file.gltf|file.glb] [--selftest]
                              --selftest only with SELF_TESTS
 }
 
@@ -114,8 +118,9 @@ uses
   FMX.Memo, FMX.Layouts, FMX.TreeView, FMX.Menus,
 
   glTF.Base, glTF.Classes, glTF.Document, glTF.Animations, glTF.Parts, glTF.Bulk,
+  glTF.ModelSplit,
   glTFViewer.Images, glTFViewer.Animations, glTFViewer.Progress, glTFViewer.Duplicates,
-  glTFViewer.Parts, glTFViewer.Orient;
+  glTFViewer.Parts, glTFViewer.Orient, glTFViewer.SplitModels;
 
 type
   //** @abstract(The viewer's main window.)
@@ -189,6 +194,11 @@ type
     /// <summary>The Re-Orient tab, holding the frame with the turn applied when
     /// saving.</summary>
     tabOrient: TTabItem;
+
+    //** @abstract(The Split tab, holding the frame that lists the models to save one by one.)
+    /// <summary>The Split tab, holding the frame that lists the models to save one by
+    /// one.</summary>
+    tabSplit: TTabItem;
 
     //** @abstract(The log: load results, document summary, save results and self-test results.)
     /// <summary>The log: load results, document summary, save results and self-test
@@ -287,6 +297,7 @@ type
     FDuplicates: TDuplicateFrame;
     FParts: TglTFPartsFrame;
     FOrient: TglTFOrientFrame;
+    FSplitModels: TglTFSplitModelsFrame;
     // The part files loaded; kept across model loads
     FPartLibrary: TglTFPartLibrary;
     // Puts parts on FDoc; replaced with the document
@@ -314,6 +325,11 @@ type
     procedure UpdateCaption;
     procedure UpdateMenu;
     procedure ConfirmDiscard(const AQuestion: string; const AProceed: TProc);
+    function SaveOptions(out AOptions: TglTFSaveOptions): Boolean;
+    procedure SplitModelsSplit(Sender: TObject);
+    procedure SplitRun(ASplitter: TglTFModelSplitter; const AFolder: string;
+      AFormat: TglTFFileFormat; const AOptions: TglTFSaveOptions);
+    procedure SplitFinished(ASplitter: TglTFModelSplitter; const AFolder, AError: string);
     procedure BulkSearch(const AOptions: TglTFBulkOptions);
     procedure BulkSearchFinished(ABulk: TglTFBulkReorienter; const AError: string);
     procedure BulkRun(ABulk: TglTFBulkReorienter);
@@ -363,6 +379,7 @@ type
     procedure ReorientTest;
     procedure BulkReorientTest;
     procedure ExifTest;
+    procedure SplitModelsTest;
     procedure PartsTest;
     procedure UnusedImagesTest;
     procedure RunSelfTests;
@@ -409,6 +426,7 @@ const
   KEY_SAVE_MODEL = 'saveModel';
   KEY_IMPORT_ANIMATIONS = 'importAnimations';
   KEY_ADD_PARTS = 'addPartFiles';
+  KEY_SPLIT_OUTPUT = 'splitOutputFolder';
 
 function FloatText(AValue: Double): string;
 begin
@@ -469,6 +487,11 @@ begin
   FOrient.Parent := tabOrient;
   FOrient.Align := TAlignLayout.Client;
   FOrient.OnChange := DocumentEdited;
+
+  FSplitModels := TglTFSplitModelsFrame.Create(Self);
+  FSplitModels.Parent := tabSplit;
+  FSplitModels.Align := TAlignLayout.Client;
+  FSplitModels.OnSplit := SplitModelsSplit;
 
   // Shown over everything while a model loads or animations are imported
   FProgress := TProgressFrame.Create(Self);
@@ -958,6 +981,116 @@ begin
     end);
 end;
 
+function TglTFMainForm.SaveOptions(out AOptions: TglTFSaveOptions): Boolean;
+begin
+  // What the tabs say about saving, for Save As and Split alike
+  AOptions := TglTFSaveOptions.Default;
+  if FImages.AlterSaveMode then
+    AOptions.ImageSaveMode := ismPerImage;
+  // "Don't save EXIF data" on the Images tab
+  AOptions.StripExif := FImages.StripExif;
+  // The turn on the Re-Orient tab; nothing is saved while it is not valid
+  Result := FOrient.GetAngles(AOptions.RotateX, AOptions.RotateY, AOptions.RotateZ);
+  if not Result then
+  begin
+    TabControl.ActiveTab := tabOrient;
+    Log;
+    Log('Not saved: the angles on the Re-Orient tab must be numbers from -360 to 360');
+  end;
+end;
+
+procedure TglTFMainForm.SplitModelsSplit(Sender: TObject);
+var
+  LOptions: TglTFSaveOptions;
+  LFormat: TglTFFileFormat;
+begin
+  if FBusy or (FSplitModels.ModelCount = 0) then
+    Exit;
+  if not SaveOptions(LOptions) then
+    Exit;
+  LFormat := FSplitModels.OutputFormat;
+  TPlatformDialogs.SelectFolder(KEY_SPLIT_OUTPUT, 'Folder for the split models', '',
+    procedure(AFolder: string)
+    var
+      LSplitter: TglTFModelSplitter;
+    begin
+      // Reached once the dialog has closed: check again
+      if (AFolder = '') or FBusy or FCloseRequested then
+        Exit;
+      LSplitter := TglTFModelSplitter.Create(FDoc);
+      try
+        LSplitter.FindModels;
+      except
+        on E: Exception do
+        begin
+          LSplitter.Free;
+          Log('ERROR: the models could not be told apart: %s', [E.Message]);
+          Exit;
+        end;
+      end;
+      SplitRun(LSplitter, AFolder, LFormat, LOptions);
+    end);
+end;
+
+procedure TglTFMainForm.SplitRun(ASplitter: TglTFModelSplitter; const AFolder: string;
+  AFormat: TglTFFileFormat; const AOptions: TglTFSaveOptions);
+begin
+  TabControl.ActiveTab := tabOutput;
+  Log;
+  Log('Split: %d model(s) to %s, as %s', [Length(ASplitter.Models), AFolder,
+    System.StrUtils.IfThen(AFormat = gffJSON, 'glTF', 'GLB')]);
+  if not TglTFReorienter.IsIdentity(AOptions.RotateX, AOptions.RotateY, AOptions.RotateZ) then
+    Log('Each model turned by X %s, Y %s, Z %s degrees (Re-Orient tab)',
+      [FloatText(AOptions.RotateX), FloatText(AOptions.RotateY), FloatText(AOptions.RotateZ)]);
+  if AOptions.StripExif then
+    Log('Images saved without EXIF data, as chosen on the Images tab');
+
+  // Each model is cut from a copy in the background; the document is only
+  // read, and the tabs are disabled meanwhile. Abort stops after the model
+  // being saved
+  ASplitter.OnProgress := WorkProgress;
+  BeginWork('Splitting the models',
+    procedure
+    begin
+      ASplitter.RequestAbort;
+    end);
+  TTask.Run(
+    procedure
+    var
+      LError: string;
+    begin
+      LError := '';
+      try
+        ASplitter.Run(AFolder, AFormat, AOptions);
+      except
+        on E: Exception do
+          LError := E.Message;
+      end;
+      TThread.Queue(nil,
+        procedure
+        begin
+          SplitFinished(ASplitter, AFolder, LError);
+        end);
+    end);
+end;
+
+procedure TglTFMainForm.SplitFinished(ASplitter: TglTFModelSplitter;
+  const AFolder, AError: string);
+var
+  LLine: string;
+begin
+  ASplitter.OnProgress := nil;
+  EndWork;
+  for LLine in ASplitter.Log do
+    Log('  %s', [LLine]);
+  if AError <> '' then
+    Log('ERROR: %s', [AError]);
+  Log('Split: %d of %d model(s) saved in %s; %d failed', [ASplitter.Saved,
+    Length(ASplitter.Models), AFolder, ASplitter.Failed]);
+  ASplitter.Free;
+  TabControl.ActiveTab := tabOutput;
+end;
+
 procedure TglTFMainForm.SaveAs(const AFileName: string);
 var
   LWarning: string;
@@ -974,19 +1107,8 @@ begin
   // Only the images a mesh shows are saved (LeaveOutUnusedImages). The
   // format decides where they go, a GLB inside it, a glTF as separate files,
   // unless "Alter image save mode" is ticked on the Images tab
-  LOptions := TglTFSaveOptions.Default;
-  if FImages.AlterSaveMode then
-    LOptions.ImageSaveMode := ismPerImage;
-  // "Don't save EXIF data" on the Images tab
-  LOptions.StripExif := FImages.StripExif;
-  // The turn on the Re-Orient tab; nothing is saved while it is not valid
-  if not FOrient.GetAngles(LOptions.RotateX, LOptions.RotateY, LOptions.RotateZ) then
-  begin
-    TabControl.ActiveTab := tabOrient;
-    Log;
-    Log('Not saved: the angles on the Re-Orient tab must be numbers from -360 to 360');
+  if not SaveOptions(LOptions) then
     Exit;
-  end;
   LGLB := TglTFDocument.FormatFromFileName(AFileName) = gffGLB;
   LEmbedded := 0;
   LExported := 0;
@@ -1545,6 +1667,7 @@ begin
   FImages.RefreshList;
   FAnimations.RefreshList;
   FParts.RefreshList;
+  FSplitModels.RefreshList;
   if FDoc.HasMissingResources then
     Log('Warning: %d media file(s) are missing; see the Images tab',
       [Length(FDoc.MissingResources)]);
@@ -1627,6 +1750,7 @@ begin
     FImages.Bind(nil);
     FAnimations.Bind(nil);
     FParts.Bind(nil, nil);
+    FSplitModels.Bind(nil);
     FreeAndNil(FPartApplier);
     FDoc.Free;
     FDoc := ADoc;
@@ -1658,6 +1782,7 @@ begin
     FImages.Bind(FDoc);
     FAnimations.Bind(FDoc);
     FParts.Bind(FDoc, FPartApplier);
+    FSplitModels.Bind(FDoc);
 
     // Offer to locate missing media, once the form has settled (not when
     // the form is closing)
@@ -2042,6 +2167,150 @@ begin
     Result := 'data:application/octet-stream;base64,' + LEncoding.EncodeBytesToString(LBytes);
   finally
     LEncoding.Free;
+  end;
+end;
+
+procedure TglTFMainForm.SplitModelsTest;
+var
+  LDoc, LOut: TglTFDocument;
+  LSplitter: TglTFModelSplitter;
+  LTemp, LJSON: string;
+  LFailures: Integer;
+
+  procedure Check(ACondition: Boolean; const AText: string);
+  begin
+    if not ACondition then
+    begin
+      Inc(LFailures);
+      Log('  FAIL: %s', [AText]);
+    end;
+  end;
+
+  function Near(const AValues: TArray<Double>; X, Y, Z: Double): Boolean;
+  begin
+    Result := (Length(AValues) = 3) and (Abs(AValues[0] - X) < 1e-6) and
+      (Abs(AValues[1] - Y) < 1e-6) and (Abs(AValues[2] - Z) < 1e-6);
+  end;
+
+  // Splits LDoc into LTemp as GLB
+  function Split: Integer;
+  begin
+    LSplitter := TglTFModelSplitter.Create(LDoc);
+    try
+      LSplitter.FindModels;
+      Result := LSplitter.Run(LTemp, gffGLB, TglTFSaveOptions.Default);
+      Check(LSplitter.Failed = 0, 'no model should fail: ' + LSplitter.Log.Text);
+    finally
+      LSplitter.Free;
+    end;
+  end;
+
+  // Loads one split model
+  function Model(const AName: string): TglTFDocument;
+  begin
+    Result := TglTFDocument.Create;
+    Result.LoadFromFile(TPath.Combine(LTemp, AName));
+  end;
+
+begin
+  Log;
+  Log('Self-test: splitting a file into one file per root node');
+  LFailures := 0;
+  LTemp := TPath.Combine(TPath.GetTempPath, 'glTFSplitTest_' +
+    TGUID.NewGuid.ToString.Replace('{', '').Replace('}', ''));
+  // Three roots sharing one triangle, which lies at (5..6, 5..6, 0) in the
+  // mesh: "A" with a child, at the origin, so far from its triangle; an
+  // unnamed one at (10, 0, 0), also far; and "a", whose origin is in the
+  // middle of its triangle
+  LJSON := '{"asset":{"version":"2.0"},"scene":0,"scenes":[{"nodes":[0,2,3]}],' +
+    '"nodes":[{"name":"A","mesh":0,"children":[1]},{"name":"A_child"},' +
+      '{"mesh":0,"translation":[10,0,0]},' +
+      '{"name":"a","mesh":0,"translation":[-5.5,-5.5,0]}],' +
+    '"meshes":[{"primitives":[{"attributes":{"POSITION":0}}]}],' +
+    '"accessors":[{"bufferView":0,"componentType":5126,"count":3,"type":"VEC3",' +
+      '"min":[5,5,0],"max":[6,6,0]}],' +
+    '"bufferViews":[{"buffer":0,"byteLength":36}],' +
+    '"buffers":[{"byteLength":36,"uri":"' +
+      FloatsDataUri([5, 5, 0, 6, 5, 0, 5, 6, 0]) + '"}]}';
+  LDoc := TglTFDocument.Create;
+  try
+    try
+      LDoc.LoadFromString(LJSON);
+      LSplitter := TglTFModelSplitter.Create(LDoc);
+      try
+        Check(LSplitter.FindModels = 3, 'three root nodes should make three models');
+        if Length(LSplitter.Models) = 3 then
+        begin
+          Check(LSplitter.Models[0].Name = 'A', 'the first model should be named "A"');
+          Check(LSplitter.Models[1].Name = 'model_002',
+            'an unnamed root should be named model_002, not ' + LSplitter.Models[1].Name);
+          Check(LSplitter.Models[2].Name = 'a_1',
+            '"a" should become a_1, as "A" is taken whatever the case, not ' +
+            LSplitter.Models[2].Name);
+          Check(Length(LSplitter.Models[0].Nodes) = 2, 'model A should hold its child too');
+          Check(LSplitter.Models[0].Recentre and LSplitter.Models[1].Recentre,
+            'models far from their origin should be moved to their centre');
+          Check(not LSplitter.Models[2].Recentre,
+            'a model with its origin inside it should keep it');
+        end;
+      finally
+        LSplitter.Free;
+      end;
+
+      Check(Split = 3, 'three models should be saved');
+      LOut := Model('A.glb');
+      try
+        Check((LOut.Root.Nodes.Count = 2) and (LOut.Root.Meshes.Count = 1) and
+          (Length(LOut.Root.Scenes[0].Nodes) = 1),
+          'A.glb should hold A and its child, one mesh and one root');
+        Check(Near(LOut.Root.Nodes[LOut.Root.Scenes[0].Nodes[0]].Translation, -5.5, -5.5, 0),
+          'A should be moved so the centre of its triangle is its origin');
+        Check(LOut.Root.Buffers[0].ByteLength = 36, 'A.glb should hold only its own bytes');
+      finally
+        LOut.Free;
+      end;
+      LOut := Model('model_002.glb');
+      try
+        Check(Near(LOut.Root.Nodes[0].Translation, -5.5, -5.5, 0),
+          'model_002 should be moved from (10, 0, 0) to its centre');
+      finally
+        LOut.Free;
+      end;
+      LOut := Model('a_1.glb');
+      try
+        Check(Near(LOut.Root.Nodes[0].Translation, -5.5, -5.5, 0),
+          'a_1 should keep its place');
+      finally
+        LOut.Free;
+      end;
+
+      // Again into the same folder: nothing replaced, sequential suffixes
+      Check(Split = 3, 'the second split should save three models too');
+      // (Where case is ignored, as on Windows, a_1.glb also takes A_1.glb, so
+      // A becomes A_2.glb there)
+      Check(TFile.Exists(TPath.Combine(LTemp, 'model_002_1.glb')) and
+        TFile.Exists(TPath.Combine(LTemp, 'a_1_1.glb')) and
+        (TFile.Exists(TPath.Combine(LTemp, 'A_1.glb')) or
+         TFile.Exists(TPath.Combine(LTemp, 'A_2.glb'))),
+        'models whose files exist should get a suffix');
+      Check(Length(TDirectory.GetFiles(LTemp)) = 6, 'no file should be replaced');
+      Check(LDoc.Root.Nodes.Count = 4, 'the document itself should not change');
+
+      if LFailures = 0 then
+        Log('  PASS: one file per root, children kept, names unique whatever the case, ' +
+          'far models centred, no file replaced');
+    except
+      on E: Exception do
+        Check(False, E.ClassName + ': ' + E.Message);
+    end;
+  finally
+    LDoc.Free;
+    try
+      if TDirectory.Exists(LTemp) then
+        TDirectory.Delete(LTemp, True);
+    except
+      // a temporary folder left behind does no harm
+    end;
   end;
 end;
 
@@ -3220,6 +3489,7 @@ begin
   ReorientTest;
   BulkReorientTest;
   ExifTest;
+  SplitModelsTest;
   PartsTest;
   UnusedImagesTest;
 

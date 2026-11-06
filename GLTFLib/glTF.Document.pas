@@ -645,6 +645,24 @@ type
     procedure LoadFromJSON(AJSON: TJSONValue);
     {$ENDREGION}
 
+    //** @abstract(Returns a new document holding a copy of this one's objects.)
+    //**
+    //** The copy has the same file name, folder and format, so the files the objects refer to
+    //** are found from it as from this document. Buffer and image data are shared, not
+    //** copied: change them by giving an object new data, never by writing into the bytes.
+    //** Used to cut a model out of a file without changing the document.
+    //**
+    //** @returns(The copy; the caller frees it.)
+    //**
+    //** @raises(EglTFError The objects are not valid glTF.)
+    /// <summary>Returns a new document holding a copy of this one's objects.</summary>
+    /// <returns>The copy; the caller frees it.</returns>
+    /// <remarks>The copy has the same file name, folder and format, so the files the objects
+    /// refer to are found from it as from this document. Buffer and image data are shared, not
+    /// copied: change them by giving an object new data, never by writing into the bytes. Used
+    /// to cut a model out of a file without changing the document.</remarks>
+    function CreateCopy: TglTFDocument;
+
     {$REGION 'Saving'}
     //** @abstract(Saves as .gltf or .glb, chosen by the file extension, with default
     //** options.)
@@ -1908,6 +1926,22 @@ begin
   if AFormat = gffNone then
     raise EglTFError.Create('Choose gffJSON or gffGLB to save a glTF stream');
   SaveInternal(AStream, AFormat, AOptions, '', '');
+end;
+
+function TglTFDocument.CreateCopy: TglTFDocument;
+begin
+  Result := TglTFDocument.Create;
+  try
+    Result.ReplaceRoot(CreateSaveCopy);
+    Result.FFileName := FFileName;
+    Result.FBaseDirectory := FBaseDirectory;
+    Result.FFormat := FFormat;
+    Result.FHasBinaryChunk := FHasBinaryChunk;
+    Result.FLoadExternalResources := FLoadExternalResources;
+  except
+    Result.Free;
+    raise;
+  end;
 end;
 
 function TglTFDocument.CreateSaveCopy: TglTF;

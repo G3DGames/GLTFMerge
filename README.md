@@ -21,6 +21,8 @@ then saves the result as one model.
   hidden where the parts cover it. The merged model can then be saved.
 - **Re-orient.** Models exported with the wrong up or forward axis for your engine can be
   turned about X, Y and Z when saved, with the turn baked into the data.
+- **Split.** A file holding many models side by side, such as an icon set, can be split into
+  one file per model on the **Split** tab.
 - **Clean up.** Leave out animations, images no mesh uses, and EXIF data in images.
 
 Saving only ever writes what is in the objects. The loaded model is never changed by a save,
@@ -28,7 +30,7 @@ so you can try different settings and save again.
 
 ## The application
 
-The viewer has a **File** menu and six tabs. The window title shows the model loaded, with a
+The viewer has a **File** menu and seven tabs. The window title shows the model loaded, with a
 `*` while there are changes not yet saved.
 
 | Tab | What it is for |
@@ -38,6 +40,7 @@ The viewer has a **File** menu and six tabs. The window title shows the model lo
 | **Animations** | Every animation with its origin, channels and length. Tick which are saved, import more from other files, rename one by clicking its name, clear them all, or split one long animation into named frame ranges. |
 | **Parts** | Load part files, put the ticked parts on the model and take them off again, with settings for how much of the body they hide. |
 | **Re-Orient** | The turn about X, Y and Z applied when saving, with presets for Z-up to Y-up, Y-up to Z-up, facing the other way, flipping upside down and no turn. |
+| **Split** | The models the file holds, one per root node of the scene with everything under it. **Split** saves each as a file of its own, as GLB or glTF, in a folder you choose. |
 | **Output** | A log of loading, saving and everything done to the model, with errors shown at their line in the glTF text. |
 
 ### File menu
@@ -65,6 +68,21 @@ tab. It opens a sheet where each row is a name, a start frame and an end frame, 
 - **Import list...**, which reads the ranges from the text file that often comes with
   animation packs, in most of the layouts those files use;
 - **Save sheet...** and **Load sheet...** to finish a sheet later.
+
+### Splitting a file into models
+
+Each root node of the scene is a model, with all its children; roots tied together by a skin
+stay together. The Split tab lists them with their file name, node, mesh and triangle counts,
+and what happens to their origin. Each saved file holds only what its model uses.
+
+- **Names** come from the root node, made safe for a file name, or `model_NNN` when it has
+  none. Names are unique whatever their case; when a file of that name is already in the
+  output folder, a sequential suffix is added (`walk_1.glb`, `walk_2.glb`), so nothing is
+  replaced.
+- **Origins** stay where they are when they are inside the model or near it, as with a
+  character standing on its origin. A model far from its origin, as when every model of a
+  sheet shares one origin, is moved so the centre of its bounding box becomes its origin.
+- The Re-Orient turn and the EXIF choice apply as for **Save As**.
 
 ### Settings
 
@@ -137,6 +155,7 @@ GLTFLib/            the library: no user interface
 src/                the application's forms and frames, each designed in an .fmx file
 delphi-neon/        the Neon JSON library (submodule)
 docs/lib, docs/ui   PasDoc documentation of the library and of the application
+icons/              the application icon for every platform (glTFMerge_1024.png is the master)
 img/                images for this file
 ```
 
@@ -156,6 +175,7 @@ The units in `GLTFLib` work without the application and can be used on their own
 | `glTF.Orient` | Turn a whole model about X, Y and Z, baked into its data. |
 | `glTF.Bulk` | Re-orient every model in a folder tree. |
 | `glTF.Exif` | Remove EXIF data from JPEG, PNG and WebP images. |
+| `glTF.ModelSplit` | Split a file into one file per root node, centring models far from their origin. |
 
 For example, to merge animations into a model and save it turned to Y-up without EXIF data:
 
