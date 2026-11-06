@@ -87,9 +87,6 @@ type
   //**
   //** Errors in the JSON chunk's content are reported as EglTFParseError or
   //** EglTFMissingPropertyError instead, with a line number.
-  /// <summary>Raised when the GLB container itself is invalid: its header or chunk layout.</summary>
-  /// <remarks>Errors in the JSON chunk's content are reported as EglTFParseError or
-  /// EglTFMissingPropertyError instead, with a line number.</remarks>
   EglTFGLBError = class(EglTFError)
   private
     FByteOffset: Int64;
@@ -101,95 +98,63 @@ type
     //** @param(AMessage What is wrong with the container.)
     //**
     //** @param(AByteOffset Byte offset in the GLB data where the problem was found.)
-    /// <summary>Creates the exception with a message and the offset of the problem.</summary>
-    /// <param name="AMessage">What is wrong with the container.</param>
-    /// <param name="AByteOffset">Byte offset in the GLB data where the problem was found.</param>
-    /// <remarks>The message is prefixed with "Invalid GLB:" and followed by the byte offset.</remarks>
     constructor Create(const AMessage: string; AByteOffset: Int64);
 
     //** @abstract(Byte offset in the GLB data where the problem was found.)
-    /// <summary>Byte offset in the GLB data where the problem was found.</summary>
     property ByteOffset: Int64 read FByteOffset;
   end;
 
   //** @abstract(The two glTF file formats.)
-  /// <summary>The two glTF file formats.</summary>
   TglTFFileFormat = (
     //** @abstract(No format: nothing is loaded, or the file name has no .gltf or .glb extension.)
-    /// <summary>No format: nothing is loaded, or the file name has no .gltf or .glb extension.</summary>
     gffNone,
 
     //** @abstract(glTF JSON text, usually a .gltf file.)
-    /// <summary>glTF JSON text, usually a .gltf file.</summary>
     gffJSON,
 
     //** @abstract(Binary glTF, a .glb file.)
-    /// <summary>Binary glTF, a .glb file.</summary>
     gffGLB);
 
   //** @abstract(Where the data of a buffer goes when saving.)
   //**
   //** Applies to buffers only; images follow @link(TglTFImageSaveMode). In a GLB,
   //** buffers[0] always goes into the BIN chunk whatever the mode.
-  /// <summary>Where the data of a buffer goes when saving.</summary>
-  /// <remarks>Applies to buffers only; images follow <see cref="TglTFImageSaveMode"/>. In a
-  /// GLB, buffers[0] always goes into the BIN chunk whatever the mode.</remarks>
   TglTFResourceMode = (
     //** @abstract(Keeps each buffer's kind: data URIs stay data URIs, external files stay
     //** external files, written next to the output.)
     //**
     //** A buffer that was in a GLB BIN chunk becomes "<name>.bin" when saving .gltf.
-    /// <summary>Keeps each buffer's kind: data URIs stay data URIs, external files stay
-    /// external files, written next to the output.</summary>
-    /// <remarks>A buffer that was in a GLB BIN chunk becomes "&lt;name&gt;.bin" when saving
-    /// .gltf.</remarks>
     rmKeep,
 
     //** @abstract(Embeds every buffer as a base64 data URI.)
-    /// <summary>Embeds every buffer as a base64 data URI.</summary>
     rmEmbed,
 
     //** @abstract(Writes every buffer as a file next to the output.)
-    /// <summary>Writes every buffer as a file next to the output.</summary>
     rmExternal);
 
   //** @abstract(Where the images go when saving.)
-  /// <summary>Where the images go when saving.</summary>
   TglTFImageSaveMode = (
     //** @abstract(The format decides: a GLB stores every image inside it, in the BIN chunk; a
     //** glTF writes every image as a separate file next to it.)
     //**
     //** The images' Embed flags are ignored. A glTF saved to a stream, which has no folder for
     //** files, still holds its images as data URIs.
-    /// <summary>The format decides: a GLB stores every image inside it, in the BIN chunk; a
-    /// glTF writes every image as a separate file next to it.</summary>
-    /// <remarks>The images' Embed flags are ignored. A glTF saved to a stream, which has no
-    /// folder for files, still holds its images as data URIs.</remarks>
     ismByFormat,
 
     //** @abstract(Each image's @code(TglTFImage.Embed) flag decides, in either format.)
-    /// <summary>Each image's <c>TglTFImage.Embed</c> flag decides, in either
-    /// format.</summary>
     ismPerImage);
 
   //** @abstract(Settings for @link(TglTFDocument.SaveToFile) and
   //** @link(TglTFDocument.SaveToStream).)
   //**
   //** Start from @link(TglTFSaveOptions.Default) and change what you need.
-  /// <summary>Settings for <see cref="TglTFDocument.SaveToFile"/> and
-  /// <see cref="TglTFDocument.SaveToStream"/>.</summary>
-  /// <remarks>Start from <see cref="TglTFSaveOptions.Default"/> and change what you
-  /// need.</remarks>
   TglTFSaveOptions = record
     //** @abstract(Where the data of each buffer goes; see @link(TglTFResourceMode).)
-    /// <summary>Where the data of each buffer goes; see <see cref="TglTFResourceMode"/>.</summary>
     Buffers: TglTFResourceMode;
 
     //** @abstract(Writes indented JSON for .gltf.)
     //**
     //** GLB JSON is always written compact.
-    /// <summary>Writes indented JSON for .gltf.</summary>
-    /// <remarks>GLB JSON is always written compact.</remarks>
     PrettyPrint: Boolean;
 
     //** @abstract(Leaves out the images the model does not need, with the materials, textures and
@@ -199,16 +164,9 @@ type
     //** @code(TglTFEdit.ImagesInUse). The others, such as those of a part taken off, or of
     //** materials no mesh uses, are neither embedded nor written as separate files. The
     //** document itself keeps them.
-    /// <summary>Leaves out the images the model does not need, with the materials, textures and
-    /// samplers that lead only to them; True by default.</summary>
-    /// <remarks>An image is needed when a mesh shows it, through a material and a texture; see
-    /// <c>TglTFEdit.ImagesInUse</c>. The others, such as those of a part taken off, or of
-    /// materials no mesh uses, are neither embedded nor written as separate files. The document
-    /// itself keeps them.</remarks>
     LeaveOutUnusedImages: Boolean;
 
     //** @abstract(Where the images go; ismByFormat by default.)
-    /// <summary>Where the images go; ismByFormat by default.</summary>
     ImageSaveMode: TglTFImageSaveMode;
 
     //** @abstract(Degrees to turn the whole model about the X axis; 0 by default.)
@@ -217,25 +175,16 @@ type
     //** re-oriented, its meshes, nodes, animations and skins turned, by
     //** @code(TglTFReorienter) in glTF.Orient. X is applied first, then Y, then Z. The
     //** document itself is not changed.
-    /// <summary>Degrees to turn the whole model about the X axis; 0 by default.</summary>
-    /// <remarks>With RotateY and RotateZ: when any of them turns the model, the saved model is
-    /// re-oriented, its meshes, nodes, animations and skins turned, by
-    /// <c>TglTFReorienter</c> in glTF.Orient. X is applied first, then Y, then Z. The document
-    /// itself is not changed.</remarks>
     RotateX: Double;
 
     //** @abstract(Degrees to turn the whole model about the Y axis; 0 by default.)
     //**
     //** See RotateX.
-    /// <summary>Degrees to turn the whole model about the Y axis; 0 by default.</summary>
-    /// <remarks>See RotateX.</remarks>
     RotateY: Double;
 
     //** @abstract(Degrees to turn the whole model about the Z axis; 0 by default.)
     //**
     //** See RotateX.
-    /// <summary>Degrees to turn the whole model about the Z axis; 0 by default.</summary>
-    /// <remarks>See RotateX.</remarks>
     RotateZ: Double;
 
     //** @abstract(Saves every image without its EXIF data; False by default.)
@@ -248,76 +197,49 @@ type
     //** other models use as it is, nor for images inside the buffers of a file using Draco or
     //** meshopt compression; SaveWarnings says so. @link(TglTFDocument.ExifRemoved) counts the
     //** images changed. The document itself is not changed.
-    /// <summary>Saves every image without its EXIF data; False by default.</summary>
-    /// <remarks>Applies to every image saved: separate files, images inside a GLB's BIN chunk
-    /// and data-URI images. JPEG, PNG and WebP images lose their EXIF data, the picture itself
-    /// unchanged (see <c>TglTFExif</c> in glTF.Exif); other formats are saved as they are. An
-    /// image already inside a buffer is stored again, without the EXIF data, and its old bytes
-    /// left out. Not done for an image with <c>TglTFImage.Shared</c> set, whose file other
-    /// models use as it is, nor for images inside the buffers of a file using Draco or meshopt
-    /// compression; SaveWarnings says so. <see cref="TglTFDocument.ExifRemoved"/> counts the
-    /// images changed. The document itself is not changed.</remarks>
     StripExif: Boolean;
 
     //** @abstract(Returns the default settings.)
     //**
     //** @returns(Buffers = rmKeep, PrettyPrint = True, LeaveOutUnusedImages = True,
     //** ImageSaveMode = ismByFormat, no turn and StripExif = False.)
-    /// <summary>Returns the default settings.</summary>
-    /// <returns>Buffers = rmKeep, PrettyPrint = True, LeaveOutUnusedImages = True,
-    /// ImageSaveMode = ismByFormat, no turn and StripExif = False.</returns>
     class function Default: TglTFSaveOptions; static;
   end;
 
   //** @abstract(The two kinds of external file a glTF can refer to.)
-  /// <summary>The two kinds of external file a glTF can refer to.</summary>
   TglTFResourceKind = (
     //** @abstract(A buffer, an entry of @code(TglTF.Buffers).)
-    /// <summary>A buffer, an entry of <c>TglTF.Buffers</c>.</summary>
     rkBuffer,
 
     //** @abstract(An image, an entry of @code(TglTF.Images).)
-    /// <summary>An image, an entry of <c>TglTF.Images</c>.</summary>
     rkImage);
 
   //** @abstract(An external buffer or image file whose data is not loaded.)
   //**
   //** Returned by @link(TglTFDocument.MissingResources). It is a snapshot: it does not
   //** change when the file is found later.
-  /// <summary>An external buffer or image file whose data is not loaded.</summary>
-  /// <remarks>Returned by <see cref="TglTFDocument.MissingResources"/>. It is a snapshot:
-  /// it does not change when the file is found later.</remarks>
   TglTFMissingResource = record
     //** @abstract(Whether this is a buffer or an image.)
-    /// <summary>Whether this is a buffer or an image.</summary>
     Kind: TglTFResourceKind;
 
     //** @abstract(Index in @code(Root.Buffers) or @code(Root.Images), depending on Kind.)
-    /// <summary>Index in <c>Root.Buffers</c> or <c>Root.Images</c>, depending on Kind.</summary>
     Index: Integer;
 
     //** @abstract(The uri as written in the glTF, still percent-encoded.)
-    /// <summary>The uri as written in the glTF, still percent-encoded.</summary>
     Uri: string;
 
     //** @abstract(Where the file was looked for: the uri resolved against
     //** @code(BaseDirectory).)
-    /// <summary>Where the file was looked for: the uri resolved against
-    /// <c>BaseDirectory</c>.</summary>
     ExpectedPath: string;
 
     //** @abstract(Returns the file name part of the uri, decoded.)
     //**
     //** @returns(For example @code(brick.png) for the uri @code(textures/brick.png).)
-    /// <summary>Returns the file name part of the uri, decoded.</summary>
-    /// <returns>For example <c>brick.png</c> for the uri <c>textures/brick.png</c>.</returns>
     function FileName: string;
 
     //** @abstract(Returns a short description for messages.)
     //**
     //** @returns(For example: Image 2 "brick.png".)
-    /// <summary>Returns a short description for messages.</summary>
-    /// <returns>For example: Image 2 "brick.png".</returns>
     function Description: string;
   end;
 
@@ -326,50 +248,33 @@ type
   //** Passed to @link(TglTFProgressEvent) handlers by TglTFDocument while loading and by
   //** TglTFAnimationImporter while importing. A document reports itself as model 1 of 1; an
   //** importer numbers the files it loads.
-  /// <summary>How far a long operation has got: which model, which stage, how much of
-  /// it.</summary>
-  /// <remarks>Passed to <see cref="TglTFProgressEvent"/> handlers by TglTFDocument while
-  /// loading and by TglTFAnimationImporter while importing. A document reports itself as model
-  /// 1 of 1; an importer numbers the files it loads.</remarks>
   TglTFProgress = record
     //** @abstract(Number of the current model, from 1.)
-    /// <summary>Number of the current model, from 1.</summary>
     ModelIndex: Integer;
 
     //** @abstract(Number of models in the whole operation.)
-    /// <summary>Number of models in the whole operation.</summary>
     ModelCount: Integer;
 
     //** @abstract(File name of the current model, without its folder; empty when it was not
     //** loaded from a file.)
-    /// <summary>File name of the current model, without its folder; empty when it was not
-    /// loaded from a file.</summary>
     ModelName: string;
 
     //** @abstract(What is being done now, for example "Loading image 3 of 8".)
-    /// <summary>What is being done now, for example "Loading image 3 of 8".</summary>
     Stage: string;
 
     //** @abstract(How much of the current model is done, from 0 to 1.)
-    /// <summary>How much of the current model is done, from 0 to 1.</summary>
     Done: Double;
 
     //** @abstract(Returns how much of the whole operation is done.)
     //**
     //** @returns(From 0 to 1: the models finished plus the part of the current one done,
     //** divided by the number of models.)
-    /// <summary>Returns how much of the whole operation is done.</summary>
-    /// <returns>From 0 to 1: the models finished plus the part of the current one done,
-    /// divided by the number of models.</returns>
     function Overall: Double;
 
     //** @abstract(Returns the model line for a progress display.)
     //**
     //** @returns(For example: Model 2 of 5: walk.glb. Only the name, usually empty, while
     //** ModelCount is 0, for example while the models are still being searched for.)
-    /// <summary>Returns the model line for a progress display.</summary>
-    /// <returns>For example: Model 2 of 5: walk.glb. Only the name, usually empty, while
-    /// ModelCount is 0, for example while the models are still being searched for.</returns>
     function ModelText: string;
   end;
 
@@ -382,12 +287,6 @@ type
   //** @param(Sender The document or importer doing the work.)
   //**
   //** @param(AProgress How far it has got.)
-  /// <summary>Event reporting progress, like TNotifyEvent with the progress added.</summary>
-  /// <param name="Sender">The document or importer doing the work.</param>
-  /// <param name="AProgress">How far it has got.</param>
-  /// <remarks>Called on the thread doing the work: when loading runs in a background thread,
-  /// a handler that updates the user interface must pass the update to the main thread, for
-  /// example with TThread.Queue. The handler must not change the document.</remarks>
   TglTFProgressEvent = procedure(Sender: TObject; const AProgress: TglTFProgress) of object;
 
   //** @abstract(A glTF 2.0 document: its object tree and loading and saving.)
@@ -407,22 +306,6 @@ type
   //**   Doc.Free;
   //** end;
   //** #)
-  /// <summary>A glTF 2.0 document: its object tree and loading and saving.</summary>
-  /// <remarks>
-  /// <para>Holds a <c>TglTF</c> object tree in <see cref="Root"/>, which is never nil.
-  /// Loading replaces the tree only when the load succeeds, so a failed load leaves the
-  /// previous asset in place. Saving never changes the tree: it works on a copy.</para>
-  /// <para>Not thread-safe; use an instance from one thread at a time. Every method blocks
-  /// until it finishes, including the file reads and writes it does.</para>
-  /// </remarks>
-  /// <example><code>
-  /// Doc := TglTFDocument.CreateFromFile('model.gltf');
-  /// try
-  ///   Doc.SaveToFile('model.glb'); // every image inside the GLB
-  /// finally
-  ///   Doc.Free;
-  /// end;
-  /// </code></example>
   TglTFDocument = class
   private
     FRoot: TglTF;
@@ -461,13 +344,9 @@ type
     //** @abstract(Creates an empty document.)
     //**
     //** @link(Root) is an empty @code(TglTF) and @link(FileFormat) is gffNone.
-    /// <summary>Creates an empty document.</summary>
-    /// <remarks><see cref="Root"/> is an empty <c>TglTF</c> and <see cref="FileFormat"/> is
-    /// gffNone.</remarks>
     constructor Create;
 
     //** @abstract(Frees the document and its whole object tree.)
-    /// <summary>Frees the document and its whole object tree.</summary>
     destructor Destroy; override;
 
     //** @abstract(Creates a document and loads a .gltf or .glb file into it.)
@@ -479,12 +358,6 @@ type
     //** @returns(The new document.)
     //**
     //** @raises(EglTFError The file is not valid glTF; see @link(LoadFromFile).)
-    /// <summary>Creates a document and loads a .gltf or .glb file into it.</summary>
-    /// <param name="AFileName">The file to load; see <see cref="LoadFromFile"/>.</param>
-    /// <returns>The new document.</returns>
-    /// <exception cref="EglTFError">The file is not valid glTF; see
-    /// <see cref="LoadFromFile"/>.</exception>
-    /// <remarks>The caller owns the result. Nothing is returned when loading fails.</remarks>
     class function CreateFromFile(const AFileName: string): TglTFDocument;
 
     //** @abstract(Creates a document and loads glTF JSON or GLB from a stream into it.)
@@ -496,12 +369,6 @@ type
     //** @returns(The new document.)
     //**
     //** @raises(EglTFError The data is not valid glTF.)
-    /// <summary>Creates a document and loads glTF JSON or GLB from a stream into it.</summary>
-    /// <param name="AStream">Read from its current position to its end; see
-    /// <see cref="LoadFromStream"/>.</param>
-    /// <returns>The new document.</returns>
-    /// <exception cref="EglTFError">The data is not valid glTF.</exception>
-    /// <remarks>The caller owns the result. Nothing is returned when loading fails.</remarks>
     class function CreateFromStream(AStream: TStream): TglTFDocument;
 
     //** @abstract(Tells whether bytes start with the GLB magic "glTF".)
@@ -509,9 +376,6 @@ type
     //** @param(ABytes The start of the data, at least 4 bytes to be recognised.)
     //**
     //** @returns(True for GLB data, False otherwise.)
-    /// <summary>Tells whether bytes start with the GLB magic "glTF".</summary>
-    /// <param name="ABytes">The start of the data, at least 4 bytes to be recognised.</param>
-    /// <returns>True for GLB data, False otherwise.</returns>
     class function IsGLBData(const ABytes: TBytes): Boolean; static;
 
     //** @abstract(Returns the format a file name's extension stands for.)
@@ -521,20 +385,12 @@ type
     //** @param(AFileName A file name or path.)
     //**
     //** @returns(gffGLB for .glb, gffJSON for .gltf, gffNone for anything else.)
-    /// <summary>Returns the format a file name's extension stands for.</summary>
-    /// <param name="AFileName">A file name or path.</param>
-    /// <returns>gffGLB for .glb, gffJSON for .gltf, gffNone for anything else.</returns>
-    /// <remarks>The comparison ignores case.</remarks>
     class function FormatFromFileName(const AFileName: string): TglTFFileFormat; static;
 
     //** @abstract(Discards the loaded asset.)
     //**
     //** @link(Root) becomes an empty @code(TglTF); the file name, base directory, format
     //** and load warnings are cleared. Objects of the old tree become invalid.
-    /// <summary>Discards the loaded asset.</summary>
-    /// <remarks><see cref="Root"/> becomes an empty <c>TglTF</c>; the file name, base
-    /// directory, format and load warnings are cleared. Objects of the old tree become
-    /// invalid.</remarks>
     procedure Clear;
 
     {$REGION 'Loading'}
@@ -559,21 +415,6 @@ type
     //** @raises(EglTFGLBError The GLB container is invalid.)
     //**
     //** @raises(EFOpenError The file cannot be opened.)
-    /// <summary>Loads a .gltf or .glb file.</summary>
-    /// <param name="AFileName">The file to load.</param>
-    /// <exception cref="EglTFParseError">The JSON is malformed or a value is invalid.</exception>
-    /// <exception cref="EglTFMissingPropertyError">A property the glTF schema requires is
-    /// missing.</exception>
-    /// <exception cref="EglTFGLBError">The GLB container is invalid.</exception>
-    /// <exception cref="EFOpenError">The file cannot be opened.</exception>
-    /// <remarks>The format is detected from the content. External buffers and images are
-    /// read relative to the file's folder, which becomes <see cref="BaseDirectory"/>.
-    /// Missing external files do not fail the load: they are listed in
-    /// <see cref="Warnings"/> and <see cref="MissingResources"/>. Errors in the JSON report
-    /// their line, within the JSON chunk for a GLB. When a referenced file is not found
-    /// under its exact name, folder and file names are matched ignoring case, as glTF files
-    /// made on Windows often differ in case from the files on case-sensitive file systems
-    /// (Linux, Android, iOS).</remarks>
     procedure LoadFromFile(const AFileName: string);
 
     //** @abstract(Loads glTF JSON or GLB from a stream.)
@@ -585,14 +426,6 @@ type
     //** @param(AStream The data; the caller keeps ownership.)
     //**
     //** @raises(EglTFError The data is empty or not valid glTF; see @link(LoadFromFile).)
-    /// <summary>Loads glTF JSON or GLB from a stream.</summary>
-    /// <param name="AStream">The data; the caller keeps ownership.</param>
-    /// <exception cref="EglTFError">The data is empty or not valid glTF; see
-    /// <see cref="LoadFromFile"/>.</exception>
-    /// <remarks>Reads from the stream's current position to its end; the format is
-    /// detected from the content. External files are read relative to
-    /// <see cref="BaseDirectory"/>, so set it first if the asset has any.
-    /// <see cref="FileName"/> becomes empty.</remarks>
     procedure LoadFromStream(AStream: TStream);
 
     //** @abstract(Loads glTF JSON text.)
@@ -603,12 +436,6 @@ type
     //** @param(AJSONText The JSON of a glTF asset.)
     //**
     //** @raises(EglTFError The text is not valid glTF; see @link(LoadFromFile).)
-    /// <summary>Loads glTF JSON text.</summary>
-    /// <param name="AJSONText">The JSON of a glTF asset.</param>
-    /// <exception cref="EglTFError">The text is not valid glTF; see
-    /// <see cref="LoadFromFile"/>.</exception>
-    /// <remarks>External files are read relative to <see cref="BaseDirectory"/>.
-    /// <see cref="FileName"/> becomes empty.</remarks>
     procedure LoadFromString(const AJSONText: string);
 
     //** @abstract(Loads GLB data held in memory.)
@@ -619,12 +446,6 @@ type
     //** @param(ABytes The whole GLB file.)
     //**
     //** @raises(EglTFError The data is not valid GLB; see @link(LoadFromFile).)
-    /// <summary>Loads GLB data held in memory.</summary>
-    /// <param name="ABytes">The whole GLB file.</param>
-    /// <exception cref="EglTFError">The data is not valid GLB; see
-    /// <see cref="LoadFromFile"/>.</exception>
-    /// <remarks>External files are read relative to <see cref="BaseDirectory"/>.
-    /// <see cref="FileName"/> becomes empty.</remarks>
     procedure LoadFromGLBBytes(const ABytes: TBytes);
 
     //** @abstract(Loads already parsed glTF JSON.)
@@ -636,12 +457,6 @@ type
     //** @param(AJSON The glTF root object; the caller keeps ownership.)
     //**
     //** @raises(EglTFError The JSON is not valid glTF.)
-    /// <summary>Loads already parsed glTF JSON.</summary>
-    /// <param name="AJSON">The glTF root object; the caller keeps ownership.</param>
-    /// <exception cref="EglTFError">The JSON is not valid glTF.</exception>
-    /// <remarks>Errors cannot report line numbers, as the original text is not available.
-    /// Buffer data can only come from data URIs and from external files relative to
-    /// <see cref="BaseDirectory"/>.</remarks>
     procedure LoadFromJSON(AJSON: TJSONValue);
     {$ENDREGION}
 
@@ -655,12 +470,6 @@ type
     //** @returns(The copy; the caller frees it.)
     //**
     //** @raises(EglTFError The objects are not valid glTF.)
-    /// <summary>Returns a new document holding a copy of this one's objects.</summary>
-    /// <returns>The copy; the caller frees it.</returns>
-    /// <remarks>The copy has the same file name, folder and format, so the files the objects
-    /// refer to are found from it as from this document. Buffer and image data are shared, not
-    /// copied: change them by giving an object new data, never by writing into the bytes. Used
-    /// to cut a model out of a file without changing the document.</remarks>
     function CreateCopy: TglTFDocument;
 
     {$REGION 'Saving'}
@@ -672,12 +481,6 @@ type
     //** @param(AFileName The output file; its extension must be .gltf or .glb.)
     //**
     //** @raises(EglTFError See the overload with options.)
-    /// <summary>Saves as .gltf or .glb, chosen by the file extension, with default
-    /// options.</summary>
-    /// <param name="AFileName">The output file; its extension must be .gltf or .glb.</param>
-    /// <exception cref="EglTFError">See the overload with options.</exception>
-    /// <remarks>Same as <see cref="SaveToFile"/> with
-    /// <see cref="TglTFSaveOptions.Default"/>.</remarks>
     procedure SaveToFile(const AFileName: string); overload;
 
     //** @abstract(Saves as .gltf or .glb, chosen by the file extension.)
@@ -720,41 +523,6 @@ type
     //** glTF, or a GLB's buffers[0] has no data.)
     //**
     //** @raises(EInOutError A file cannot be written.)
-    /// <summary>Saves as .gltf or .glb, chosen by the file extension.</summary>
-    /// <param name="AFileName">The output file; its extension must be .gltf or .glb.</param>
-    /// <param name="AOptions">Where buffer data goes and how the JSON is laid out.</param>
-    /// <exception cref="EglTFError">The extension is not .gltf or .glb, the objects are not
-    /// valid glTF, or a GLB's buffers[0] has no data.</exception>
-    /// <exception cref="EInOutError">A file cannot be written.</exception>
-    /// <remarks>
-    /// <para>The output is made file-complete. Every buffer and image stored as a separate
-    /// file is written next to it, at the path its uri gives relative to the output,
-    /// creating sub-folders as needed. A file whose data was not loaded is copied from
-    /// where it was found, or from its original location. A file already there with the
-    /// same bytes is left alone. <see cref="SavedFiles"/> lists what was done for each
-    /// file. A file that cannot be found anywhere is written as a uri reference only,
-    /// reported in <see cref="SaveWarnings"/>, and makes <see cref="SaveComplete"/>
-    /// False.</para>
-    /// <para>An image saved as a separate file is not also kept in a buffer: when it was
-    /// inside one, its bytes are cut out, the later data moves down and every bufferView index
-    /// is renumbered. Files using Draco or meshopt compression are the exception, as those
-    /// extensions refer to bufferViews in their own JSON; the bytes then stay and
-    /// <see cref="SaveWarnings"/> says so. The document itself is never changed.</para>
-    /// <para>An image saved as a separate file is named, in order of preference: after its
-    /// uri (keeping the uri's folders when they stay inside the output folder, otherwise only
-    /// the file name); after its name, made safe for every platform's file system, with an
-    /// extension from its MIME type; or &lt;model&gt;_image&lt;N&gt;. Names are unique within a
-    /// save, ignoring case: images with identical bytes share one file, others get "_2", "_3"
-    /// and so on before the extension. Buffer files follow the same rule, and nothing may take
-    /// the name of the output file itself.</para>
-    /// <para>An image file never replaces a different file already on disk: it is renamed the
-    /// same way instead. The exception is an image with <c>TglTFImage.Shared</c> set, whose file
-    /// may be shared with other models: when it already exists it is used as it is, even if its
-    /// bytes differ, and its uri may lead outside the output folder.</para>
-    /// <para>The separate files are written first and the main file last, so a failure
-    /// leaves any existing main file untouched. Existing files of the same names are
-    /// replaced.</para>
-    /// </remarks>
     procedure SaveToFile(const AFileName: string; const AOptions: TglTFSaveOptions); overload;
 
     //** @abstract(Saves to a stream in the given format, with default options.)
@@ -766,13 +534,6 @@ type
     //** @param(AFormat gffJSON or gffGLB.)
     //**
     //** @raises(EglTFError See the overload with options.)
-    /// <summary>Saves to a stream in the given format, with default options.</summary>
-    /// <param name="AStream">Written from its current position; the caller keeps
-    /// ownership.</param>
-    /// <param name="AFormat">gffJSON or gffGLB.</param>
-    /// <exception cref="EglTFError">See the overload with options.</exception>
-    /// <remarks>Same as <see cref="SaveToStream"/> with
-    /// <see cref="TglTFSaveOptions.Default"/>.</remarks>
     procedure SaveToStream(AStream: TStream; AFormat: TglTFFileFormat); overload;
 
     //** @abstract(Saves to a stream in the given format.)
@@ -790,18 +551,6 @@ type
     //**
     //** @raises(EglTFError AFormat is gffNone, the objects are not valid glTF, or a GLB's
     //** buffers[0] has no data.)
-    /// <summary>Saves to a stream in the given format.</summary>
-    /// <param name="AStream">Written from its current position; the caller keeps
-    /// ownership.</param>
-    /// <param name="AFormat">gffJSON or gffGLB.</param>
-    /// <param name="AOptions">How the JSON is laid out; Buffers is ignored.</param>
-    /// <exception cref="EglTFError">AFormat is gffNone, the objects are not valid glTF, or a
-    /// GLB's buffers[0] has no data.</exception>
-    /// <remarks>A stream has no folder for separate files, so every buffer and image that
-    /// has data is put inside it: in a GLB, buffers[0] goes into the BIN chunk; everything
-    /// else becomes a data URI, or a buffer for images with Embed set. Only files that
-    /// could not be found stay as uri references, which makes <see cref="SaveComplete"/>
-    /// False.</remarks>
     procedure SaveToStream(AStream: TStream; AFormat: TglTFFileFormat;
       const AOptions: TglTFSaveOptions); overload;
     {$ENDREGION}
@@ -814,12 +563,6 @@ type
     //** @param(AUri A uri as written in the glTF.)
     //**
     //** @returns(The file path, or AUri itself for a data URI.)
-    /// <summary>Resolves a buffer or image uri to a file path.</summary>
-    /// <param name="AUri">A uri as written in the glTF.</param>
-    /// <returns>The file path, or AUri itself for a data URI.</returns>
-    /// <remarks>The uri is percent-decoded and resolved against
-    /// <see cref="BaseDirectory"/>. Data URIs and absolute paths are returned unchanged.
-    /// The file does not have to exist.</remarks>
     function ResolveUri(const AUri: string): string;
 
     //** @abstract(Returns the bytes of a buffer.)
@@ -831,12 +574,6 @@ type
     //** @returns(The buffer's Data, byteLength bytes long.)
     //**
     //** @raises(EglTFError The buffer does not exist or its data is not loaded.)
-    /// <summary>Returns the bytes of a buffer.</summary>
-    /// <param name="AIndex">Index in <c>Root.Buffers</c>.</param>
-    /// <returns>The buffer's Data, byteLength bytes long.</returns>
-    /// <exception cref="EglTFError">The buffer does not exist or its data is not
-    /// loaded.</exception>
-    /// <remarks>The array is the buffer's own Data, not a copy.</remarks>
     function GetBufferData(AIndex: Integer): TBytes;
 
     {$REGION 'Missing external files'}
@@ -847,19 +584,11 @@ type
     //** included.
     //**
     //** @returns(One entry per missing file, buffers first; empty when none is missing.)
-    /// <summary>Lists the external buffer and image files whose data is not loaded.</summary>
-    /// <returns>One entry per missing file, buffers first; empty when none is
-    /// missing.</returns>
-    /// <remarks>Computed from the current objects each time it is called: every buffer or
-    /// image with a uri that is not a data URI and no Data. Images inside a bufferView are
-    /// not included.</remarks>
     function MissingResources: TArray<TglTFMissingResource>;
 
     //** @abstract(Tells whether any external buffer or image file is missing.)
     //**
     //** @returns(True when @link(MissingResources) is not empty.)
-    /// <summary>Tells whether any external buffer or image file is missing.</summary>
-    /// <returns>True when <see cref="MissingResources"/> is not empty.</returns>
     function HasMissingResources: Boolean;
 
     //** @abstract(Loads the data of a buffer or image from a file the caller found.)
@@ -875,15 +604,6 @@ type
     //**
     //** @raises(EglTFError The file does not exist, AIndex is out of range, or a buffer
     //** file is smaller than the buffer's byteLength.)
-    /// <summary>Loads the data of a buffer or image from a file the caller found.</summary>
-    /// <param name="AKind">Whether AIndex is a buffer or an image.</param>
-    /// <param name="AIndex">Index in <c>Root.Buffers</c> or <c>Root.Images</c>.</param>
-    /// <param name="AFileName">The file to read.</param>
-    /// <exception cref="EglTFError">The file does not exist, AIndex is out of range, or a
-    /// buffer file is smaller than the buffer's byteLength.</exception>
-    /// <remarks>The uri in the glTF is not changed. The file becomes the object's
-    /// SourceFile, so a later save copies it next to the output if it is to be a separate
-    /// file there.</remarks>
     procedure SupplyResourceFile(AKind: TglTFResourceKind; AIndex: Integer;
       const AFileName: string);
 
@@ -901,17 +621,6 @@ type
     //**
     //** @returns(How many missing files were found and loaded; 0 when ADirectory does
     //** not exist.)
-    /// <summary>Looks for every missing file in a folder and loads those it finds.</summary>
-    /// <param name="ADirectory">The folder to search.</param>
-    /// <param name="ARecursive">Also search sub-folders; this can be slow on large
-    /// folders.</param>
-    /// <returns>How many missing files were found and loaded; 0 when ADirectory does not
-    /// exist.</returns>
-    /// <remarks>For each missing file it tries, in order: the uri's relative path inside
-    /// ADirectory, the file name directly in ADirectory, then (when ARecursive) the file
-    /// name in any sub-folder. Names are compared ignoring case on every platform. A
-    /// candidate that cannot be used, such as a buffer file that is too small, is skipped.
-    /// Sub-folders that cannot be read are ignored.</remarks>
     function SearchMissingResources(const ADirectory: string; ARecursive: Boolean = True): Integer;
     {$ENDREGION}
 
@@ -919,51 +628,33 @@ type
     //**
     //** Owned by the document. Replaced by every successful load and by @link(Clear), which
     //** makes references to the old tree's objects invalid.
-    /// <summary>The glTF object tree; never nil.</summary>
-    /// <remarks>Owned by the document. Replaced by every successful load and by
-    /// <see cref="Clear"/>, which makes references to the old tree's objects
-    /// invalid.</remarks>
     property Root: TglTF read FRoot;
 
     //** @abstract(Full path of the loaded file; empty when loaded from anything else.)
-    /// <summary>Full path of the loaded file; empty when loaded from anything else.</summary>
     property FileName: string read FFileName;
 
     //** @abstract(Folder that relative uris are resolved against.)
     //**
     //** Set by @link(LoadFromFile) to the file's folder. Set it before the other load
     //** methods when the asset refers to external files.
-    /// <summary>Folder that relative uris are resolved against.</summary>
-    /// <remarks>Set by <see cref="LoadFromFile"/> to the file's folder. Set it before the
-    /// other load methods when the asset refers to external files.</remarks>
     property BaseDirectory: string read FBaseDirectory write FBaseDirectory;
 
     //** @abstract(Format of the loaded asset; gffNone when nothing is loaded.)
-    /// <summary>Format of the loaded asset; gffNone when nothing is loaded.</summary>
     property FileFormat: TglTFFileFormat read FFormat;
 
     //** @abstract(True when the loaded GLB had a BIN chunk.)
-    /// <summary>True when the loaded GLB had a BIN chunk.</summary>
     property HasBinaryChunk: Boolean read FHasBinaryChunk;
 
     //** @abstract(Size of the loaded GLB BIN chunk in bytes, padding included; 0 otherwise.)
-    /// <summary>Size of the loaded GLB BIN chunk in bytes, padding included; 0
-    /// otherwise.</summary>
     property BinaryChunkLength: Int64 read FBinaryChunkLength;
 
     //** @abstract(Size of the loaded GLB JSON chunk in bytes; 0 for .gltf.)
-    /// <summary>Size of the loaded GLB JSON chunk in bytes; 0 for .gltf.</summary>
     property JSONChunkLength: Int64 read FJSONChunkLength;
 
     //** @abstract(Reads external buffer and image files while loading; True by default.)
     //**
     //** When False, external files are not read and appear in @link(MissingResources).
     //** A later save to a file still copies them from their original location.
-    /// <summary>Reads external buffer and image files while loading; True by
-    /// default.</summary>
-    /// <remarks>When False, external files are not read and appear in
-    /// <see cref="MissingResources"/>. A later save to a file still copies them from their
-    /// original location.</remarks>
     property LoadExternalResources: Boolean read FLoadExternalResources write FLoadExternalResources;
 
     //** @abstract(Occurs as loading progresses: reading, parsing, building the objects and
@@ -971,27 +662,17 @@ type
     //**
     //** Called on the thread that loads; see @link(TglTFProgressEvent). The last call of a
     //** successful load has Done = 1 and says how many animations the model has.
-    /// <summary>Occurs as loading progresses: reading, parsing, building the objects and
-    /// loading each buffer and image.</summary>
-    /// <remarks>Called on the thread that loads; see <see cref="TglTFProgressEvent"/>. The
-    /// last call of a successful load has Done = 1 and says how many animations the model
-    /// has.</remarks>
     property OnProgress: TglTFProgressEvent read FOnProgress write FOnProgress;
 
     //** @abstract(Non-fatal problems found by the last load, one per line.)
     //**
     //** For example a missing texture file. Owned by the document.
-    /// <summary>Non-fatal problems found by the last load, one per line.</summary>
-    /// <remarks>For example a missing texture file. Owned by the document.</remarks>
     property Warnings: TStringList read FWarnings;
 
     //** @abstract(Non-fatal problems found by the last save, one per line.)
     //**
     //** Includes every file the saved glTF refers to that could not be found. Owned by the
     //** document; cleared at the start of each save.
-    /// <summary>Non-fatal problems found by the last save, one per line.</summary>
-    /// <remarks>Includes every file the saved glTF refers to that could not be found. Owned
-    /// by the document; cleared at the start of each save.</remarks>
     property SaveWarnings: TStringList read FSaveWarnings;
 
     //** @abstract(What the last save did with each separate buffer and image file.)
@@ -999,11 +680,6 @@ type
     //** One line per file, for example "textures/brick.png: copied from D:\found\brick.png",
     //** "...: written from embedded data" or "...: already in place". Empty after a save to
     //** a stream. Owned by the document; cleared at the start of each save.
-    /// <summary>What the last save did with each separate buffer and image file.</summary>
-    /// <remarks>One line per file, for example "textures/brick.png: copied from
-    /// D:\found\brick.png", "...: written from embedded data" or "...: already in place".
-    /// Empty after a save to a stream. Owned by the document; cleared at the start of each
-    /// save.</remarks>
     property SavedFiles: TStringList read FSavedFiles;
 
     //** @abstract(True when the last save is file-complete.)
@@ -1011,19 +687,12 @@ type
     //** File-complete means every file the saved glTF refers to exists next to it, so it
     //** loads without missing files. False when a referenced file could not be found;
     //** @link(SaveWarnings) names it.
-    /// <summary>True when the last save is file-complete.</summary>
-    /// <remarks>File-complete means every file the saved glTF refers to exists next to it,
-    /// so it loads without missing files. False when a referenced file could not be found;
-    /// <see cref="SaveWarnings"/> names it.</remarks>
     property SaveComplete: Boolean read FSaveComplete;
 
     //** @abstract(How many images the last save wrote without their EXIF data.)
     //**
     //** 0 unless @code(TglTFSaveOptions.StripExif) was set; images that had no EXIF data are
     //** not counted.
-    /// <summary>How many images the last save wrote without their EXIF data.</summary>
-    /// <remarks>0 unless <c>TglTFSaveOptions.StripExif</c> was set; images that had no EXIF
-    /// data are not counted.</remarks>
     property ExifRemoved: Integer read FExifRemoved;
   end;
 
@@ -1049,9 +718,7 @@ const
 
 { Helpers }
 
-// <summary>
-//   RFC 3986 percent-decoding (UTF-8). Unlike form decoding, '+' is kept
-// </summary>
+// RFC 3986 percent-decoding (UTF-8). Unlike form decoding, '+' is kept
 function PercentDecode(const AValue: string): string;
 var
   LSource: TBytes;
@@ -1083,7 +750,7 @@ begin
   Result := TEncoding.UTF8.GetString(LResult, 0, LCount);
 end;
 
-// <summary>Percent-encodes a relative path for use as a URI ('/' is kept)</summary>
+// Percent-encodes a relative path for use as a URI ('/' is kept)
 function PercentEncodePath(const APath: string): string;
 var
   LByte: Byte;
@@ -1137,10 +804,8 @@ begin
     Result := TPath.Combine(ABaseDir, LPath);
 end;
 
-// <summary>
-//   A relative URI that stays inside the output folder (no scheme, not
-//   rooted, no ".."), so it can be written next to the output
-// </summary>
+// A relative URI that stays inside the output folder (no scheme, not
+// rooted, no ".."), so it can be written next to the output
 // An existing folder matching APath; where the exact name is not found the
 // names are compared without case, folder by folder, as glTF files made on
 // Windows often differ in case from the files on case-sensitive file systems
@@ -1218,7 +883,7 @@ begin
   Result := True;
 end;
 
-// <summary>Decodes a base64 data URI; APath locates it for error messages</summary>
+// Decodes a base64 data URI; APath locates it for error messages
 function DecodeDataUri(const AUri, APath: string): TBytes;
 var
   LComma: Integer;
@@ -2353,10 +2018,8 @@ var
       Check('Image', J, LOut.Images[J].Uri);
   end;
 
-  // <summary>
-  //   Appends AData to ABuffer's Data on a 4-byte boundary and adds a
-  //   bufferView for it. Returns the new bufferView's index
-  // </summary>
+  // Appends AData to ABuffer's Data on a 4-byte boundary and adds a
+  // bufferView for it. Returns the new bufferView's index
   function AppendToBuffer(ABuffer: TglTFBuffer; ABufferIndex: Integer; const AData: TBytes): Integer;
   var
     LBytes: TBytes;
@@ -2380,7 +2043,7 @@ var
     Result := LOut.BufferViews.Count - 1;
   end;
 
-  // <summary>The buffer embedded images go into (created when needed)</summary>
+  // The buffer embedded images go into (created when needed)
   function ImageTarget(out AIndex: Integer): TglTFBuffer;
   begin
     if AFormat = gffGLB then

@@ -64,10 +64,6 @@ type
   //** Carries where the problem is: @link(JSONPath) always when known, and the line and
   //** column in the source text when the document was loaded from text. The location is
   //** appended to the message by @link(SetSourceLocation).
-  /// <summary>Base class of every exception raised by the glTF reader and writer.</summary>
-  /// <remarks>Carries where the problem is: <see cref="JSONPath"/> always when known, and
-  /// the line and column in the source text when the document was loaded from text. The
-  /// location is appended to the message by <see cref="SetSourceLocation"/>.</remarks>
   EglTFError = class(Exception)
   private
     FJSONPath: string;
@@ -92,17 +88,6 @@ type
     //**
     //** @param(AEndLine Last line of the offending value, to report a range; 0 for a
     //** single position.)
-    /// <summary>Records where the error is in the source text and appends it to the
-    /// message.</summary>
-    /// <param name="ASourceName">File name to show; empty when not loaded from a
-    /// file.</param>
-    /// <param name="ALine">1-based line of the start of the problem.</param>
-    /// <param name="AColumn">1-based column of the start of the problem.</param>
-    /// <param name="AEndLine">Last line of the offending value, to report a range; 0 for a
-    /// single position.</param>
-    /// <remarks>The message gets for example " [model.gltf, line 74, column 13]", or
-    /// " [lines 72-79]" when AEndLine is after ALine. Only the first call has an effect; a
-    /// line of 0 or less is ignored. Called by TglTFDocument while loading.</remarks>
     procedure SetSourceLocation(const ASourceName: string; ALine, AColumn: Integer;
       AEndLine: Integer = 0);
 
@@ -110,38 +95,26 @@ type
     //** "meshes[0].primitives[2]".)
     //**
     //** Empty for the root object or when unknown.
-    /// <summary>Location of the problem in the document, for example
-    /// "meshes[0].primitives[2]".</summary>
-    /// <remarks>Empty for the root object or when unknown.</remarks>
     property JSONPath: string read FJSONPath;
 
     //** @abstract(Name of the loaded file, with ", JSON chunk" for a GLB; empty otherwise.)
-    /// <summary>Name of the loaded file, with ", JSON chunk" for a GLB; empty
-    /// otherwise.</summary>
     property SourceName: string read FSourceName;
 
     //** @abstract(1-based line of the problem in the glTF text; 0 when unknown.)
-    /// <summary>1-based line of the problem in the glTF text; 0 when unknown.</summary>
     property Line: Integer read FLine;
 
     //** @abstract(1-based column of the problem in the glTF text; 0 when unknown.)
-    /// <summary>1-based column of the problem in the glTF text; 0 when unknown.</summary>
     property Column: Integer read FColumn;
 
     //** @abstract(Last line of the offending value; equal to @link(Line) for one-line
     //** values.)
-    /// <summary>Last line of the offending value; equal to <see cref="Line"/> for one-line
-    /// values.</summary>
     property EndLine: Integer read FEndLine;
 
     //** @abstract(True when @link(Line) and @link(Column) are known.)
-    /// <summary>True when <see cref="Line"/> and <see cref="Column"/> are known.</summary>
     property HasSourceLocation: Boolean read GetHasSourceLocation;
   end;
 
   //** @abstract(Raised when the JSON is malformed or a value has the wrong type or shape.)
-  /// <summary>Raised when the JSON is malformed or a value has the wrong type or
-  /// shape.</summary>
   EglTFParseError = class(EglTFError)
   public
     //** @abstract(Creates the exception for a location in the document.)
@@ -152,11 +125,6 @@ type
     //** @param(AJSONPath Location of the problem; empty for the root.)
     //**
     //** @param(AMessage What is wrong.)
-    /// <summary>Creates the exception for a location in the document.</summary>
-    /// <param name="AJSONPath">Location of the problem; empty for the root.</param>
-    /// <param name="AMessage">What is wrong.</param>
-    /// <remarks>The message becomes AMessage followed by the path, for example
-    /// 'Invalid value (at "accessors[1].count")'.</remarks>
     constructor Create(const AJSONPath, AMessage: string);
   end;
 
@@ -164,9 +132,6 @@ type
   //**
   //** @link(EglTFError.JSONPath) and the line point at the object that should contain the
   //** property.
-  /// <summary>Raised when a property the glTF 2.0 schema requires is not present.</summary>
-  /// <remarks><see cref="EglTFError.JSONPath"/> and the line point at the object that
-  /// should contain the property.</remarks>
   EglTFMissingPropertyError = class(EglTFError)
   private
     FObjectType: string;
@@ -180,19 +145,12 @@ type
     //** "componentType".)
     //**
     //** @param(AJSONPath Location of the object that is missing it.)
-    /// <summary>Creates the exception for a missing property.</summary>
-    /// <param name="AObjectType">glTF object type, for example "accessor".</param>
-    /// <param name="APropertyName">JSON name of the missing property, for example
-    /// "componentType".</param>
-    /// <param name="AJSONPath">Location of the object that is missing it.</param>
     constructor Create(const AObjectType, APropertyName, AJSONPath: string);
 
     //** @abstract(glTF object type, for example "accessor".)
-    /// <summary>glTF object type, for example "accessor".</summary>
     property ObjectType: string read FObjectType;
 
     //** @abstract(JSON name of the missing property, for example "componentType".)
-    /// <summary>JSON name of the missing property, for example "componentType".</summary>
     property PropertyName: string read FPropertyName;
   end;
 
@@ -203,42 +161,28 @@ type
   //** Use together with @code([NeonProperty@('jsonName'@)]), which gives the JSON name that
   //** is checked. Loading an object without that property raises
   //** @link(EglTFMissingPropertyError); saving always writes it.
-  /// <summary>Marks a property as required by the glTF 2.0 schema.</summary>
-  /// <remarks>Use together with <c>[NeonProperty('jsonName')]</c>, which gives the JSON
-  /// name that is checked. Loading an object without that property raises
-  /// <see cref="EglTFMissingPropertyError"/>; saving always writes it.</remarks>
   glTFRequiredAttribute = class(TCustomAttribute);
 
   TglTFProperty = class;
 
   //** @abstract(Class reference to a glTF object class, used to create nested objects.)
-  /// <summary>Class reference to a glTF object class, used to create nested
-  /// objects.</summary>
   TglTFPropertyClass = class of TglTFProperty;
 
   //** @abstract(Describes one simple-value property that is read from and written to JSON.)
   //**
   //** Collected once per class through RTTI; used when saving and when reporting an
   //** invalid value.
-  /// <summary>Describes one simple-value property that is read from and written to
-  /// JSON.</summary>
-  /// <remarks>Collected once per class through RTTI; used when saving and when reporting
-  /// an invalid value.</remarks>
   TglTFMemberInfo = record
     //** @abstract(The property's name in the glTF JSON, from @code([NeonProperty]).)
-    /// <summary>The property's name in the glTF JSON, from <c>[NeonProperty]</c>.</summary>
     JSONName: string;
 
     //** @abstract(The Delphi property name.)
-    /// <summary>The Delphi property name.</summary>
     PropertyName: string;
 
     //** @abstract(The property's type.)
-    /// <summary>The property's type.</summary>
     TypeInfo: PTypeInfo;
 
     //** @abstract(True when the property has @code([glTFRequired]).)
-    /// <summary>True when the property has <c>[glTFRequired]</c>.</summary>
     Required: Boolean;
   end;
 
@@ -246,9 +190,6 @@ type
   //**
   //** Created and owned by @link(TglTFProperty), one per class, and kept until the
   //** program ends. Not meant to be used directly.
-  /// <summary>Metadata of one glTF object class, collected once through RTTI.</summary>
-  /// <remarks>Created and owned by <see cref="TglTFProperty"/>, one per class, and kept
-  /// until the program ends. Not meant to be used directly.</remarks>
   TglTFTypeInfo = class
   private
     FKnown: TDictionary<string, Boolean>;
@@ -263,11 +204,9 @@ type
     FDefaultValues: TList<TValue>;
   public
     //** @abstract(Creates empty metadata.)
-    /// <summary>Creates empty metadata.</summary>
     constructor Create;
 
     //** @abstract(Frees the metadata and its default instance.)
-    /// <summary>Frees the metadata and its default instance.</summary>
     destructor Destroy; override;
   end;
 
@@ -287,23 +226,6 @@ type
   //** with @code([NeonProperty]) and, where required, @code([glTFRequired]); override
   //** @link(ReadChildren) and @link(WriteChildren) for nested objects, @link(Validate) for
   //** other rules and @link(glTFTypeName) for messages.
-  /// <summary>Abstract base of every glTF object, glTFProperty in the schema.</summary>
-  /// <remarks>
-  /// <para><see cref="LoadFromJSON"/> runs these steps: (1) the properties marked
-  /// <c>[glTFRequired]</c> are checked; (2) simple values (numbers, strings, booleans,
-  /// arrays) are read into the writable properties marked <c>[NeonProperty]</c>, directly
-  /// through RTTI cached per class, as this is done for every object of a file; (3) "extensions", "extras" and any property not in the schema are kept as JSON so
-  /// they can be queried; (4) <see cref="ReadChildren"/> loads nested glTF objects;
-  /// (5) <see cref="Validate"/> applies rules an attribute cannot express.</para>
-  /// <para><see cref="SaveToJSON"/> does the reverse from the current property values.
-  /// Objects are not thread-safe; the per-class metadata is shared and guarded by a
-  /// monitor.</para>
-  /// <para>To add an object type: derive from this class, declare its values as
-  /// properties with <c>[NeonProperty]</c> and, where required, <c>[glTFRequired]</c>;
-  /// override <see cref="ReadChildren"/> and <see cref="WriteChildren"/> for nested
-  /// objects, <see cref="Validate"/> for other rules and <see cref="glTFTypeName"/> for
-  /// messages.</para>
-  /// </remarks>
   TglTFProperty = class abstract
   private
     class var FTypeInfos: TObjectDictionary<TClass, TglTFTypeInfo>;
@@ -332,10 +254,6 @@ type
     //** @param(AName JSON name of the child property.)
     //**
     //** @returns(For example "meshes[0].primitives" for AName "primitives" on meshes[0].)
-    /// <summary>Returns the JSON path of a direct child of this object.</summary>
-    /// <param name="AName">JSON name of the child property.</param>
-    /// <returns>For example "meshes[0].primitives" for AName "primitives" on
-    /// meshes[0].</returns>
     function ChildPath(const AName: string): string;
 
     //** @abstract(Creates and loads a nested glTF object from a property of AJSON.)
@@ -353,15 +271,6 @@ type
     //** null.)
     //**
     //** @raises(EglTFError The nested object is invalid.)
-    /// <summary>Creates and loads a nested glTF object from a property of AJSON.</summary>
-    /// <param name="AJSON">This object's JSON.</param>
-    /// <param name="AName">JSON name of the nested object.</param>
-    /// <param name="AClass">Class of the object to create.</param>
-    /// <returns>The new object, owned by the caller; nil when the property is absent or
-    /// null.</returns>
-    /// <exception cref="EglTFError">The nested object is invalid.</exception>
-    /// <remarks>Whether the property is required is checked earlier through
-    /// <c>[glTFRequired]</c>, so an absent property is not an error here.</remarks>
     function ReadObject(AJSON: TJSONObject; const AName: string;
       AClass: TglTFPropertyClass): TglTFProperty;
 
@@ -371,23 +280,12 @@ type
     //** previously loaded children first, as an object can be loaded more than once.
     //**
     //** @param(AJSON This object's JSON.)
-    /// <summary>Loads nested glTF objects, lists and maps; does nothing by
-    /// default.</summary>
-    /// <param name="AJSON">This object's JSON.</param>
-    /// <remarks>Called by <see cref="LoadFromJSON"/> after the simple values have been
-    /// read. Free any previously loaded children first, as an object can be loaded more
-    /// than once.</remarks>
     procedure ReadChildren(AJSON: TJSONObject); virtual;
 
     //** @abstract(Checks rules beyond "property X is required"; does nothing by default.)
     //**
     //** Called last by @link(LoadFromJSON). For example camera.type "perspective"
     //** requires camera.perspective. Raise with @link(RaiseMissing) or @link(RaiseInvalid).
-    /// <summary>Checks rules beyond "property X is required"; does nothing by
-    /// default.</summary>
-    /// <remarks>Called last by <see cref="LoadFromJSON"/>. For example camera.type
-    /// "perspective" requires camera.perspective. Raise with <see cref="RaiseMissing"/> or
-    /// <see cref="RaiseInvalid"/>.</remarks>
     procedure Validate; virtual;
 
     //** @abstract(Raises @link(EglTFMissingPropertyError) for a property of this object.)
@@ -395,10 +293,6 @@ type
     //** @param(AJSONName JSON name of the missing property.)
     //**
     //** @raises(EglTFMissingPropertyError Always.)
-    /// <summary>Raises <see cref="EglTFMissingPropertyError"/> for a property of this
-    /// object.</summary>
-    /// <param name="AJSONName">JSON name of the missing property.</param>
-    /// <exception cref="EglTFMissingPropertyError">Always.</exception>
     procedure RaiseMissing(const AJSONName: string);
 
     //** @abstract(Raises @link(EglTFParseError) for an invalid property of this object.)
@@ -408,11 +302,6 @@ type
     //** @param(AMessage Why it is invalid, for example "must be >= 1".)
     //**
     //** @raises(EglTFParseError Always.)
-    /// <summary>Raises <see cref="EglTFParseError"/> for an invalid property of this
-    /// object.</summary>
-    /// <param name="AJSONName">JSON name of the invalid property.</param>
-    /// <param name="AMessage">Why it is invalid, for example "must be &gt;= 1".</param>
-    /// <exception cref="EglTFParseError">Always.</exception>
     procedure RaiseInvalid(const AJSONName, AMessage: string);
 
     //** @abstract(Writes nested glTF objects, lists and maps; does nothing by default.)
@@ -421,11 +310,6 @@ type
     //** simple values have been written.
     //**
     //** @param(AJSON The JSON being built for this object.)
-    /// <summary>Writes nested glTF objects, lists and maps; does nothing by
-    /// default.</summary>
-    /// <param name="AJSON">The JSON being built for this object.</param>
-    /// <remarks>The counterpart of <see cref="ReadChildren"/>, called by
-    /// <see cref="SaveToJSON"/> after the simple values have been written.</remarks>
     procedure WriteChildren(AJSON: TJSONObject); virtual;
 
     //** @abstract(Writes a nested glTF object when it is assigned.)
@@ -435,32 +319,21 @@ type
     //** @param(AName JSON name to write it under.)
     //**
     //** @param(AChild The nested object; nothing is written when nil.)
-    /// <summary>Writes a nested glTF object when it is assigned.</summary>
-    /// <param name="AJSON">The JSON being built for this object.</param>
-    /// <param name="AName">JSON name to write it under.</param>
-    /// <param name="AChild">The nested object; nothing is written when nil.</param>
     procedure WriteObject(AJSON: TJSONObject; const AName: string; AChild: TglTFProperty);
   public
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** Descendants set their defaults here; @link(SaveToJSON) leaves out values equal to
     //** them.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Descendants set their defaults here; <see cref="SaveToJSON"/> leaves out
-    /// values equal to them.</remarks>
     constructor Create; virtual;
 
     //** @abstract(Frees the object and the JSON it keeps.)
-    /// <summary>Frees the object and the JSON it keeps.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(For example "accessor"; used in error messages. The class name unless
     //** overridden.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>For example "accessor"; used in error messages. The class name unless
-    /// overridden.</returns>
     class function glTFTypeName: string; virtual;
 
     //** @abstract(Loads this object from a JSON object.)
@@ -476,16 +349,6 @@ type
     //** @raises(EglTFParseError AJSON is not an object or a value is invalid.)
     //**
     //** @raises(EglTFMissingPropertyError A required property is missing.)
-    /// <summary>Loads this object from a JSON object.</summary>
-    /// <param name="AJSON">A JSON object; the caller keeps ownership.</param>
-    /// <param name="AJSONPath">This object's location in the document, used in error
-    /// messages and by <see cref="ChildPath"/>.</param>
-    /// <exception cref="EglTFParseError">AJSON is not an object or a value is
-    /// invalid.</exception>
-    /// <exception cref="EglTFMissingPropertyError">A required property is
-    /// missing.</exception>
-    /// <remarks>Replaces everything loaded before. The JSON is not kept, except copies of
-    /// extensions, extras and non-standard properties.</remarks>
     procedure LoadFromJSON(AJSON: TJSONValue; const AJSONPath: string = '');
 
     //** @abstract(Builds the JSON for this object from its current property values.)
@@ -499,14 +362,6 @@ type
     //** @returns(A new JSON object, owned by the caller.)
     //**
     //** @raises(EglTFError A value cannot be converted to JSON.)
-    /// <summary>Builds the JSON for this object from its current property values.</summary>
-    /// <returns>A new JSON object, owned by the caller.</returns>
-    /// <exception cref="EglTFError">A value cannot be converted to JSON.</exception>
-    /// <remarks>Nothing comes from the JSON the object was loaded from. A simple value is
-    /// written when it is required or differs from the spec default (the value a new
-    /// instance has), so values changed in code are written whether or not they were in
-    /// the original file. Nested objects come from <see cref="WriteChildren"/>;
-    /// extensions, extras and non-standard properties are written last.</remarks>
     function SaveToJSON: TJSONObject; virtual;
 
     //** @abstract(Tells whether the loaded JSON contained a property.)
@@ -518,20 +373,12 @@ type
     //** @param(AJSONName JSON name of the property.)
     //**
     //** @returns(True when the property was present and not null.)
-    /// <summary>Tells whether the loaded JSON contained a property.</summary>
-    /// <param name="AJSONName">JSON name of the property.</param>
-    /// <returns>True when the property was present and not null.</returns>
-    /// <remarks>Useful for optional values whose default could also appear explicitly,
-    /// such as node.matrix. Reflects the last load only, not later changes; a JSON null
-    /// counts as absent.</remarks>
     function IsDefined(const AJSONName: string): Boolean;
 
     {$REGION 'Extensions'}
     //** @abstract(Tells whether the object has at least one extension.)
     //**
     //** @returns(True when "extensions" has at least one entry.)
-    /// <summary>Tells whether the object has at least one extension.</summary>
-    /// <returns>True when "extensions" has at least one entry.</returns>
     function HasExtensions: Boolean;
 
     //** @abstract(Tells whether the object has a given extension.)
@@ -539,10 +386,6 @@ type
     //** @param(AName Extension name, for example "KHR_materials_emissive_strength".)
     //**
     //** @returns(True when the extension is present.)
-    /// <summary>Tells whether the object has a given extension.</summary>
-    /// <param name="AName">Extension name, for example
-    /// "KHR_materials_emissive_strength".</param>
-    /// <returns>True when the extension is present.</returns>
     function HasExtension(const AName: string): Boolean;
 
     //** @abstract(Returns the JSON of an extension.)
@@ -550,16 +393,11 @@ type
     //** @param(AName Extension name.)
     //**
     //** @returns(The extension's JSON, owned by this object; nil when absent.)
-    /// <summary>Returns the JSON of an extension.</summary>
-    /// <param name="AName">Extension name.</param>
-    /// <returns>The extension's JSON, owned by this object; nil when absent.</returns>
     function FindExtension(const AName: string): TJSONValue;
 
     //** @abstract(Returns the names of the object's extensions.)
     //**
     //** @returns(The names in file order; empty when there are none.)
-    /// <summary>Returns the names of the object's extensions.</summary>
-    /// <returns>The names in file order; empty when there are none.</returns>
     function ExtensionNames: TArray<string>;
 
     //** @abstract(Reads a typed value inside an extension.)
@@ -572,12 +410,6 @@ type
     //** @param(AValue The value; Default@(T@) when not found.)
     //**
     //** @returns(True when the value exists and converts to T.)
-    /// <summary>Reads a typed value inside an extension.</summary>
-    /// <param name="AExtension">Extension name.</param>
-    /// <param name="APath">Path inside the extension in System.JSON syntax, for example
-    /// "a.b[0]"; empty for the extension itself.</param>
-    /// <param name="AValue">The value; Default(T) when not found.</param>
-    /// <returns>True when the value exists and converts to T.</returns>
     function TryGetExtensionValue<T>(const AExtension, APath: string; out AValue: T): Boolean;
 
     //** @abstract(Deserialises an extension into an object of your own class with Neon.)
@@ -589,13 +421,6 @@ type
     //** @returns(A new T, owned by the caller; nil when the extension is absent.)
     //**
     //** @raises(Exception Neon cannot map the JSON onto T.)
-    /// <summary>Deserialises an extension into an object of your own class with
-    /// Neon.</summary>
-    /// <param name="AName">Extension name.</param>
-    /// <param name="AConfig">Neon configuration; nil uses
-    /// <see cref="ExtrasNeonConfig"/>.</param>
-    /// <returns>A new T, owned by the caller; nil when the extension is absent.</returns>
-    /// <exception cref="Exception">Neon cannot map the JSON onto T.</exception>
     function ExtensionAs<T: class, constructor>(const AName: string;
       const AConfig: INeonConfiguration = nil): T;
     {$ENDREGION}
@@ -604,8 +429,6 @@ type
     //** @abstract(Tells whether the object has an "extras" value.)
     //**
     //** @returns(True when "extras" was present.)
-    /// <summary>Tells whether the object has an "extras" value.</summary>
-    /// <returns>True when "extras" was present.</returns>
     function HasExtras: Boolean;
 
     //** @abstract(Tells whether a value exists inside "extras".)
@@ -613,9 +436,6 @@ type
     //** @param(APath Path in System.JSON syntax, for example "author.name".)
     //**
     //** @returns(True when the value exists.)
-    /// <summary>Tells whether a value exists inside "extras".</summary>
-    /// <param name="APath">Path in System.JSON syntax, for example "author.name".</param>
-    /// <returns>True when the value exists.</returns>
     function HasExtra(const APath: string): Boolean;
 
     //** @abstract(Returns the JSON at a path inside "extras".)
@@ -623,18 +443,12 @@ type
     //** @param(APath Path in System.JSON syntax; empty for "extras" itself.)
     //**
     //** @returns(The JSON, owned by this object; nil when absent.)
-    /// <summary>Returns the JSON at a path inside "extras".</summary>
-    /// <param name="APath">Path in System.JSON syntax; empty for "extras" itself.</param>
-    /// <returns>The JSON, owned by this object; nil when absent.</returns>
     function FindExtra(const APath: string): TJSONValue;
 
     //** @abstract(Returns the top-level names inside "extras".)
     //**
     //** @returns(The names in file order; empty when "extras" is absent or not a JSON
     //** object.)
-    /// <summary>Returns the top-level names inside "extras".</summary>
-    /// <returns>The names in file order; empty when "extras" is absent or not a JSON
-    /// object.</returns>
     function ExtraNames: TArray<string>;
 
     //** @abstract(Reads a typed value inside "extras".)
@@ -644,10 +458,6 @@ type
     //** @param(AValue The value; Default@(T@) when not found.)
     //**
     //** @returns(True when the value exists and converts to T.)
-    /// <summary>Reads a typed value inside "extras".</summary>
-    /// <param name="APath">Path in System.JSON syntax, for example "author.name".</param>
-    /// <param name="AValue">The value; Default(T) when not found.</param>
-    /// <returns>True when the value exists and converts to T.</returns>
     function TryGetExtra<T>(const APath: string; out AValue: T): Boolean;
 
     //** @abstract(Reads a typed value inside "extras", with a fallback.)
@@ -661,14 +471,6 @@ type
     //** @longCode(#
     //** Author := Asset.GetExtra<string>('author.name', '(unknown)');
     //** #)
-    /// <summary>Reads a typed value inside "extras", with a fallback.</summary>
-    /// <param name="APath">Path in System.JSON syntax.</param>
-    /// <param name="ADefault">Returned when the value is absent or does not convert to
-    /// T.</param>
-    /// <returns>The value, or ADefault.</returns>
-    /// <example><code>
-    /// Author := Asset.GetExtra&lt;string&gt;('author.name', '(unknown)');
-    /// </code></example>
     function GetExtra<T>(const APath: string; const ADefault: T): T;
 
     //** @abstract(Deserialises "extras", or a part of it, into an object of your own class
@@ -681,13 +483,6 @@ type
     //** @returns(A new T, owned by the caller; nil when absent.)
     //**
     //** @raises(Exception Neon cannot map the JSON onto T.)
-    /// <summary>Deserialises "extras", or a part of it, into an object of your own class
-    /// with Neon.</summary>
-    /// <param name="APath">Path in System.JSON syntax; empty for "extras" itself.</param>
-    /// <param name="AConfig">Neon configuration; nil uses
-    /// <see cref="ExtrasNeonConfig"/>.</param>
-    /// <returns>A new T, owned by the caller; nil when absent.</returns>
-    /// <exception cref="Exception">Neon cannot map the JSON onto T.</exception>
     function ExtraAs<T: class, constructor>(const APath: string = '';
       const AConfig: INeonConfiguration = nil): T;
     {$ENDREGION}
@@ -699,10 +494,6 @@ type
     //** @param(AName JSON name of the property.)
     //**
     //** @returns(True when it was present.)
-    /// <summary>Tells whether the object had a property the glTF schema does not
-    /// define.</summary>
-    /// <param name="AName">JSON name of the property.</param>
-    /// <returns>True when it was present.</returns>
     function HasUnknownProperty(const AName: string): Boolean;
 
     //** @abstract(Returns the JSON of a property the glTF schema does not define.)
@@ -710,24 +501,17 @@ type
     //** @param(AName JSON name of the property.)
     //**
     //** @returns(The JSON, owned by this object; nil when absent.)
-    /// <summary>Returns the JSON of a property the glTF schema does not define.</summary>
-    /// <param name="AName">JSON name of the property.</param>
-    /// <returns>The JSON, owned by this object; nil when absent.</returns>
     function FindUnknownProperty(const AName: string): TJSONValue;
     {$ENDREGION}
 
     //** @abstract(This object's location in the document, for example "nodes[3]".)
     //**
     //** Empty for the root object.
-    /// <summary>This object's location in the document, for example "nodes[3]".</summary>
-    /// <remarks>Empty for the root object.</remarks>
     property JSONPath: string read FJSONPath;
 
     //** @abstract(JSON names of the properties present in the loaded JSON.)
     //**
     //** Null values are not included. See @link(IsDefined).
-    /// <summary>JSON names of the properties present in the loaded JSON.</summary>
-    /// <remarks>Null values are not included. See <see cref="IsDefined"/>.</remarks>
     property DefinedProperties: TArray<string> read FDefinedProperties;
 
     //** @abstract(Sets one member of the "extras" JSON object.)
@@ -740,35 +524,21 @@ type
     //** @param(AValue The value; this object owns it from now on.)
     //**
     //** @raises(EglTFError "extras" is present but is not a JSON object; AValue is freed.)
-    /// <summary>Sets one member of the "extras" JSON object.</summary>
-    /// <param name="AName">The member name.</param>
-    /// <param name="AValue">The value; this object owns it from now on.</param>
-    /// <exception cref="EglTFError">"extras" is present but is not a JSON object; AValue is
-    /// freed.</exception>
-    /// <remarks>Creates "extras" as an object when it is absent and replaces a member with the
-    /// same name. Written back by <see cref="SaveToJSON"/>.</remarks>
     procedure SetExtra(const AName: string; AValue: TJSONValue);
 
     //** @abstract(The "extensions" JSON object; nil when absent.)
     //**
     //** Owned by this object and written back by @link(SaveToJSON).
-    /// <summary>The "extensions" JSON object; nil when absent.</summary>
-    /// <remarks>Owned by this object and written back by <see cref="SaveToJSON"/>.</remarks>
     property Extensions: TJSONObject read FExtensions;
 
     //** @abstract(The "extras" JSON value; nil when absent.)
     //**
     //** Owned by this object and written back by @link(SaveToJSON).
-    /// <summary>The "extras" JSON value; nil when absent.</summary>
-    /// <remarks>Owned by this object and written back by <see cref="SaveToJSON"/>.</remarks>
     property Extras: TJSONValue read FExtras;
 
     //** @abstract(Properties the glTF schema does not define; nil when there are none.)
     //**
     //** Owned by this object and written back by @link(SaveToJSON).
-    /// <summary>Properties the glTF schema does not define; nil when there are
-    /// none.</summary>
-    /// <remarks>Owned by this object and written back by <see cref="SaveToJSON"/>.</remarks>
     property UnknownProperties: TJSONObject read FUnknownProperties;
 
     //** @abstract(Neon configuration used by @link(ExtraAs) and @link(ExtensionAs) when
@@ -776,10 +546,6 @@ type
     //**
     //** Defaults to camelCase member names with exceptions raised. Shared by all objects;
     //** set it at start-up, not while other threads load documents.
-    /// <summary>Neon configuration used by <see cref="ExtraAs"/> and
-    /// <see cref="ExtensionAs"/> when none is passed.</summary>
-    /// <remarks>Defaults to camelCase member names with exceptions raised. Shared by all
-    /// objects; set it at start-up, not while other threads load documents.</remarks>
     class property ExtrasNeonConfig: INeonConfiguration read FExtrasNeonConfig write FExtrasNeonConfig;
   end;
 
@@ -787,9 +553,6 @@ type
   //** glTFChildOfRootProperty in the schema.)
   //**
   //** Adds the optional "name".
-  /// <summary>Abstract base of the objects stored in the root's arrays,
-  /// glTFChildOfRootProperty in the schema.</summary>
-  /// <remarks>Adds the optional "name".</remarks>
   TglTFChildOfRootProperty = class abstract(TglTFProperty)
   private
     FName: string;
@@ -797,8 +560,6 @@ type
     //** @abstract(The glTF "name": a user-defined name; empty when not set.)
     //**
     //** Not required to be unique.
-    /// <summary>The glTF "name": a user-defined name; empty when not set.</summary>
-    /// <remarks>Not required to be unique.</remarks>
     [NeonProperty('name')]
     property Name: string read FName write FName;
   end;
@@ -807,14 +568,9 @@ type
   //**
   //** Frees its items. The index of an item is its glTF index, which other objects use to
   //** refer to it, so removing or reordering items changes those references.
-  /// <summary>Owning list of glTF objects, loaded from and saved to a JSON array.</summary>
-  /// <remarks>Frees its items. The index of an item is its glTF index, which other objects
-  /// use to refer to it, so removing or reordering items changes those
-  /// references.</remarks>
   TglTFList<T: TglTFProperty, constructor> = class(TObjectList<T>)
   public
     //** @abstract(Creates an empty list that owns its items.)
-    /// <summary>Creates an empty list that owns its items.</summary>
     constructor Create;
 
     //** @abstract(Clears the list, then loads one item per element of a JSON array.)
@@ -827,21 +583,11 @@ type
     //** @raises(EglTFParseError AJSON is not an array, or an item is invalid.)
     //**
     //** @raises(EglTFMissingPropertyError An item lacks a required property.)
-    /// <summary>Clears the list, then loads one item per element of a JSON array.</summary>
-    /// <param name="AJSON">The JSON array; nil or null gives an empty list.</param>
-    /// <param name="AJSONPath">Location of the array, for example "meshes"; items get
-    /// "meshes[0]" and so on.</param>
-    /// <exception cref="EglTFParseError">AJSON is not an array, or an item is
-    /// invalid.</exception>
-    /// <exception cref="EglTFMissingPropertyError">An item lacks a required
-    /// property.</exception>
     procedure LoadFromJSON(AJSON: TJSONValue; const AJSONPath: string);
 
     //** @abstract(Returns a JSON array with every item's @code(SaveToJSON).)
     //**
     //** @returns(A new array, owned by the caller.)
-    /// <summary>Returns a JSON array with every item's <c>SaveToJSON</c>.</summary>
-    /// <returns>A new array, owned by the caller.</returns>
     function SaveToJSON: TJSONArray;
 
     //** @abstract(Adds the list as a JSON array to a JSON object.)
@@ -851,11 +597,6 @@ type
     //** @param(AName JSON name of the array.)
     //**
     //** @param(AAlways Also write an empty list, for arrays the schema requires.)
-    /// <summary>Adds the list as a JSON array to a JSON object.</summary>
-    /// <param name="AJSON">The object to add to; it owns the new array.</param>
-    /// <param name="AName">JSON name of the array.</param>
-    /// <param name="AAlways">Also write an empty list, for arrays the schema
-    /// requires.</param>
     procedure WriteTo(AJSON: TJSONObject; const AName: string; AAlways: Boolean = False);
   end;
 
@@ -1344,7 +1085,7 @@ begin
     AJSON.AddPair(AName, AChild.SaveToJSON);
 end;
 
-// <summary>Value equality used to leave out values equal to the spec default</summary>
+// Value equality used to leave out values equal to the spec default
 function SameTValue(const A, B: TValue): Boolean;
 var
   I: Integer;
@@ -1373,10 +1114,8 @@ begin
   end;
 end;
 
-// <summary>
-//   Shortest text that reads back as exactly the same Double (15 to 17
-//   significant digits), so saving never loses precision
-// </summary>
+// Shortest text that reads back as exactly the same Double (15 to 17
+// significant digits), so saving never loses precision
 function FloatToJSONText(AValue: Double): string;
 var
   LPrecision: Integer;
@@ -1389,10 +1128,8 @@ begin
   end;
 end;
 
-// <summary>
-//   JSON for a property value: floats (and float arrays) exactly, anything
-//   else through Neon
-// </summary>
+// JSON for a property value: floats (and float arrays) exactly, anything
+// else through Neon
 function ValueToJSON(const AValue: TValue; const AConfig: INeonConfiguration): TJSONValue;
 var
   LArray: TJSONArray;

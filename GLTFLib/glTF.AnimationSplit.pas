@@ -62,23 +62,17 @@ uses
 
 type
   //** @abstract(One part of a long animation: a name and a frame range.)
-  /// <summary>One part of a long animation: a name and a frame range.</summary>
   TglTFAnimationRange = record
     //** @abstract(Name of the new animation; required and unique.)
-    /// <summary>Name of the new animation; required and unique.</summary>
     Name: string;
 
     //** @abstract(First frame, from 0.)
-    /// <summary>First frame, from 0.</summary>
     StartFrame: Integer;
 
     //** @abstract(Last frame; after StartFrame and at most the last frame of the animation.)
-    /// <summary>Last frame; after StartFrame and at most the last frame of the
-    /// animation.</summary>
     EndFrame: Integer;
 
     //** @abstract(Optional notes; stored in the new animation's extras as "notes".)
-    /// <summary>Optional notes; stored in the new animation's extras as "notes".</summary>
     Notes: string;
 
     //** @abstract(Returns a range.)
@@ -92,41 +86,26 @@ type
     //** @param(ANotes Optional notes.)
     //**
     //** @returns(The range.)
-    /// <summary>Returns a range.</summary>
-    /// <param name="AName">Name of the new animation.</param>
-    /// <param name="AStartFrame">First frame.</param>
-    /// <param name="AEndFrame">Last frame.</param>
-    /// <param name="ANotes">Optional notes.</param>
-    /// <returns>The range.</returns>
     class function Create(const AName: string; AStartFrame, AEndFrame: Integer;
       const ANotes: string = ''): TglTFAnimationRange; static;
   end;
 
   //** @abstract(The parts a long animation is split into, in the order they are to appear.)
-  /// <summary>The parts a long animation is split into, in the order they are to
-  /// appear.</summary>
   TglTFAnimationRanges = TArray<TglTFAnimationRange>;
 
   //** @abstract(What @link(TglTFAnimationSplitter.ParseRangeList) found in a text.)
-  /// <summary>What <see cref="TglTFAnimationSplitter.ParseRangeList"/> found in a
-  /// text.</summary>
   TglTFRangeList = record
     //** @abstract(The ranges, in the order of the lines.)
-    /// <summary>The ranges, in the order of the lines.</summary>
     Ranges: TglTFAnimationRanges;
 
     //** @abstract(Line number, from 1, of the first range; 0 when none was found.)
-    /// <summary>Line number, from 1, of the first range; 0 when none was found.</summary>
     FirstLine: Integer;
 
     //** @abstract(Line number, from 1, of the last range; 0 when none was found.)
-    /// <summary>Line number, from 1, of the last range; 0 when none was found.</summary>
     LastLine: Integer;
 
     //** @abstract(Line numbers between the first and the last range that hold text but no
     //** range; they were skipped.)
-    /// <summary>Line numbers between the first and the last range that hold text but no
-    /// range; they were skipped.</summary>
     SkippedLines: TArray<Integer>;
   end;
 
@@ -144,25 +123,10 @@ type
   //**      TglTFAnimationRange.Create('run', 120, 300)], nil);
   //** end;
   //** #)
-  /// <summary>Finds long animations and splits them by frame ranges.</summary>
-  /// <remarks>All methods are class methods. They work on a TglTF whose buffer data is
-  /// loaded.</remarks>
-  /// <example><code>
-  /// Index := TglTFAnimationSplitter.FindLongAnimation(Doc.Root);
-  /// if Index >= 0 then
-  /// begin
-  ///   Fps := TglTFAnimationSplitter.DetectFrameRate(Doc.Root, Doc.Root.Animations[Index]);
-  ///   TglTFAnimationSplitter.Split(Doc.Root, Index, Fps,
-  ///     [TglTFAnimationRange.Create('walk', 0, 90),
-  ///      TglTFAnimationRange.Create('run', 120, 300)], nil);
-  /// end;
-  /// </code></example>
   TglTFAnimationSplitter = class sealed
   public
     //** @abstract(Length in seconds above which an animation is likely to be several joined
     //** together.)
-    /// <summary>Length in seconds above which an animation is likely to be several joined
-    /// together.</summary>
     const LongAnimationSeconds = 10.0;
 
     //** @abstract(Reads an accessor's elements as floats.)
@@ -177,16 +141,6 @@ type
     //** @returns(Count times the number of components floats, element after element.)
     //**
     //** @raises(EglTFError The accessor's data is missing or lies outside its buffer.)
-    /// <summary>Reads an accessor's elements as floats.</summary>
-    /// <param name="ARoot">The tree.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Accessors</c>.</param>
-    /// <returns>Count times the number of components floats, element after
-    /// element.</returns>
-    /// <exception cref="EglTFError">The accessor's data is missing or lies outside its
-    /// buffer.</exception>
-    /// <remarks>Handles every component type, normalized integers (converted to -1..1 or
-    /// 0..1), byteStride and sparse accessors. An accessor without a bufferView starts as
-    /// zeros.</remarks>
     class function ReadAccessor(ARoot: TglTF; AIndex: Integer): TArray<Single>; static;
 
     //** @abstract(Returns the length of an animation in seconds.)
@@ -197,11 +151,6 @@ type
     //**
     //** @returns(The time of its last key frame: the largest "max" of its sampler inputs, or
     //** the largest time in their data when "max" is missing; 0 when unknown.)
-    /// <summary>Returns the length of an animation in seconds.</summary>
-    /// <param name="ARoot">The tree.</param>
-    /// <param name="AAnimation">The animation.</param>
-    /// <returns>The time of its last key frame: the largest "max" of its sampler inputs, or the
-    /// largest time in their data when "max" is missing; 0 when unknown.</returns>
     class function Duration(ARoot: TglTF; AAnimation: TglTFAnimation): Double; static;
 
     //** @abstract(Estimates the frame rate an animation was made at.)
@@ -215,13 +164,6 @@ type
     //** @param(AAnimation The animation.)
     //**
     //** @returns(Frames per second; 30 when it cannot be told.)
-    /// <summary>Estimates the frame rate an animation was made at.</summary>
-    /// <param name="ARoot">The tree.</param>
-    /// <param name="AAnimation">The animation.</param>
-    /// <returns>Frames per second; 30 when it cannot be told.</returns>
-    /// <remarks>Uses the median gap between two key frames, over all samplers. A result within
-    /// 1% of a usual rate (12, 15, 23.976, 24, 25, 29.97, 30, 48, 50, 59.94, 60, 120) is
-    /// snapped to it; otherwise it is rounded to a whole number.</remarks>
     class function DetectFrameRate(ARoot: TglTF; AAnimation: TglTFAnimation): Double; static;
 
     //** @abstract(Returns the last frame of an animation.)
@@ -231,10 +173,6 @@ type
     //** @param(AFrameRate Frames per second.)
     //**
     //** @returns(ADuration times AFrameRate, rounded; frames run from 0 to this.)
-    /// <summary>Returns the last frame of an animation.</summary>
-    /// <param name="ADuration">Length in seconds.</param>
-    /// <param name="AFrameRate">Frames per second.</param>
-    /// <returns>ADuration times AFrameRate, rounded; frames run from 0 to this.</returns>
     class function LastFrame(ADuration, AFrameRate: Double): Integer; static;
 
     //** @abstract(Finds the longest animation that is likely to be several joined together.)
@@ -244,12 +182,6 @@ type
     //** @param(AMinSeconds Only animations longer than this count.)
     //**
     //** @returns(Index in @code(ARoot.Animations); -1 when no animation is that long.)
-    /// <summary>Finds the longest animation that is likely to be several joined
-    /// together.</summary>
-    /// <param name="ARoot">The tree.</param>
-    /// <param name="AMinSeconds">Only animations longer than this count.</param>
-    /// <returns>Index in <c>ARoot.Animations</c>; -1 when no animation is that
-    /// long.</returns>
     class function FindLongAnimation(ARoot: TglTF;
       AMinSeconds: Double = LongAnimationSeconds): Integer; static;
 
@@ -270,18 +202,6 @@ type
     //** @param(AProblems One entry per range: empty when it is fine, otherwise what is wrong.)
     //**
     //** @returns(True when there is at least one range and none has a problem.)
-    /// <summary>Checks the ranges an animation is to be split into.</summary>
-    /// <param name="ARoot">The tree.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Animations</c> of the animation to
-    /// split.</param>
-    /// <param name="ALastFrame">The animation's last frame.</param>
-    /// <param name="ARanges">The ranges.</param>
-    /// <param name="AProblems">One entry per range: empty when it is fine, otherwise what is
-    /// wrong.</param>
-    /// <returns>True when there is at least one range and none has a problem.</returns>
-    /// <remarks>Each name is required and must be unique, ignoring case, among the ranges and
-    /// among the model's other animations. Frames must be from 0 to ALastFrame, and EndFrame
-    /// must be after StartFrame. Gaps and overlaps between ranges are allowed.</remarks>
     class function ValidateRanges(ARoot: TglTF; AIndex, ALastFrame: Integer;
       const ARanges: TglTFAnimationRanges; out AProblems: TArray<string>): Boolean; static;
 
@@ -312,29 +232,6 @@ type
     //** Look Around    415 - 555  -> Look Around, 415, 555
     //** "Run" 625-685 (3 loops)   -> Run, 625, 685
     //** #)
-    /// <summary>Reads animation ranges from a text, such as the list that comes with an
-    /// animation file.</summary>
-    /// <param name="AText">The text, with any line ends.</param>
-    /// <param name="AList">What was found.</param>
-    /// <returns>True when at least one range was found.</returns>
-    /// <remarks>
-    /// <para>A line holds a range when it has two whole numbers, the start frame and then the
-    /// end frame, separated only by spaces, tabs and signs such as "-", "~", ":" or "..", or
-    /// by the word "to"; a "-" is never a minus sign, as frames are never negative. The name is
-    /// the text before the numbers or, when there is none, the text after them. It ends at a
-    /// tab, two spaces, "(", "[", "#", ";" or "//", so notes after it are ignored, and must
-    /// contain a letter. Quotes are removed, and so are a leading list number such as "3." and
-    /// surrounding signs such as ":" or ",". Digits inside a name, as in walk_01, are part of
-    /// it.</para>
-    /// <para>Lines before the first range and after the last, such as a title or a note, are
-    /// ignored. Lines between them that hold text but no range are skipped and listed. The
-    /// ranges are not checked; see ValidateRanges.</para>
-    /// </remarks>
-    /// <example><code>
-    /// 10 - 40  walk_01           -> walk_01, 10, 40
-    /// Look Around    415 - 555  -> Look Around, 415, 555
-    /// "Run" 625-685 (3 loops)   -> Run, 625, 685
-    /// </code></example>
     class function ParseRangeList(const AText: string; out AList: TglTFRangeList): Boolean;
       static;
 
@@ -359,22 +256,6 @@ type
     //** @returns(The number of animations created.)
     //**
     //** @raises(EglTFError The ranges are invalid, or the animation's data cannot be read.)
-    /// <summary>Replaces an animation with one new animation per range.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Animations</c> of the animation to
-    /// split.</param>
-    /// <param name="AFrameRate">Frames per second used to turn frames into seconds.</param>
-    /// <param name="ARanges">The parts, see ValidateRanges.</param>
-    /// <param name="AWarnings">Receives a line for each clean-up step skipped; may be
-    /// nil.</param>
-    /// <returns>The number of animations created.</returns>
-    /// <exception cref="EglTFError">The ranges are invalid, or the animation's data cannot be
-    /// read.</exception>
-    /// <remarks>The new animations take the old one's place in the list, in the order of
-    /// ARanges, with its Origin and with ExportOnSave True. Their key frame data is appended
-    /// to the model's buffer in one go, and the data only the old animation used is removed.
-    /// The ranges are checked first; nothing changes when they are invalid or the data cannot
-    /// be read.</remarks>
     class function Split(ARoot: TglTF; AIndex: Integer; AFrameRate: Double;
       const ARanges: TglTFAnimationRanges; AWarnings: TStrings): Integer; static;
   end;

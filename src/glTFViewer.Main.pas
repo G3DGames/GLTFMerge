@@ -1019,6 +1019,7 @@ begin
         Exit;
       LSplitter := TglTFModelSplitter.Create(FDoc);
       try
+        LSplitter.ScaleUp := FSplitModels.ScaleUp;
         LSplitter.FindModels;
       except
         on E: Exception do
@@ -1044,6 +1045,9 @@ begin
       [FloatText(AOptions.RotateX), FloatText(AOptions.RotateY), FloatText(AOptions.RotateZ)]);
   if AOptions.StripExif then
     Log('Images saved without EXIF data, as chosen on the Images tab');
+  if not SameValue(ASplitter.Scale, 1) then
+    Log('Every model scaled by %s, so the smallest size of any model is 1 unit',
+      [FloatText(ASplitter.Scale)]);
 
   // Each model is cut from a copy in the background; the document is only
   // read, and the tabs are disabled meanwhile. Abort stops after the model
@@ -2296,9 +2300,51 @@ begin
       Check(Length(TDirectory.GetFiles(LTemp)) = 6, 'no file should be replaced');
       Check(LDoc.Root.Nodes.Count = 4, 'the document itself should not change');
 
+      // Scaling up: one triangle 2 x 1 (flat, so Z is left out), as "small"
+      // scaled by 0.25 and as "big" at full size. The smallest size is
+      // small's 0.25, so every model is scaled by 4
+      LDoc.LoadFromString('{"asset":{"version":"2.0"},"scene":0,"scenes":[{"nodes":[0,1]}],' +
+        '"nodes":[{"name":"small","mesh":0,"scale":[0.25,0.25,0.25]},' +
+          '{"name":"big","mesh":0}],' +
+        '"meshes":[{"primitives":[{"attributes":{"POSITION":0}}]}],' +
+        '"accessors":[{"bufferView":0,"componentType":5126,"count":3,"type":"VEC3",' +
+          '"min":[0,0,0],"max":[2,1,0]}],' +
+        '"bufferViews":[{"buffer":0,"byteLength":36}],' +
+        '"buffers":[{"byteLength":36,"uri":"' +
+          FloatsDataUri([0, 0, 0, 2, 0, 0, 0, 1, 0]) + '"}]}');
+      LSplitter := TglTFModelSplitter.Create(LDoc);
+      try
+        LSplitter.ScaleUp := False;
+        LSplitter.FindModels;
+        Check(SameValue(LSplitter.Scale, 1), 'without Scale up the scale should stay 1');
+        LSplitter.ScaleUp := True;
+        LSplitter.FindModels;
+        Check(SameValue(LSplitter.Scale, 4, 1e-9),
+          'the smallest size, 0.25, should give a scale of 4, not ' +
+          FloatToStr(LSplitter.Scale));
+      finally
+        LSplitter.Free;
+      end;
+      TDirectory.Delete(LTemp, True);
+      Check(Split = 2, 'two scaled models should be saved');
+      LOut := Model('small.glb');
+      try
+        Check(Near(LOut.Root.Nodes[0].Scale, 1, 1, 1),
+          'small should be saved at scale 1, so it is 1 unit high');
+      finally
+        LOut.Free;
+      end;
+      LOut := Model('big.glb');
+      try
+        Check(Near(LOut.Root.Nodes[0].Scale, 4, 4, 4),
+          'big should be scaled by the same 4');
+      finally
+        LOut.Free;
+      end;
+
       if LFailures = 0 then
         Log('  PASS: one file per root, children kept, names unique whatever the case, ' +
-          'far models centred, no file replaced');
+          'far models centred, no file replaced, small models scaled up together');
     except
       on E: Exception do
         Check(False, E.ClassName + ': ' + E.Message);

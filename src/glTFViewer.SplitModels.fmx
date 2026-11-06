@@ -57,11 +57,27 @@ object glTFSplitModelsFrame: TglTFSplitModelsFrame
       Text = 'glTF'
       Size.PlatformDefault = False
     end
+    object chkScaleUp: TCheckBox
+      Align = Left
+      Position.X = 342.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 180.000000000000000000
+      Size.Height = 28.000000000000000000
+      Margins.Left = 18.000000000000000000
+      IsChecked = True
+      Text = 'Scale up small models'
+      Hint = 'When any model is under 1 unit along any axis, scale every ' +
+        'model by the same factor so that the smallest size becomes ' +
+        '1 unit'
+      ShowHint = True
+      OnChange = chkScaleUpChange
+      Size.PlatformDefault = False
+    end
     object lblSummary: TLabel
       Align = Client
-      Size.Width = 616.000000000000000000
+      Size.Width = 418.000000000000000000
       Size.Height = 28.000000000000000000
-      Position.X = 338.000000000000000000
+      Position.X = 536.000000000000000000
       Position.Y = 6.000000000000000000
       Margins.Left = 14.000000000000000000
       StyledSettings = [Family, Size, Style, FontColor]

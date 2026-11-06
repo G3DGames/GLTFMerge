@@ -83,6 +83,10 @@ uses
   glTFViewer.SplitModels in 'src\glTFViewer.SplitModels.pas' {glTFSplitModelsFrame: TFrame},
   glTFViewer.Main in 'src\glTFViewer.Main.pas' {glTFMainForm};
 
+// The icon (MAINICON), version information and manifest that the IDE keeps in
+// glTFMerge.res, made from the project options (icons\glTFMerge.ico)
+{$R *.res}
+
 begin
   ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;

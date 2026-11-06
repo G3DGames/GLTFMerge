@@ -3,9 +3,13 @@
 //**
 //** @link(TglTFSplitModelsFrame) lists the models TglTFModelSplitter finds: one per root node
 //** of the default scene, with everything under it. The columns are #, Name, Nodes, Meshes,
-//** Triangles and Origin. Name is the file name the model gets, its root node's name or
-//** model_NNN; Origin says whether the model keeps its origin or is moved so that its centre
-//** is its origin.
+//** Triangles, Size and Origin. Name is the file name the model gets, its root node's name or
+//** model_NNN; Size is its size along X, Y and Z as saved; Origin says whether the model keeps
+//** its origin or is moved so that its centre is its origin.
+//**
+//** "Scale up small models", ticked by default, scales every model by one factor when any is
+//** under 1 unit along any axis, so that the smallest size becomes 1 unit; the summary gives
+//** the factor.
 //**
 //** "Save as" chooses GLB, the default, or glTF. "Split" raises
 //** @link(TglTFSplitModelsFrame.OnSplit); the main form asks for the output folder and saves
@@ -23,9 +27,14 @@ unit glTFViewer.SplitModels;
 
   TglTFSplitModelsFrame lists the models TglTFModelSplitter finds: one per
   root node of the default scene, with everything under it. The columns are
-  #, Name, Nodes, Meshes, Triangles and Origin. Name is the file name the
-  model gets, its root node's name or model_NNN; Origin says whether the model
-  keeps its origin or is moved so that its centre is its origin.
+  #, Name, Nodes, Meshes, Triangles, Size and Origin. Name is the file name
+  the model gets, its root node's name or model_NNN; Size is its size along
+  X, Y and Z as saved; Origin says whether the model keeps its origin or is
+  moved so that its centre is its origin.
+
+  "Scale up small models", ticked by default, scales every model by one
+  factor when any is under 1 unit along any axis, so that the smallest size
+  becomes 1 unit; the summary gives the factor.
 
   "Save as" chooses GLB, the default, or glTF. "Split" raises OnSplit; the
   main form asks for the output folder and saves the models there, a model
@@ -40,7 +49,7 @@ unit glTFViewer.SplitModels;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes,
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Math,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.StdCtrls, FMX.Layouts, FMX.ListBox,
   FMX.Graphics, FMX.Controls.Presentation,
 
@@ -79,6 +88,11 @@ type
     /// <summary>Save the models as .gltf, with separate files.</summary>
     rbGLTF: TRadioButton;
 
+    //** @abstract("Scale up small models": scale every model so the smallest size is 1 unit.)
+    /// <summary>"Scale up small models": scale every model so the smallest size is 1
+    /// unit.</summary>
+    chkScaleUp: TCheckBox;
+
     //** @abstract(How many models there are and how many are moved to their centre.)
     /// <summary>How many models there are and how many are moved to their centre.</summary>
     lblSummary: TLabel;
@@ -97,6 +111,13 @@ type
     /// <summary>Raises OnSplit.</summary>
     /// <param name="Sender">The button.</param>
     procedure btnSplitClick(Sender: TObject);
+
+    //** @abstract(Lists the models again, with their sizes as the box now says.)
+    //**
+    //** @param(Sender The checkbox.)
+    /// <summary>Lists the models again, with their sizes as the box now says.</summary>
+    /// <param name="Sender">The checkbox.</param>
+    procedure chkScaleUpChange(Sender: TObject);
 
     //** @abstract(Lays out the headings again when their width changes.)
     //**
@@ -124,8 +145,9 @@ type
     FColumns: TColumnDefs;
     procedure RowResize(Sender: TObject);
     procedure LayoutRow(ARow: TControl);
-    procedure AddRow(AIndex: Integer; const AModel: TglTFSplitModel);
+    procedure AddRow(AIndex: Integer; const AModel: TglTFSplitModel; AScale: Double);
     function GetOutputFormat: TglTFFileFormat;
+    function GetScaleUp: Boolean;
     procedure ApplyWidth;
   protected
     //** @abstract(Lays the rows out again for the new width.)
@@ -160,6 +182,10 @@ type
     /// <summary>The format chosen: gffGLB or gffJSON.</summary>
     property OutputFormat: TglTFFileFormat read GetOutputFormat;
 
+    //** @abstract(Whether "Scale up small models" is ticked.)
+    /// <summary>Whether "Scale up small models" is ticked.</summary>
+    property ScaleUp: Boolean read GetScaleUp;
+
     //** @abstract(The number of models listed.)
     /// <summary>The number of models listed.</summary>
     property ModelCount: Integer read FCount;
@@ -187,7 +213,8 @@ const
   COL_NODES = 2;
   COL_MESHES = 3;
   COL_TRIANGLES = 4;
-  COL_ORIGIN = 5;
+  COL_SIZE = 5;
+  COL_ORIGIN = 6;
 
   // Below these frame widths (phones in portrait) some columns are hidden
   NARROW_WIDTH = 600;
@@ -204,6 +231,7 @@ begin
     TColumnDef.Create('Nodes', 70, chNarrow),
     TColumnDef.Create('Meshes', 70, chNarrow),
     TColumnDef.Create('Triangles', 90, chVeryNarrow),
+    TColumnDef.Create('Size', 170, chNarrow),
     TColumnDef.Create('Origin', 170)];
   // The headings come from the same list as the rows' cells, so they match
   TColumnLayout.AddHeadings(layHeader, FColumns);
@@ -240,10 +268,30 @@ begin
     Result := gffGLB;
 end;
 
-procedure TglTFSplitModelsFrame.AddRow(AIndex: Integer; const AModel: TglTFSplitModel);
+// A size for the list: 3 significant digits, as 2.75 or 0.00204
+function SizeText(AValue: Double): string;
+begin
+  Result := FormatFloat('0.###', AValue);
+  if (AValue <> 0) and (Abs(AValue) < 0.01) then
+    Result := FloatToStrF(AValue, ffGeneral, 3, 0);
+end;
+
+function TglTFSplitModelsFrame.GetScaleUp: Boolean;
+begin
+  Result := chkScaleUp.IsChecked;
+end;
+
+procedure TglTFSplitModelsFrame.chkScaleUpChange(Sender: TObject);
+begin
+  if FColumns <> nil then // nil while the frame is loaded
+    RefreshList;
+end;
+
+procedure TglTFSplitModelsFrame.AddRow(AIndex: Integer; const AModel: TglTFSplitModel;
+  AScale: Double);
 var
   LItem: TListBoxItem;
-  LOrigin: string;
+  LOrigin, LSize: string;
 begin
   LItem := TListBoxItem.Create(lstModels);
   LItem.Parent := lstModels;
@@ -263,6 +311,12 @@ begin
   TColumnLayout.AddText(LItem, COL_NODES, IntToStr(Length(AModel.Nodes)));
   TColumnLayout.AddText(LItem, COL_MESHES, IntToStr(AModel.MeshNodes));
   TColumnLayout.AddText(LItem, COL_TRIANGLES, IntToStr(AModel.Triangles));
+  if AModel.HasBounds then
+    LSize := Format('%s x %s x %s', [SizeText(AScale * AModel.Size[0]),
+      SizeText(AScale * AModel.Size[1]), SizeText(AScale * AModel.Size[2])])
+  else
+    LSize := '-';
+  TColumnLayout.AddText(LItem, COL_SIZE, LSize);
   TColumnLayout.AddText(LItem, COL_ORIGIN, LOrigin);
 
   LItem.OnResize := RowResize;
@@ -281,16 +335,20 @@ var
   LModels: TArray<TglTFSplitModel>;
   LMoved, I: Integer;
   LLoaded: Boolean;
+  LScale: Double;
 begin
   LModels := nil;
+  LScale := 1;
   LLoaded := Assigned(FDoc) and (FDoc.FileFormat <> gffNone);
   if LLoaded then
   begin
     LSplitter := TglTFModelSplitter.Create(FDoc);
     try
       try
+        LSplitter.ScaleUp := chkScaleUp.IsChecked;
         LSplitter.FindModels;
         LModels := LSplitter.Models;
+        LScale := LSplitter.Scale;
       except
         // A broken node tree: nothing to list
         LModels := nil;
@@ -304,7 +362,7 @@ begin
   try
     lstModels.Clear;
     for I := 0 to High(LModels) do
-      AddRow(I, LModels[I]);
+      AddRow(I, LModels[I], LScale);
   finally
     lstModels.EndUpdate;
   end;
@@ -324,6 +382,8 @@ begin
   else
     lblSummary.Text := Format('%d models; %d moved so their centre is their origin',
       [FCount, LMoved]);
+  if (FCount > 0) and not SameValue(LScale, 1) then
+    lblSummary.Text := lblSummary.Text + Format('; all scaled by %s', [SizeText(LScale)]);
   btnSplit.Enabled := FCount > 0;
 end;
 

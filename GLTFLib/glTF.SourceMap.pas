@@ -29,24 +29,17 @@ uses
 
 type
   //** @abstract(Where a value is in the source text; all positions are 1-based.)
-  /// <summary>Where a value is in the source text; all positions are 1-based.</summary>
   TglTFSourceSpan = record
     //** @abstract(Line where the value starts; for an object member, the line of its key.)
-    /// <summary>Line where the value starts; for an object member, the line of its
-    /// key.</summary>
     StartLine: Integer;
 
     //** @abstract(Column where the value starts; for an object member, the column of its key.)
-    /// <summary>Column where the value starts; for an object member, the column of its
-    /// key.</summary>
     StartColumn: Integer;
 
     //** @abstract(Line of the value's last character.)
-    /// <summary>Line of the value's last character.</summary>
     EndLine: Integer;
 
     //** @abstract(Column of the value's last character.)
-    /// <summary>Column of the value's last character.</summary>
     EndColumn: Integer;
   end;
 
@@ -54,9 +47,6 @@ type
   //**
   //** The whole text is scanned once, in the constructor. It tolerates malformed JSON: mapping
   //** stops where the text stops making sense. Not thread-safe.
-  /// <summary>Positions of every value of a JSON text, looked up by JSON path.</summary>
-  /// <remarks>The whole text is scanned once, in the constructor. It tolerates malformed JSON:
-  /// mapping stops where the text stops making sense. Not thread-safe.</remarks>
   TglTFSourceMap = class
   private
     FText: string;
@@ -82,13 +72,9 @@ type
     //** @abstract(Scans a JSON text and records the position of every value.)
     //**
     //** @param(AText The JSON text, as loaded; LF, CRLF and CR line ends are all counted.)
-    /// <summary>Scans a JSON text and records the position of every value.</summary>
-    /// <param name="AText">The JSON text, as loaded; LF, CRLF and CR line ends are all
-    /// counted.</param>
     constructor Create(const AText: string);
 
     //** @abstract(Frees the map.)
-    /// <summary>Frees the map.</summary>
     destructor Destroy; override;
 
     //** @abstract(Finds where a value is in the text.)
@@ -102,13 +88,6 @@ type
     //** @param(ASpan Where the value, or its nearest enclosing value, is.)
     //**
     //** @returns(False only when not even the root was found.)
-    /// <summary>Finds where a value is in the text.</summary>
-    /// <param name="AJSONPath">Path of the value, for example "meshes[0].primitives[2]"; empty
-    /// for the root.</param>
-    /// <param name="ASpan">Where the value, or its nearest enclosing value, is.</param>
-    /// <returns>False only when not even the root was found.</returns>
-    /// <remarks>When the path itself is not in the text, for example a property that is
-    /// missing, the nearest enclosing value is returned, up to the root.</remarks>
     function TryFind(const AJSONPath: string; out ASpan: TglTFSourceSpan): Boolean;
   end;
 

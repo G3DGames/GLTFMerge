@@ -59,15 +59,6 @@ type
   //** // Drop animation 2 and whatever data only it used
   //** TglTFEdit.DeleteAnimation(Doc.Root, 2, Warnings);
   //** #)
-  /// <summary>Editing operations on a glTF object tree that keep its indices
-  /// consistent.</summary>
-  /// <remarks>All methods are class methods; there is nothing to create. A Delete method
-  /// assumes the object it deletes is no longer referred to: use the matching IsUsed method,
-  /// or <see cref="DeleteUnusedData"/>, which checks.</remarks>
-  /// <example><code>
-  /// // Drop animation 2 and whatever data only it used
-  /// TglTFEdit.DeleteAnimation(Doc.Root, 2, Warnings);
-  /// </code></example>
   TglTFEdit = class
   public
     //** @abstract(Tells whether the tree uses an extension that refers to bufferViews or
@@ -82,14 +73,6 @@ type
     //** @param(AName The first such extension found; empty when none.)
     //**
     //** @returns(True when such an extension is in @code(ExtensionsUsed).)
-    /// <summary>Tells whether the tree uses an extension that refers to bufferViews or buffers
-    /// from its own JSON.</summary>
-    /// <param name="ARoot">The tree to check.</param>
-    /// <param name="AName">The first such extension found; empty when none.</param>
-    /// <returns>True when such an extension is in <c>ExtensionsUsed</c>.</returns>
-    /// <remarks>These are KHR_draco_mesh_compression, EXT_meshopt_compression and
-    /// KHR_meshopt_compression. While one is used, bufferViews and buffers must not be
-    /// deleted, as the extension's indices would then point at the wrong data.</remarks>
     class function UsesBufferViewExtension(ARoot: TglTF; out AName: string): Boolean; static;
 
     //** @abstract(Tells whether the tree uses an extension that refers to accessors from its
@@ -102,13 +85,6 @@ type
     //** @param(AName The first such extension found; empty when none.)
     //**
     //** @returns(True when such an extension is in @code(ExtensionsUsed).)
-    /// <summary>Tells whether the tree uses an extension that refers to accessors from its own
-    /// JSON.</summary>
-    /// <param name="ARoot">The tree to check.</param>
-    /// <param name="AName">The first such extension found; empty when none.</param>
-    /// <returns>True when such an extension is in <c>ExtensionsUsed</c>.</returns>
-    /// <remarks>This is EXT_mesh_gpu_instancing. While it is used, accessors must not be
-    /// deleted.</remarks>
     class function UsesAccessorExtension(ARoot: TglTF; out AName: string): Boolean; static;
 
     //** @abstract(Tells whether anything in the tree refers to an accessor.)
@@ -121,12 +97,6 @@ type
     //** @param(AIndex Index in @code(ARoot.Accessors).)
     //**
     //** @returns(True when at least one reference was found.)
-    /// <summary>Tells whether anything in the tree refers to an accessor.</summary>
-    /// <param name="ARoot">The tree to check.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Accessors</c>.</param>
-    /// <returns>True when at least one reference was found.</returns>
-    /// <remarks>Checks mesh primitive attributes, indices and morph targets, skin inverse bind
-    /// matrices and animation sampler inputs and outputs.</remarks>
     class function IsAccessorUsed(ARoot: TglTF; AIndex: Integer): Boolean; static;
 
     //** @abstract(Tells whether anything in the tree refers to a bufferView.)
@@ -138,11 +108,6 @@ type
     //** @param(AIndex Index in @code(ARoot.BufferViews).)
     //**
     //** @returns(True when at least one reference was found.)
-    /// <summary>Tells whether anything in the tree refers to a bufferView.</summary>
-    /// <param name="ARoot">The tree to check.</param>
-    /// <param name="AIndex">Index in <c>ARoot.BufferViews</c>.</param>
-    /// <returns>True when at least one reference was found.</returns>
-    /// <remarks>Checks accessors, their sparse indices and values, and images.</remarks>
     class function IsBufferViewUsed(ARoot: TglTF; AIndex: Integer): Boolean; static;
 
     //** @abstract(Tells whether any bufferView refers to a buffer.)
@@ -152,10 +117,6 @@ type
     //** @param(AIndex Index in @code(ARoot.Buffers).)
     //**
     //** @returns(True when at least one bufferView is in that buffer.)
-    /// <summary>Tells whether any bufferView refers to a buffer.</summary>
-    /// <param name="ARoot">The tree to check.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Buffers</c>.</param>
-    /// <returns>True when at least one bufferView is in that buffer.</returns>
     class function IsBufferUsed(ARoot: TglTF; AIndex: Integer): Boolean; static;
 
     //** @abstract(Deletes an accessor and renumbers the references to the accessors after it.)
@@ -165,12 +126,6 @@ type
     //** @param(ARoot The tree to change.)
     //**
     //** @param(AIndex Index in @code(ARoot.Accessors).)
-    /// <summary>Deletes an accessor and renumbers the references to the accessors after
-    /// it.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Accessors</c>.</param>
-    /// <remarks>Nothing may still refer to the accessor itself. Its bufferViews are left in
-    /// place.</remarks>
     class procedure DeleteAccessor(ARoot: TglTF; AIndex: Integer); static;
 
     //** @abstract(Deletes a bufferView, cuts its bytes out of its buffer and renumbers the
@@ -186,16 +141,6 @@ type
     //** @param(ARoot The tree to change.)
     //**
     //** @param(AIndex Index in @code(ARoot.BufferViews).)
-    /// <summary>Deletes a bufferView, cuts its bytes out of its buffer and renumbers the
-    /// references to the bufferViews after it.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AIndex">Index in <c>ARoot.BufferViews</c>.</param>
-    /// <remarks>The bytes cut are the view rounded up to 4 bytes, so its padding goes too, or
-    /// rounded down when another view uses the padding; nothing is cut when another view
-    /// overlaps it. The views after it in the same buffer move down by the amount cut, which is
-    /// a multiple of 4 unless the view is at the end of the buffer. The buffer's Data is
-    /// replaced by a new array, so an array shared with another tree is not changed. Nothing
-    /// may still refer to the bufferView itself.</remarks>
     class procedure DeleteBufferView(ARoot: TglTF; AIndex: Integer); static;
 
     //** @abstract(Deletes several accessors at once and renumbers every reference to the
@@ -209,14 +154,6 @@ type
     //**
     //** @param(AIndices Indices in @code(ARoot.Accessors), in any order; repeats and invalid
     //** indices are ignored.)
-    /// <summary>Deletes several accessors at once and renumbers every reference to the
-    /// others.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AIndices">Indices in <c>ARoot.Accessors</c>, in any order; repeats and
-    /// invalid indices are ignored.</param>
-    /// <remarks>Much faster than deleting them one by one: the references are renumbered in
-    /// one pass. Nothing may still refer to the accessors deleted. Their bufferViews are left
-    /// in place.</remarks>
     class procedure DeleteAccessors(ARoot: TglTF; const AIndices: TArray<Integer>); static;
 
     //** @abstract(Deletes several bufferViews at once, cutting their bytes out of their
@@ -231,15 +168,6 @@ type
     //**
     //** @param(AIndices Indices in @code(ARoot.BufferViews), in any order; repeats and
     //** invalid indices are ignored.)
-    /// <summary>Deletes several bufferViews at once, cutting their bytes out of their
-    /// buffers.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AIndices">Indices in <c>ARoot.BufferViews</c>, in any order; repeats and
-    /// invalid indices are ignored.</param>
-    /// <remarks>The same rules as DeleteBufferView, applied to all of them together: each
-    /// buffer is rebuilt once, without the bytes cut, and the references to the remaining
-    /// views are renumbered in one pass. Bytes a remaining view uses are never cut. Nothing
-    /// may still refer to the views deleted.</remarks>
     class procedure DeleteBufferViews(ARoot: TglTF; const AIndices: TArray<Integer>); static;
 
     //** @abstract(Deletes a buffer and renumbers the bufferViews that refer to the buffers
@@ -250,11 +178,6 @@ type
     //** @param(ARoot The tree to change.)
     //**
     //** @param(AIndex Index in @code(ARoot.Buffers).)
-    /// <summary>Deletes a buffer and renumbers the bufferViews that refer to the buffers after
-    /// it.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Buffers</c>.</param>
-    /// <remarks>No bufferView may still be in the buffer itself.</remarks>
     class procedure DeleteBuffer(ARoot: TglTF; AIndex: Integer); static;
 
     //** @abstract(Deletes those of the given accessors that nothing uses any more, then the
@@ -274,18 +197,6 @@ type
     //** @param(AWarnings Receives a line for each step skipped; may be nil.)
     //**
     //** @returns(The number of accessors deleted.)
-    /// <summary>Deletes those of the given accessors that nothing uses any more, then the
-    /// bufferViews and buffers that only they used.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AAccessors">Indices in <c>ARoot.Accessors</c> that may have become unused;
-    /// may repeat and may include indices that are still used.</param>
-    /// <param name="AWarnings">Receives a line for each step skipped; may be nil.</param>
-    /// <returns>The number of accessors deleted.</returns>
-    /// <remarks>Only the listed accessors and the bufferViews and buffers they lead to are
-    /// considered, so data the file never used is left alone. Up to 3 zero bytes of padding
-    /// left at the end of a buffer that was cut are removed too. A buffer is deleted when its
-    /// data was cut down to nothing. When the tree uses an extension that would be
-    /// broken, the step concerned is skipped and a warning added.</remarks>
     class function DeleteUnusedData(ARoot: TglTF; const AAccessors: TArray<Integer>;
       AWarnings: TStrings): Integer; static;
 
@@ -294,9 +205,6 @@ type
     //** @param(AAnimation The animation.)
     //**
     //** @returns(The input and output accessor indices, each once, in sampler order.)
-    /// <summary>Returns the accessors an animation's samplers use.</summary>
-    /// <param name="AAnimation">The animation.</param>
-    /// <returns>The input and output accessor indices, each once, in sampler order.</returns>
     class function AnimationAccessors(AAnimation: TglTFAnimation): TArray<Integer>; static;
 
     //** @abstract(Deletes an animation and the data only it used.)
@@ -309,13 +217,6 @@ type
     //** @param(AIndex Index in @code(ARoot.Animations).)
     //**
     //** @param(AWarnings Receives a line for each step skipped; may be nil.)
-    /// <summary>Deletes an animation and the data only it used.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Animations</c>.</param>
-    /// <param name="AWarnings">Receives a line for each step skipped; may be nil.</param>
-    /// <remarks>Nothing in the glTF core schema refers to an animation by index, so no other
-    /// index changes apart from those of the data deleted; see
-    /// <see cref="DeleteUnusedData"/>.</remarks>
     class procedure DeleteAnimation(ARoot: TglTF; AIndex: Integer; AWarnings: TStrings); static;
 
     //** @abstract(Deletes every animation and the data only they used.)
@@ -328,12 +229,6 @@ type
     //** @param(AWarnings Receives a line for each step skipped; may be nil.)
     //**
     //** @returns(The number of animations deleted.)
-    /// <summary>Deletes every animation and the data only they used.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AWarnings">Receives a line for each step skipped; may be nil.</param>
-    /// <returns>The number of animations deleted.</returns>
-    /// <remarks>Accessors, bufferViews and buffer bytes that something else, such as a mesh or
-    /// a skin, also uses are kept; see <see cref="DeleteUnusedData"/>.</remarks>
     class function ClearAnimations(ARoot: TglTF; AWarnings: TStrings): Integer; static;
 
     //** @abstract(Tells whether two names are the same name, as duplicate checks see it.)
@@ -346,14 +241,6 @@ type
     //** @param(B Another name.)
     //**
     //** @returns(True when they are the same name.)
-    /// <summary>Tells whether two names are the same name, as duplicate checks see
-    /// it.</summary>
-    /// <param name="A">A name.</param>
-    /// <param name="B">Another name.</param>
-    /// <returns>True when they are the same name.</returns>
-    /// <remarks>Case is ignored, in every alphabet, and so are spaces at either end. Every
-    /// duplicate check on names uses this, so that names differing only in case cannot both be
-    /// used.</remarks>
     class function SameName(const A, B: string): Boolean; static;
 
     //** @abstract(Finds the animation with a name, case ignored.)
@@ -366,13 +253,6 @@ type
     //**
     //** @returns(Index in @code(ARoot.Animations), or -1 when no other animation has the
     //** name.)
-    /// <summary>Finds the animation with a name, case ignored.</summary>
-    /// <param name="ARoot">The tree to search.</param>
-    /// <param name="AName">The name; an empty one is never found.</param>
-    /// <param name="AExcept">An animation to skip, such as the one being renamed; -1 for
-    /// none.</param>
-    /// <returns>Index in <c>ARoot.Animations</c>, or -1 when no other animation has the
-    /// name.</returns>
     class function FindAnimation(ARoot: TglTF; const AName: string;
       AExcept: Integer = -1): Integer; static;
 
@@ -387,13 +267,6 @@ type
     //**
     //** @returns(The reason, or an empty string when the name can be used: it is not empty and
     //** no other animation has it, case ignored.)
-    /// <summary>Tells why a name cannot be given to an animation.</summary>
-    /// <param name="ARoot">The tree holding the animations.</param>
-    /// <param name="AName">The name wanted.</param>
-    /// <param name="AExcept">The animation that is to get the name, which may already have it
-    /// in another case; -1 for a new animation.</param>
-    /// <returns>The reason, or an empty string when the name can be used: it is not empty and
-    /// no other animation has it, case ignored.</returns>
     class function AnimationNameProblem(ARoot: TglTF; const AName: string;
       AExcept: Integer = -1): string; static;
 
@@ -406,12 +279,6 @@ type
     //** @param(AName The new name; spaces at either end are removed.)
     //**
     //** @returns(An empty string when renamed; otherwise why not, and nothing is changed.)
-    /// <summary>Renames an animation, when the name passes AnimationNameProblem.</summary>
-    /// <param name="ARoot">The tree holding the animation.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Animations</c>.</param>
-    /// <param name="AName">The new name; spaces at either end are removed.</param>
-    /// <returns>An empty string when renamed; otherwise why not, and nothing is
-    /// changed.</returns>
     class function RenameAnimation(ARoot: TglTF; AIndex: Integer;
       const AName: string): string; static;
 
@@ -425,13 +292,6 @@ type
     //** @param(ARoot The tree to change.)
     //**
     //** @returns(Index in @code(ARoot.Buffers).)
-    /// <summary>Returns the buffer new binary data should be appended to, creating one when
-    /// needed.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <returns>Index in <c>ARoot.Buffers</c>.</returns>
-    /// <remarks>That is buffers[0] when its data is loaded, so that a GLB keeps a single BIN
-    /// chunk. Otherwise a new, empty buffer is added at the end; it has no uri, so a save
-    /// decides where it goes.</remarks>
     class function DataBuffer(ARoot: TglTF): Integer; static;
 
     //** @abstract(Appends bytes to a buffer, starting on a 4-byte boundary.)
@@ -449,15 +309,6 @@ type
     //** @returns(The byte offset in the buffer where the bytes start.)
     //**
     //** @raises(EglTFError The buffer's data is not loaded.)
-    /// <summary>Appends bytes to a buffer, starting on a 4-byte boundary.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="ABufferIndex">Index in <c>ARoot.Buffers</c>; its data must be loaded unless
-    /// it is empty.</param>
-    /// <param name="AData">The bytes to append.</param>
-    /// <returns>The byte offset in the buffer where the bytes start.</returns>
-    /// <exception cref="EglTFError">The buffer's data is not loaded.</exception>
-    /// <remarks>The buffer is padded with zeros up to the boundary first. Its Data is replaced
-    /// by a new array and its ByteLength updated.</remarks>
     class function AppendBufferData(ARoot: TglTF; ABufferIndex: Integer;
       const AData: TBytes): Int64; static;
 
@@ -466,9 +317,6 @@ type
     //** @param(ARoot The tree to change.)
     //**
     //** @param(AName The extension name, for example KHR_texture_transform.)
-    /// <summary>Adds a name to <c>ExtensionsUsed</c> unless it is already there.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AName">The extension name, for example KHR_texture_transform.</param>
     class procedure AddExtensionUsed(ARoot: TglTF; const AName: string); static;
 
     //** @abstract(Tells whether any node refers to a mesh.)
@@ -478,10 +326,6 @@ type
     //** @param(AIndex Index in @code(ARoot.Meshes).)
     //**
     //** @returns(True when at least one node has it as its mesh.)
-    /// <summary>Tells whether any node refers to a mesh.</summary>
-    /// <param name="ARoot">The tree to check.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Meshes</c>.</param>
-    /// <returns>True when at least one node has it as its mesh.</returns>
     class function IsMeshUsed(ARoot: TglTF; AIndex: Integer): Boolean; static;
 
     //** @abstract(Tells whether any node refers to a skin.)
@@ -491,10 +335,6 @@ type
     //** @param(AIndex Index in @code(ARoot.Skins).)
     //**
     //** @returns(True when at least one node has it as its skin.)
-    /// <summary>Tells whether any node refers to a skin.</summary>
-    /// <param name="ARoot">The tree to check.</param>
-    /// <param name="AIndex">Index in <c>ARoot.Skins</c>.</param>
-    /// <returns>True when at least one node has it as its skin.</returns>
     class function IsSkinUsed(ARoot: TglTF; AIndex: Integer): Boolean; static;
 
     //** @abstract(Deletes nodes and renumbers every reference to the nodes after them.)
@@ -516,20 +356,6 @@ type
     //** @param(AWarnings Receives a line for each step skipped; may be nil.)
     //**
     //** @raises(EglTFError A node to delete is a joint of a skin; nothing is changed.)
-    /// <summary>Deletes nodes and renumbers every reference to the nodes after them.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AIndices">Indices in <c>ARoot.Nodes</c>, in any order; repeats and invalid
-    /// indices are ignored.</param>
-    /// <param name="AWarnings">Receives a line for each step skipped; may be nil.</param>
-    /// <exception cref="EglTFError">A node to delete is a joint of a skin; nothing is
-    /// changed.</exception>
-    /// <remarks>The children of a deleted node that stay take its place: in its parent's
-    /// children, or among the root nodes of the scenes it was in. Animation channels that target
-    /// a deleted node are removed, and an animation left without channels is deleted with the
-    /// data only it used. A deleted node that was a skin's "skeleton" leaves that skin without
-    /// one. The meshes, skins and cameras of the deleted nodes stay; see
-    /// <see cref="DeleteUnusedObjects"/>. Only the glTF 2.0 core references are renumbered; an
-    /// extension that refers to nodes from its own JSON is not.</remarks>
     class procedure DeleteNodes(ARoot: TglTF; const AIndices: TArray<Integer>;
       AWarnings: TStrings); static;
 
@@ -562,28 +388,6 @@ type
     //**
     //** @returns(The number of meshes, skins, materials, textures, images and samplers
     //** deleted.)
-    /// <summary>Deletes those of the given meshes, skins and materials that nothing uses any
-    /// more, then everything that only they used.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AMeshes">Indices in <c>ARoot.Meshes</c> that may have become
-    /// unused.</param>
-    /// <param name="ASkins">Indices in <c>ARoot.Skins</c> that may have become unused.</param>
-    /// <param name="AMaterials">Indices in <c>ARoot.Materials</c> that may have become
-    /// unused.</param>
-    /// <param name="AAccessors">Further indices in <c>ARoot.Accessors</c> that may have become
-    /// unused.</param>
-    /// <param name="AWarnings">Receives a line for each step skipped; may be nil.</param>
-    /// <returns>The number of meshes, skins, materials, textures, images and samplers
-    /// deleted.</returns>
-    /// <remarks>Works down from the objects given: meshes no node uses, skins no node uses, and
-    /// materials no primitive uses are deleted; then the textures only the deleted materials
-    /// used, the images and samplers only those textures used, and the accessors, bufferViews
-    /// and buffer bytes only all of these used (see <see cref="DeleteUnusedData"/>). Every
-    /// reference to the objects that follow is renumbered, texture references in material
-    /// extensions and image references in texture extensions included. Objects the file never
-    /// used are left alone, as only what the given objects lead to is considered. Materials are
-    /// kept when the tree uses KHR_materials_variants, which refers to them from its own JSON; a
-    /// warning says so.</remarks>
     class function DeleteUnusedObjects(ARoot: TglTF; const AMeshes, ASkins,
       AMaterials, AAccessors: TArray<Integer>; AWarnings: TStrings): Integer; static;
 
@@ -598,14 +402,6 @@ type
     //**
     //** @param(AMap Returns the new texture index for an old one; returning the same index
     //** leaves it as it is.)
-    /// <summary>Calls a function for every texture reference in a material's JSON and replaces
-    /// the index with what it returns.</summary>
-    /// <param name="AValue">A material, or part of one, as JSON; changed in place.</param>
-    /// <param name="AMap">Returns the new texture index for an old one; returning the same
-    /// index leaves it as it is.</param>
-    /// <remarks>A texture reference is an object with a numeric "index" under a name ending in
-    /// "Texture", such as baseColorTexture, or clearcoatTexture inside an extension. The whole
-    /// value is searched, so references in extensions are found too.</remarks>
     class procedure RemapTextureRefs(AValue: TJSONValue; const AMap: TFunc<Integer, Integer>); static;
 
     //** @abstract(Tells which images the model needs: those a mesh shows.)
@@ -618,14 +414,6 @@ type
     //** @param(ARoot The tree to check.)
     //**
     //** @returns(One flag per entry of @code(ARoot.Images), True for the images needed.)
-    /// <summary>Tells which images the model needs: those a mesh shows.</summary>
-    /// <param name="ARoot">The tree to check.</param>
-    /// <returns>One flag per entry of <c>ARoot.Images</c>, True for the images
-    /// needed.</returns>
-    /// <remarks>An image is needed when a texture uses it that a material uses that a mesh
-    /// primitive uses, texture references in material extensions and image references in
-    /// texture extensions included. While KHR_materials_variants is used, every material
-    /// counts as used, as that extension refers to materials from its own JSON.</remarks>
     class function ImagesInUse(ARoot: TglTF): TArray<Boolean>; static;
 
     //** @abstract(Deletes every material, texture, image and sampler the meshes do not lead to.)
@@ -641,16 +429,6 @@ type
     //** @param(AWarnings Receives a line for each step skipped; may be nil.)
     //**
     //** @returns(The number of materials, textures, images and samplers deleted.)
-    /// <summary>Deletes every material, texture, image and sampler the meshes do not lead
-    /// to.</summary>
-    /// <param name="ARoot">The tree to change.</param>
-    /// <param name="AWarnings">Receives a line for each step skipped; may be nil.</param>
-    /// <returns>The number of materials, textures, images and samplers deleted.</returns>
-    /// <remarks>The images left are exactly those <see cref="ImagesInUse"/> reports as needed.
-    /// Materials no primitive uses go first, then the textures no remaining material uses, then
-    /// the images and samplers no remaining texture uses, and the bufferViews and buffer bytes
-    /// only those images used. Every reference to the objects that follow is renumbered. Used on
-    /// the copy made for a save, so that a saved file holds only the images it needs.</remarks>
     class function DeleteUnusedImages(ARoot: TglTF; AWarnings: TStrings): Integer; static;
 
     //** @abstract(Calls a function for every number under a given name in a JSON value and
@@ -664,13 +442,6 @@ type
     //** @param(AName The property name, for example "source".)
     //**
     //** @param(AMap Returns the new value for an old one.)
-    /// <summary>Calls a function for every number under a given name in a JSON value and
-    /// replaces it with what it returns.</summary>
-    /// <param name="AValue">The JSON to search, whole; changed in place.</param>
-    /// <param name="AName">The property name, for example "source".</param>
-    /// <param name="AMap">Returns the new value for an old one.</param>
-    /// <remarks>Used for the "source" image references of textures, which texture extensions
-    /// such as EXT_texture_webp repeat.</remarks>
     class procedure RemapNamedRefs(AValue: TJSONValue; const AName: string;
       const AMap: TFunc<Integer, Integer>); static;
   end;

@@ -36,116 +36,88 @@ const
   //** @abstract(Value of an optional index property that is not set.)
   //**
   //** Index properties such as @code(TglTFNode.Mesh) hold -1 when the glTF does not give them.
-  /// <summary>Value of an optional index property that is not set.</summary>
-  /// <remarks>Index properties such as <c>TglTFNode.Mesh</c> hold -1 when the glTF does not
-  /// give them.</remarks>
   GLTF_UNDEFINED_INDEX = -1;
 
   // accessor.componentType / accessor.sparse.indices.componentType
 
   //** @abstract(Component type 5120: signed 8-bit integer.)
-  /// <summary>Component type 5120: signed 8-bit integer.</summary>
   GLTF_COMPONENT_BYTE           = 5120;
 
   //** @abstract(Component type 5121: unsigned 8-bit integer.)
-  /// <summary>Component type 5121: unsigned 8-bit integer.</summary>
   GLTF_COMPONENT_UNSIGNED_BYTE  = 5121;
 
   //** @abstract(Component type 5122: signed 16-bit integer.)
-  /// <summary>Component type 5122: signed 16-bit integer.</summary>
   GLTF_COMPONENT_SHORT          = 5122;
 
   //** @abstract(Component type 5123: unsigned 16-bit integer.)
-  /// <summary>Component type 5123: unsigned 16-bit integer.</summary>
   GLTF_COMPONENT_UNSIGNED_SHORT = 5123;
 
   //** @abstract(Component type 5125: unsigned 32-bit integer.)
-  /// <summary>Component type 5125: unsigned 32-bit integer.</summary>
   GLTF_COMPONENT_UNSIGNED_INT   = 5125;
 
   //** @abstract(Component type 5126: 32-bit IEEE float.)
-  /// <summary>Component type 5126: 32-bit IEEE float.</summary>
   GLTF_COMPONENT_FLOAT          = 5126;
 
   // bufferView.target
 
   //** @abstract(bufferView target 34962: vertex attribute data.)
-  /// <summary>bufferView target 34962: vertex attribute data.</summary>
   GLTF_TARGET_ARRAY_BUFFER         = 34962;
 
   //** @abstract(bufferView target 34963: vertex indices.)
-  /// <summary>bufferView target 34963: vertex indices.</summary>
   GLTF_TARGET_ELEMENT_ARRAY_BUFFER = 34963;
 
   // mesh.primitive.mode
 
   //** @abstract(Primitive mode 0: points.)
-  /// <summary>Primitive mode 0: points.</summary>
   GLTF_MODE_POINTS         = 0;
 
   //** @abstract(Primitive mode 1: separate lines.)
-  /// <summary>Primitive mode 1: separate lines.</summary>
   GLTF_MODE_LINES          = 1;
 
   //** @abstract(Primitive mode 2: a closed line loop.)
-  /// <summary>Primitive mode 2: a closed line loop.</summary>
   GLTF_MODE_LINE_LOOP      = 2;
 
   //** @abstract(Primitive mode 3: a line strip.)
-  /// <summary>Primitive mode 3: a line strip.</summary>
   GLTF_MODE_LINE_STRIP     = 3;
 
   //** @abstract(Primitive mode 4: separate triangles; the default.)
-  /// <summary>Primitive mode 4: separate triangles; the default.</summary>
   GLTF_MODE_TRIANGLES      = 4;
 
   //** @abstract(Primitive mode 5: a triangle strip.)
-  /// <summary>Primitive mode 5: a triangle strip.</summary>
   GLTF_MODE_TRIANGLE_STRIP = 5;
 
   //** @abstract(Primitive mode 6: a triangle fan.)
-  /// <summary>Primitive mode 6: a triangle fan.</summary>
   GLTF_MODE_TRIANGLE_FAN   = 6;
 
   // sampler.magFilter / sampler.minFilter
 
   //** @abstract(Sampler filter 9728: nearest texel.)
-  /// <summary>Sampler filter 9728: nearest texel.</summary>
   GLTF_FILTER_NEAREST                = 9728;
 
   //** @abstract(Sampler filter 9729: linear interpolation.)
-  /// <summary>Sampler filter 9729: linear interpolation.</summary>
   GLTF_FILTER_LINEAR                 = 9729;
 
   //** @abstract(Sampler minification filter 9984: nearest texel of the nearest mipmap.)
-  /// <summary>Sampler minification filter 9984: nearest texel of the nearest mipmap.</summary>
   GLTF_FILTER_NEAREST_MIPMAP_NEAREST = 9984;
 
   //** @abstract(Sampler minification filter 9985: linear within the nearest mipmap.)
-  /// <summary>Sampler minification filter 9985: linear within the nearest mipmap.</summary>
   GLTF_FILTER_LINEAR_MIPMAP_NEAREST  = 9985;
 
   //** @abstract(Sampler minification filter 9986: nearest texel, blended between two mipmaps.)
-  /// <summary>Sampler minification filter 9986: nearest texel, blended between two
-  /// mipmaps.</summary>
   GLTF_FILTER_NEAREST_MIPMAP_LINEAR  = 9986;
 
   //** @abstract(Sampler minification filter 9987: trilinear filtering.)
-  /// <summary>Sampler minification filter 9987: trilinear filtering.</summary>
   GLTF_FILTER_LINEAR_MIPMAP_LINEAR   = 9987;
 
   // sampler.wrapS / sampler.wrapT
 
   //** @abstract(Sampler wrap mode 33071: clamp to the edge.)
-  /// <summary>Sampler wrap mode 33071: clamp to the edge.</summary>
   GLTF_WRAP_CLAMP_TO_EDGE   = 33071;
 
   //** @abstract(Sampler wrap mode 33648: mirrored repeat.)
-  /// <summary>Sampler wrap mode 33648: mirrored repeat.</summary>
   GLTF_WRAP_MIRRORED_REPEAT = 33648;
 
   //** @abstract(Sampler wrap mode 10497: repeat; the default.)
-  /// <summary>Sampler wrap mode 10497: repeat; the default.</summary>
   GLTF_WRAP_REPEAT          = 10497;
 
 type
@@ -156,124 +128,91 @@ type
   //** @abstract(The accessor "type" as an enumeration.)
   //**
   //** The schema allows other strings for extensions; those map to atUnknown.
-  /// <summary>The accessor "type" as an enumeration.</summary>
-  /// <remarks>The schema allows other strings for extensions; those map to atUnknown.</remarks>
   TglTFAccessorType = (
     //** @abstract(Any other string.)
-    /// <summary>Any other string.</summary>
     atUnknown,
 
     //** @abstract("SCALAR": one component.)
-    /// <summary>"SCALAR": one component.</summary>
     atScalar,
 
     //** @abstract("VEC2": two components.)
-    /// <summary>"VEC2": two components.</summary>
     atVec2,
 
     //** @abstract("VEC3": three components.)
-    /// <summary>"VEC3": three components.</summary>
     atVec3,
 
     //** @abstract("VEC4": four components.)
-    /// <summary>"VEC4": four components.</summary>
     atVec4,
 
     //** @abstract("MAT2": a 2 by 2 matrix.)
-    /// <summary>"MAT2": a 2 by 2 matrix.</summary>
     atMat2,
 
     //** @abstract("MAT3": a 3 by 3 matrix.)
-    /// <summary>"MAT3": a 3 by 3 matrix.</summary>
     atMat3,
 
     //** @abstract("MAT4": a 4 by 4 matrix.)
-    /// <summary>"MAT4": a 4 by 4 matrix.</summary>
     atMat4);
 
   //** @abstract(The material "alphaMode" as an enumeration.)
-  /// <summary>The material "alphaMode" as an enumeration.</summary>
   TglTFAlphaMode = (
     //** @abstract(Any other string.)
-    /// <summary>Any other string.</summary>
     amUnknown,
 
     //** @abstract("OPAQUE": alpha is ignored.)
-    /// <summary>"OPAQUE": alpha is ignored.</summary>
     amOpaque,
 
     //** @abstract("MASK": fully opaque or fully transparent, by alphaCutoff.)
-    /// <summary>"MASK": fully opaque or fully transparent, by alphaCutoff.</summary>
     amMask,
 
     //** @abstract("BLEND": alpha blends with the background.)
-    /// <summary>"BLEND": alpha blends with the background.</summary>
     amBlend);
 
   //** @abstract(The animation target "path" as an enumeration.)
-  /// <summary>The animation target "path" as an enumeration.</summary>
   TglTFAnimationPath = (
     //** @abstract(Any other string.)
-    /// <summary>Any other string.</summary>
     apUnknown,
 
     //** @abstract("translation".)
-    /// <summary>"translation".</summary>
     apTranslation,
 
     //** @abstract("rotation".)
-    /// <summary>"rotation".</summary>
     apRotation,
 
     //** @abstract("scale".)
-    /// <summary>"scale".</summary>
     apScale,
 
     //** @abstract("weights": morph target weights.)
-    /// <summary>"weights": morph target weights.</summary>
     apWeights);
 
   //** @abstract(The animation sampler "interpolation" as an enumeration.)
-  /// <summary>The animation sampler "interpolation" as an enumeration.</summary>
   TglTFInterpolation = (
     //** @abstract(Any other string.)
-    /// <summary>Any other string.</summary>
     ipUnknown,
 
     //** @abstract("LINEAR".)
-    /// <summary>"LINEAR".</summary>
     ipLinear,
 
     //** @abstract("STEP": values are held until the next key frame.)
-    /// <summary>"STEP": values are held until the next key frame.</summary>
     ipStep,
 
     //** @abstract("CUBICSPLINE": cubic spline with tangents.)
-    /// <summary>"CUBICSPLINE": cubic spline with tangents.</summary>
     ipCubicSpline);
 
   //** @abstract(The camera "type" as an enumeration.)
-  /// <summary>The camera "type" as an enumeration.</summary>
   TglTFCameraType = (
     //** @abstract(Any other string.)
-    /// <summary>Any other string.</summary>
     ctUnknown,
 
     //** @abstract("perspective".)
-    /// <summary>"perspective".</summary>
     ctPerspective,
 
     //** @abstract("orthographic".)
-    /// <summary>"orthographic".</summary>
     ctOrthographic);
 
   //** @abstract(Maps attribute semantics to accessor indices.)
   //**
   //** Keys are names such as POSITION, NORMAL or TEXCOORD_0; values are indices in
   //** @code(TglTF.Accessors).
-  /// <summary>Maps attribute semantics to accessor indices.</summary>
-  /// <remarks>Keys are names such as POSITION, NORMAL or TEXCOORD_0; values are indices in
-  /// <c>TglTF.Accessors</c>.</remarks>
   TglTFAttributeMap = TDictionary<string, Integer>;
 
   {$REGION 'asset'}
@@ -281,8 +220,6 @@ type
   //** @abstract(The glTF "asset": metadata about the file, including the glTF version.)
   //**
   //** Required in every glTF file.
-  /// <summary>The glTF "asset": metadata about the file, including the glTF version.</summary>
-  /// <remarks>Required in every glTF file.</remarks>
   TglTFAsset = class(TglTFProperty)
   private
     FCopyright: string;
@@ -295,35 +232,25 @@ type
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "asset"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "asset"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "copyright": a copyright message; empty when not set.)
-    /// <summary>The glTF "copyright": a copyright message; empty when not set.</summary>
     [NeonProperty('copyright')]
     property Copyright: string read FCopyright write FCopyright;
 
     //** @abstract(The glTF "generator": the tool that created the file; empty when not set.)
-    /// <summary>The glTF "generator": the tool that created the file; empty when not
-    /// set.</summary>
     [NeonProperty('generator')]
     property Generator: string read FGenerator write FGenerator;
 
     //** @abstract(The glTF "version" the file targets, in the form major.minor; required.)
     //**
     //** Files whose major version is not 2 are rejected when loading.
-    /// <summary>The glTF "version" the file targets, in the form major.minor;
-    /// required.</summary>
-    /// <remarks>Files whose major version is not 2 are rejected when loading.</remarks>
     [NeonProperty('version'), glTFRequired]
     property Version: string read FVersion write FVersion;
 
     //** @abstract(The glTF "minVersion" a reader needs; empty when not set.)
     //**
     //** Files that need more than 2.0 are rejected when loading.
-    /// <summary>The glTF "minVersion" a reader needs; empty when not set.</summary>
-    /// <remarks>Files that need more than 2.0 are rejected when loading.</remarks>
     [NeonProperty('minVersion')]
     property MinVersion: string read FMinVersion write FMinVersion;
   end;
@@ -336,10 +263,6 @@ type
   //**
   //** The bytes themselves are in @link(Data), filled by TglTFDocument when loading. Where
   //** they are stored when saving is decided by TglTFDocument, not by @link(Uri).
-  /// <summary>A glTF buffer: a block of binary data that bufferViews point into.</summary>
-  /// <remarks>The bytes themselves are in <see cref="Data"/>, filled by TglTFDocument when
-  /// loading. Where they are stored when saving is decided by TglTFDocument, not by
-  /// <see cref="Uri"/>.</remarks>
   TglTFBuffer = class(TglTFChildOfRootProperty)
   private
     FUri: string;
@@ -352,24 +275,17 @@ type
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "buffer"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "buffer"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(Tells whether the uri holds the data itself as a "data:" URI.)
     //**
     //** @returns(True for a data URI, False for a file reference or no uri.)
-    /// <summary>Tells whether the uri holds the data itself as a "data:" URI.</summary>
-    /// <returns>True for a data URI, False for a file reference or no uri.</returns>
     function IsDataUri: Boolean;
 
     //** @abstract(Returns the MIME type written in a data URI.)
     //**
     //** @returns(For example @code(application/octet-stream); empty when the uri is not a
     //** data URI or names no type.)
-    /// <summary>Returns the MIME type written in a data URI.</summary>
-    /// <returns>For example <c>application/octet-stream</c>; empty when the uri is not a
-    /// data URI or names no type.</returns>
     function DataUriMimeType: string;
 
     //** @abstract(The buffer's bytes; nil when they could not be loaded.)
@@ -377,10 +293,6 @@ type
     //** Filled by TglTFDocument when loading, from the GLB BIN chunk, a data URI or an
     //** external file, and used when saving. Saving writes byteLength from its length.
     //** Not part of the glTF JSON.
-    /// <summary>The buffer's bytes; nil when they could not be loaded.</summary>
-    /// <remarks>Filled by TglTFDocument when loading, from the GLB BIN chunk, a data URI or
-    /// an external file, and used when saving. Saving writes byteLength from its length.
-    /// Not part of the glTF JSON.</remarks>
     [NeonIgnore]
     property Data: TBytes read FData write FData;
 
@@ -390,31 +302,21 @@ type
     //** Set when the data is loaded from an external file, or from a file found later with
     //** TglTFDocument.SupplyResourceFile. Saving copies from it when the buffer must be a
     //** separate file and its data is not loaded. Not part of the glTF JSON.
-    /// <summary>The file <see cref="Data"/> was read from; empty for data that was inside
-    /// the glTF.</summary>
-    /// <remarks>Set when the data is loaded from an external file, or from a file found
-    /// later with TglTFDocument.SupplyResourceFile. Saving copies from it when the buffer
-    /// must be a separate file and its data is not loaded. Not part of the glTF
-    /// JSON.</remarks>
     [NeonIgnore]
     property SourceFile: string read FSourceFile write FSourceFile;
 
     //** @abstract(The glTF "uri": a file path relative to the glTF, or a data URI.)
     //**
     //** Empty for the GLB BIN chunk.
-    /// <summary>The glTF "uri": a file path relative to the glTF, or a data URI.</summary>
-    /// <remarks>Empty for the GLB BIN chunk.</remarks>
     [NeonProperty('uri')]
     property Uri: string read FUri write FUri;
 
     //** @abstract(The glTF "byteLength": the buffer's size in bytes; required.)
-    /// <summary>The glTF "byteLength": the buffer's size in bytes; required.</summary>
     [NeonProperty('byteLength'), glTFRequired]
     property ByteLength: Int64 read FByteLength write FByteLength;
   end;
 
   //** @abstract(A glTF bufferView: a range of bytes in a buffer.)
-  /// <summary>A glTF bufferView: a range of bytes in a buffer.</summary>
   TglTFBufferView = class(TglTFChildOfRootProperty)
   private
     FBuffer: Integer;
@@ -428,32 +330,23 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** Buffer is GLTF_UNDEFINED_INDEX; the other values are 0.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Buffer is GLTF_UNDEFINED_INDEX; the other values are 0.</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "bufferView"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "bufferView"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "buffer": index in @code(TglTF.Buffers) of the buffer holding the
     //** bytes; required.)
-    /// <summary>The glTF "buffer": index in <c>TglTF.Buffers</c> of the buffer holding the
-    /// bytes; required.</summary>
     [NeonProperty('buffer'), glTFRequired]
     property Buffer: Integer read FBuffer write FBuffer;
 
     //** @abstract(The glTF "byteOffset": where the range starts in the buffer; 0 by default.)
-    /// <summary>The glTF "byteOffset": where the range starts in the buffer; 0 by
-    /// default.</summary>
     [NeonProperty('byteOffset')]
     property ByteOffset: Int64 read FByteOffset write FByteOffset;
 
     //** @abstract(The glTF "byteLength": the length of the range in bytes; required.)
-    /// <summary>The glTF "byteLength": the length of the range in bytes; required.</summary>
     [NeonProperty('byteLength'), glTFRequired]
     property ByteLength: Int64 read FByteLength write FByteLength;
 
@@ -461,10 +354,6 @@ type
     //** when not set.)
     //**
     //** 0 means the data is tightly packed. When set it must be between 4 and 252.
-    /// <summary>The glTF "byteStride": bytes between the starts of two vertex elements; 0 when
-    /// not set.</summary>
-    /// <remarks>0 means the data is tightly packed. When set it must be between 4 and
-    /// 252.</remarks>
     [NeonProperty('byteStride')]
     property ByteStride: Integer read FByteStride write FByteStride;
 
@@ -472,9 +361,6 @@ type
     //** set.)
     //**
     //** GLTF_TARGET_ARRAY_BUFFER or GLTF_TARGET_ELEMENT_ARRAY_BUFFER.
-    /// <summary>The glTF "target": the GPU buffer type the data is meant for; 0 when not
-    /// set.</summary>
-    /// <remarks>GLTF_TARGET_ARRAY_BUFFER or GLTF_TARGET_ELEMENT_ARRAY_BUFFER.</remarks>
     [NeonProperty('target')]
     property Target: Integer read FTarget write FTarget;
   end;
@@ -484,7 +370,6 @@ type
   {$REGION 'accessor'}
 
   //** @abstract(The indices of the elements a sparse accessor replaces.)
-  /// <summary>The indices of the elements a sparse accessor replaces.</summary>
   TglTFAccessorSparseIndices = class(TglTFProperty)
   private
     FBufferView: Integer;
@@ -494,24 +379,18 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** BufferView is GLTF_UNDEFINED_INDEX.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>BufferView is GLTF_UNDEFINED_INDEX.</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "accessor.sparse.indices"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "accessor.sparse.indices"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "bufferView" holding the indices; required.)
-    /// <summary>The glTF "bufferView" holding the indices; required.</summary>
     [NeonProperty('bufferView'), glTFRequired]
     property BufferView: Integer read FBufferView write FBufferView;
 
     //** @abstract(The glTF "byteOffset" of the indices in the bufferView; 0 by default.)
-    /// <summary>The glTF "byteOffset" of the indices in the bufferView; 0 by default.</summary>
     [NeonProperty('byteOffset')]
     property ByteOffset: Int64 read FByteOffset write FByteOffset;
 
@@ -519,15 +398,11 @@ type
     //**
     //** One of GLTF_COMPONENT_UNSIGNED_BYTE, GLTF_COMPONENT_UNSIGNED_SHORT or
     //** GLTF_COMPONENT_UNSIGNED_INT.
-    /// <summary>The glTF "componentType" of the indices; required.</summary>
-    /// <remarks>One of GLTF_COMPONENT_UNSIGNED_BYTE, GLTF_COMPONENT_UNSIGNED_SHORT or
-    /// GLTF_COMPONENT_UNSIGNED_INT.</remarks>
     [NeonProperty('componentType'), glTFRequired]
     property ComponentType: Integer read FComponentType write FComponentType;
   end;
 
   //** @abstract(The replacement values of a sparse accessor.)
-  /// <summary>The replacement values of a sparse accessor.</summary>
   TglTFAccessorSparseValues = class(TglTFProperty)
   private
     FBufferView: Integer;
@@ -536,32 +411,24 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** BufferView is GLTF_UNDEFINED_INDEX.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>BufferView is GLTF_UNDEFINED_INDEX.</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "accessor.sparse.values"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "accessor.sparse.values"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "bufferView" holding the values; required.)
-    /// <summary>The glTF "bufferView" holding the values; required.</summary>
     [NeonProperty('bufferView'), glTFRequired]
     property BufferView: Integer read FBufferView write FBufferView;
 
     //** @abstract(The glTF "byteOffset" of the values in the bufferView; 0 by default.)
-    /// <summary>The glTF "byteOffset" of the values in the bufferView; 0 by default.</summary>
     [NeonProperty('byteOffset')]
     property ByteOffset: Int64 read FByteOffset write FByteOffset;
   end;
 
   //** @abstract(The glTF "sparse" storage of an accessor: values that replace some of its
   //** elements.)
-  /// <summary>The glTF "sparse" storage of an accessor: values that replace some of its
-  /// elements.</summary>
   TglTFAccessorSparse = class(TglTFProperty)
   private
     FCount: Integer;
@@ -573,43 +440,32 @@ type
     procedure Validate; override;
   public
     //** @abstract(Frees the object and its indices and values objects.)
-    /// <summary>Frees the object and its indices and values objects.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "accessor.sparse"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "accessor.sparse"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "count": how many elements are replaced; required, at least 1.)
-    /// <summary>The glTF "count": how many elements are replaced; required, at least
-    /// 1.</summary>
     [NeonProperty('count'), glTFRequired]
     property Count: Integer read FCount write FCount;
 
     //** @abstract(The glTF "indices": which elements are replaced; required.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "indices": which elements are replaced; required.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('indices'), glTFRequired]
     property Indices: TglTFAccessorSparseIndices read FIndices;
 
     //** @abstract(The glTF "values": the replacement values; required.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "values": the replacement values; required.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('values'), glTFRequired]
     property Values: TglTFAccessorSparseValues read FValues;
   end;
 
   //** @abstract(A glTF accessor: how to read typed elements, such as vertex positions, from a
   //** bufferView.)
-  /// <summary>A glTF accessor: how to read typed elements, such as vertex positions, from a
-  /// bufferView.</summary>
   TglTFAccessor = class(TglTFChildOfRootProperty)
   private
     FBufferView: Integer;
@@ -630,70 +486,49 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** BufferView is GLTF_UNDEFINED_INDEX.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>BufferView is GLTF_UNDEFINED_INDEX.</remarks>
     constructor Create; override;
 
     //** @abstract(Frees the object and its sparse object.)
-    /// <summary>Frees the object and its sparse object.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "accessor"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "accessor"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(Returns how many components each element has.)
     //**
     //** @returns(1 for SCALAR, 2 to 4 for VEC2 to VEC4, 4, 9 or 16 for MAT2 to MAT4; 0 for an
     //** unknown type.)
-    /// <summary>Returns how many components each element has.</summary>
-    /// <returns>1 for SCALAR, 2 to 4 for VEC2 to VEC4, 4, 9 or 16 for MAT2 to MAT4; 0 for an
-    /// unknown type.</returns>
     function ComponentCount: Integer;
 
     //** @abstract(Returns the size in bytes of one component.)
     //**
     //** @returns(1, 2 or 4; 0 for an unknown component type.)
-    /// <summary>Returns the size in bytes of one component.</summary>
-    /// <returns>1, 2 or 4; 0 for an unknown component type.</returns>
     function ComponentByteSize: Integer;
 
     //** @abstract(The glTF "bufferView" holding the data; GLTF_UNDEFINED_INDEX when not set.)
     //**
     //** Without a bufferView every element is zero unless replaced by sparse values.
-    /// <summary>The glTF "bufferView" holding the data; GLTF_UNDEFINED_INDEX when not
-    /// set.</summary>
-    /// <remarks>Without a bufferView every element is zero unless replaced by sparse
-    /// values.</remarks>
     [NeonProperty('bufferView')]
     property BufferView: Integer read FBufferView write FBufferView;
 
     //** @abstract(The glTF "byteOffset" of the data in the bufferView; 0 by default.)
-    /// <summary>The glTF "byteOffset" of the data in the bufferView; 0 by default.</summary>
     [NeonProperty('byteOffset')]
     property ByteOffset: Int64 read FByteOffset write FByteOffset;
 
     //** @abstract(The glTF "componentType": the type of each component; required.)
     //**
     //** One of the GLTF_COMPONENT_* constants.
-    /// <summary>The glTF "componentType": the type of each component; required.</summary>
-    /// <remarks>One of the GLTF_COMPONENT_* constants.</remarks>
     [NeonProperty('componentType'), glTFRequired]
     property ComponentType: Integer read FComponentType write FComponentType;
 
     //** @abstract(The glTF "normalized": whether integer components map to the range 0..1 or
     //** -1..1; False by default.)
-    /// <summary>The glTF "normalized": whether integer components map to the range 0..1 or
-    /// -1..1; False by default.</summary>
     [NeonProperty('normalized')]
     property Normalized: Boolean read FNormalized write FNormalized;
 
     //** @abstract(The glTF "count": how many elements the accessor has; required, at least 1.)
-    /// <summary>The glTF "count": how many elements the accessor has; required, at least
-    /// 1.</summary>
     [NeonProperty('count'), glTFRequired]
     property Count: Integer read FCount write FCount;
 
@@ -701,40 +536,28 @@ type
     //**
     //** One of "SCALAR", "VEC2", "VEC3", "VEC4", "MAT2", "MAT3" or "MAT4". See
     //** @link(AccessorType) for a typed view.
-    /// <summary>The glTF "type": the shape of each element; required.</summary>
-    /// <remarks>One of "SCALAR", "VEC2", "VEC3", "VEC4", "MAT2", "MAT3" or "MAT4". See
-    /// <see cref="AccessorType"/> for a typed view.</remarks>
     [NeonProperty('type'), glTFRequired]
     property &Type: string read FType write FType;
 
     //** @abstract(The glTF "max": the largest value of each component; empty when not set.)
     //**
     //** When set it has @link(ComponentCount) values.
-    /// <summary>The glTF "max": the largest value of each component; empty when not
-    /// set.</summary>
-    /// <remarks>When set it has <see cref="ComponentCount"/> values.</remarks>
     [NeonProperty('max')]
     property Max: TArray<Double> read FMax write FMax;
 
     //** @abstract(The glTF "min": the smallest value of each component; empty when not set.)
     //**
     //** When set it has @link(ComponentCount) values.
-    /// <summary>The glTF "min": the smallest value of each component; empty when not
-    /// set.</summary>
-    /// <remarks>When set it has <see cref="ComponentCount"/> values.</remarks>
     [NeonProperty('min')]
     property Min: TArray<Double> read FMin write FMin;
 
     //** @abstract(The glTF "sparse" storage; nil when not set.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "sparse" storage; nil when not set.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('sparse')]
     property Sparse: TglTFAccessorSparse read FSparse;
 
     //** @abstract(The "type" as an enumeration; atUnknown for any other string.)
-    /// <summary>The "type" as an enumeration; atUnknown for any other string.</summary>
     property AccessorType: TglTFAccessorType read GetAccessorType;
   end;
 
@@ -743,8 +566,6 @@ type
   {$REGION 'animation'}
 
   //** @abstract(The glTF "target" of an animation channel: the node and property it animates.)
-  /// <summary>The glTF "target" of an animation channel: the node and property it
-  /// animates.</summary>
   TglTFAnimationChannelTarget = class(TglTFProperty)
   private
     FNode: Integer;
@@ -754,21 +575,15 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** Node is GLTF_UNDEFINED_INDEX.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Node is GLTF_UNDEFINED_INDEX.</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "animation.channel.target"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "animation.channel.target"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "node": index in @code(TglTF.Nodes) of the animated node;
     //** GLTF_UNDEFINED_INDEX when not set.)
-    /// <summary>The glTF "node": index in <c>TglTF.Nodes</c> of the animated node;
-    /// GLTF_UNDEFINED_INDEX when not set.</summary>
     [NeonProperty('node')]
     property Node: Integer read FNode write FNode;
 
@@ -776,20 +591,14 @@ type
     //**
     //** One of "translation", "rotation", "scale" or "weights". See @link(AnimationPath) for a
     //** typed view.
-    /// <summary>The glTF "path": which property is animated; required.</summary>
-    /// <remarks>One of "translation", "rotation", "scale" or "weights". See
-    /// <see cref="AnimationPath"/> for a typed view.</remarks>
     [NeonProperty('path'), glTFRequired]
     property Path: string read FPath write FPath;
 
     //** @abstract(The "path" as an enumeration; apUnknown for any other string.)
-    /// <summary>The "path" as an enumeration; apUnknown for any other string.</summary>
     property AnimationPath: TglTFAnimationPath read GetAnimationPath;
   end;
 
   //** @abstract(A glTF animation channel: connects a sampler to the property it animates.)
-  /// <summary>A glTF animation channel: connects a sampler to the property it
-  /// animates.</summary>
   TglTFAnimationChannel = class(TglTFProperty)
   private
     FSampler: Integer;
@@ -799,34 +608,26 @@ type
     procedure WriteChildren(AJSON: TJSONObject); override;
   public
     //** @abstract(Frees the object and its target.)
-    /// <summary>Frees the object and its target.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "animation.channel"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "animation.channel"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "sampler": index in the animation's Samplers; required.)
-    /// <summary>The glTF "sampler": index in the animation's Samplers; required.</summary>
     [NeonProperty('sampler'), glTFRequired]
     property Sampler: Integer read FSampler write FSampler;
 
     //** @abstract(The glTF "target": the node and property animated; required.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "target": the node and property animated; required.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('target'), glTFRequired]
     property Target: TglTFAnimationChannelTarget read FTarget;
   end;
 
   //** @abstract(A glTF animation sampler: key frame times, values and how to interpolate
   //** between them.)
-  /// <summary>A glTF animation sampler: key frame times, values and how to interpolate between
-  /// them.</summary>
   TglTFAnimationSampler = class(TglTFProperty)
   private
     FInput: Integer;
@@ -837,45 +638,32 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** Interpolation is "LINEAR".
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Interpolation is "LINEAR".</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "animation.sampler"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "animation.sampler"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "input": index in @code(TglTF.Accessors) of the key frame times;
     //** required.)
-    /// <summary>The glTF "input": index in <c>TglTF.Accessors</c> of the key frame times;
-    /// required.</summary>
     [NeonProperty('input'), glTFRequired]
     property Input: Integer read FInput write FInput;
 
     //** @abstract(The glTF "interpolation": "LINEAR" @(the default@), "STEP" or "CUBICSPLINE".)
-    /// <summary>The glTF "interpolation": "LINEAR" (the default), "STEP" or
-    /// "CUBICSPLINE".</summary>
     [NeonProperty('interpolation')]
     property Interpolation: string read FInterpolation write FInterpolation;
 
     //** @abstract(The glTF "output": index in @code(TglTF.Accessors) of the key frame values;
     //** required.)
-    /// <summary>The glTF "output": index in <c>TglTF.Accessors</c> of the key frame values;
-    /// required.</summary>
     [NeonProperty('output'), glTFRequired]
     property Output: Integer read FOutput write FOutput;
 
     //** @abstract(The "interpolation" as an enumeration; ipUnknown for any other string.)
-    /// <summary>The "interpolation" as an enumeration; ipUnknown for any other
-    /// string.</summary>
     property InterpolationKind: TglTFInterpolation read GetInterpolationKind;
   end;
 
   //** @abstract(A glTF animation: a set of channels and the samplers they use.)
-  /// <summary>A glTF animation: a set of channels and the samplers they use.</summary>
   TglTFAnimation = class(TglTFChildOfRootProperty)
   private
     FChannels: TglTFList<TglTFAnimationChannel>;
@@ -890,35 +678,25 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** Channels and Samplers are empty lists and @link(ExportOnSave) is True.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Channels and Samplers are empty lists and <see cref="ExportOnSave"/> is
-    /// True.</remarks>
     constructor Create; override;
 
     //** @abstract(Frees the object and its channels and samplers.)
-    /// <summary>Frees the object and its channels and samplers.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "animation"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "animation"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "channels"; required, at least one.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "channels"; required, at least one.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('channels'), glTFRequired]
     property Channels: TglTFList<TglTFAnimationChannel> read FChannels;
 
     //** @abstract(The glTF "samplers"; required, at least one.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "samplers"; required, at least one.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('samplers'), glTFRequired]
     property Samplers: TglTFList<TglTFAnimationSampler> read FSamplers;
 
@@ -927,10 +705,6 @@ type
     //** True by default. When False, TglTFDocument leaves the animation out of the saved
     //** file, together with the accessors, bufferViews and buffer bytes only it used; the
     //** document itself keeps them. A save choice, not part of the glTF JSON.
-    /// <summary>Whether a save writes this animation.</summary>
-    /// <remarks>True by default. When False, TglTFDocument leaves the animation out of the
-    /// saved file, together with the accessors, bufferViews and buffer bytes only it used; the
-    /// document itself keeps them. A save choice, not part of the glTF JSON.</remarks>
     [NeonIgnore]
     property ExportOnSave: Boolean read FExportOnSave write FExportOnSave;
 
@@ -938,10 +712,6 @@ type
     //** name of the file it was imported from.)
     //**
     //** Set by TglTFAnimationImporter. For display only; not part of the glTF JSON.
-    /// <summary>Where the animation came from: empty for the loaded model, otherwise the name
-    /// of the file it was imported from.</summary>
-    /// <remarks>Set by TglTFAnimationImporter. For display only; not part of the glTF
-    /// JSON.</remarks>
     [NeonIgnore]
     property Origin: string read FOrigin write FOrigin;
   end;
@@ -951,7 +721,6 @@ type
   {$REGION 'camera'}
 
   //** @abstract(The orthographic projection of a camera.)
-  /// <summary>The orthographic projection of a camera.</summary>
   TglTFCameraOrthographic = class(TglTFProperty)
   private
     FXMag: Double;
@@ -962,33 +731,26 @@ type
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "camera.orthographic"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "camera.orthographic"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "xmag": horizontal magnification of the view; required.)
-    /// <summary>The glTF "xmag": horizontal magnification of the view; required.</summary>
     [NeonProperty('xmag'), glTFRequired]
     property XMag: Double read FXMag write FXMag;
 
     //** @abstract(The glTF "ymag": vertical magnification of the view; required.)
-    /// <summary>The glTF "ymag": vertical magnification of the view; required.</summary>
     [NeonProperty('ymag'), glTFRequired]
     property YMag: Double read FYMag write FYMag;
 
     //** @abstract(The glTF "zfar": distance to the far clipping plane; required.)
-    /// <summary>The glTF "zfar": distance to the far clipping plane; required.</summary>
     [NeonProperty('zfar'), glTFRequired]
     property ZFar: Double read FZFar write FZFar;
 
     //** @abstract(The glTF "znear": distance to the near clipping plane; required.)
-    /// <summary>The glTF "znear": distance to the near clipping plane; required.</summary>
     [NeonProperty('znear'), glTFRequired]
     property ZNear: Double read FZNear write FZNear;
   end;
 
   //** @abstract(The perspective projection of a camera.)
-  /// <summary>The perspective projection of a camera.</summary>
   TglTFCameraPerspective = class(TglTFProperty)
   private
     FAspectRatio: Double;
@@ -999,33 +761,25 @@ type
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "camera.perspective"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "camera.perspective"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "aspectRatio": width divided by height; 0 when not set.)
     //**
     //** When not set, use the aspect ratio of the viewport.
-    /// <summary>The glTF "aspectRatio": width divided by height; 0 when not set.</summary>
-    /// <remarks>When not set, use the aspect ratio of the viewport.</remarks>
     [NeonProperty('aspectRatio')]
     property AspectRatio: Double read FAspectRatio write FAspectRatio;
 
     //** @abstract(The glTF "yfov": vertical field of view in radians; required.)
-    /// <summary>The glTF "yfov": vertical field of view in radians; required.</summary>
     [NeonProperty('yfov'), glTFRequired]
     property YFov: Double read FYFov write FYFov;
 
     //** @abstract(The glTF "zfar": distance to the far clipping plane; 0 when not set.)
     //**
     //** When not set, the projection is infinite.
-    /// <summary>The glTF "zfar": distance to the far clipping plane; 0 when not set.</summary>
-    /// <remarks>When not set, the projection is infinite.</remarks>
     [NeonProperty('zfar')]
     property ZFar: Double read FZFar write FZFar;
 
     //** @abstract(The glTF "znear": distance to the near clipping plane; required.)
-    /// <summary>The glTF "znear": distance to the near clipping plane; required.</summary>
     [NeonProperty('znear'), glTFRequired]
     property ZNear: Double read FZNear write FZNear;
   end;
@@ -1034,9 +788,6 @@ type
   //**
   //** The object matching @link(Type) is required: Perspective for "perspective", Orthographic
   //** for "orthographic".
-  /// <summary>A glTF camera: a perspective or orthographic projection.</summary>
-  /// <remarks>The object matching <see cref="Type"/> is required: Perspective for
-  /// "perspective", Orthographic for "orthographic".</remarks>
   TglTFCamera = class(TglTFChildOfRootProperty)
   private
     FOrthographic: TglTFCameraOrthographic;
@@ -1049,42 +800,32 @@ type
     procedure Validate; override;
   public
     //** @abstract(Frees the object and its projection objects.)
-    /// <summary>Frees the object and its projection objects.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "camera"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "camera"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "orthographic" projection; nil when not set.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "orthographic" projection; nil when not set.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('orthographic')]
     property Orthographic: TglTFCameraOrthographic read FOrthographic;
 
     //** @abstract(The glTF "perspective" projection; nil when not set.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "perspective" projection; nil when not set.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('perspective')]
     property Perspective: TglTFCameraPerspective read FPerspective;
 
     //** @abstract(The glTF "type": "perspective" or "orthographic"; required.)
     //**
     //** See @link(CameraType) for a typed view.
-    /// <summary>The glTF "type": "perspective" or "orthographic"; required.</summary>
-    /// <remarks>See <see cref="CameraType"/> for a typed view.</remarks>
     [NeonProperty('type'), glTFRequired]
     property &Type: string read FType write FType;
 
     //** @abstract(The "type" as an enumeration; ctUnknown for any other string.)
-    /// <summary>The "type" as an enumeration; ctUnknown for any other string.</summary>
     property CameraType: TglTFCameraType read GetCameraType;
   end;
 
@@ -1096,11 +837,6 @@ type
   //**
   //** The bytes of the image file are in @link(Data). Whether a save stores them inside
   //** the glTF file or as a separate file is decided by @link(Embed).
-  /// <summary>A glTF image: texture data stored in a file, a data URI or a
-  /// bufferView.</summary>
-  /// <remarks>The bytes of the image file are in <see cref="Data"/>. Whether a save stores
-  /// them inside the glTF file or as a separate file is decided by
-  /// <see cref="Embed"/>.</remarks>
   TglTFImage = class(TglTFChildOfRootProperty)
   private
     FUri: string;
@@ -1116,23 +852,16 @@ type
     //** @abstract(Creates an image with no uri and no bufferView.)
     //**
     //** @link(BufferView) is GLTF_UNDEFINED_INDEX and @link(Embed) is False.
-    /// <summary>Creates an image with no uri and no bufferView.</summary>
-    /// <remarks><see cref="BufferView"/> is GLTF_UNDEFINED_INDEX and <see cref="Embed"/> is
-    /// False.</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "image"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "image"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(Tells whether the uri holds the image itself as a "data:" URI.)
     //**
     //** @returns(True for a data URI, False for a file reference or no uri.)
-    /// <summary>Tells whether the uri holds the image itself as a "data:" URI.</summary>
-    /// <returns>True for a data URI, False for a file reference or no uri.</returns>
     function IsDataUri: Boolean;
 
     //** @abstract(Returns the best known MIME type of the image.)
@@ -1141,21 +870,12 @@ type
     //** uri, then the signature at the start of @link(Data) (PNG, JPEG, WebP).
     //**
     //** @returns(For example @code(image/png); empty when the type cannot be told.)
-    /// <summary>Returns the best known MIME type of the image.</summary>
-    /// <returns>For example <c>image/png</c>; empty when the type cannot be told.</returns>
-    /// <remarks>Tries, in order: <see cref="MimeType"/>, the data URI's type, the file
-    /// extension of the uri, then the signature at the start of <see cref="Data"/> (PNG,
-    /// JPEG, WebP).</remarks>
     function EffectiveMimeType: string;
 
     //** @abstract(The bytes of the image file; nil when the file is missing.)
     //**
     //** Filled by TglTFDocument when loading, from a data URI, an external file or a copy
     //** of its bufferView, and used when saving. Not part of the glTF JSON.
-    /// <summary>The bytes of the image file; nil when the file is missing.</summary>
-    /// <remarks>Filled by TglTFDocument when loading, from a data URI, an external file or
-    /// a copy of its bufferView, and used when saving. Not part of the glTF
-    /// JSON.</remarks>
     [NeonIgnore]
     property Data: TBytes read FData write FData;
 
@@ -1169,14 +889,6 @@ type
     //** so its bytes are not stored twice. Loading sets it to whether the image was already
     //** inside the file @(a data URI or a bufferView@). A save choice, not part of the glTF
     //** JSON.
-    /// <summary>Whether a save stores the image inside the glTF file, when the save lets each
-    /// image decide.</summary>
-    /// <remarks>Only used by a save whose ImageSaveMode is ismPerImage; by default the format
-    /// decides (see TglTFSaveOptions in glTF.Document). True stores it inside the saved file: in the BIN chunk for GLB, in a base64
-    /// data-URI buffer for glTF. False writes it as a separate file next to the saved file
-    /// only; an image that was inside a buffer is taken out of it, so its bytes are not stored
-    /// twice. Loading sets it to whether the image was already inside the file (a data URI or a
-    /// bufferView). A save choice, not part of the glTF JSON.</remarks>
     [NeonIgnore]
     property Embed: Boolean read FEmbed write FEmbed;
 
@@ -1190,15 +902,6 @@ type
     //** models can share a common texture folder. When False @(the default@), saving never
     //** overwrites a different file: the image gets a unique name instead. A save choice, not
     //** part of the glTF JSON.
-    /// <summary>Whether the image file may be shared with other models when saved as a separate
-    /// file.</summary>
-    /// <remarks>Only used when <see cref="Embed"/> is False. When True and a file already
-    /// exists where the image is to be saved, that file is used as it is: it is neither
-    /// overwritten nor renamed, even if its bytes differ, as other models rely on it. A
-    /// relative uri that leads outside the output folder, such as "../textures/wood.png", is
-    /// kept, so that models can share a common texture folder. When False (the default), saving
-    /// never overwrites a different file: the image gets a unique name instead. A save choice,
-    /// not part of the glTF JSON.</remarks>
     [NeonIgnore]
     property Shared: Boolean read FShared write FShared;
 
@@ -1208,42 +911,28 @@ type
     //** Set when the image is loaded from an external file, or from a file found later with
     //** TglTFDocument.SupplyResourceFile. Saving copies from it when the image must be a
     //** separate file and its data is not loaded. Not part of the glTF JSON.
-    /// <summary>The file <see cref="Data"/> was read from; empty for an image that was
-    /// inside the glTF.</summary>
-    /// <remarks>Set when the image is loaded from an external file, or from a file found
-    /// later with TglTFDocument.SupplyResourceFile. Saving copies from it when the image
-    /// must be a separate file and its data is not loaded. Not part of the glTF
-    /// JSON.</remarks>
     [NeonIgnore]
     property SourceFile: string read FSourceFile write FSourceFile;
 
     //** @abstract(The glTF "uri": a file path relative to the glTF, or a data URI.)
     //**
     //** Empty when the image is in a bufferView.
-    /// <summary>The glTF "uri": a file path relative to the glTF, or a data URI.</summary>
-    /// <remarks>Empty when the image is in a bufferView.</remarks>
     [NeonProperty('uri')]
     property Uri: string read FUri write FUri;
 
     //** @abstract(The glTF "mimeType", for example @code(image/png) or @code(image/jpeg).)
     //**
     //** Required when the image is in a bufferView.
-    /// <summary>The glTF "mimeType", for example <c>image/png</c> or
-    /// <c>image/jpeg</c>.</summary>
-    /// <remarks>Required when the image is in a bufferView.</remarks>
     [NeonProperty('mimeType')]
     property MimeType: string read FMimeType write FMimeType;
 
     //** @abstract(The glTF "bufferView" holding the image; GLTF_UNDEFINED_INDEX when it
     //** has none.)
-    /// <summary>The glTF "bufferView" holding the image; GLTF_UNDEFINED_INDEX when it has
-    /// none.</summary>
     [NeonProperty('bufferView')]
     property BufferView: Integer read FBufferView write FBufferView;
   end;
 
   //** @abstract(A glTF sampler: texture filtering and wrapping.)
-  /// <summary>A glTF sampler: texture filtering and wrapping.</summary>
   TglTFSampler = class(TglTFChildOfRootProperty)
   private
     FMagFilter: Integer;
@@ -1254,46 +943,35 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** WrapS and WrapT are GLTF_WRAP_REPEAT; the filters are 0 @(not set@).
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>WrapS and WrapT are GLTF_WRAP_REPEAT; the filters are 0 (not set).</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "sampler"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "sampler"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "magFilter": filter for magnification; 0 when not set.)
     //**
     //** GLTF_FILTER_NEAREST or GLTF_FILTER_LINEAR.
-    /// <summary>The glTF "magFilter": filter for magnification; 0 when not set.</summary>
-    /// <remarks>GLTF_FILTER_NEAREST or GLTF_FILTER_LINEAR.</remarks>
     [NeonProperty('magFilter')]
     property MagFilter: Integer read FMagFilter write FMagFilter;
 
     //** @abstract(The glTF "minFilter": filter for minification; 0 when not set.)
     //**
     //** One of the GLTF_FILTER_* constants.
-    /// <summary>The glTF "minFilter": filter for minification; 0 when not set.</summary>
-    /// <remarks>One of the GLTF_FILTER_* constants.</remarks>
     [NeonProperty('minFilter')]
     property MinFilter: Integer read FMinFilter write FMinFilter;
 
     //** @abstract(The glTF "wrapS": wrapping along U; GLTF_WRAP_REPEAT by default.)
-    /// <summary>The glTF "wrapS": wrapping along U; GLTF_WRAP_REPEAT by default.</summary>
     [NeonProperty('wrapS')]
     property WrapS: Integer read FWrapS write FWrapS;
 
     //** @abstract(The glTF "wrapT": wrapping along V; GLTF_WRAP_REPEAT by default.)
-    /// <summary>The glTF "wrapT": wrapping along V; GLTF_WRAP_REPEAT by default.</summary>
     [NeonProperty('wrapT')]
     property WrapT: Integer read FWrapT write FWrapT;
   end;
 
   //** @abstract(A glTF texture: an image combined with a sampler.)
-  /// <summary>A glTF texture: an image combined with a sampler.</summary>
   TglTFTexture = class(TglTFChildOfRootProperty)
   private
     FSampler: Integer;
@@ -1302,24 +980,17 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** Sampler and Source are GLTF_UNDEFINED_INDEX.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Sampler and Source are GLTF_UNDEFINED_INDEX.</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "texture"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "texture"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "sampler": index in @code(TglTF.Samplers); GLTF_UNDEFINED_INDEX when
     //** not set.)
     //**
     //** Without a sampler, use repeat wrapping and automatic filtering.
-    /// <summary>The glTF "sampler": index in <c>TglTF.Samplers</c>; GLTF_UNDEFINED_INDEX when
-    /// not set.</summary>
-    /// <remarks>Without a sampler, use repeat wrapping and automatic filtering.</remarks>
     [NeonProperty('sampler')]
     property Sampler: Integer read FSampler write FSampler;
 
@@ -1327,9 +998,6 @@ type
     //** not set.)
     //**
     //** An extension may supply the image instead.
-    /// <summary>The glTF "source": index in <c>TglTF.Images</c>; GLTF_UNDEFINED_INDEX when not
-    /// set.</summary>
-    /// <remarks>An extension may supply the image instead.</remarks>
     [NeonProperty('source')]
     property Source: Integer read FSource write FSource;
   end;
@@ -1339,7 +1007,6 @@ type
   {$REGION 'material'}
 
   //** @abstract(A reference from a material to a texture.)
-  /// <summary>A reference from a material to a texture.</summary>
   TglTFTextureInfo = class(TglTFProperty)
   private
     FIndex: Integer;
@@ -1348,25 +1015,19 @@ type
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "textureInfo"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "textureInfo"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "index": index in @code(TglTF.Textures); required.)
-    /// <summary>The glTF "index": index in <c>TglTF.Textures</c>; required.</summary>
     [NeonProperty('index'), glTFRequired]
     property Index: Integer read FIndex write FIndex;
 
     //** @abstract(The glTF "texCoord": which TEXCOORD_n attribute gives the coordinates; 0 by
     //** default.)
-    /// <summary>The glTF "texCoord": which TEXCOORD_n attribute gives the coordinates; 0 by
-    /// default.</summary>
     [NeonProperty('texCoord')]
     property TexCoord: Integer read FTexCoord write FTexCoord;
   end;
 
   //** @abstract(A reference to a normal map, with its scale.)
-  /// <summary>A reference to a normal map, with its scale.</summary>
   TglTFNormalTextureInfo = class(TglTFTextureInfo)
   private
     FScale: Double;
@@ -1374,26 +1035,19 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** Scale is 1.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Scale is 1.</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "material.normalTextureInfo"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "material.normalTextureInfo"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "scale" applied to the normal vectors' X and Y; 1 by default.)
-    /// <summary>The glTF "scale" applied to the normal vectors' X and Y; 1 by
-    /// default.</summary>
     [NeonProperty('scale')]
     property Scale: Double read FScale write FScale;
   end;
 
   //** @abstract(A reference to an occlusion map, with its strength.)
-  /// <summary>A reference to an occlusion map, with its strength.</summary>
   TglTFOcclusionTextureInfo = class(TglTFTextureInfo)
   private
     FStrength: Double;
@@ -1401,25 +1055,19 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** Strength is 1.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Strength is 1.</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "material.occlusionTextureInfo"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "material.occlusionTextureInfo"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "strength" of the occlusion, 0 to 1; 1 by default.)
-    /// <summary>The glTF "strength" of the occlusion, 0 to 1; 1 by default.</summary>
     [NeonProperty('strength')]
     property Strength: Double read FStrength write FStrength;
   end;
 
   //** @abstract(The metallic-roughness parameters of a material.)
-  /// <summary>The metallic-roughness parameters of a material.</summary>
   TglTFPbrMetallicRoughness = class(TglTFProperty)
   private
     FBaseColorFactor: TArray<Double>;
@@ -1435,47 +1083,34 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** BaseColorFactor is [1, 1, 1, 1]; MetallicFactor and RoughnessFactor are 1.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>BaseColorFactor is [1, 1, 1, 1]; MetallicFactor and RoughnessFactor are
-    /// 1.</remarks>
     constructor Create; override;
 
     //** @abstract(Frees the object and its texture references.)
-    /// <summary>Frees the object and its texture references.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "material.pbrMetallicRoughness"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "material.pbrMetallicRoughness"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "baseColorFactor": linear RGBA multiplier of the base colour; [1, 1,
     //** 1, 1] by default.)
     //**
     //** Always 4 values.
-    /// <summary>The glTF "baseColorFactor": linear RGBA multiplier of the base colour; [1, 1,
-    /// 1, 1] by default.</summary>
-    /// <remarks>Always 4 values.</remarks>
     [NeonProperty('baseColorFactor')]
     property BaseColorFactor: TArray<Double> read FBaseColorFactor write FBaseColorFactor;
 
     //** @abstract(The glTF "baseColorTexture"; nil when not set.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "baseColorTexture"; nil when not set.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('baseColorTexture')]
     property BaseColorTexture: TglTFTextureInfo read FBaseColorTexture;
 
     //** @abstract(The glTF "metallicFactor", 0 to 1; 1 by default.)
-    /// <summary>The glTF "metallicFactor", 0 to 1; 1 by default.</summary>
     [NeonProperty('metallicFactor')]
     property MetallicFactor: Double read FMetallicFactor write FMetallicFactor;
 
     //** @abstract(The glTF "roughnessFactor", 0 to 1; 1 by default.)
-    /// <summary>The glTF "roughnessFactor", 0 to 1; 1 by default.</summary>
     [NeonProperty('roughnessFactor')]
     property RoughnessFactor: Double read FRoughnessFactor write FRoughnessFactor;
 
@@ -1483,15 +1118,11 @@ type
     //**
     //** Metalness is read from the blue channel and roughness from the green channel. Owned by
     //** this object.
-    /// <summary>The glTF "metallicRoughnessTexture"; nil when not set.</summary>
-    /// <remarks>Metalness is read from the blue channel and roughness from the green channel.
-    /// Owned by this object.</remarks>
     [NeonProperty('metallicRoughnessTexture')]
     property MetallicRoughnessTexture: TglTFTextureInfo read FMetallicRoughnessTexture;
   end;
 
   //** @abstract(A glTF material: how a surface looks.)
-  /// <summary>A glTF material: how a surface looks.</summary>
   TglTFMaterial = class(TglTFChildOfRootProperty)
   private
     FPbrMetallicRoughness: TglTFPbrMetallicRoughness;
@@ -1511,86 +1142,62 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** EmissiveFactor is [0, 0, 0], AlphaMode "OPAQUE", AlphaCutoff 0.5 and DoubleSided False.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>EmissiveFactor is [0, 0, 0], AlphaMode "OPAQUE", AlphaCutoff 0.5 and
-    /// DoubleSided False.</remarks>
     constructor Create; override;
 
     //** @abstract(Frees the object and its nested parameter and texture objects.)
-    /// <summary>Frees the object and its nested parameter and texture objects.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "material"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "material"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "pbrMetallicRoughness" parameters; nil when not set.)
     //**
     //** When nil, the spec defaults apply. Owned by this object.
-    /// <summary>The glTF "pbrMetallicRoughness" parameters; nil when not set.</summary>
-    /// <remarks>When nil, the spec defaults apply. Owned by this object.</remarks>
     [NeonProperty('pbrMetallicRoughness')]
     property PbrMetallicRoughness: TglTFPbrMetallicRoughness read FPbrMetallicRoughness;
 
     //** @abstract(The glTF "normalTexture"; nil when not set.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "normalTexture"; nil when not set.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('normalTexture')]
     property NormalTexture: TglTFNormalTextureInfo read FNormalTexture;
 
     //** @abstract(The glTF "occlusionTexture"; nil when not set.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "occlusionTexture"; nil when not set.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('occlusionTexture')]
     property OcclusionTexture: TglTFOcclusionTextureInfo read FOcclusionTexture;
 
     //** @abstract(The glTF "emissiveTexture"; nil when not set.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "emissiveTexture"; nil when not set.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('emissiveTexture')]
     property EmissiveTexture: TglTFTextureInfo read FEmissiveTexture;
 
     //** @abstract(The glTF "emissiveFactor": linear RGB emitted light; [0, 0, 0] by default.)
     //**
     //** Always 3 values.
-    /// <summary>The glTF "emissiveFactor": linear RGB emitted light; [0, 0, 0] by
-    /// default.</summary>
-    /// <remarks>Always 3 values.</remarks>
     [NeonProperty('emissiveFactor')]
     property EmissiveFactor: TArray<Double> read FEmissiveFactor write FEmissiveFactor;
 
     //** @abstract(The glTF "alphaMode": "OPAQUE" @(the default@), "MASK" or "BLEND".)
     //**
     //** See @link(AlphaModeKind) for a typed view.
-    /// <summary>The glTF "alphaMode": "OPAQUE" (the default), "MASK" or "BLEND".</summary>
-    /// <remarks>See <see cref="AlphaModeKind"/> for a typed view.</remarks>
     [NeonProperty('alphaMode')]
     property AlphaMode: string read FAlphaMode write FAlphaMode;
 
     //** @abstract(The glTF "alphaCutoff": alpha below which a MASK material is transparent; 0.5
     //** by default.)
-    /// <summary>The glTF "alphaCutoff": alpha below which a MASK material is transparent; 0.5
-    /// by default.</summary>
     [NeonProperty('alphaCutoff')]
     property AlphaCutoff: Double read FAlphaCutoff write FAlphaCutoff;
 
     //** @abstract(The glTF "doubleSided": whether back faces are drawn; False by default.)
-    /// <summary>The glTF "doubleSided": whether back faces are drawn; False by
-    /// default.</summary>
     [NeonProperty('doubleSided')]
     property DoubleSided: Boolean read FDoubleSided write FDoubleSided;
 
     //** @abstract(The "alphaMode" as an enumeration; amUnknown for any other string.)
-    /// <summary>The "alphaMode" as an enumeration; amUnknown for any other string.</summary>
     property AlphaModeKind: TglTFAlphaMode read GetAlphaModeKind;
   end;
 
@@ -1599,7 +1206,6 @@ type
   {$REGION 'mesh'}
 
   //** @abstract(A glTF mesh primitive: geometry drawn with one material.)
-  /// <summary>A glTF mesh primitive: geometry drawn with one material.</summary>
   TglTFMeshPrimitive = class(TglTFProperty)
   private
     FAttributes: TglTFAttributeMap;
@@ -1617,20 +1223,14 @@ type
     //**
     //** Indices and Material are GLTF_UNDEFINED_INDEX and Mode is GLTF_MODE_TRIANGLES;
     //** Attributes and Targets are empty.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Indices and Material are GLTF_UNDEFINED_INDEX and Mode is GLTF_MODE_TRIANGLES;
-    /// Attributes and Targets are empty.</remarks>
     constructor Create; override;
 
     //** @abstract(Frees the object and its attribute maps.)
-    /// <summary>Frees the object and its attribute maps.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "mesh.primitive"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "mesh.primitive"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(Tells whether the primitive has an attribute.)
@@ -1638,9 +1238,6 @@ type
     //** @param(ASemantic Attribute name, for example POSITION; case-sensitive.)
     //**
     //** @returns(True when the attribute is present.)
-    /// <summary>Tells whether the primitive has an attribute.</summary>
-    /// <param name="ASemantic">Attribute name, for example POSITION; case-sensitive.</param>
-    /// <returns>True when the attribute is present.</returns>
     function HasAttribute(const ASemantic: string): Boolean;
 
     //** @abstract(Returns the accessor index of an attribute.)
@@ -1649,19 +1246,12 @@ type
     //**
     //** @returns(Index in @code(TglTF.Accessors); GLTF_UNDEFINED_INDEX when the attribute is
     //** absent.)
-    /// <summary>Returns the accessor index of an attribute.</summary>
-    /// <param name="ASemantic">Attribute name, for example POSITION; case-sensitive.</param>
-    /// <returns>Index in <c>TglTF.Accessors</c>; GLTF_UNDEFINED_INDEX when the attribute is
-    /// absent.</returns>
     function GetAttribute(const ASemantic: string): Integer;
 
     //** @abstract(The glTF "attributes": attribute name to accessor index; required, at least
     //** one.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "attributes": attribute name to accessor index; required, at least
-    /// one.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('attributes'), glTFRequired]
     property Attributes: TglTFAttributeMap read FAttributes;
 
@@ -1669,9 +1259,6 @@ type
     //** GLTF_UNDEFINED_INDEX when not set.)
     //**
     //** When not set, the geometry is not indexed.
-    /// <summary>The glTF "indices": index in <c>TglTF.Accessors</c> of the vertex indices;
-    /// GLTF_UNDEFINED_INDEX when not set.</summary>
-    /// <remarks>When not set, the geometry is not indexed.</remarks>
     [NeonProperty('indices')]
     property Indices: Integer read FIndices write FIndices;
 
@@ -1679,18 +1266,12 @@ type
     //** when not set.)
     //**
     //** When not set, the default material is used.
-    /// <summary>The glTF "material": index in <c>TglTF.Materials</c>; GLTF_UNDEFINED_INDEX when
-    /// not set.</summary>
-    /// <remarks>When not set, the default material is used.</remarks>
     [NeonProperty('material')]
     property Material: Integer read FMaterial write FMaterial;
 
     //** @abstract(The glTF "mode": the kind of primitive; GLTF_MODE_TRIANGLES by default.)
     //**
     //** One of the GLTF_MODE_* constants.
-    /// <summary>The glTF "mode": the kind of primitive; GLTF_MODE_TRIANGLES by
-    /// default.</summary>
-    /// <remarks>One of the GLTF_MODE_* constants.</remarks>
     [NeonProperty('mode')]
     property Mode: Integer read FMode write FMode;
 
@@ -1698,15 +1279,11 @@ type
     //** none.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "targets": the morph targets, each an attribute map; empty when
-    /// none.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('targets')]
     property Targets: TObjectList<TglTFAttributeMap> read FTargets;
   end;
 
   //** @abstract(A glTF mesh: a set of primitives drawn together.)
-  /// <summary>A glTF mesh: a set of primitives drawn together.</summary>
   TglTFMesh = class(TglTFChildOfRootProperty)
   private
     FPrimitives: TglTFList<TglTFMeshPrimitive>;
@@ -1719,31 +1296,23 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** Primitives is an empty list.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Primitives is an empty list.</remarks>
     constructor Create; override;
 
     //** @abstract(Frees the object and its primitives.)
-    /// <summary>Frees the object and its primitives.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "mesh"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "mesh"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "primitives"; required, at least one.)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "primitives"; required, at least one.</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('primitives'), glTFRequired]
     property Primitives: TglTFList<TglTFMeshPrimitive> read FPrimitives;
 
     //** @abstract(The glTF "weights": default morph target weights; empty when not set.)
-    /// <summary>The glTF "weights": default morph target weights; empty when not set.</summary>
     [NeonProperty('weights')]
     property Weights: TArray<Double> read FWeights write FWeights;
   end;
@@ -1756,9 +1325,6 @@ type
   //**
   //** The local transform is either @link(Matrix) or @link(Translation), @link(Rotation) and
   //** @link(Scale); see @link(HasMatrix).
-  /// <summary>A glTF node: an element of the scene hierarchy with a transform.</summary>
-  /// <remarks>The local transform is either <see cref="Matrix"/> or <see cref="Translation"/>,
-  /// <see cref="Rotation"/> and <see cref="Scale"/>; see <see cref="HasMatrix"/>.</remarks>
   TglTFNode = class(TglTFChildOfRootProperty)
   private
     FCamera: Integer;
@@ -1777,16 +1343,11 @@ type
     //**
     //** Camera, Skin and Mesh are GLTF_UNDEFINED_INDEX; Matrix is the identity, Rotation [0, 0,
     //** 0, 1], Scale [1, 1, 1] and Translation [0, 0, 0].
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Camera, Skin and Mesh are GLTF_UNDEFINED_INDEX; Matrix is the identity,
-    /// Rotation [0, 0, 0, 1], Scale [1, 1, 1] and Translation [0, 0, 0].</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "node"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "node"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(Tells whether the loaded node gave its transform as a matrix.)
@@ -1795,73 +1356,52 @@ type
     //**
     //** @returns(True when "matrix" was present; False when the transform is translation,
     //** rotation and scale.)
-    /// <summary>Tells whether the loaded node gave its transform as a matrix.</summary>
-    /// <returns>True when "matrix" was present; False when the transform is translation,
-    /// rotation and scale.</returns>
-    /// <remarks>Reflects the loaded JSON, not later changes.</remarks>
     function HasMatrix: Boolean;
 
     //** @abstract(The glTF "camera": index in @code(TglTF.Cameras); GLTF_UNDEFINED_INDEX when
     //** not set.)
-    /// <summary>The glTF "camera": index in <c>TglTF.Cameras</c>; GLTF_UNDEFINED_INDEX when not
-    /// set.</summary>
     [NeonProperty('camera')]
     property Camera: Integer read FCamera write FCamera;
 
     //** @abstract(The glTF "children": indices in @code(TglTF.Nodes) of the child nodes; empty
     //** when none.)
-    /// <summary>The glTF "children": indices in <c>TglTF.Nodes</c> of the child nodes; empty
-    /// when none.</summary>
     [NeonProperty('children')]
     property Children: TArray<Integer> read FChildren write FChildren;
 
     //** @abstract(The glTF "skin": index in @code(TglTF.Skins); GLTF_UNDEFINED_INDEX when not
     //** set.)
-    /// <summary>The glTF "skin": index in <c>TglTF.Skins</c>; GLTF_UNDEFINED_INDEX when not
-    /// set.</summary>
     [NeonProperty('skin')]
     property Skin: Integer read FSkin write FSkin;
 
     //** @abstract(The glTF "matrix": the local transform as 16 numbers in column-major order;
     //** the identity by default.)
-    /// <summary>The glTF "matrix": the local transform as 16 numbers in column-major order; the
-    /// identity by default.</summary>
     [NeonProperty('matrix')]
     property Matrix: TArray<Double> read FMatrix write FMatrix;
 
     //** @abstract(The glTF "mesh": index in @code(TglTF.Meshes); GLTF_UNDEFINED_INDEX when not
     //** set.)
-    /// <summary>The glTF "mesh": index in <c>TglTF.Meshes</c>; GLTF_UNDEFINED_INDEX when not
-    /// set.</summary>
     [NeonProperty('mesh')]
     property Mesh: Integer read FMesh write FMesh;
 
     //** @abstract(The glTF "rotation": a unit quaternion x, y, z, w; [0, 0, 0, 1] by default.)
-    /// <summary>The glTF "rotation": a unit quaternion x, y, z, w; [0, 0, 0, 1] by
-    /// default.</summary>
     [NeonProperty('rotation')]
     property Rotation: TArray<Double> read FRotation write FRotation;
 
     //** @abstract(The glTF "scale" along x, y and z; [1, 1, 1] by default.)
-    /// <summary>The glTF "scale" along x, y and z; [1, 1, 1] by default.</summary>
     [NeonProperty('scale')]
     property Scale: TArray<Double> read FScale write FScale;
 
     //** @abstract(The glTF "translation" along x, y and z; [0, 0, 0] by default.)
-    /// <summary>The glTF "translation" along x, y and z; [0, 0, 0] by default.</summary>
     [NeonProperty('translation')]
     property Translation: TArray<Double> read FTranslation write FTranslation;
 
     //** @abstract(The glTF "weights": morph target weights of the node's mesh; empty when not
     //** set.)
-    /// <summary>The glTF "weights": morph target weights of the node's mesh; empty when not
-    /// set.</summary>
     [NeonProperty('weights')]
     property Weights: TArray<Double> read FWeights write FWeights;
   end;
 
   //** @abstract(A glTF scene: the root nodes of a hierarchy to show.)
-  /// <summary>A glTF scene: the root nodes of a hierarchy to show.</summary>
   TglTFScene = class(TglTFChildOfRootProperty)
   private
     FNodes: TArray<Integer>;
@@ -1869,20 +1409,15 @@ type
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "scene"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "scene"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "nodes": indices in @code(TglTF.Nodes) of the root nodes; empty when
     //** none.)
-    /// <summary>The glTF "nodes": indices in <c>TglTF.Nodes</c> of the root nodes; empty when
-    /// none.</summary>
     [NeonProperty('nodes')]
     property Nodes: TArray<Integer> read FNodes write FNodes;
   end;
 
   //** @abstract(A glTF skin: the joints that deform a skinned mesh.)
-  /// <summary>A glTF skin: the joints that deform a skinned mesh.</summary>
   TglTFSkin = class(TglTFChildOfRootProperty)
   private
     FInverseBindMatrices: Integer;
@@ -1894,38 +1429,27 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** InverseBindMatrices and Skeleton are GLTF_UNDEFINED_INDEX.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>InverseBindMatrices and Skeleton are GLTF_UNDEFINED_INDEX.</remarks>
     constructor Create; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "skin"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "skin"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(The glTF "inverseBindMatrices": index in @code(TglTF.Accessors);
     //** GLTF_UNDEFINED_INDEX when not set.)
     //**
     //** When not set, every inverse bind matrix is the identity.
-    /// <summary>The glTF "inverseBindMatrices": index in <c>TglTF.Accessors</c>;
-    /// GLTF_UNDEFINED_INDEX when not set.</summary>
-    /// <remarks>When not set, every inverse bind matrix is the identity.</remarks>
     [NeonProperty('inverseBindMatrices')]
     property InverseBindMatrices: Integer read FInverseBindMatrices write FInverseBindMatrices;
 
     //** @abstract(The glTF "skeleton": index in @code(TglTF.Nodes) of the skeleton root;
     //** GLTF_UNDEFINED_INDEX when not set.)
-    /// <summary>The glTF "skeleton": index in <c>TglTF.Nodes</c> of the skeleton root;
-    /// GLTF_UNDEFINED_INDEX when not set.</summary>
     [NeonProperty('skeleton')]
     property Skeleton: Integer read FSkeleton write FSkeleton;
 
     //** @abstract(The glTF "joints": indices in @code(TglTF.Nodes) of the joints; required, at
     //** least one.)
-    /// <summary>The glTF "joints": indices in <c>TglTF.Nodes</c> of the joints; required, at
-    /// least one.</summary>
     [NeonProperty('joints'), glTFRequired]
     property Joints: TArray<Integer> read FJoints write FJoints;
   end;
@@ -1939,10 +1463,6 @@ type
   //** Owns every object of the document. Other objects refer to each other by index in these
   //** lists, so removing or reordering items changes those references. Usually held by a
   //** TglTFDocument.
-  /// <summary>The root object of a glTF asset.</summary>
-  /// <remarks>Owns every object of the document. Other objects refer to each other by index in
-  /// these lists, so removing or reordering items changes those references. Usually held by a
-  /// TglTFDocument.</remarks>
   TglTF = class(TglTFProperty)
   private
     FExtensionsUsed: TArray<string>;
@@ -1970,20 +1490,14 @@ type
     //** @abstract(Creates the object with the spec's default values.)
     //**
     //** Scene is GLTF_UNDEFINED_INDEX; every list is empty and Asset is nil until loaded.
-    /// <summary>Creates the object with the spec's default values.</summary>
-    /// <remarks>Scene is GLTF_UNDEFINED_INDEX; every list is empty and Asset is nil until
-    /// loaded.</remarks>
     constructor Create; override;
 
     //** @abstract(Frees the object and every object it holds.)
-    /// <summary>Frees the object and every object it holds.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns the object's name in the glTF specification.)
     //**
     //** @returns(Always "glTF"; used in error messages.)
-    /// <summary>Returns the object's name in the glTF specification.</summary>
-    /// <returns>Always "glTF"; used in error messages.</returns>
     class function glTFTypeName: string; override;
 
     //** @abstract(Tells whether an extension is listed in "extensionsUsed".)
@@ -1991,9 +1505,6 @@ type
     //** @param(AName Extension name; case-sensitive.)
     //**
     //** @returns(True when listed.)
-    /// <summary>Tells whether an extension is listed in "extensionsUsed".</summary>
-    /// <param name="AName">Extension name; case-sensitive.</param>
-    /// <returns>True when listed.</returns>
     function IsExtensionUsed(const AName: string): Boolean;
 
     //** @abstract(Tells whether an extension is listed in "extensionsRequired".)
@@ -2001,9 +1512,6 @@ type
     //** @param(AName Extension name; case-sensitive.)
     //**
     //** @returns(True when listed.)
-    /// <summary>Tells whether an extension is listed in "extensionsRequired".</summary>
-    /// <param name="AName">Extension name; case-sensitive.</param>
-    /// <returns>True when listed.</returns>
     function IsExtensionRequired(const AName: string): Boolean;
 
     //** @abstract(Builds the JSON for the whole asset from the current objects.)
@@ -2013,17 +1521,10 @@ type
     //** @returns(A new JSON object, owned by the caller.)
     //**
     //** @raises(EglTFError A value cannot be converted to JSON.)
-    /// <summary>Builds the JSON for the whole asset from the current objects.</summary>
-    /// <returns>A new JSON object, owned by the caller.</returns>
-    /// <exception cref="EglTFError">A value cannot be converted to JSON.</exception>
-    /// <remarks>As <c>TglTFProperty.SaveToJSON</c>, with "asset" moved to the front as is
-    /// conventional.</remarks>
     function SaveToJSON: TJSONObject; override;
 
     //** @abstract(The glTF "extensionsUsed": names of the extensions the file uses; empty when
     //** none.)
-    /// <summary>The glTF "extensionsUsed": names of the extensions the file uses; empty when
-    /// none.</summary>
     [NeonProperty('extensionsUsed')]
     property ExtensionsUsed: TArray<string> read FExtensionsUsed write FExtensionsUsed;
 
@@ -2031,128 +1532,95 @@ type
     //** empty when none.)
     //**
     //** Every name must also be in @link(ExtensionsUsed).
-    /// <summary>The glTF "extensionsRequired": names of the extensions a reader must support;
-    /// empty when none.</summary>
-    /// <remarks>Every name must also be in <see cref="ExtensionsUsed"/>.</remarks>
     [NeonProperty('extensionsRequired')]
     property ExtensionsRequired: TArray<string> read FExtensionsRequired write FExtensionsRequired;
 
     //** @abstract(The glTF "accessors".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "accessors".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('accessors')]
     property Accessors: TglTFList<TglTFAccessor> read FAccessors;
 
     //** @abstract(The glTF "animations".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "animations".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('animations')]
     property Animations: TglTFList<TglTFAnimation> read FAnimations;
 
     //** @abstract(The glTF "asset": file metadata; required.)
     //**
     //** Nil until loaded. Owned by this object.
-    /// <summary>The glTF "asset": file metadata; required.</summary>
-    /// <remarks>Nil until loaded. Owned by this object.</remarks>
     [NeonProperty('asset'), glTFRequired]
     property Asset: TglTFAsset read FAsset;
 
     //** @abstract(The glTF "buffers".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "buffers".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('buffers')]
     property Buffers: TglTFList<TglTFBuffer> read FBuffers;
 
     //** @abstract(The glTF "bufferViews".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "bufferViews".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('bufferViews')]
     property BufferViews: TglTFList<TglTFBufferView> read FBufferViews;
 
     //** @abstract(The glTF "cameras".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "cameras".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('cameras')]
     property Cameras: TglTFList<TglTFCamera> read FCameras;
 
     //** @abstract(The glTF "images".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "images".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('images')]
     property Images: TglTFList<TglTFImage> read FImages;
 
     //** @abstract(The glTF "materials".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "materials".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('materials')]
     property Materials: TglTFList<TglTFMaterial> read FMaterials;
 
     //** @abstract(The glTF "meshes".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "meshes".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('meshes')]
     property Meshes: TglTFList<TglTFMesh> read FMeshes;
 
     //** @abstract(The glTF "nodes".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "nodes".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('nodes')]
     property Nodes: TglTFList<TglTFNode> read FNodes;
 
     //** @abstract(The glTF "samplers".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "samplers".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('samplers')]
     property Samplers: TglTFList<TglTFSampler> read FSamplers;
 
     //** @abstract(The glTF "scene": index in @link(Scenes) of the scene to show first;
     //** GLTF_UNDEFINED_INDEX when not set.)
-    /// <summary>The glTF "scene": index in <see cref="Scenes"/> of the scene to show first;
-    /// GLTF_UNDEFINED_INDEX when not set.</summary>
     [NeonProperty('scene')]
     property Scene: Integer read FScene write FScene;
 
     //** @abstract(The glTF "scenes".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "scenes".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('scenes')]
     property Scenes: TglTFList<TglTFScene> read FScenes;
 
     //** @abstract(The glTF "skins".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "skins".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('skins')]
     property Skins: TglTFList<TglTFSkin> read FSkins;
 
     //** @abstract(The glTF "textures".)
     //**
     //** Owned by this object.
-    /// <summary>The glTF "textures".</summary>
-    /// <remarks>Owned by this object.</remarks>
     [NeonProperty('textures')]
     property Textures: TglTFList<TglTFTexture> read FTextures;
   end;
@@ -2190,7 +1658,7 @@ begin
     Result := Result.Substring(0, LEnd);
 end;
 
-// <summary>Attribute map as a JSON object, keys sorted. The caller owns it</summary>
+// Attribute map as a JSON object, keys sorted. The caller owns it
 function AttributeMapToJSON(AMap: TglTFAttributeMap): TJSONObject;
 var
   LKeys: TArray<string>;

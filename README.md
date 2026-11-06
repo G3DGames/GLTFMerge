@@ -40,7 +40,7 @@ The viewer has a **File** menu and seven tabs. The window title shows the model 
 | **Animations** | Every animation with its origin, channels and length. Tick which are saved, import more from other files, rename one by clicking its name, clear them all, or split one long animation into named frame ranges. |
 | **Parts** | Load part files, put the ticked parts on the model and take them off again, with settings for how much of the body they hide. |
 | **Re-Orient** | The turn about X, Y and Z applied when saving, with presets for Z-up to Y-up, Y-up to Z-up, facing the other way, flipping upside down and no turn. |
-| **Split** | The models the file holds, one per root node of the scene with everything under it. **Split** saves each as a file of its own, as GLB or glTF, in a folder you choose. |
+| **Split** | The models the file holds, one per root node of the scene with everything under it. **Split** saves each as a file of its own, as GLB or glTF, in a folder you choose, scaling small models up if asked. |
 | **Output** | A log of loading, saving and everything done to the model, with errors shown at their line in the glTF text. |
 
 ### File menu
@@ -73,7 +73,7 @@ tab. It opens a sheet where each row is a name, a start frame and an end frame, 
 
 Each root node of the scene is a model, with all its children; roots tied together by a skin
 stay together. The Split tab lists them with their file name, node, mesh and triangle counts,
-and what happens to their origin. Each saved file holds only what its model uses.
+their size along X, Y and Z as saved, and what happens to their origin. Each saved file holds only what its model uses.
 
 - **Names** come from the root node, made safe for a file name, or `model_NNN` when it has
   none. Names are unique whatever their case; when a file of that name is already in the
@@ -82,6 +82,11 @@ and what happens to their origin. Each saved file holds only what its model uses
 - **Origins** stay where they are when they are inside the model or near it, as with a
   character standing on its origin. A model far from its origin, as when every model of a
   sheet shares one origin, is moved so the centre of its bounding box becomes its origin.
+- **Sizes**: with **Scale up small models** ticked (the default), when any model would be
+  under 1 unit along any axis, every model is scaled by the same factor so that the smallest
+  size becomes 1 unit, keeping the models in proportion to each other. An icon sheet whose
+  icons are 0.002 thick is scaled by 500, for example. Sizes of nearly nothing, such as the
+  thickness of a flat plane, are left out. Untick it to keep the sizes as they are.
 - The Re-Orient turn and the EXIF choice apply as for **Save As**.
 
 ### Settings
@@ -154,9 +159,10 @@ glTFMerge.dpr       the application
 GLTFLib/            the library: no user interface
 src/                the application's forms and frames, each designed in an .fmx file
 delphi-neon/        the Neon JSON library (submodule)
-docs/lib, docs/ui   PasDoc documentation of the library and of the application
+docs/html, docs/chm the PasDoc reference that tools/pasdoc.bat writes (git ignores both)
 icons/              the application icon for every platform (glTFMerge_1024.png is the master)
 img/                images for this file
+tools/              pasdoc.bat, and the dark colours it adds to the reference
 ```
 
 ### The library
@@ -175,7 +181,7 @@ The units in `GLTFLib` work without the application and can be used on their own
 | `glTF.Orient` | Turn a whole model about X, Y and Z, baked into its data. |
 | `glTF.Bulk` | Re-orient every model in a folder tree. |
 | `glTF.Exif` | Remove EXIF data from JPEG, PNG and WebP images. |
-| `glTF.ModelSplit` | Split a file into one file per root node, centring models far from their origin. |
+| `glTF.ModelSplit` | Split a file into one file per root node, centring models far from their origin and scaling up small ones. |
 
 For example, to merge animations into a model and save it turned to Y-up without EXIF data:
 
@@ -209,8 +215,36 @@ begin
 end;
 ```
 
-Every public type and routine is documented twice: with XML comments for Delphi's Help
-Insight and with PasDoc comments, from which the HTML in `docs` is generated.
+Every public type and routine of the library is documented with PasDoc `//**` comments
+(see [The reference](#the-reference-pasdoc-optional) below). The application's units in `src`
+also carry XML comments for Delphi's Help Insight.
+
+## The reference (PasDoc, optional)
+
+`tools\pasdoc.bat` (run from anywhere) writes the PasDoc reference as HTML in `docs\html\` and
+as HTML Help in `docs\chm\`, each with one folder for the library and one per program:
+
+| Folder | What it holds |
+| --- | --- |
+| `api\` | Every unit in `GLTFLib`. Start at `docs\html\api\index.html`. |
+| `glTFMerge\` | The application: `glTFMerge.dpr`, its forms and frames in `src`, and the library units it uses. |
+
+The programs are found, not listed: every `.dpr` in the root gets its own reference, made of
+the `GLTFLib` and `src` units its uses clause names (Neon is left out). Only `//**` comments are
+read (PasDoc's `--staronly`). The view is Windows 64-bit (`MSWINDOWS`, `WIN64`, `CPUX64`
+defined), without the self-tests.
+
+It needs `pasdoc` on the PATH (or `PASDOC` set to its full path; releases at
+https://github.com/pasdoc/pasdoc/releases/), and, for the `.chm` files, Microsoft HTML Help
+Workshop's `hhc.exe` (or `HHC` set to its full path); without `hhc.exe` the HTML Help projects
+are written but not compiled. `docs\html` and `docs\chm` are deleted first, so nothing from an
+earlier run is left; nothing else in `docs` is touched.
+
+Dark colours are added after each run, appended to the `pasdoc.css` PasDoc wrote, so PasDoc's
+own stylesheet is used as it is and no copy of it is kept here. `tools/pasdoc-dark.css` is for
+the HTML: dark only when the browser or system asks for it. `tools/pasdoc-chm-dark.css` is for
+the `.chm` files: always dark, because the HTML Help viewer can neither ask nor read CSS custom
+properties. `set PASDOC_DARK=0` leaves them out.
 
 ## Licence
 

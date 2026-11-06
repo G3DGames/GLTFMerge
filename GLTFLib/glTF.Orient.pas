@@ -87,15 +87,6 @@ type
   //** // A Z-up model to glTF's Y-up
   //** TglTFReorienter.Apply(Doc.Root, -90, 0, 0, Warnings);
   //** #)
-  /// <summary>Turns a whole model about the X, Y and Z axes.</summary>
-  /// <remarks>All methods are class methods. Apply changes the tree it is given, including its
-  /// buffers' bytes, which it copies first, so arrays shared with another tree are not
-  /// changed. TglTFDocument uses it on the copy it saves; see
-  /// <c>TglTFSaveOptions.RotateX</c>.</remarks>
-  /// <example><code>
-  /// // A Z-up model to glTF's Y-up
-  /// TglTFReorienter.Apply(Doc.Root, -90, 0, 0, Warnings);
-  /// </code></example>
   TglTFReorienter = class sealed
   public
     //** @abstract(Tells whether a turn changes anything.)
@@ -108,12 +99,6 @@ type
     //**
     //** @returns(True when all three are 0, or the turn they make is no turn at all, such
     //** as 360 about one axis.)
-    /// <summary>Tells whether a turn changes anything.</summary>
-    /// <param name="AX">Degrees about the X axis.</param>
-    /// <param name="AY">Degrees about the Y axis.</param>
-    /// <param name="AZ">Degrees about the Z axis.</param>
-    /// <returns>True when all three are 0, or the turn they make is no turn at all, such as
-    /// 360 about one axis.</returns>
     class function IsIdentity(AX, AY, AZ: Double): Boolean; static;
 
     //** @abstract(Turns the whole model and bakes the turn into its data.)
@@ -132,16 +117,6 @@ type
     //** may be nil.)
     //**
     //** @raises(EglTFError Data that must be turned is not loaded.)
-    /// <summary>Turns the whole model and bakes the turn into its data.</summary>
-    /// <param name="ARoot">The tree to change; its buffer data must be loaded.</param>
-    /// <param name="AX">Degrees about the X axis, applied first.</param>
-    /// <param name="AY">Degrees about the Y axis, applied second.</param>
-    /// <param name="AZ">Degrees about the Z axis, applied last.</param>
-    /// <param name="AWarnings">Receives a line for everything that could not be turned
-    /// exactly; may be nil.</param>
-    /// <exception cref="EglTFError">Data that must be turned is not loaded.</exception>
-    /// <remarks>See the unit description for what changes. Does nothing when IsIdentity is
-    /// True.</remarks>
     class procedure Apply(ARoot: TglTF; AX, AY, AZ: Double; AWarnings: TStrings); static;
   end;
 

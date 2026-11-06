@@ -13,6 +13,13 @@
 //** origin: the shift goes into its root nodes, or, when a root's position is animated, into
 //** a new parent node, so the animation is kept as it is.
 //**
+//** With @link(TglTFModelSplitter.ScaleUp), the default, models too small are scaled up: when
+//** any model measures less than 1 unit along any axis, every model is scaled by the same
+//** factor, so that the smallest size of any model along any axis becomes exactly 1 and the
+//** models keep their sizes relative to each other. A size of nothing, such as the thickness of
+//** a flat plane, is not counted. The scale goes where the shift goes: into the root nodes, or
+//** into the new parent node when a root's position or scale is animated.
+//**
 //** A model is named after its first root node, made safe for a file name, or model_NNN when
 //** that has no name. A name another model already has, or a file already in the output
 //** folder, gets a sequential suffix: walk_1, walk_2 and so on; no file is replaced. Saving
@@ -41,6 +48,14 @@ unit glTF.ModelSplit;
   its root nodes, or, when a root's position is animated, into a new parent
   node, so the animation is kept as it is.
 
+  With ScaleUp, the default, models too small are scaled up: when any model
+  measures less than 1 unit along any axis, every model is scaled by the same
+  factor, so that the smallest size of any model along any axis becomes
+  exactly 1 and the models keep their sizes relative to each other. A size of
+  nothing, such as the thickness of a flat plane, is not counted. The scale
+  goes where the shift goes: into the root nodes, or into the new parent node
+  when a root's position or scale is animated.
+
   A model is named after its first root node, made safe for a file name, or
   model_NNN when that has no name. A name another model already has, or a
   file already in the output folder, gets a sequential suffix: walk_1,
@@ -62,48 +77,33 @@ uses
 
 type
   //** @abstract(One model found in the file.)
-  /// <summary>One model found in the file.</summary>
   TglTFSplitModel = record
     //** @abstract(The name it is saved under, without extension: unique among the models,
     //** safe for a file name; a file already in the output folder may still add a suffix.)
-    /// <summary>The name it is saved under, without extension: unique among the models, safe
-    /// for a file name; a file already in the output folder may still add a
-    /// suffix.</summary>
     Name: string;
 
     //** @abstract(Its root nodes, in the default scene's order; usually one.)
-    /// <summary>Its root nodes, in the default scene's order; usually one.</summary>
     Roots: TArray<Integer>;
 
     //** @abstract(Its nodes: the roots, everything under them and the joints its skins use.)
-    /// <summary>Its nodes: the roots, everything under them and the joints its skins
-    /// use.</summary>
     Nodes: TArray<Integer>;
 
     //** @abstract(How many of its nodes have a mesh.)
-    /// <summary>How many of its nodes have a mesh.</summary>
     MeshNodes: Integer;
 
     //** @abstract(Triangles in its meshes, counting a mesh once per node that shows it.)
-    /// <summary>Triangles in its meshes, counting a mesh once per node that shows
-    /// it.</summary>
     Triangles: Int64;
 
     //** @abstract(Whether it has a bounding box: False when no mesh gives positions.)
-    /// <summary>Whether it has a bounding box: False when no mesh gives
-    /// positions.</summary>
     HasBounds: Boolean;
 
     //** @abstract(The centre of its bounding box, in the scene's space.)
-    /// <summary>The centre of its bounding box, in the scene's space.</summary>
     Centre: array[0..2] of Double;
 
     //** @abstract(The size of its bounding box along X, Y and Z, in the scene's space.)
-    /// <summary>The size of its bounding box along X, Y and Z, in the scene's space.</summary>
     Size: array[0..2] of Double;
 
     //** @abstract(Whether it is moved so that its centre is its origin.)
-    /// <summary>Whether it is moved so that its centre is its origin.</summary>
     Recentre: Boolean;
   end;
 
@@ -111,9 +111,6 @@ type
   //**
   //** Call @link(FindModels), then @link(Run), usually from a background thread; read
   //** @link(Log) and the counts afterwards.
-  /// <summary>Lists the models in a document and saves each as a file of its own.</summary>
-  /// <remarks>Call <see cref="FindModels"/>, then <see cref="Run"/>, usually from a background
-  /// thread; read <see cref="Log"/> and the counts afterwards.</remarks>
   TglTFModelSplitter = class
   private
     FDoc: TglTFDocument;
@@ -123,23 +120,21 @@ type
     FFailed: Integer;
     FCurrent: Integer;
     FAbortRequested: Boolean;
+    FScaleUp: Boolean;
+    FScale: Double;
     FOnProgress: TglTFProgressEvent;
     procedure Report(const AStage: string; ADone: Double);
     procedure DocumentProgress(Sender: TObject; const AProgress: TglTFProgress);
     procedure Measure(var AModel: TglTFSplitModel; const AWorld: TArray<TArray<Double>>);
     function BuildModel(AIndex: Integer): TglTFDocument;
-    procedure MoveToOrigin(ACopy: TglTFDocument; const AModel: TglTFSplitModel);
+    procedure Place(ACopy: TglTFDocument; const AModel: TglTFSplitModel);
   public
     //** @abstract(Creates the splitter for a document.)
     //**
     //** @param(ADoc The document holding the models; not owned, and not changed.)
-    /// <summary>Creates the splitter for a document.</summary>
-    /// <param name="ADoc">The document holding the models; not owned, and not
-    /// changed.</param>
     constructor Create(ADoc: TglTFDocument);
 
     //** @abstract(Frees the splitter.)
-    /// <summary>Frees the splitter.</summary>
     destructor Destroy; override;
 
     //** @abstract(Turns a node name into a name safe for a file.)
@@ -150,25 +145,16 @@ type
     //** @param(AName The node name.)
     //**
     //** @returns(The safe name; empty when nothing is left.)
-    /// <summary>Turns a node name into a name safe for a file.</summary>
-    /// <param name="AName">The node name.</param>
-    /// <returns>The safe name; empty when nothing is left.</returns>
-    /// <remarks>Characters no file system accepts, \ / : * ? " &lt; &gt; | and control
-    /// characters, become underscores, and spaces and dots at either end are removed.</remarks>
     class function SafeFileName(const AName: string): string; static;
 
     //** @abstract(Finds the models: the root nodes of the default scene, with what is under
     //** them.)
     //**
     //** Without scenes, the nodes no other node has as a child are the roots. Each model is
-    //** measured, told whether it will be moved to its centre, and named.
+    //** measured, told whether it will be moved to its centre, and named; then @link(Scale)
+    //** is worked out, as @link(ScaleUp) says.
     //**
     //** @returns(The number of models; see @link(Models).)
-    /// <summary>Finds the models: the root nodes of the default scene, with what is under
-    /// them.</summary>
-    /// <returns>The number of models; see <see cref="Models"/>.</returns>
-    /// <remarks>Without scenes, the nodes no other node has as a child are the roots. Each
-    /// model is measured, told whether it will be moved to its centre, and named.</remarks>
     function FindModels: Integer;
 
     //** @abstract(Returns the file a model would be saved to, with a suffix when the name is
@@ -183,14 +169,6 @@ type
     //** @param(ATaken Files already chosen in this run, lower case; the file is added.)
     //**
     //** @returns(The full path of a file that does not exist yet.)
-    /// <summary>Returns the file a model would be saved to, with a suffix when the name is
-    /// taken.</summary>
-    /// <param name="AFolder">The output folder.</param>
-    /// <param name="AName">The model's name.</param>
-    /// <param name="AFormat">gffGLB or gffJSON.</param>
-    /// <param name="ATaken">Files already chosen in this run, lower case; the file is
-    /// added.</param>
-    /// <returns>The full path of a file that does not exist yet.</returns>
     class function FreeFileName(const AFolder, AName: string; AFormat: TglTFFileFormat;
       ATaken: TStrings): string; static;
 
@@ -208,47 +186,37 @@ type
     //** @param(AOptions The save options, such as the turn and the EXIF choice.)
     //**
     //** @returns(The number of models saved.)
-    /// <summary>Saves every model found in a folder, one file each.</summary>
-    /// <param name="AFolder">The output folder; created when needed.</param>
-    /// <param name="AFormat">gffGLB or gffJSON.</param>
-    /// <param name="AOptions">The save options, such as the turn and the EXIF choice.</param>
-    /// <returns>The number of models saved.</returns>
-    /// <remarks>Each model is made from a copy of the document, cut down to what the model
-    /// uses, moved to its centre when <c>Recentre</c> says so, and saved with AOptions. A
-    /// failure is logged and counted, and the next model is done. Stops early, after the model
-    /// being saved, when <see cref="RequestAbort"/> was called.</remarks>
     function Run(const AFolder: string; AFormat: TglTFFileFormat;
       const AOptions: TglTFSaveOptions): Integer;
 
     //** @abstract(Asks Run to stop after the model it is on; may be called from any thread.)
-    /// <summary>Asks Run to stop after the model it is on; may be called from any
-    /// thread.</summary>
     procedure RequestAbort;
 
     //** @abstract(The models found by FindModels.)
-    /// <summary>The models found by FindModels.</summary>
     property Models: TArray<TglTFSplitModel> read FModels;
 
     //** @abstract(One line per model saved and per warning, for the user.)
-    /// <summary>One line per model saved and per warning, for the user.</summary>
     property Log: TStringList read FLog;
 
     //** @abstract(The models Run saved.)
-    /// <summary>The models Run saved.</summary>
     property Saved: Integer read FSaved;
 
     //** @abstract(The models Run could not save.)
-    /// <summary>The models Run could not save.</summary>
     property Failed: Integer read FFailed;
 
     //** @abstract(Whether RequestAbort was called.)
-    /// <summary>Whether RequestAbort was called.</summary>
     property AbortRequested: Boolean read FAbortRequested;
+
+    //** @abstract(Whether models smaller than 1 unit along any axis are scaled up; True by
+    //** default. Set it before FindModels.)
+    property ScaleUp: Boolean read FScaleUp write FScaleUp;
+
+    //** @abstract(The factor every model is scaled by, worked out by FindModels: 1 when none is
+    //** smaller than 1 unit along any axis, or when ScaleUp is off.)
+    property Scale: Double read FScale;
 
     //** @abstract(Reports each model and how far its save has got; called on the thread that
     //** runs Run.)
-    /// <summary>Reports each model and how far its save has got; called on the thread that
-    /// runs Run.</summary>
     property OnProgress: TglTFProgressEvent read FOnProgress write FOnProgress;
   end;
 
@@ -261,6 +229,10 @@ const
   // A model whose origin is further than this share of its largest size from
   // its bounding box is moved to its centre
   NEAR_SHARE = 0.25;
+
+  // A model's size along an axis below this share of its largest size is
+  // taken as no size at all, as with the thickness of a flat plane
+  SIZE_OF_NOTHING = 1e-6;
 
 type
   TMat4 = array[0..15] of Double; // column-major, as glTF
@@ -357,6 +329,8 @@ begin
   inherited Create;
   FDoc := ADoc;
   FLog := TStringList.Create;
+  FScaleUp := True;
+  FScale := 1;
 end;
 
 destructor TglTFModelSplitter.Destroy;
@@ -510,6 +484,8 @@ var
   LName: string;
   LModel: TglTFSplitModel;
   LNodes: TList<Integer>;
+  LSmallest, LLargest: Double;
+  A: Integer;
 
   procedure AddWorld(ANode: Integer; const AParent: TMat4);
   var
@@ -665,6 +641,21 @@ begin
   finally
     LNames.Free;
   end;
+  // One factor for every model, so they keep their sizes relative to each
+  // other: the smallest size of any model along any axis becomes 1. A size
+  // of nothing next to the model's largest (a flat plane) does not count
+  FScale := 1;
+  LSmallest := MaxDouble;
+  for LModel in FModels do
+    if LModel.HasBounds then
+    begin
+      LLargest := Max(LModel.Size[0], Max(LModel.Size[1], LModel.Size[2]));
+      for A := 0 to 2 do
+        if LModel.Size[A] > SIZE_OF_NOTHING * LLargest then
+          LSmallest := Min(LSmallest, LModel.Size[A]);
+    end;
+  if FScaleUp and (LSmallest < 1) and (LSmallest > 0) then
+    FScale := 1 / LSmallest;
   Result := Length(FModels);
 end;
 
@@ -720,59 +711,75 @@ begin
     TglTFEdit.DeleteUnusedObjects(LRoot, LAll, Indices(LRoot.Skins.Count),
       Indices(LRoot.Materials.Count), nil, FLog);
 
-    if FModels[AIndex].Recentre then
-      MoveToOrigin(Result, FModels[AIndex]);
+    Place(Result, FModels[AIndex]);
   except
     Result.Free;
     raise;
   end;
 end;
 
-procedure TglTFModelSplitter.MoveToOrigin(ACopy: TglTFDocument; const AModel: TglTFSplitModel);
+procedure TglTFModelSplitter.Place(ACopy: TglTFDocument; const AModel: TglTFSplitModel);
 var
   LRoot: TglTF;
   LRoots: TArray<Integer>;
+  LShift: array[0..2] of Double;
   LAnimated: Boolean;
   LAnimation: TglTFAnimation;
   LChannel: TglTFAnimationChannel;
   LNode, LParent: TglTFNode;
-  LMatrix, LTranslation: TArray<Double>;
+  LMatrix, LTranslation, LScale: TArray<Double>;
   I, A: Integer;
 begin
+  // Every point P of the model goes to Scale * (P + shift): the shift puts
+  // the centre on the origin when the model is far from it
+  for A := 0 to 2 do
+    if AModel.Recentre then
+      LShift[A] := -AModel.Centre[A]
+    else
+      LShift[A] := 0;
+  if not AModel.Recentre and SameValue(FScale, 1) then
+    Exit;
   LRoot := ACopy.Root;
   if LRoot.Scenes.Count = 0 then
     Exit;
   LRoots := LRoot.Scenes[0].Nodes;
 
-  // A root whose position is animated cannot simply be moved: the animation
-  // would put it back. Then a new parent carries the shift
+  // A root whose position or scale is animated cannot simply be changed:
+  // the animation would put it back. Then a new parent carries the change
   LAnimated := False;
   for LAnimation in LRoot.Animations do
     for LChannel in LAnimation.Channels do
       for I in LRoots do
-        if (LChannel.Target.Node = I) and (LChannel.Target.Path = 'translation') then
+        if (LChannel.Target.Node = I) and ((LChannel.Target.Path = 'translation') or
+           (LChannel.Target.Path = 'scale')) then
           LAnimated := True;
 
   if LAnimated then
   begin
     LParent := TglTFNode.Create;
     LParent.Name := AModel.Name + '_origin';
-    LParent.Translation := [-AModel.Centre[0], -AModel.Centre[1], -AModel.Centre[2]];
+    LParent.Translation := [FScale * LShift[0], FScale * LShift[1], FScale * LShift[2]];
+    LParent.Scale := [FScale, FScale, FScale];
     LParent.Children := LRoots;
     LRoot.Nodes.Add(LParent);
     LRoot.Scenes[0].Nodes := [LRoot.Nodes.Count - 1];
     Exit;
   end;
 
-  // Roots are in the scene's space: the shift is added to their position
+  // Roots are in the scene's space: the shift is added to their position,
+  // then position and size are scaled. A uniform scale leaves the rotation
+  // as it is
   for I in LRoots do
   begin
     LNode := LRoot.Nodes[I];
     if not IsIdentity(LNode.Matrix) then
     begin
       LMatrix := Copy(LNode.Matrix);
+      for A := 0 to 11 do
+        if A mod 4 <> 3 then
+          LMatrix[A] := LMatrix[A] * FScale;
       for A := 0 to 2 do
-        LMatrix[12 + A] := LMatrix[12 + A] - AModel.Centre[A];
+        LMatrix[12 + A] := FScale * (LMatrix[12 + A] + LShift[A]);
       LNode.Matrix := LMatrix;
     end
     else
@@ -780,9 +787,16 @@ begin
       LTranslation := Copy(LNode.Translation);
       if Length(LTranslation) <> 3 then
         LTranslation := [0, 0, 0];
+      LScale := Copy(LNode.Scale);
+      if Length(LScale) <> 3 then
+        LScale := [1, 1, 1];
       for A := 0 to 2 do
-        LTranslation[A] := LTranslation[A] - AModel.Centre[A];
+      begin
+        LTranslation[A] := FScale * (LTranslation[A] + LShift[A]);
+        LScale[A] := LScale[A] * FScale;
+      end;
       LNode.Translation := LTranslation;
+      LNode.Scale := LScale;
     end;
   end;
 end;
@@ -847,6 +861,8 @@ begin
             LNote := ' (renamed: the name was already taken)';
           if FModels[I].Recentre then
             LNote := LNote + ' (moved so its centre is its origin)';
+          if not SameValue(FScale, 1) then
+            LNote := LNote + Format(' (scaled by %.6g)', [FScale]);
           FLog.Add(Format('Saved %s%s', [ExtractFileName(LTarget), LNote]));
           for LWarning in LCopy.SaveWarnings do
             FLog.Add('  Warning: ' + LWarning);

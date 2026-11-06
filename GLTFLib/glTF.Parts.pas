@@ -108,19 +108,12 @@ const
   //** TglTFPartApplier.)
   //**
   //** Its value is an object with "file", the part file's name, and "part", the part's name.
-  /// <summary>Name of the extras entry that marks a node as a part put on by
-  /// TglTFPartApplier.</summary>
-  /// <remarks>Its value is an object with "file", the part file's name, and "part", the part's
-  /// name.</remarks>
   GLTF_PART_EXTRA = 'glTFViewerPart';
 
 type
   //** @abstract(Settings that decide which bones a part covers and what it replaces.)
   //**
   //** Start from @link(TglTFPartOptions.Default) and change what you need.
-  /// <summary>Settings that decide which bones a part covers and what it replaces.</summary>
-  /// <remarks>Start from <see cref="TglTFPartOptions.Default"/> and change what you
-  /// need.</remarks>
   TglTFPartOptions = record
     //** @abstract(How close a part's surface must come to the body for the body to be hidden
     //** there, as a share of the body's height; 0.03 by default.)
@@ -130,13 +123,6 @@ type
     //** pokes through the cloth. A triangle is hidden when its three corners are covered. Larger
     //** values hide the body under looser clothes too; smaller ones keep more of it, at the risk
     //** of skin showing through.
-    /// <summary>How close a part's surface must come to the body for the body to be hidden
-    /// there, as a share of the body's height; 0.03 by default.</summary>
-    /// <remarks>A body vertex is covered when a part's surface crosses the line along its normal
-    /// no further than this from it, on either side: outside the skin, or inside it where the
-    /// body pokes through the cloth. A triangle is hidden when its three corners are covered.
-    /// Larger values hide the body under looser clothes too; smaller ones keep more of it, at the
-    /// risk of skin showing through.</remarks>
     CoverGap: Double;
 
     //** @abstract(Share of a part's triangles a bone must drive for the part to cover that bone,
@@ -145,11 +131,6 @@ type
     //** The bones a part covers decide which parts it replaces @(see @link(ReplaceShare)@) and
     //** are listed for it; they do not decide what of the body is hidden @(see
     //** @link(CoverGap)@).
-    /// <summary>Share of a part's triangles a bone must drive for the part to cover that bone,
-    /// from 0 to 1; 0.02 by default.</summary>
-    /// <remarks>The bones a part covers decide which parts it replaces (see
-    /// <see cref="ReplaceShare"/>) and are listed for it; they do not decide what of the body is
-    /// hidden (see <see cref="CoverGap"/>).</remarks>
     MinShare: Double;
 
     //** @abstract(Share of a part's triangles on the bones a new part covers for the new part to
@@ -157,10 +138,6 @@ type
     //**
     //** Only parts put on earlier are replaced; the body and the model's other meshes are hidden
     //** where covered instead.
-    /// <summary>Share of a part's triangles on the bones a new part covers for the new part to
-    /// replace it, from 0 to 1; 0.5 by default.</summary>
-    /// <remarks>Only parts put on earlier are replaced; the body and the model's other meshes are
-    /// hidden where covered instead.</remarks>
     ReplaceShare: Double;
 
     //** @abstract(Bones never covered, compared ignoring case; none by default.)
@@ -168,17 +145,11 @@ type
     //** Body vertices whose strongest bone is one of these are never hidden, and parts do not
     //** replace each other on account of these bones. For example Head keeps the whole head
     //** under a hood.
-    /// <summary>Bones never covered, compared ignoring case; none by default.</summary>
-    /// <remarks>Body vertices whose strongest bone is one of these are never hidden, and parts do
-    /// not replace each other on account of these bones. For example Head keeps the whole head
-    /// under a hood.</remarks>
     KeepBones: TArray<string>;
 
     //** @abstract(Returns the default settings.)
     //**
     //** @returns(CoverGap 0.03, MinShare 0.02, ReplaceShare 0.5, no KeepBones.)
-    /// <summary>Returns the default settings.</summary>
-    /// <returns>CoverGap 0.03, MinShare 0.02, ReplaceShare 0.5, no KeepBones.</returns>
     class function Default: TglTFPartOptions; static;
 
     //** @abstract(Tells whether a bone is one of @link(KeepBones).)
@@ -186,19 +157,12 @@ type
     //** @param(ABone The bone's node name.)
     //**
     //** @returns(True when the bone is never covered.)
-    /// <summary>Tells whether a bone is one of <see cref="KeepBones"/>.</summary>
-    /// <param name="ABone">The bone's node name.</param>
-    /// <returns>True when the bone is never covered.</returns>
     function IsKept(const ABone: string): Boolean;
   end;
 
   //** @abstract(One skinned mesh found in a part file: a piece that can be put on a model.)
   //**
   //** Created and owned by @link(TglTFPartLibrary); read-only for its users.
-  /// <summary>One skinned mesh found in a part file: a piece that can be put on a
-  /// model.</summary>
-  /// <remarks>Created and owned by <see cref="TglTFPartLibrary"/>; read-only for its
-  /// users.</remarks>
   TglTFPart = class
   private
     FSource: TglTFDocument;
@@ -214,8 +178,6 @@ type
     //** @abstract(Returns a short description for messages.)
     //**
     //** @returns(For example: "Peasant_Feet" from Peasant.gltf.)
-    /// <summary>Returns a short description for messages.</summary>
-    /// <returns>For example: "Peasant_Feet" from Peasant.gltf.</returns>
     function Description: string;
 
     //** @abstract(Returns the bones the part covers with the given settings.)
@@ -223,10 +185,6 @@ type
     //** @param(AOptions Decide the share a bone needs and the bones never covered.)
     //**
     //** @returns(The bone names, the one driving the most triangles first.)
-    /// <summary>Returns the bones the part covers with the given settings.</summary>
-    /// <param name="AOptions">Decide the share a bone needs and the bones never
-    /// covered.</param>
-    /// <returns>The bone names, the one driving the most triangles first.</returns>
     function CoveredBones(const AOptions: TglTFPartOptions): TArray<string>;
 
     //** @abstract(Returns the bones the part covers with their shares, for display.)
@@ -236,47 +194,31 @@ type
     //** @param(AMax Most bones listed; the rest are counted.)
     //**
     //** @returns(For example "foot_l 64%, ball_l 30%"; "none" when it covers no bone.)
-    /// <summary>Returns the bones the part covers with their shares, for display.</summary>
-    /// <param name="AOptions">Decide the share a bone needs and the bones never
-    /// covered.</param>
-    /// <param name="AMax">Most bones listed; the rest are counted.</param>
-    /// <returns>For example "foot_l 64%, ball_l 30%"; "none" when it covers no
-    /// bone.</returns>
     function CoveredText(const AOptions: TglTFPartOptions; AMax: Integer = 4): string;
 
     //** @abstract(The document the part is in; owned by the library.)
-    /// <summary>The document the part is in; owned by the library.</summary>
     property Source: TglTFDocument read FSource;
 
     //** @abstract(The file the part is in.)
-    /// <summary>The file the part is in.</summary>
     property FileName: string read FFileName;
 
     //** @abstract(Index of the part's node in @code(Source.Root.Nodes).)
-    /// <summary>Index of the part's node in <c>Source.Root.Nodes</c>.</summary>
     property NodeIndex: Integer read FNodeIndex;
 
     //** @abstract(The part's name: its node's name, else its mesh's, else "node N".)
-    /// <summary>The part's name: its node's name, else its mesh's, else "node N".</summary>
     property Name: string read FName;
 
     //** @abstract(Number of triangles of the part.)
-    /// <summary>Number of triangles of the part.</summary>
     property TriangleCount: Integer read FTriangleCount;
 
     //** @abstract(Every bone that drives some of the part's triangles, the one driving the most
     //** first.)
-    /// <summary>Every bone that drives some of the part's triangles, the one driving the most
-    /// first.</summary>
     property Bones: TArray<string> read FBones;
 
     //** @abstract(Parallel to @link(Bones): the number of triangles each one drives.)
-    /// <summary>Parallel to <see cref="Bones"/>: the number of triangles each one
-    /// drives.</summary>
     property BoneTriangles: TArray<Integer> read FBoneTriangles;
 
     //** @abstract(Why the part cannot be put on a model; empty when it can.)
-    /// <summary>Why the part cannot be put on a model; empty when it can.</summary>
     property Error: string read FError;
   end;
 
@@ -285,10 +227,6 @@ type
   //** Every node with both a mesh and a skin is a part. Load files with @link(LoadFiles), or
   //** add documents already loaded with @link(AddDocument). The library owns the documents
   //** and the parts.
-  /// <summary>The part files loaded and the parts found in them.</summary>
-  /// <remarks>Every node with both a mesh and a skin is a part. Load files with
-  /// <see cref="LoadFiles"/>, or add documents already loaded with
-  /// <see cref="AddDocument"/>. The library owns the documents and the parts.</remarks>
   TglTFPartLibrary = class
   private
     FDocuments: TObjectList<TglTFDocument>;
@@ -307,11 +245,9 @@ type
     procedure SourceProgress(Sender: TObject; const AProgress: TglTFProgress);
   public
     //** @abstract(Creates an empty library.)
-    /// <summary>Creates an empty library.</summary>
     constructor Create;
 
     //** @abstract(Frees the library, its documents and its parts.)
-    /// <summary>Frees the library, its documents and its parts.</summary>
     destructor Destroy; override;
 
     //** @abstract(Loads part files and adds the parts found in them.)
@@ -322,11 +258,6 @@ type
     //** @param(AFileNames The .gltf or .glb files.)
     //**
     //** @returns(The number of parts added.)
-    /// <summary>Loads part files and adds the parts found in them.</summary>
-    /// <param name="AFileNames">The .gltf or .glb files.</param>
-    /// <returns>The number of parts added.</returns>
-    /// <remarks>A file that cannot be loaded adds a line to <see cref="Log"/> and the others
-    /// are still loaded. Stops early on an abort.</remarks>
     function LoadFiles(const AFileNames: TArray<string>): Integer;
 
     //** @abstract(Adds the parts of a document already loaded.)
@@ -336,71 +267,48 @@ type
     //** @param(AFileName The name to show; may be empty.)
     //**
     //** @returns(The number of parts added, those that cannot be put on a model included.)
-    /// <summary>Adds the parts of a document already loaded.</summary>
-    /// <param name="ADoc">The document; the library owns it from now on, even when this
-    /// raises.</param>
-    /// <param name="AFileName">The name to show; may be empty.</param>
-    /// <returns>The number of parts added, those that cannot be put on a model
-    /// included.</returns>
     function AddDocument(ADoc: TglTFDocument; const AFileName: string): Integer;
 
     //** @abstract(Removes every part and frees every document.)
-    /// <summary>Removes every part and frees every document.</summary>
     procedure Clear;
 
     //** @abstract(Asks LoadFiles to stop after the file it is loading.)
     //**
     //** May be called from any thread.
-    /// <summary>Asks LoadFiles to stop after the file it is loading.</summary>
-    /// <remarks>May be called from any thread.</remarks>
     procedure RequestAbort;
 
     //** @abstract(Number of parts.)
-    /// <summary>Number of parts.</summary>
     property Count: Integer read GetCount;
 
     //** @abstract(The parts, in the order of the files and of their nodes.)
-    /// <summary>The parts, in the order of the files and of their nodes.</summary>
     property Parts[AIndex: Integer]: TglTFPart read GetPart; default;
 
     //** @abstract(What happened while loading; cleared by each LoadFiles.)
-    /// <summary>What happened while loading; cleared by each LoadFiles.</summary>
     property Log: TStringList read FLog;
 
     //** @abstract(Whether LoadFiles was asked to stop. May be read from any thread.)
-    /// <summary>Whether LoadFiles was asked to stop. May be read from any thread.</summary>
     property AbortRequested: Boolean read GetAbortRequested;
 
     //** @abstract(Occurs as files are loaded. Called on the loading thread; see
     //** TglTFProgressEvent.)
-    /// <summary>Occurs as files are loaded. Called on the loading thread; see
-    /// TglTFProgressEvent.</summary>
     property OnProgress: TglTFProgressEvent read FOnProgress write FOnProgress;
   end;
 
   //** @abstract(A part on a model, as listed by @link(TglTFPartApplier.AppliedParts).)
-  /// <summary>A part on a model, as listed by
-  /// <see cref="TglTFPartApplier.AppliedParts"/>.</summary>
   TglTFAppliedPart = record
     //** @abstract(Index of its node in the model's @code(Root.Nodes).)
-    /// <summary>Index of its node in the model's <c>Root.Nodes</c>.</summary>
     NodeIndex: Integer;
 
     //** @abstract(The part's name, from the mark in its extras, else its node's name.)
-    /// <summary>The part's name, from the mark in its extras, else its node's name.</summary>
     Name: string;
 
     //** @abstract(The file the part came from, from the mark in its extras.)
-    /// <summary>The file the part came from, from the mark in its extras.</summary>
     FileName: string;
 
     //** @abstract(Number of triangles of the part.)
-    /// <summary>Number of triangles of the part.</summary>
     TriangleCount: Integer;
 
     //** @abstract(The bones it covers with their shares, as TglTFPart.CoveredText gives them.)
-    /// <summary>The bones it covers with their shares, as TglTFPart.CoveredText gives
-    /// them.</summary>
     CoveredText: string;
   end;
 
@@ -414,15 +322,6 @@ type
   //** Applier := TglTFPartApplier.Create(Doc);
   //** Applier.Apply([Library[0], Library[3]], TglTFPartOptions.Default);
   //** #)
-  /// <summary>Puts parts on a model and takes them off again.</summary>
-  /// <remarks>Create one per model and keep it as long as the model is open: it remembers the
-  /// body's triangles from before the first change, so that hidden triangles can come back.
-  /// Create a new one when another model is loaded. See the unit description for what Apply
-  /// does.</remarks>
-  /// <example><code>
-  /// Applier := TglTFPartApplier.Create(Doc);
-  /// Applier.Apply([Library[0], Library[3]], TglTFPartOptions.Default);
-  /// </code></example>
   TglTFPartApplier = class
   private
     FTarget: TglTFDocument;
@@ -446,13 +345,9 @@ type
     //**
     //** @param(ATarget The model; not owned. Nothing else may change its meshes while the
     //** applier is used.)
-    /// <summary>Creates an applier for a model.</summary>
-    /// <param name="ATarget">The model; not owned. Nothing else may change its meshes while the
-    /// applier is used.</param>
     constructor Create(ATarget: TglTFDocument);
 
     //** @abstract(Frees the applier; the model is not changed.)
-    /// <summary>Frees the applier; the model is not changed.</summary>
     destructor Destroy; override;
 
     //** @abstract(Puts parts on the model.)
@@ -468,17 +363,6 @@ type
     //** @param(AOptions Decide which bones each part covers and what it replaces.)
     //**
     //** @returns(The number of parts put on.)
-    /// <summary>Puts parts on the model.</summary>
-    /// <param name="AParts">The parts, from one or more libraries, which must stay alive
-    /// meanwhile.</param>
-    /// <param name="AOptions">Decide which bones each part covers and what it
-    /// replaces.</param>
-    /// <returns>The number of parts put on.</returns>
-    /// <remarks>The parts are put on in turn, each taking off the pieces it replaces, so of two
-    /// parts that cover the same bones the later one stays. A part that cannot be put on adds a
-    /// line to <see cref="Log"/> and the others are still put on. Then the body triangles the
-    /// parts on the model lie over are hidden and the data no longer used is deleted. An abort
-    /// stops between parts; the model is always left valid.</remarks>
     function Apply(const AParts: TArray<TglTFPart>; const AOptions: TglTFPartOptions): Integer;
 
     //** @abstract(Takes parts off the model.)
@@ -492,22 +376,12 @@ type
     //** @param(AOptions Decide which bones the remaining parts cover.)
     //**
     //** @returns(The number of parts taken off.)
-    /// <summary>Takes parts off the model.</summary>
-    /// <param name="ANodes">Indices of part nodes in the model's <c>Root.Nodes</c>, as
-    /// <see cref="AppliedParts"/> gives them; nodes that are not parts are ignored.</param>
-    /// <param name="AOptions">Decide which bones the remaining parts cover.</param>
-    /// <returns>The number of parts taken off.</returns>
-    /// <remarks>The parts' nodes are deleted with whatever only they used, and the body
-    /// triangles they covered come back unless another part covers them.</remarks>
     function Remove(const ANodes: TArray<Integer>; const AOptions: TglTFPartOptions): Integer;
 
     //** @abstract(Hides the body triangles again with new settings, without putting on or
     //** taking off any part.)
     //**
     //** @param(AOptions Decide which bones the parts on the model cover.)
-    /// <summary>Hides the body triangles again with new settings, without putting on or taking
-    /// off any part.</summary>
-    /// <param name="AOptions">Decide which bones the parts on the model cover.</param>
     procedure Refresh(const AOptions: TglTFPartOptions);
 
     //** @abstract(Lists the parts on the model.)
@@ -515,9 +389,6 @@ type
     //** @param(AOptions Decide the bones listed as covered.)
     //**
     //** @returns(One entry per node marked as a part, in node order.)
-    /// <summary>Lists the parts on the model.</summary>
-    /// <param name="AOptions">Decide the bones listed as covered.</param>
-    /// <returns>One entry per node marked as a part, in node order.</returns>
     function AppliedParts(const AOptions: TglTFPartOptions): TArray<TglTFAppliedPart>;
 
     //** @abstract(Tells whether a node is a part put on by an applier.)
@@ -525,36 +396,25 @@ type
     //** @param(ANode The node.)
     //**
     //** @returns(True when its extras have the @link(GLTF_PART_EXTRA) mark.)
-    /// <summary>Tells whether a node is a part put on by an applier.</summary>
-    /// <param name="ANode">The node.</param>
-    /// <returns>True when its extras have the <see cref="GLTF_PART_EXTRA"/> mark.</returns>
     class function IsPartNode(ANode: TglTFNode): Boolean; static;
 
     //** @abstract(Asks Apply to stop after the part it is putting on.)
     //**
     //** May be called from any thread.
-    /// <summary>Asks Apply to stop after the part it is putting on.</summary>
-    /// <remarks>May be called from any thread.</remarks>
     procedure RequestAbort;
 
     //** @abstract(The model.)
-    /// <summary>The model.</summary>
     property Target: TglTFDocument read FTarget;
 
     //** @abstract(What happened: parts put on, taken off and replaced, triangles hidden;
     //** cleared by each Apply, Remove and Refresh.)
-    /// <summary>What happened: parts put on, taken off and replaced, triangles hidden; cleared
-    /// by each Apply, Remove and Refresh.</summary>
     property Log: TStringList read FLog;
 
     //** @abstract(Whether Apply was asked to stop. May be read from any thread.)
-    /// <summary>Whether Apply was asked to stop. May be read from any thread.</summary>
     property AbortRequested: Boolean read GetAbortRequested;
 
     //** @abstract(Occurs as parts are put on. Called on the applying thread; see
     //** TglTFProgressEvent.)
-    /// <summary>Occurs as parts are put on. Called on the applying thread; see
-    /// TglTFProgressEvent.</summary>
     property OnProgress: TglTFProgressEvent read FOnProgress write FOnProgress;
   end;
 
@@ -570,13 +430,6 @@ type
 //** @returns(Three vertex indices per triangle; nil for points and lines.)
 //**
 //** @raises(EglTFError The data is missing or does not fit.)
-/// <summary>Reads the triangles of a mesh primitive.</summary>
-/// <param name="ARoot">The tree the primitive is in.</param>
-/// <param name="APrimitive">The primitive.</param>
-/// <returns>Three vertex indices per triangle; nil for points and lines.</returns>
-/// <exception cref="EglTFError">The data is missing or does not fit.</exception>
-/// <remarks>Triangle strips and fans are turned into separate triangles. A primitive without
-/// indices uses its vertices in order.</remarks>
 function ReadPrimitiveTriangles(ARoot: TglTF; APrimitive: TglTFMeshPrimitive): TArray<Cardinal>;
 
 //** @abstract(Reads the values of an accessor as numbers.)
@@ -593,15 +446,6 @@ function ReadPrimitiveTriangles(ARoot: TglTF; APrimitive: TglTFMeshPrimitive): T
 //** I * components + C.)
 //**
 //** @raises(EglTFError The data is missing or does not fit.)
-/// <summary>Reads the values of an accessor as numbers.</summary>
-/// <param name="ARoot">The tree the accessor is in.</param>
-/// <param name="AIndex">Index in <c>ARoot.Accessors</c>.</param>
-/// <returns>Count times the number of components values; element I's component C is at
-/// I * components + C.</returns>
-/// <exception cref="EglTFError">The data is missing or does not fit.</exception>
-/// <remarks>Normalized integers are turned into 0..1 or -1..1, as the glTF specification says;
-/// sparse values are applied. Matrices are read as their components in order, without the
-/// padding some small matrix types have.</remarks>
 function ReadAccessorValues(ARoot: TglTF; AIndex: Integer): TArray<Double>;
 
 implementation

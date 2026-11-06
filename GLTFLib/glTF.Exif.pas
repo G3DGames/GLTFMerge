@@ -47,8 +47,6 @@ type
   //** @abstract(Finds and removes EXIF data in image files held in memory.)
   //**
   //** All methods are class methods and may be called from any thread.
-  /// <summary>Finds and removes EXIF data in image files held in memory.</summary>
-  /// <remarks>All methods are class methods and may be called from any thread.</remarks>
   TglTFExif = class sealed
   public
     //** @abstract(Returns an image without its EXIF data.)
@@ -58,12 +56,6 @@ type
     //** @param(AStripped The image without EXIF data; AData itself when there was none.)
     //**
     //** @returns(True when EXIF data was found and removed.)
-    /// <summary>Returns an image without its EXIF data.</summary>
-    /// <param name="AData">The image file: JPEG, PNG or WebP; anything else is left
-    /// alone.</param>
-    /// <param name="AStripped">The image without EXIF data; AData itself when there was
-    /// none.</param>
-    /// <returns>True when EXIF data was found and removed.</returns>
     class function Strip(const AData: TBytes; out AStripped: TBytes): Boolean; static;
 
     //** @abstract(Tells whether an image holds EXIF data that Strip would remove.)
@@ -71,9 +63,6 @@ type
     //** @param(AData The image file.)
     //**
     //** @returns(True when it does.)
-    /// <summary>Tells whether an image holds EXIF data that Strip would remove.</summary>
-    /// <param name="AData">The image file.</param>
-    /// <returns>True when it does.</returns>
     class function HasExif(const AData: TBytes): Boolean; static;
   end;
 

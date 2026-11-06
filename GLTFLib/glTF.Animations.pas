@@ -76,37 +76,25 @@ uses
 
 type
   //** @abstract(What to do with an imported animation whose name is already used.)
-  /// <summary>What to do with an imported animation whose name is already used.</summary>
   TglTFDuplicateAction = (
     //** @abstract(The imported animation replaces the one with the same name, taking its
     //** place in the list; the data only the old one used is removed at the end of the
     //** import.)
-    /// <summary>The imported animation replaces the one with the same name, taking its place
-    /// in the list; the data only the old one used is removed at the end of the
-    /// import.</summary>
     daReplace,
 
     //** @abstract(The animation already there is kept and the imported one is ignored.)
-    /// <summary>The animation already there is kept and the imported one is ignored.</summary>
     daKeep,
 
     //** @abstract(The imported animation is added under a new, unique name.)
-    /// <summary>The imported animation is added under a new, unique name.</summary>
     daRename,
 
     //** @abstract(The imported animation is ignored and the import stops; what was added so
     //** far stays.)
-    /// <summary>The imported animation is ignored and the import stops; what was added so far
-    /// stays.</summary>
     daAbort);
 
   //** @abstract(One animation found in a file being imported, and what happened to it.)
   //**
   //** Created and owned by @link(TglTFAnimationImporter); read-only for its users.
-  /// <summary>One animation found in a file being imported, and what happened to
-  /// it.</summary>
-  /// <remarks>Created and owned by <see cref="TglTFAnimationImporter"/>; read-only for its
-  /// users.</remarks>
   TglTFAnimationCandidate = class
   private
     FSourceFile: TObject;
@@ -125,34 +113,26 @@ type
     function GetChannelCount: Integer;
   public
     //** @abstract(Creates an empty candidate.)
-    /// <summary>Creates an empty candidate.</summary>
     constructor Create;
 
     //** @abstract(Frees the candidate.)
-    /// <summary>Frees the candidate.</summary>
     destructor Destroy; override;
 
     //** @abstract(Returns a short description for messages.)
     //**
     //** @returns(For example: "Walk" from run.glb.)
-    /// <summary>Returns a short description for messages.</summary>
-    /// <returns>For example: "Walk" from run.glb.</returns>
     function Description: string;
 
     //** @abstract(The document the animation is in; owned by the importer.)
-    /// <summary>The document the animation is in; owned by the importer.</summary>
     property Source: TglTFDocument read FSource;
 
     //** @abstract(The file the animation is in.)
-    /// <summary>The file the animation is in.</summary>
     property FileName: string read FFileName;
 
     //** @abstract(Index of the animation in @code(Source.Root.Animations).)
-    /// <summary>Index of the animation in <c>Source.Root.Animations</c>.</summary>
     property SourceIndex: Integer read FSourceIndex;
 
     //** @abstract(The animation's name in its file; empty when it has none.)
-    /// <summary>The animation's name in its file; empty when it has none.</summary>
     property OriginalName: string read FOriginalName;
 
     //** @abstract(The name it has, or would have, in the model.)
@@ -160,43 +140,29 @@ type
     //** The original name, or for an unnamed animation the file name without its extension,
     //** followed by "_" and the animation's number when the file has several. Changed by a
     //** rename.
-    /// <summary>The name it has, or would have, in the model.</summary>
-    /// <remarks>The original name, or for an unnamed animation the file name without its
-    /// extension, followed by "_" and the animation's number when the file has several.
-    /// Changed by a rename.</remarks>
     property Name: string read FName;
 
     //** @abstract(Whether it can be imported: some channel matched and its data is there.)
-    /// <summary>Whether it can be imported: some channel matched and its data is
-    /// there.</summary>
     property WillImport: Boolean read FWillImport;
 
     //** @abstract(Whether it was added to the model.)
-    /// <summary>Whether it was added to the model.</summary>
     property Imported: Boolean read FImported;
 
     //** @abstract(Index of the model's animation it replaced; GLTF_UNDEFINED_INDEX when it
     //** replaced none.)
-    /// <summary>Index of the model's animation it replaced; GLTF_UNDEFINED_INDEX when it
-    /// replaced none.</summary>
     property Replaced: Integer read FReplaced;
 
     //** @abstract(Number of channels the animation has in its file.)
-    /// <summary>Number of channels the animation has in its file.</summary>
     property ChannelCount: Integer read GetChannelCount;
 
     //** @abstract(Number of channels whose node was matched in the model; only these are
     //** imported.)
-    /// <summary>Number of channels whose node was matched in the model; only these are
-    /// imported.</summary>
     property MatchedChannels: Integer read FMatchedChannels;
 
     //** @abstract(Why the animation cannot be imported; empty when it can.)
-    /// <summary>Why the animation cannot be imported; empty when it can.</summary>
     property Error: string read FError;
 
     //** @abstract(One line per channel skipped, saying why.)
-    /// <summary>One line per channel skipped, saying why.</summary>
     property Notes: TStringList read FNotes;
   end;
 
@@ -219,18 +185,6 @@ type
   //**
   //** @param(ANewName For daRename: the new name; it holds a suggested unique name on entry.
   //** A name that cannot be used is replaced by the suggestion.)
-  /// <summary>Asks what to do with an animation whose name the model already uses.</summary>
-  /// <param name="AImporter">The importer.</param>
-  /// <param name="ACandidate">The animation being imported.</param>
-  /// <param name="AExisting">Index of the model's animation with the same name.</param>
-  /// <param name="AAction">The answer; daKeep when unchanged.</param>
-  /// <param name="ANewName">For daRename: the new name; it holds a suggested unique name on
-  /// entry. A name that cannot be used is replaced by the suggestion.</param>
-  /// <remarks>Called on the importing thread, which waits for the answer. A handler that asks
-  /// the user from a background import must show the question on the main thread and wait for
-  /// it, for example with a TEvent; it must not be called on the main thread itself then.
-  /// Reading the model, for example through NameProblem, is safe while the importer
-  /// waits.</remarks>
   TglTFDuplicateEvent = reference to procedure(AImporter: TglTFAnimationImporter;
     ACandidate: TglTFAnimationCandidate; AExisting: Integer;
     var AAction: TglTFDuplicateAction; var ANewName: string);
@@ -257,27 +211,6 @@ type
   //**   Importer.Free;
   //** end;
   //** #)
-  /// <summary>Imports the animations of other glTF files into a document, one animation at a
-  /// time.</summary>
-  /// <remarks>Set OnDuplicate, and OnProgress if wanted, then call ImportFiles. Duplicates are
-  /// found by name, ignoring case, among the model's animations, including those added
-  /// earlier in the same import. Without an OnDuplicate handler, duplicates keep the old
-  /// animation. The importer owns the documents it loads; free it after the
-  /// import.</remarks>
-  /// <example><code>
-  /// Importer := TglTFAnimationImporter.Create(Doc);
-  /// try
-  ///   Importer.OnDuplicate :=
-  ///     procedure(AImporter: TglTFAnimationImporter; ACandidate: TglTFAnimationCandidate;
-  ///       AExisting: Integer; var AAction: TglTFDuplicateAction; var ANewName: string)
-  ///     begin
-  ///       AAction := daRename; // keep both, under the suggested name
-  ///     end;
-  ///   Importer.ImportFiles(['walk.glb', 'run.glb']);
-  /// finally
-  ///   Importer.Free;
-  /// end;
-  /// </code></example>
   TglTFAnimationImporter = class
   private
     FTarget: TglTFDocument;
@@ -317,13 +250,9 @@ type
     //**
     //** @param(ATarget The document that receives the animations; not owned. Nothing else
     //** may change it during the import.)
-    /// <summary>Creates an importer for a document.</summary>
-    /// <param name="ATarget">The document that receives the animations; not owned. Nothing
-    /// else may change it during the import.</param>
     constructor Create(ATarget: TglTFDocument);
 
     //** @abstract(Frees the importer, the documents it loaded and its candidates.)
-    /// <summary>Frees the importer, the documents it loaded and its candidates.</summary>
     destructor Destroy; override;
 
     //** @abstract(Imports the animations of several .gltf or .glb files.)
@@ -336,14 +265,6 @@ type
     //** @param(AFileNames The files, in the order their animations are to be added.)
     //**
     //** @returns(The number of animations added or replaced.)
-    /// <summary>Imports the animations of several .gltf or .glb files.</summary>
-    /// <param name="AFileNames">The files, in the order their animations are to be
-    /// added.</param>
-    /// <returns>The number of animations added or replaced.</returns>
-    /// <remarks>Each file is loaded and its animations matched and added in turn; see the
-    /// unit description. A file that cannot be loaded, or has no animations, adds a line to
-    /// <see cref="Log"/> and the import goes on. Stops early on an abort. At the end, the data
-    /// only replaced animations used is removed from the model.</remarks>
     function ImportFiles(const AFileNames: TArray<string>): Integer;
 
     //** @abstract(Imports the animations of an already loaded document.)
@@ -356,14 +277,6 @@ type
     //** may be empty.)
     //**
     //** @returns(The number of animations added or replaced.)
-    /// <summary>Imports the animations of an already loaded document.</summary>
-    /// <param name="ASource">The document; the importer owns it from now on, even when this
-    /// raises.</param>
-    /// <param name="AFileName">The name to show and to derive names of unnamed animations
-    /// from; may be empty.</param>
-    /// <returns>The number of animations added or replaced.</returns>
-    /// <remarks>Like ImportFiles for one file, including the removal of replaced data at the
-    /// end.</remarks>
     function ImportDocument(ASource: TglTFDocument; const AFileName: string): Integer;
 
     //** @abstract(Asks the import to stop once the animation being added is finished.)
@@ -371,10 +284,6 @@ type
     //** May be called from any thread, typically the main thread while the import runs in a
     //** background thread. The remaining animations and files are not imported; those
     //** already added stay.
-    /// <summary>Asks the import to stop once the animation being added is finished.</summary>
-    /// <remarks>May be called from any thread, typically the main thread while the import runs
-    /// in a background thread. The remaining animations and files are not imported; those
-    /// already added stay.</remarks>
     procedure RequestAbort;
 
     //** @abstract(Tells whether a name can be given to an imported animation.)
@@ -382,9 +291,6 @@ type
     //** @param(AName The name wanted; leading and trailing spaces are ignored.)
     //**
     //** @returns(Empty when the name is fine, otherwise why it is not.)
-    /// <summary>Tells whether a name can be given to an imported animation.</summary>
-    /// <param name="AName">The name wanted; leading and trailing spaces are ignored.</param>
-    /// <returns>Empty when the name is fine, otherwise why it is not.</returns>
     function NameProblem(const AName: string): string;
 
     //** @abstract(Suggests a name the model does not use yet.)
@@ -393,55 +299,37 @@ type
     //**
     //** @returns(AName followed by "_2", "_3" and so on: the first the model does not use. A
     //** "_N" already at the end of AName is replaced.)
-    /// <summary>Suggests a name the model does not use yet.</summary>
-    /// <param name="AName">The name wanted.</param>
-    /// <returns>AName followed by "_2", "_3" and so on: the first the model does not use. A
-    /// "_N" already at the end of AName is replaced.</returns>
     function SuggestName(const AName: string): string;
 
     //** @abstract(The document receiving the animations.)
-    /// <summary>The document receiving the animations.</summary>
     property Target: TglTFDocument read FTarget;
 
     //** @abstract(Number of animations found in the files so far.)
-    /// <summary>Number of animations found in the files so far.</summary>
     property Count: Integer read GetCount;
 
     //** @abstract(The animations found, in the order the files and their animations were
     //** read.)
-    /// <summary>The animations found, in the order the files and their animations were
-    /// read.</summary>
     property Candidates[AIndex: Integer]: TglTFAnimationCandidate read GetCandidate; default;
 
     //** @abstract(Number of animations added or replaced so far.)
-    /// <summary>Number of animations added or replaced so far.</summary>
     property ImportedCount: Integer read FImportedCount;
 
     //** @abstract(Whether the import was asked to stop.)
     //**
     //** May be read from any thread.
-    /// <summary>Whether the import was asked to stop.</summary>
-    /// <remarks>May be read from any thread.</remarks>
     property AbortRequested: Boolean read GetAbortRequested;
 
     //** @abstract(Occurs as files are loaded and animations added.)
     //**
     //** Each file is one model: its load takes the first half, adding its animations the
     //** second. Called on the importing thread; see TglTFProgressEvent.
-    /// <summary>Occurs as files are loaded and animations added.</summary>
-    /// <remarks>Each file is one model: its load takes the first half, adding its animations
-    /// the second. Called on the importing thread; see TglTFProgressEvent.</remarks>
     property OnProgress: TglTFProgressEvent read FOnProgress write FOnProgress;
 
     //** @abstract(Asks what to do with each duplicate; see @link(TglTFDuplicateEvent).)
-    /// <summary>Asks what to do with each duplicate; see
-    /// <see cref="TglTFDuplicateEvent"/>.</summary>
     property OnDuplicate: TglTFDuplicateEvent read FOnDuplicate write FOnDuplicate;
 
     //** @abstract(What happened: files loaded or not, channels skipped, animations added,
     //** replaced, renamed or kept, and any abort.)
-    /// <summary>What happened: files loaded or not, channels skipped, animations added,
-    /// replaced, renamed or kept, and any abort.</summary>
     property Log: TStringList read FLog;
   end;
 
